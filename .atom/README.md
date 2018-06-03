@@ -6,19 +6,19 @@
 
 ## Installation
 
-1.  Run applicable install script
+1.  Execute applicable install script
 
     -   Shell
 
-	```sh
-	./install.sh
-	```
+    	```sh
+    	./install.sh
+    	```
 
     -   Powershell
 
-        ```powershell
-        .\install.ps1
-        ```
+      ```powershell
+      .\install.ps1
+      ```
 
     -   What it does
 
@@ -28,14 +28,14 @@
 
 2.  Install packages from `packages.txt` using `apm`
 
-    ```sh
-    apm install --packages-file package.txt
-    ```
+  ```sh
+  apm install --packages-file package.txt
+  ```
 
 3.  After installing or updating packages, output user-installed packages to `packages.txt`
 
-    ```sh
-    apm list --installed --bare > packages.txt
-    ```
+  ```sh
+  apm list --installed --bare > packages.txt
+  ```
 
 [//]: # (TODO: add shell script)
