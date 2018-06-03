@@ -1,5 +1,7 @@
 # .atom
 
+## Contents
+
 -	[Atom and package config](../config.cson "")
 -	[Init file](../init.coffee "init.coffee")
 -	[Keymap](../keymap.cson "keymap.cson")
