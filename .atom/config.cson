@@ -35,7 +35,7 @@
     reopenProjectMenuCount: 10
     telemetryConsent: "no"
     themes: [
-      "northem-light-atom-ui"
+      "one-light-ui"
       "one-light-syntax"
     ]
     uriHandlerRegistration: "always"
@@ -56,6 +56,12 @@
   "highlight-selected":
     highlightBackground: true
     lightTheme: true
+  "linter-sass-lint":
+    configFile: "C:\\Users\\Theodore\\.atom\\.sass-lint.yml"
+  "linter-ui-default":
+    decorateOnTreeView: "Files and Directories"
+    gutterPosition: "Left"
+    panelHeight: 150
   "markdown-preview":
     useGitHubStyle: true
   tabs:

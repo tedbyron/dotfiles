@@ -23,18 +23,8 @@
     }
   }
 
-  .project-root-header {
-    &::before {
-      opacity: 1 !important;
-    }
-
-    .icon {
-      line-height: 2
-    }
-
-    .icon::before {
-      vertical-align: sub;
-    }
+  .project-root-header .icon::before {
+    vertical-align: sub;
   }
 
   .entries {
@@ -47,7 +37,7 @@
       line-height: 1.75em;
     }
 
-    .directory .name {
+    .directory .header {
       line-height: 1.75em;
     }
   }
