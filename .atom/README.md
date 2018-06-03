@@ -28,14 +28,14 @@
 
 2.  Install packages from `packages.txt` using `apm`
 
-  ```sh
-  apm install --packages-file package.txt
-  ```
+    ```sh
+    apm install --packages-file package.txt
+    ```
 
 3.  After installing or updating packages, output user-installed packages to `packages.txt`
 
-  ```sh
-  apm list --installed --bare > packages.txt
-  ```
+    ```sh
+    apm list --installed --bare > packages.txt
+    ```
 
 [//]: # (TODO: add shell script)
