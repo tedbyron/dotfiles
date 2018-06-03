@@ -16,9 +16,9 @@
 
     -   Powershell
 
-      ```powershell
-      .\install.ps1
-      ```
+        ```powershell
+        .\install.ps1
+        ```
 
     -   What it does
 
