@@ -1,18 +1,5 @@
 # .atom
 
-## Contents
-
--	[Atom and package config](/.atom/config.cson "config.cson")
--	[Init file](/.atom/init.coffee "init.coffee")
--	[Keymap](/.atom/keymap.cson "keymap.cson")
--	[Package list](/.atom/packages.txt "packages.txt")
--	[Snippets](/.atom/snippets.cson "snippets.cson")
--	[User styles](/.atom/styles.less "styles.less")  
-
--	[Windows install script](/.atom/install.ps1)  
-
--	[README.md](#.atom)
-
 ## Prerequisites
 
 -	Install [Atom](https://atom.io)
@@ -21,13 +8,13 @@
 
 1.	Run applicable install script
 	-	Shell
-	
+
 		```sh
 		./install.sh
 		```
 
 	-	Powershell
-		
+
 		```powershell
 		.\install.ps1
 		```
