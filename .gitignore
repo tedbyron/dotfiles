@@ -4,4 +4,6 @@
 /.atom/blob-store
 /.atom/compile-cache
 /.atom/dev
+/.atom/github.cson
+/.atom/packages
 /.atom/storage
