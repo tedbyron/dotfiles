@@ -1,11 +1,11 @@
 # .atom
 
 -	[Atom and package config](../config.cson "")
--	[Init File](../init.coffee "init.coffee")
+-	[Init file](../init.coffee "init.coffee")
 -	[Keymap](../keymap.cson "keymap.cson")
--	[Package List](../package-list.txt "package-list.txt")
--	[snippets.cson](../snippets.cson "snippets.cson")
--	[styles.less](../styles.less "styles.less")
+-	[Package list](../package-list.txt "package-list.txt")
+-	[Snippets](../snippets.cson "snippets.cson")
+-	[User styles](../styles.less "styles.less")
 
 -	[Windows install script](../install.ps1)
 
@@ -27,7 +27,7 @@
 	-	Powershell
 		
 		```powershell
-		\.install.ps1
+		.\install.ps1
 		```
 
 2.	Install packages from `package-list.txt` using `apm`
