@@ -1,0 +1,66 @@
+"*":
+  "atom-beautify":
+    general:
+      beautifyEntireFileOnSave: false
+    html:
+      extra_liners: [
+        "head"
+        "body"
+        "/html"
+        "header"
+        "main"
+        "footer"
+      ]
+  "atom-clock":
+    showTooltip: true
+    tooltipDateFormat: "dddd M/D/Y"
+  "autocomplete-plus":
+    confirmCompletion: "tab"
+    suggestionListFollows: "Cursor"
+  "color-picker":
+    abbreviateValues: true
+    uppercaseColorValues: true
+  core:
+    autoHideMenuBar: true
+    closeDeletedFileTabs: true
+    disabledPackages: [
+      "language-gfm"
+    ]
+    openEmptyEditorOnStart: false
+    packagesWithKeymapsDisabled: [
+      "language-markdown"
+      "highlight-selected"
+    ]
+    projectHome: "C:\\Users\\Theodore\\Documents\\GitHub\\"
+    reopenProjectMenuCount: 10
+    telemetryConsent: "no"
+    themes: [
+      "northem-light-atom-ui"
+      "one-light-syntax"
+    ]
+    uriHandlerRegistration: "always"
+  editor:
+    fontFamily: "FiraCode-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace"
+    fontSize: 15
+    showIndentGuide: true
+    softWrap: true
+    softWrapAtPreferredLineLength: true
+    zoomFontWhenCtrlScrolling: false
+  "exception-reporting":
+    userId: "8000780f-5481-4de2-bb5c-ccf1f9a168af"
+  firacode:
+    fontWeight: "regular"
+    scopes: [
+      "*"
+    ]
+  "highlight-selected":
+    highlightBackground: true
+    lightTheme: true
+  "markdown-preview":
+    useGitHubStyle: true
+  tabs:
+    enableMruTabSwitching: false
+  "tree-view":
+    hideIgnoredNames: true
+  welcome:
+    showOnStartup: false

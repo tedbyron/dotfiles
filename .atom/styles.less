@@ -1,0 +1,60 @@
+// hide project view toggle button
+.atom-dock-toggle-button-visible {
+  display: none;
+}
+
+// tab bar icons
+.tab-bar .title::before {
+  vertical-align: sub;
+}
+
+// project tab bar
+.left .tab-bar {
+  display: none;
+}
+
+// tree view
+.tree-view {
+  .tree-view-root {
+    padding-top: 0;
+
+    .project-root {
+      padding-bottom: 0;
+    }
+  }
+
+  .project-root-header {
+    &::before {
+      opacity: 1 !important;
+    }
+
+    .icon {
+      line-height: 2
+    }
+
+    .icon::before {
+      vertical-align: sub;
+    }
+  }
+
+  .entries {
+    .icon::before {
+      font-size: 1em;
+      vertical-align: baseline;
+    }
+
+    li {
+      line-height: 1.75em;
+    }
+
+    .directory .name {
+      line-height: 1.75em;
+    }
+  }
+}
+
+// settings config button that pisses me off
+.settings-view .config-menu .icon::before {
+  vertical-align: baseline;
+  margin-right: .5em;
+}

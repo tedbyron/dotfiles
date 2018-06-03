@@ -1,3 +1,3 @@
 # dotfiles
 
-### WIP
+>	Under construction...
