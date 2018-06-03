@@ -10,9 +10,9 @@
 
     -   Shell
 
-	    	```sh
-	    	./install.sh
-	    	```
+	```sh
+	./install.sh
+	```
 
     -   Powershell
 
