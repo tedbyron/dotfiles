@@ -2,16 +2,16 @@
 
 ## Contents
 
--	[Atom and package config](../config.cson "")
--	[Init file](../init.coffee "init.coffee")
--	[Keymap](../keymap.cson "keymap.cson")
--	[Package list](../package-list.txt "package-list.txt")
--	[Snippets](../snippets.cson "snippets.cson")
--	[User styles](../styles.less "styles.less")
+-	[Atom and package config](/.atom/config.cson "config.cson")
+-	[Init file](/.atom/init.coffee "init.coffee")
+-	[Keymap](/.atom/keymap.cson "keymap.cson")
+-	[Package list](/.atom/package-list.txt "package-list.txt")
+-	[Snippets](/.atom/snippets.cson "snippets.cson")
+-	[User styles](/.atom/styles.less "styles.less")  
 
--	[Windows install script](../install.ps1)
+-	[Windows install script](/.atom/install.ps1)  
 
--	[README.md](../README.md)
+-	[README.md](#.atom)
 
 ## Prerequisites
 
