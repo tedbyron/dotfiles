@@ -22,14 +22,14 @@
 
     -   What it does
 
-        -   Copy `~/.atom/` into repository without overwriting
+        -   Copy `~/.atom/` to cloned repo without overwriting
         -   Move `~/.atom/` to `~/.atom.backup`
-        -   Create symlink from `~/.atom/` to the repository
+        -   Symlink `~/.atom/` to cloned repo
 
 2.  Install packages from `packages.txt` using `apm`
 
     ```sh
-    apm install --packages-file package.txt
+    apm install --packages-file packages.txt
     ```
 
 3.  After installing or updating packages, output user-installed packages to `packages.txt`
@@ -37,5 +37,3 @@
     ```sh
     apm list --installed --bare > packages.txt
     ```
-
-[//]: # (TODO: add shell script)
