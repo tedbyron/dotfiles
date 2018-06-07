@@ -56,12 +56,17 @@
   "highlight-selected":
     highlightBackground: true
     lightTheme: true
+  "language-markdown":
+    addListItems: false
+    disableLanguageGfm: false
+    emphasisShortcuts: false
   "linter-sass-lint":
     configFile: "C:\\Users\\Theodore\\.atom\\.sass-lint.yml"
   "linter-ui-default":
     decorateOnTreeView: "Files and Directories"
     gutterPosition: "Left"
     panelHeight: 150
+    showPanel: true
   "markdown-preview":
     useGitHubStyle: true
   tabs:
@@ -70,3 +75,7 @@
     hideIgnoredNames: true
   welcome:
     showOnStartup: false
+".md.text":
+  editor:
+    showInvisibles: false
+    tabLength: 4
