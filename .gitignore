@@ -7,3 +7,4 @@
 /.atom/github.cson
 /.atom/packages
 /.atom/storage
+.DS_Store
