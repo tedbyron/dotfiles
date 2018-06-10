@@ -66,7 +66,6 @@
     decorateOnTreeView: "Files and Directories"
     gutterPosition: "Left"
     panelHeight: 150
-    showPanel: true
   "markdown-preview":
     useGitHubStyle: true
   tabs:
