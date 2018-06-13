@@ -15,8 +15,10 @@
     showTooltip: true
     tooltipDateFormat: "dddd M/D/Y"
   "autocomplete-plus":
+    autoActivationDelay: 300
     confirmCompletion: "tab"
-    suggestionListFollows: "Cursor"
+    moveToCancel: true
+    strictMatching: true
   "color-picker":
     abbreviateValues: true
     uppercaseColorValues: true
@@ -42,6 +44,7 @@
   editor:
     fontFamily: "FiraCode-Regular, Menlo, Consolas, DejaVu Sans Mono, monospace"
     fontSize: 15
+    scrollPastEnd: true
     showIndentGuide: true
     softWrap: true
     softWrapAtPreferredLineLength: true
@@ -60,6 +63,7 @@
     addListItems: false
     disableLanguageGfm: false
     emphasisShortcuts: false
+  "linter-eslint": {}
   "linter-sass-lint":
     configFile: "C:\\Users\\Theodore\\.atom\\.sass-lint.yml"
   "linter-ui-default":
@@ -68,6 +72,17 @@
     panelHeight: 150
   "markdown-preview":
     useGitHubStyle: true
+  "spell-check":
+    grammars: [
+      "source.asciidoc"
+      "source.gfm"
+      "text.git-commit"
+      "text.plain"
+      "text.plain.null-grammar"
+      "text.md"
+      "text.html"
+      "text.html.liquid"
+    ]
   tabs:
     enableMruTabSwitching: false
   "tree-view":
