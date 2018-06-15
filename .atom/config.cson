@@ -82,6 +82,7 @@
       "text.md"
       "text.html"
       "text.html.liquid"
+      "text.git-commit"
     ]
   tabs:
     enableMruTabSwitching: false
