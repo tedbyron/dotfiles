@@ -4,8 +4,9 @@
 set -e
 
 # check internet connection
-if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+if ping -q -c 1 -W 5 8.8.8.8 >/dev/null; then
   echo -e "No internet connection\\nExiting..."
+  exit 1
 fi
 
 ########################################
@@ -34,10 +35,8 @@ brew install "${formulae[@]}"
 # homebrew-cask
 ########################################
 
-# install homebrew-cask if not installed
-if ! brew info brew-cask &>/dev/null; then
-  brew tap homebrew/cask
-fi
+# install homebrew-cask
+brew tap homebrew/cask
 
 # homebrew casks
 casks=(
@@ -63,18 +62,20 @@ npm_packages=(
   sass
 )
 
+npm install "${npm_packages[@]}"
+
 ########################################
 # other
 ########################################
 
-# check if bash profile or shell profile exist and add composer alias
+# check if bash profile or shell profile exist and add Composer alias
 if [[ -a "$HOME/.bash_profile" ]]; then
-  echo "alias composer=\"php /user/local/bin/composer.phar\"" >> $HOME/.bash_profile
-elif [[ -a "$HOME/.profile"]]; then
-  echo "alias composer=\"php /user/local/bin/composer.phar\"" >> $HOME/.profile
+  echo "alias composer=\"php /user/local/bin/composer.phar\"" >> "$HOME/.bash_profile"
+elif [[ -a "$HOME/.profile" ]]; then
+  echo "alias composer=\"php /user/local/bin/composer.phar\"" >> "$HOME/.profile"
 else
-  touch $HOME/.bash_profile
-  echo "alias composer=\"php /user/local/bin/composer.phar\"" >> $HOME/.bash_profile
+  touch "$HOME/.bash_profile"
+  echo "alias composer=\"php /user/local/bin/composer.phar\"" >> "$HOME/.bash_profile"
 fi
 
 npm install -g "${npm_packages[@]}"
