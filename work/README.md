@@ -19,19 +19,11 @@
     ./install.sh
     ```
 
-## Post-Installation
-
--   The script will add a global Composer alias to your bash profile. If you're using a shell other than bash, then the alias must be added manually to your shell profile
-    ```sh
-    alias composer="php /usr/local/bin/composer.phar"
-    ```
-
 ## What the script does
 
 1.  Checks if there is an internet connection
-2.  Installs three package managers (Homebrew, Homebrew-Cask, npm) and installs packages (npm packages are installed globally)
+2.  Installs three package managers: Homebrew, Homebrew-Cask, and npm, and installs the following packages
     -   Homebrew
-        -   composer
         -   git
         -   node (Node.js)
             -   npm
@@ -47,10 +39,11 @@
         -   slack
 3. Prompts for optional package installations
     -   Homebrew
-        -   chunkwm \[Tap\]
-        -   nvim
+        -   emacs
+        -   nano
+        -   neovim
         -   vim
     -   Homebrew-Cask
         -   gpg-suite (GPG Tools)
         -   karabiner-elements
-4. Writes a global Composer alias to `$HOME/.bash_profile` or `$HOME/.profile`
+        -   spectacle
