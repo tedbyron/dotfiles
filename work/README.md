@@ -1,4 +1,4 @@
-# IdeaBase Dev Environment Installation
+# OS X Dev Environment Installation
 
 ## Prerequisites
 
@@ -7,13 +7,13 @@
     ```sh
     curl -O https://raw.githubusercontent.com/tedbyron/dotfiles/master/ideabase/install.sh
     ```
-
-## Installation
-
 -   Add execute permission to the install script
     ```sh
     chmod +x install.sh
     ```
+
+## Installation
+
 -   Run the script
     ```sh
     ./install.sh
@@ -29,7 +29,7 @@
 ## What the script does
 
 1.  Checks if there is an internet connection
-2.  Installs two package managers which have packages for the applications we use
+2.  Installs three package managers (Homebrew, Homebrew-Cask, npm) and installs packages (npm packages are installed globally)
     -   Homebrew
         -   composer
         -   git
@@ -45,11 +45,12 @@
         -   mamp (MAMP Pro)
         -   tower
         -   slack
-3. Writes a global Composer alias to `$HOME/.bash_profile` or `$HOME/.profile`
-4. Prompts for optional package installations
+3. Prompts for optional package installations
     -   Homebrew
-        -   gpg-tools
+        -   chunkwm \[Tap\]
+        -   nvim
         -   vim
     -   Homebrew-Cask
-        -   karabiner
-        -   spectacle
+        -   gpg-suite (GPG Tools)
+        -   karabiner-elements
+4. Writes a global Composer alias to `$HOME/.bash_profile` or `$HOME/.profile`

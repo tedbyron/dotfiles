@@ -62,7 +62,14 @@ npm_packages=(
   sass
 )
 
-npm install "${npm_packages[@]}"
+# install npm packages
+npm install -g "${npm_packages[@]}"
+
+########################################
+# optional packages
+########################################
+
+# TODO
 
 ########################################
 # other
@@ -77,7 +84,3 @@ else
   touch "$HOME/.bash_profile"
   echo "alias composer=\"php /user/local/bin/composer.phar\"" >> "$HOME/.bash_profile"
 fi
-
-npm install -g "${npm_packages[@]}"
-
-# TODO: add optional packages
