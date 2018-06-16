@@ -5,8 +5,8 @@ set -e
 
 # check internet connection
 echo "Checking for internets..."
-if ping -q -c 1 -W 5 8.8.8.8 >/dev/null; then
-  echo -e "No internet connection\\nExiting..."
+if ping -q -c 1 -W 5 8.8.8.8 > /dev/null; then
+  printf "%s\\n" "No internet connection" "Exiting..."
   exit 1
 fi
 
@@ -16,10 +16,15 @@ fi
 
 # install homebrew if not installed
 if [[ ! -x $(command -v brew) ]]; then
-  echo "Installing Homebrew..."
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
   brew update
+fi
+
+# exit 1 if installation failed
+if [[ ! -x $(command -v brew) ]]; then
+  printf "%s\\n" "Homebrew Installation failed" "Exiting..."
+  exit 1
 fi
 
 # homebrew formulae
@@ -83,19 +88,19 @@ input_options=(
   "   (7) karabiner-elements"
   "   (8) spectacle"
 )
-printf '%s\n' "${input_options[@]}"
-echo "Enter optional packages to be installed, separated by commas:"
+printf "%s\\n" "${input_options[@]}"
+echo "Enter additional packages to be installed, separated by commas"
 
 # split input by comma and whitespace into options array
 IFS=", " read -pra "e.g. \"3, 6, 7\" default none (0):" options
 
-options_none=1
+none_selected=false
 
 # loop through options array and add selected options to arrays
 for i in "${!options[@]}"
 do
   if [[ "0" == "${options[$i]}" ]]; then
-    options_none=0
+    none_selected=true
     break
   elif [[ "1" == "${options[$i]}" ]]; then
     formulae_options=(
@@ -128,9 +133,11 @@ do
 done
 
 # install selected options
-if [[ options_none -eq 1 ]]; then
+if ! $none_selected; then
   brew install "${formulae_options[@]}"
   brew cask install "${cask_options[@]}"
+else
+  echo "No additional packages selected."
 fi
 
-printf '\n%s\n' "Done."
+echo "Done."
