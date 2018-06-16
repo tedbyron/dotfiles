@@ -3,7 +3,7 @@
 ## Prerequisites
 
 -   Hopefully you're using a Mac...
--   Download the raw install script from GitHub or using cURL
+-   Download the raw install script from GitHub or with cURL
     ```sh
     curl -O https://raw.githubusercontent.com/tedbyron/dotfiles/master/ideabase/install.sh
     ```
