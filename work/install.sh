@@ -129,4 +129,4 @@ fi
 
 echo "Done."
 
-# TODO: fix optional package install, add global composer alias, fix bash upgrade
+# TODO: fix optional package install, fix bash upgrade
