@@ -76,7 +76,8 @@ printf "%s\\n" "${input_options[@]}"
 echo "Enter additional packages to be installed, separated by commas"
 
 # split input by comma and whitespace into options array
-IFS=", " read -pra "e.g. \"3, 6, 7\" default none (0):" options
+echo -n "e.g. \"3, 6, 7\" default none (0):"
+IFS=", " read -ra options
 
 none_selected=false
 
@@ -116,14 +117,18 @@ do
   fi
 done
 
-# install selected options
+# install selected options separately in case one fails
 if ! $none_selected; then
-  brew install "${formulae_options[@]}"
-  brew cask install "${cask_options[@]}"
+  for i in "${!formulae_options[@]}"
+  do
+    brew install "${formulae_options[$i]}"
+  done
+  for i in "${!cask_options[@]}"
+  do
+    brew cask install "${cask_options[@]}"
+  done
 else
   echo "No additional packages selected."
 fi
 
 echo "Done."
-
-# TODO: fix optional package install, fix bash upgrade
