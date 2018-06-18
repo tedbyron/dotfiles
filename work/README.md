@@ -5,7 +5,7 @@
 -   Hopefully you're using a Mac...
 -   Download the raw install script from GitHub or with cURL
     ```sh
-    curl -O https://raw.githubusercontent.com/tedbyron/dotfiles/master/ideabase/install.sh
+    curl -LOk https://raw.githubusercontent.com/tedbyron/dotfiles/master/ideabase/install.sh
     ```
 -   Add execute permission to the install script
     ```sh
