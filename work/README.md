@@ -24,7 +24,7 @@
 1.  Checks if there is an internet connection
 2.  Installs three package managers: Homebrew, Homebrew-Cask, and npm, and installs the following packages
     -   Homebrew
-        -   bash (current version)
+        -   bash (latest version)
         -   composer
         -   git
         -   node (Node.js)
