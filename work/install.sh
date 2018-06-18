@@ -29,6 +29,7 @@ brew install node
 # change shell to newer version of bash
 chmod u+w /etc/shells
 echo "/usr/local/bin/bash" > /etc/shells
+chmod u-w /etc/shells
 chsh -s /usr/local/bin/bash
 
 ########################################
@@ -126,3 +127,5 @@ else
 fi
 
 echo "Done."
+
+# TODO: fix optional package install, add global composer alias, fix bash upgrade
