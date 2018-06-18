@@ -23,6 +23,7 @@ fi
 
 # install formulae separately in case one fails
 brew install bash
+brew install composer
 brew install git
 brew install node
 
