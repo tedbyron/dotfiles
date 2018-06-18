@@ -5,10 +5,7 @@ set -e
 
 # check internet connection
 echo "Checking for internets..."
-if ping -q -c 1 -W 5 8.8.8.8 > /dev/null; then
-  printf "%s\\n" "No internet connection" "Exiting..."
-  exit 1
-fi
+ping -q -W 5 -c 1 8.8.8.8 > /dev/null || exit 1
 
 ########################################
 # homebrew-cask
