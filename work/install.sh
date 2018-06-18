@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# terminate on first nonzero exit code
-set -e
-
 # check internet connection
 echo "Checking for internets..."
 ping -q -W 5 -c 1 8.8.8.8 > /dev/null || exit 1
@@ -24,14 +21,15 @@ if [[ ! -x $(command -v brew) ]]; then
   exit 1
 fi
 
-# homebrew formulae
-formulae=(
-  "git"
-  "node"
-)
+# install formulae separately in case one fails
+brew install bash
+brew install git
+brew install node
 
-# install formulae
-brew install "${formulae[@]}"
+# change shell to newer version of bash
+chmod u+w /etc/shells
+echo "/usr/local/bin/bash" > /etc/shells
+chsh -s /usr/local/bin/bash
 
 ########################################
 # homebrew-cask
@@ -40,32 +38,22 @@ brew install "${formulae[@]}"
 # tap homebrew-cask
 brew tap homebrew/cask
 
-# homebrew casks
-casks=(
-  "atom"
-  "firefox"
-  "github"
-  "google-chrome"
-  "mamp"
-  "tower"
-  "slack"
-)
-
-# install casks
-brew cask install "${casks[@]}"
+# install casks separately in case one fails
+brew cask install atom
+brew cask install firefox
+brew cask install github
+brew cask install google-chrome
+brew cask install mamp
+brew cask install tower
+brew cask install slack
 
 ########################################
 # npm
 ########################################
 
-# npm packages
-npm_packages=(
-  "grunt-cli"
-  "sass"
-)
-
-# install npm packages
-npm install -g "${npm_packages[@]}"
+# install npm packages separately in case one fails
+npm install -g grunt-cli
+npm install -g sass
 
 ########################################
 # optional packages
