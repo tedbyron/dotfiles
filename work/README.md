@@ -25,6 +25,7 @@
 2.  Installs three package managers: Homebrew, Homebrew-Cask, and npm, and installs the following packages
     -   Homebrew
         -   bash (current version)
+        -   composer
         -   git
         -   node (Node.js)
             -   npm
