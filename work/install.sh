@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # check internet connection
-echo "Checking for internets..."
 ping -q -W 5 -c 1 8.8.8.8 > /dev/null || exit 1
 
 ########################################
@@ -27,7 +26,10 @@ brew install composer
 brew install git
 brew install node
 
+# TODO: check if bash installed correctly
 # change shell to newer version of bash
+su -c echo /usr/local/bin/bash >> /etc/shells
+su -c chsh -s /usr/local/bin/bash
 chsh -s /usr/local/bin/bash
 
 ########################################
