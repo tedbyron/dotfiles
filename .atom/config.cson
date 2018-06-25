@@ -15,7 +15,7 @@
     showTooltip: true
     tooltipDateFormat: "dddd M/D/Y"
   "autocomplete-plus":
-    autoActivationDelay: 300
+    autoActivationDelay: 500
     confirmCompletion: "tab"
     moveToCancel: true
     strictMatching: true
