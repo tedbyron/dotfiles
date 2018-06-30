@@ -11,6 +11,7 @@
     -   Shell
 
     	```sh
+        chmod +x install.sh
     	./install.sh
     	```
 
@@ -20,20 +21,8 @@
         .\install.ps1
         ```
 
-    -   What it does
-
-        -   Copy `~/.atom/` to cloned repo without overwriting
-        -   Move `~/.atom/` to `~/.atom.backup`
-        -   Symlink `~/.atom/` to cloned repo
-
-2.  Install packages from `packages.txt` using `apm`
+2.  Install starred packages from <atom.io>
 
     ```sh
-    apm install --packages-file packages.txt
-    ```
-
-3.  After installing or updating packages, output user-installed packages to `packages.txt`
-
-    ```sh
-    apm list --installed --bare > packages.txt
+    apm stars --install
     ```
