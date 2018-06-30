@@ -37,8 +37,8 @@
     reopenProjectMenuCount: 10
     telemetryConsent: "no"
     themes: [
-      "one-dark-ui"
-      "firewatch-syntax"
+      "one-light-ui"
+      "one-light-syntax"
     ]
     uriHandlerRegistration: "always"
   editor:
