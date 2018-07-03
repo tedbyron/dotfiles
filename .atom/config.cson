@@ -37,13 +37,13 @@
     reopenProjectMenuCount: 10
     telemetryConsent: "no"
     themes: [
-      "one-light-ui"
-      "one-light-syntax"
+      "one-dark-ui"
+      "base16-tomorrow-dark-theme"
     ]
     uriHandlerRegistration: "always"
   editor:
-    fontFamily: "Fira Code, Menlo, Consolas, DejaVu Sans Mono, monospace"
-    fontSize: 15
+    fontFamily: "Roboto Mono, Menlo, Consolas, DejaVu Sans Mono, monospace"
+    fontSize: 16
     scrollPastEnd: true
     showIndentGuide: true
     softWrap: true
@@ -51,11 +51,6 @@
     zoomFontWhenCtrlScrolling: false
   "exception-reporting":
     userId: "8000780f-5481-4de2-bb5c-ccf1f9a168af"
-  firacode:
-    fontWeight: "regular"
-    scopes: [
-      "*"
-    ]
   "gpp-compiler": {}
   "highlight-selected":
     highlightBackground: true
