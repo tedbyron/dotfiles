@@ -36,13 +36,9 @@
     projectHome: "C:\\Users\\Theodore\\Documents\\GitHub\\"
     reopenProjectMenuCount: 10
     telemetryConsent: "no"
-    themes: [
-      "one-dark-ui"
-      "base16-tomorrow-dark-theme"
-    ]
     uriHandlerRegistration: "always"
   editor:
-    fontFamily: "Roboto Mono, Menlo, Consolas, DejaVu Sans Mono, monospace"
+    fontFamily: "Iosevka, Menlo, Consolas, DejaVu Sans Mono, monospace"
     fontSize: 16
     scrollPastEnd: true
     showIndentGuide: true
