@@ -14,8 +14,13 @@
 *.pem
 *.pub
 *.srl
+*.stTheme.cache
+*.sublime-project
+*.sublime-workspace
 *.swp
 *.tar
+*.tmlanguage.cache
+*.tmPreferences.cache
 *.zip
 .apm
 .DS_Store
