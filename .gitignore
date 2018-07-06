@@ -37,4 +37,4 @@
 .node-gyp
 .npm
 bh_unicode_properties.cache
-oscrypto-ca-bundle.crt
+nohup.out
