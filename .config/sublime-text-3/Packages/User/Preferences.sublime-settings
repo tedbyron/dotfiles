@@ -3,12 +3,12 @@
 	"auto_complete_cycle": true,
 	"bold_folder_labels": true,
 	"caret_style": "blink",
-	"close_windows_when_empty": true,
+	"close_windows_when_empty": false,
 	"color_scheme": "Packages/Theme - One Dark/One Dark.tmTheme",
 	"draw_centered": true,
 	"fade_fold_buttons": false,
 	"font_face": "Iosevka",
-	"font_size": 16,
+	"font_size": 14,
 	"highlight_line": true,
 	"ignored_packages":
 	[
