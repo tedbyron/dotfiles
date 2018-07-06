@@ -1,30 +1,20 @@
-########
-# path #
-########
-# $HOME/bin
+# path
 [[ -d "$HOME/bin" && -z "$(echo $PATH | grep -o $HOME/bin)" ]] && export PATH="${PATH}:$HOME/bin"
 
-# $HOME/.npm-global
 if [[ -x "$(command -v npm)" && -d "$HOME/.npm-global" ]]; then
   [[ "$(npm prefix -g)" != "$HOME/.npm-global" ]] && npm config set prefix "$HOME/.npm-global"
   [[ -z "$(echo $PATH | grep -o $HOME/.npm-global)" ]] && export PATH="${PATH}:$HOME/.npm-global"
 fi
 
-###########
-# globals #
-###########
+# globals
 export EDITOR=vim
 export PAGER="less -R"
 export SUDO_EDITOR=vim
 
-#######
-# ps1 #
-#######
+# ps1
 PS1="\w \\$ \[$(tput sgr0)\]"
 
-###########
-# aliases #
-###########
+# aliases
 alias sudo="sudo " # check if commands following sudo are aliases
 
 alias bootlog="journalctl -p 3 -xb"
@@ -60,9 +50,7 @@ mpv() {
   command mpv "$@" &
 }
 
-#####################
-# interactive check #
-#####################
+# interactive check
 [[ $- != *i* ]] && return
 
 # colorscheme
