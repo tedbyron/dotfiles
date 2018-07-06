@@ -5,8 +5,7 @@
 [[ -d "$HOME/bin" && -z "$(echo $PATH | grep -o $HOME/bin)" ]] && export PATH="${PATH}:$HOME/bin"
 
 # $HOME/.npm-global
-if [[ -x "$(command -v npm)" ]]; then
-  [[ ! -d "$HOME/.npm-global" ]] && mkdir "$HOME/.npm-global"
+if [[ -x "$(command -v npm)" && -d "$HOME/.npm-global" ]]; then
   [[ "$(npm prefix -g)" != "$HOME/.npm-global" ]] && npm config set prefix "$HOME/.npm-global"
   [[ -z "$(echo $PATH | grep -o $HOME/.npm-global)" ]] && export PATH="${PATH}:$HOME/.npm-global"
 fi
