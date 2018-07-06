@@ -1,7 +1,5 @@
 # dotfiles
 
->	My dotfiles... not fully automated, but getting there
+>	My dotfiles
 
-## Contents
-
--   [.atom](/.atom ".atom")
+don't trust any scripts in here

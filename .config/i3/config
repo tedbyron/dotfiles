@@ -152,7 +152,7 @@ mode "resize" {
 set $terminal urxvt
 set $browser chromium
 set $browser_private chromium --incognito
-set $editor subl
+set $editor atom
 set $music spotify
 
 bindsym $mod+u        exec --no-startup-id $terminal -e ranger

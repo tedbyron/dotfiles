@@ -8,29 +8,31 @@ ping -q -W 5 -c 1 8.8.8.8 > /dev/null || exit 1
 ########################################
 
 # install homebrew if not installed
-if [[ ! -x $(command -v brew) ]]; then
+if [[ ! -x "$(command -v brew)" ]]; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
   brew update
 fi
 
 # exit 1 if installation failed
-if [[ ! -x $(command -v brew) ]]; then
+if [[ ! -x "$(command -v brew)" ]]; then
   printf "%s\\n" "Homebrew Installation failed" "Exiting..."
   exit 1
 fi
 
-# install formulae separately in case one fails
-brew install bash
-brew install composer
-brew install git
-brew install node
+formulae=(
+  "composer"
+  "git"
+  "node"
+)
 
-# TODO: check if bash installed correctly
-# change shell to newer version of bash
-su -c echo /usr/local/bin/bash >> /etc/shells
-su -c chsh -s /usr/local/bin/bash
-chsh -s /usr/local/bin/bash
+# install formulae separately in case one fails
+for i in "${!formulae[@]}"
+do
+  brew install "${formulae[i]}"
+done
+unset i
+unset formulae
 
 ########################################
 # homebrew-cask
@@ -39,22 +41,40 @@ chsh -s /usr/local/bin/bash
 # tap homebrew-cask
 brew tap homebrew/cask
 
+casks=(
+  "atom"
+  "firefox"
+  "github"
+  "google-chrome"
+  "mamp"
+  "tower"
+  "slack"
+)
+
 # install casks separately in case one fails
-brew cask install atom
-brew cask install firefox
-brew cask install github
-brew cask install google-chrome
-brew cask install mamp
-brew cask install tower
-brew cask install slack
+for i in "${!casks[@]}"
+do
+  brew install "${casks[i]}"
+done
+unset i
+unset casks
 
 ########################################
 # npm
 ########################################
 
+node_packages=(
+  "grunt-cli"
+  "sass"
+)
+
 # install npm packages separately in case one fails
-npm install -g grunt-cli
-npm install -g sass
+for i in "${!node_packages[@]}"
+do
+  brew install "${node_packages[i]}"
+done
+unset i
+unset node_packages
 
 ########################################
 # optional packages
@@ -71,10 +91,9 @@ input_options=(
   "   (5) vim"
   "Homebrew-Cask"
   "   (6) gpg-suite"
-  "   (7) karabiner-elements"
-  "   (8) spectacle"
 )
 printf "%s\\n" "${input_options[@]}"
+unset input_options
 echo "Enter additional packages to be installed, separated by commas"
 
 # split input by comma and whitespace into options array
@@ -98,8 +117,6 @@ do
     )
     cask_options=(
       "gpg-suite"
-      "karabiner-elements"
-      "spectacle"
     )
     break
   elif [[ "2" == "${options[$i]}" ]]; then
@@ -112,12 +129,10 @@ do
     formulae_options+=("vim")
   elif [[ "6" == "${options[$i]}" ]]; then
     cask_options+=("gpg-suite")
-  elif [[ "7" == "${options[$i]}" ]]; then
-    cask_options+=("karabiner-elements")
-  elif [[ "8" == "${options[$i]}" ]]; then
-    cask_options+=("spectacle")
   fi
 done
+unset i
+unset options
 
 # install selected options separately in case one fails
 if ! $none_selected; then
@@ -125,12 +140,17 @@ if ! $none_selected; then
   do
     brew install "${formulae_options[$i]}"
   done
+  unset i
   for i in "${!cask_options[@]}"
   do
     brew cask install "${cask_options[@]}"
   done
+  unset i
 else
   echo "No additional packages selected."
 fi
+unset none_selected
+
+brew cask cleanup
 
 echo "Done."
