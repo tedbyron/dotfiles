@@ -1,13 +1,14 @@
 ########
 # path #
 ########
-[[ -d "$HOME/bin" ]] && export PATH="$PATH:$HOME/bin"
+# $HOME/bin
+[[ "$UID" -ge 1000 && -d "$HOME/bin" && -z "$(echo $PATH | grep -o $HOME/bin)" ]] && export PATH="${PATH}:$HOME/bin"
 
-# put npm global modules in home dir
-if [[ -x "$(command -v npm)" ]]; then
+# $HOME/.npm-global
+if [[ "$UID" -ge 1000 && -x "$(command -v npm)" ]]; then
   [[ ! -d "$HOME/.npm-global" ]] && mkdir "$HOME/.npm-global"
   [[ "$(npm prefix -g)" != "$HOME/.npm-global" ]] && npm config set prefix "$HOME/.npm-global"
-  export PATH="$PATH:$HOME/.npm-global"
+  [[ -z "$(echo $PATH | grep -o $HOME/.npm-global)" ]] && export PATH="${PATH}:$HOME/.npm-global"
 fi
 
 ###########
