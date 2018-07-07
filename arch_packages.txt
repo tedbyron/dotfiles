@@ -4,6 +4,7 @@ adobe-source-han-serif-cn-fonts
 adobe-source-han-serif-tw-fonts
 alsa-utils
 arc-gtk-theme
+atom
 autoconf
 automake
 bash
@@ -43,6 +44,8 @@ i3-gaps
 i3blocks
 i3lock
 i3status
+ibus
+ibus-libpinyin
 inetutils
 intel-ucode
 iproute2
@@ -64,7 +67,6 @@ mdadm
 mpv
 nano
 neofetch
-neovim
 netctl
 openssh
 pacman
@@ -79,6 +81,7 @@ procps-ng
 psmisc
 python-pywal
 python-setuptools
+rakudo
 ranger
 rclone
 reiserfsprogs
@@ -87,15 +90,16 @@ s-nail
 sed
 shadow
 spotify
-sublime-text
 sudo
 sysfsutils
 systemd-sysvcompat
 tar
 texinfo
+ttf-dejavu
 ttf-emojione
 ttf-iosevka
 ttf-roboto
+ttf-unifont
 unzip
 urxvt-perls
 usbutils

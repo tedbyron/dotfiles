@@ -11,6 +11,11 @@ URxvt.perl-ext-common:  default,matcher,selection-to-clipboard
 URxvt.url-launcher:     /usr/bin/chromium
 URxvt.matcher.button:   1
 
+URxvt.saveLines: 100000
+
+! URxvt.inputMethod: ibus
+! URxvt.preeditType: OverTheSpot
+
 URxvt.font: xft:monospace:size=12
 ! URxvt.letterSpace: -1
 

@@ -10,15 +10,18 @@ fi
 export EDITOR=vim
 export PAGER="less -R"
 export SUDO_EDITOR=vim
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
 
 # ps1
-PS1="\w \\$ \[$(tput sgr0)\]"
+PS1="[\u@\h \W] \\$ \[$(tput sgr0)\]"
 
 # aliases
 alias sudo="sudo " # check if commands following sudo are aliases
 
 alias bootlog="journalctl -p 3 -xb"
-alias systemlog="systemctl --failed"
+alias syslog="systemctl --failed"
 
 alias path="echo -e ${PATH//:/\\\\n}"
 
@@ -35,7 +38,8 @@ alias less="less -R"
 
 alias trash="gio trash"
 alias neofetch="clear; neofetch"
-alias com.github.babluboy.bookworm=bookworm
+alias com.github.babluboy.bookworm="bookworm"
+alias bigup="yay;npm update -g; apm update -c"
 
 # wrapped aliases
 du() {
@@ -52,6 +56,11 @@ mpv() {
 
 # interactive check
 [[ $- != *i* ]] && return
+
+setxkbmap -option compose:ralt
+
+# ps1
+PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[35m\]\h\[\e[m\] \[\e[33m\]\W\[\e[m\]] \\$ "
 
 # colorscheme
 (cat ~/.cache/wal/sequences &)

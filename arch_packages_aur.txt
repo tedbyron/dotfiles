@@ -1,0 +1,12 @@
+capitaine-cursors
+chromium-widevine
+keeweb-desktop
+moarvm
+nqp
+pipes.sh
+rakudo
+spotify
+ttf-emojione
+ttf-iosevka
+ttf-unifont
+yay

@@ -14,6 +14,10 @@
   "atom-clock":
     showTooltip: true
     tooltipDateFormat: "dddd M/D/Y"
+  "atom-ide-ui":
+    "atom-ide-find-references": {}
+    use:
+      "atom-ide-diagnostics-ui": "never"
   "autocomplete-plus":
     autoActivationDelay: 500
     confirmCompletion: "tab"
@@ -33,7 +37,7 @@
       "language-markdown"
       "highlight-selected"
     ]
-    projectHome: "C:\\Users\\Theodore\\Documents\\GitHub\\"
+    projectHome: "/home/ted/repositories"
     reopenProjectMenuCount: 10
     telemetryConsent: "no"
     uriHandlerRegistration: "always"
@@ -47,7 +51,10 @@
     zoomFontWhenCtrlScrolling: false
   "exception-reporting":
     userId: "8000780f-5481-4de2-bb5c-ccf1f9a168af"
-  "gpp-compiler": {}
+  "gpp-compiler":
+    addCompilingErr: false
+    cCompilerOptions: "-c -Wall"
+    linuxTerminal: "URxvt"
   "highlight-selected":
     highlightBackground: true
     lightTheme: true
@@ -57,7 +64,7 @@
     emphasisShortcuts: false
   "linter-eslint": {}
   "linter-gcc":
-    execPath: "C:\\MinGW\\bin\\gcc.exe"
+    execPath: "/usr/bin/gcc"
   "linter-sass-lint":
     configFile: "C:\\Users\\Theodore\\.atom\\.sass-lint.yml"
   "linter-ui-default":
@@ -76,8 +83,6 @@
       "text.plain"
       "text.plain.null-grammar"
       "text.md"
-      "text.html"
-      "text.html.liquid"
       "text.git-commit"
     ]
   tabs:
