@@ -1,10 +1,10 @@
 capitaine-cursors
 chromium-widevine
 keeweb-desktop
-moarvm
-nqp
 pipes.sh
+python-lolcat
 rakudo
+slack-desktop
 spotify
 ttf-emojione
 ttf-iosevka

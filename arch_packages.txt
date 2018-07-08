@@ -26,6 +26,7 @@ dmenu
 e2fsprogs
 fakeroot
 feh
+figlet
 file
 filesystem
 findutils
@@ -79,6 +80,7 @@ pkgconf
 playerctl
 procps-ng
 psmisc
+python-lolcat
 python-pywal
 python-setuptools
 rakudo
@@ -89,6 +91,7 @@ rxvt-unicode
 s-nail
 sed
 shadow
+slack-desktop
 spotify
 sudo
 sysfsutils
@@ -107,6 +110,7 @@ util-linux
 vi
 vim
 which
+wpa_actiond
 wpa_supplicant
 xf86-video-intel
 xfsprogs

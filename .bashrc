@@ -54,10 +54,11 @@ mpv() {
   command mpv "$@" &
 }
 
-# interactive check
-[[ $- != *i* ]] && return
-
+# set compose key
 setxkbmap -option compose:ralt
+
+# return if shell is not interactive
+[[ $- != *i* ]] && return
 
 # ps1
 PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[35m\]\h\[\e[m\] \[\e[33m\]\W\[\e[m\]] \\$ "

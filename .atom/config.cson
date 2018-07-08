@@ -37,7 +37,7 @@
       "language-markdown"
       "highlight-selected"
     ]
-    projectHome: "/home/ted/repositories"
+    projectHome: "$HOME/repositories"
     reopenProjectMenuCount: 10
     telemetryConsent: "no"
     uriHandlerRegistration: "always"
@@ -49,12 +49,6 @@
     softWrap: true
     softWrapAtPreferredLineLength: true
     zoomFontWhenCtrlScrolling: false
-  "exception-reporting":
-    userId: "8000780f-5481-4de2-bb5c-ccf1f9a168af"
-  "gpp-compiler":
-    addCompilingErr: false
-    cCompilerOptions: "-c -Wall"
-    linuxTerminal: "URxvt"
   "highlight-selected":
     highlightBackground: true
     lightTheme: true
@@ -62,15 +56,18 @@
     addListItems: false
     disableLanguageGfm: false
     emphasisShortcuts: false
-  "linter-eslint": {}
+  linter:
+    lintOnChange: false
   "linter-gcc":
     execPath: "/usr/bin/gcc"
+  "linter-js-standard":
+    style: "semistandard"
   "linter-sass-lint":
-    configFile: "C:\\Users\\Theodore\\.atom\\.sass-lint.yml"
+    configFile: "$HOME/.atom/.sass-lint.yml"
   "linter-ui-default":
     decorateOnTreeView: "Files and Directories"
     gutterPosition: "Left"
-    panelHeight: 150
+    panelHeight: 300
   "markdown-preview":
     useGitHubStyle: true
   "one-dark-ui":
@@ -87,6 +84,8 @@
     ]
   tabs:
     enableMruTabSwitching: false
+  "toggle-quotes":
+    quoteCharacters: "\"'`"
   "tree-view":
     hideIgnoredNames: true
   welcome:

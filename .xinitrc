@@ -30,4 +30,5 @@ fi
 
 xset r rate 225 20
 wal --theme base16-onedark
+eval $(ssh-agent)
 exec i3
