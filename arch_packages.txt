@@ -1,3 +1,4 @@
+acpi
 adobe-source-han-sans-cn-fonts
 adobe-source-han-sans-tw-fonts
 adobe-source-han-serif-cn-fonts
@@ -78,6 +79,7 @@ perl
 pipes.sh
 pkgconf
 playerctl
+polybar
 procps-ng
 psmisc
 python-lolcat
@@ -100,7 +102,7 @@ tar
 texinfo
 ttf-dejavu
 ttf-emojione
-ttf-iosevka
+ttf-iosevka-ss07
 ttf-roboto
 ttf-unifont
 unzip

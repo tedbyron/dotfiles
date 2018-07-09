@@ -2,11 +2,12 @@ capitaine-cursors
 chromium-widevine
 keeweb-desktop
 pipes.sh
+polybar
 python-lolcat
 rakudo
 slack-desktop
 spotify
 ttf-emojione
-ttf-iosevka
+ttf-iosevka-ss07
 ttf-unifont
 yay

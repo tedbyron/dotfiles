@@ -14,8 +14,10 @@ export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 
+# TODO: remove literal colors from PS1
+
 # ps1
-PS1="[\u@\h \W] \\$ \[$(tput sgr0)\]"
+PS1="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || { echo '\[\e[31m\]' && exit 1; }\`┌ \[\e[39m\]\A [\[\e[33m\]\u\[\e[39m\]@\[\e[33m\]\H\[\e[39m\]] \w \n\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || echo '\[\e[31m\]'\`└ \`[[ -d .git ]] && { [[ \$(git status -s) ]] && echo -n '\[\e[33m\]' || echo -n '\[\e[32m\]'; } && printf '%s ' \$(git rev-parse --abbrev-ref HEAD)\`\`[[ \$(command id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(tput sgr0)\]"
 
 # aliases
 alias sudo="sudo " # check if commands following sudo are aliases
@@ -59,9 +61,6 @@ setxkbmap -option compose:ralt
 
 # return if shell is not interactive
 [[ $- != *i* ]] && return
-
-# ps1
-PS1="[\[\e[36m\]\u\[\e[m\]@\[\e[35m\]\h\[\e[m\] \[\e[33m\]\W\[\e[m\]] \\$ "
 
 # colorscheme
 (cat ~/.cache/wal/sequences &)
