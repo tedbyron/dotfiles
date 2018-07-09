@@ -27,7 +27,7 @@ set textwidth=0
 set wrapmargin=0
 set ignorecase
 set smartcase
-set hlsearch    
+set hlsearch
 set nohls
 set incsearch
 set magic
@@ -43,6 +43,7 @@ set wildmode=list:longest,full
 set scrolloff=5
 set cursorline
 set noshowmode
+set clipboard=unnamed
 
 set laststatus=2
 set ttimeoutlen=10

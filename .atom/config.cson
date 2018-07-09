@@ -27,6 +27,7 @@
     abbreviateValues: true
     uppercaseColorValues: true
   core:
+    autoHideMenuBar: true
     closeDeletedFileTabs: true
     disabledPackages: [
       "language-gfm"
@@ -49,6 +50,8 @@
     softWrap: true
     softWrapAtPreferredLineLength: true
     zoomFontWhenCtrlScrolling: false
+  "exception-reporting":
+    userId: "b0fb7cf7-76af-4c8b-922c-c946a20482ac"
   "highlight-selected":
     highlightBackground: true
     lightTheme: true
