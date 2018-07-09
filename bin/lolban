@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 echo
-figlet -p -f ANSI\ Shadow "$@" | lolcat 
+figlet -p -f ANSI\ Shadow "$@" | lolcat -3
