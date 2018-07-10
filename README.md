@@ -2,4 +2,5 @@
 
 >	My dotfiles
 
-don't trust any scripts in here
+-   [Arch Install](arch_install.md)
+-   [Arch Snippets](arch_snippets.md)
