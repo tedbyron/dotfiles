@@ -17,7 +17,7 @@ export QT_IM_MODULE=ibus
 # TODO: remove literal colors from PS1
 
 # ps1
-PS1="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || { echo '\[\e[31m\]' && exit 1; }\`┌ \[\e[39m\]\A [\[\e[33m\]\u\[\e[39m\]@\[\e[33m\]\H\[\e[39m\]] \w \n\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || echo '\[\e[31m\]'\`└ \`[[ -d .git ]] && { [[ \$(git status -s) ]] && echo -n '\[\e[33m\]' || echo -n '\[\e[32m\]'; } && printf '%s ' \$(git rev-parse --abbrev-ref HEAD)\`\`[[ \$(command id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(tput sgr0)\]"
+PS1="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || { echo '\[\e[31m\]' && exit 1; }\`┌ \[\e[39m\]\A [\[\e[33m\]\u\[\e[39m\]@\[\e[33m\]\H\[\e[39m\]] \w \n\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || echo '\[\e[31m\]'\`└ \`[[ \$(git rev-parse --is-inside-work-tree 2>/dev/null) == 'true' ]] && { [[ \$(git status -s) ]] && echo -n '\[\e[33m\]' || echo -n '\[\e[32m\]'; } && printf '%s ' \$(git rev-parse --abbrev-ref HEAD)\`\`[[ \$(command id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(tput sgr0)\]"
 
 # aliases
 alias sudo="sudo " # check if commands following sudo are aliases

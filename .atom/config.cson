@@ -70,7 +70,7 @@
   "linter-ui-default":
     decorateOnTreeView: "Files and Directories"
     gutterPosition: "Left"
-    panelHeight: 300
+    panelHeight: 314
   "markdown-preview":
     useGitHubStyle: true
   "one-dark-ui":
