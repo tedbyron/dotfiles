@@ -1,6 +1,6 @@
 # startup
 exec_always --no-startup-id feh --randomize --no-fehbg --bg-fill $HOME/pictures/wallpapers
-exec --no-startup-id compton -b
+exec --no-startup-id compton -b -C -I 0.02 -O 0.02 --active-opacity 0.85 -i 0.85 --xrender-sync --xrender-sync-fence
 exec --no-startup-id amixer sset Master 60%
 exec --no-startup-id amixer sset Master mute
 exec --no-startup-id ibus-daemon -x
