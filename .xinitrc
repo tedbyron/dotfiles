@@ -29,6 +29,6 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 xset r rate 225 20
-wal --theme base16-onedark
+wal --theme $HOME/.config/wal/colorschemes/dark/onedark.json
 eval $(ssh-agent)
 exec i3

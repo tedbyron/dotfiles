@@ -1,6 +1,7 @@
 # startup
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id feh --randomize --no-fehbg --bg-fill $HOME/pictures/wallpapers
-exec --no-startup-id compton -b -C -I 0.02 -O 0.02 --active-opacity 0.85 -i 0.85 --xrender-sync --xrender-sync-fence
+exec --no-startup-id compton -b --logpath /dev/null
 exec --no-startup-id amixer sset Master 60%
 exec --no-startup-id amixer sset Master mute
 exec --no-startup-id ibus-daemon -x
@@ -52,17 +53,17 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec --no-startup-id i3-nagbar -t warning -m "Are you sure you want to exit i3?" -b "Yes" i3-msg exit
 
 # statusbar
-bindsym $mod+b bar mode toggle
-
-bar {
-  status_command i3blocks
-
-  colors {
-    background $bg
-    statusline $fg
-    # urgent_workspace $
-  }
-}
+# bindsym $mod+b bar mode toggle
+#
+# bar {
+#   status_command i3blocks
+#
+#   colors {
+#     background $bg
+#     statusline $fg
+#     # urgent_workspace $
+#   }
+# }
 
 # change split
 bindsym $mod+w layout tabbed

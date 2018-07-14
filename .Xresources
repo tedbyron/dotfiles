@@ -19,7 +19,7 @@ URxvt.saveLines: 100000
 URxvt.font: xft:monospace:size=12
 URxvt.letterSpace: 0
 
-URxvt.internalBorder: 15
+URxvt.internalBorder: 50
 URxvt.scrollBar: false
 URxvt.cursorBlink: 1
 URxvt.iso14755: false

@@ -1,0 +1,264 @@
+[colors]
+background = ${xrdb:color0:#282c34}
+background-alt = ${xrdb:color0:#282c34}
+foreground = ${xrdb:color7:#eee}
+foreground-alt = ${xrdb:color15:#c8ccd4}
+primary = ${xrdb:color3:#e5c07b}
+secondary = ${xrdb:color2:#98c379}
+alert = ${xrdb:color1:#e06c75}
+
+[bar/main]
+monitor = ${env:MONITOR:eDP1}
+bottom = true
+width = 100%
+height = 25
+;offset-x = 1%
+;offset-y = 1%
+;radius = 6.0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = ${colors.foreground-alt}
+
+border-left-size = 14
+border-right-size = 14
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = monospace:pixelsize=10;2
+font-1 = Source\ Han\ Sans\ TW:pixelsize=12;2
+font-2 = unifont:size=10:antialias=false;2
+
+modules-left = i3
+modules-center =
+modules-right = volume xbacklight temperature memory cpu filesystem battery wlan date
+; eth powermenu xkeyboard
+
+; tray-position = right
+; tray-padding = 2
+;tray-transparent = true
+
+wm-restack = i3
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/filesystem]
+type = internal/fs
+interval = 300
+
+mount-0 = /
+
+label-mounted = %{F#eee}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground}
+
+format-mounted-underline = ${colors.foreground-alt}
+format-unmounted-underline = ${colors.alert}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+override-redirect = false
+; pin-workspaces = trues
+
+ws-icon-0 = 1;一
+ws-icon-1 = 2;二
+ws-icon-2 = 3;三
+ws-icon-3 = 4;四
+ws-icon-4 = 5;五
+ws-icon-5 = 6;六
+ws-icon-6 = 7;七
+ws-icon-7 = 8;八
+ws-icon-8 = 9;九
+ws-icon-9 = 10;十
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+label-focused = %icon%
+label-focused-background = ${colors.background-alt}
+label-focused-underline = ${colors.foreground-alt}
+label-focused-padding = 2
+
+label-unfocused = %icon%
+label-unfocused-padding = 2
+
+label-visible = %icon%
+label-visible-background = ${colors.background-alt}
+label-visible-underline = ${colors.primary}
+label-visible-padding = 2
+
+label-urgent = %icon%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = 亮
+
+bar-width = 10
+bar-indicator = |
+bar-indicator-foreground = #ff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = ${colors.primary}
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.foreground-alt}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+; format-prefix = "cpu "
+format-prefix-foreground = ${colors.foreground}
+format-underline = ${colors.foreground-alt}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+; format-prefix = "ram "
+format-prefix-foreground = ${colors.foreground}
+format-underline = ${colors.foreground-alt}
+label = %percentage_used%%
+
+[module/wlan]
+type = internal/network
+interface = wlp58s0
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+format-connected-underline = ${colors.foreground-alt}
+label-connected = %essid%
+
+; format-disconnected =
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
+
+ramp-signal-0 = ▒
+ramp-signal-1 = ▁
+ramp-signal-2 = ▃
+ramp-signal-3 = ▅
+ramp-signal-4 = █
+ramp-signal-foreground = ${colors.foreground-alt}
+
+[module/eth]
+type = internal/network
+interface = net0
+interval = 3.0
+
+format-connected-underline = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = "%m/%d/%y"
+; date-alt = "%m/%d/%y"
+
+time = %H:%M
+; time-alt = %H:%M:%S
+
+format-underline = ${colors.foreground-alt}
+
+label = %date% %time%
+
+[module/volume]
+type = internal/volume
+
+format-volume = <label-volume> <bar-volume>
+label-volume = 音
+label-volume-foreground = ${root.foreground}
+
+format-muted-foreground = ${colors.foreground}
+label-muted = 靜音
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.secondary}
+bar-volume-foreground-1 = ${colors.secondary}
+bar-volume-foreground-2 = ${colors.secondary}
+bar-volume-foreground-3 = ${colors.secondary}
+bar-volume-foreground-4 = ${colors.secondary}
+bar-volume-foreground-5 = ${colors.primary}
+bar-volume-foreground-6 = ${colors.alert}
+bar-volume-gradient = true
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 100
+poll-interval = 15
+
+format-charging = <label-charging>
+format-charging-underline = ${colors.secondary}
+
+format-discharging = <label-discharging>
+format-discharging-underline = ${colors.foreground-alt}
+
+format-full-underline = ${self.format-charging-underline}
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 8
+warn-temperature = 60
+interval = 5
+
+format = <label>
+format-underline = ${colors.foreground-alt}
+format-warn = <label-warn>
+format-warn-underline = ${colors.alert}
+
+label = %temperature%
+label-warn = %temperature%
+label-warn-foreground = ${colors.alert}
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
