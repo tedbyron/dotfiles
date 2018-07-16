@@ -160,8 +160,8 @@ set $music spotify
 
 bindsym $mod+u        exec --no-startup-id $terminal -e ranger
 bindsym $mod+Shift+u  exec --no-startup-id $terminal -e ranger /
-bindsym $mod+i        exec $browser
-bindsym $mod+Shift+i  exec $browser_private
+bindsym $mod+i        exec --no-startup-id $browser
+bindsym $mod+Shift+i  exec --no-startup-id $browser_private
 bindsym $mod+o        exec $editor
 bindsym $mod+p        exec $music
 

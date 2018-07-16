@@ -16,6 +16,7 @@ bzip2
 capitaine-cursors
 chromium
 chromium-widevine
+cmake
 compton
 coreutils
 cryptsetup
@@ -23,6 +24,7 @@ device-mapper
 dhcpcd
 dialog
 diffutils
+discord
 dmenu
 e2fsprogs
 fakeroot
@@ -82,12 +84,9 @@ playerctl
 polybar
 procps-ng
 psmisc
-python-lolcat
 python-pywal
 python-setuptools
-rakudo
 ranger
-rclone
 reiserfsprogs
 rxvt-unicode
 s-nail
@@ -111,6 +110,9 @@ usbutils
 util-linux
 vi
 vim
+virtualbox
+virtualbox-guest-iso
+virtualbox-host-modules-arch
 which
 wpa_actiond
 wpa_supplicant
@@ -119,5 +121,6 @@ xfsprogs
 xorg-server
 xorg-xbacklight
 xorg-xinit
+xorg-xprop
 yay
 youtube-dl
