@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # check internet connection
-ping -q -W 5 -c 1 8.8.8.8 > /dev/null || exit 1
+ping -q -W 5 -c 1 8.8.8.8 1>/dev/null || exit 1
 
 ########################################
 # homebrew
