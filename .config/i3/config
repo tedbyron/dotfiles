@@ -1,6 +1,6 @@
 # startup
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id feh --randomize --no-fehbg --bg-fill $HOME/pictures/wallpapers
+exec_always --no-startup-id feh --randomize --no-fehbg --bg-fill $HOME/Pictures/wallpapers
 exec --no-startup-id compton -b --logpath /dev/null
 exec --no-startup-id amixer sset Master 60%
 exec --no-startup-id amixer sset Master mute
@@ -13,11 +13,11 @@ set_from_resource $fc i3wm.color4 # focus
 set_from_resource $ur i3wm.color1 # urgent
 
 # class                 border  bg   text indctr child
-client.focused            $bg   $bg   $fg   $bg   $bg
-client.focused_inactive   $bg   $bg   $fg   $bg   $bg
-client.unfocused          $bg   $bg   $fg   $bg   $bg
+client.focused            $bg   $bg   $fg   $fg   $fg
+client.focused_inactive   $bg   $bg   $fg   $fg   $fg
+client.unfocused          $bg   $bg   $fg   $fg   $fg
 client.urgent             $ur   $ur   $fg   $ur   $ur
-client.placeholder        $bg   $bg   $fg   $bg   $bg
+client.placeholder        $bg   $bg   $fg   $fg   $fg
 client.background         $bg
 
 # base
@@ -47,7 +47,7 @@ default_border pixel 1
 gaps inner 15
 
 bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
-bindsym $mod+d exec --no-startup-id dmenu_run -b -i -fn 'monospace-14' -nb "$bg" -nf "$fg" -sb "$fg" -sf "$bg"
+bindsym $mod+d exec --no-startup-id dmenu_run -b -i -fn 'monospace-15' -nb "$bg" -nf "$fg" -sb "$fg" -sf "$bg"
 bindsym $mod+Shift+q kill
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec --no-startup-id i3-nagbar -t warning -m "Are you sure you want to exit i3?" -b "Yes" i3-msg exit
@@ -162,8 +162,8 @@ bindsym $mod+u        exec --no-startup-id $terminal -e ranger
 bindsym $mod+Shift+u  exec --no-startup-id $terminal -e ranger /
 bindsym $mod+i        exec --no-startup-id $browser
 bindsym $mod+Shift+i  exec --no-startup-id $browser_private
-bindsym $mod+o        exec $editor
-bindsym $mod+p        exec $music
+bindsym $mod+o        exec --no-startup-id $editor
+bindsym $mod+p        exec --no-startup-id $music
 
 # media keys
 bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle; exec --no-startup-id pkill -RTMIN+10 i3blocks

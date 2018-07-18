@@ -6,7 +6,7 @@ if [[ $status ]]; then
   title=$(playerctl metadata xesam:title)
   artist=$(playerctl metadata xesam:artist)
   [[ $status == "Playing" ]] && status="播放" || { [[ $status == "Paused" ]] && status="暫停"; }
-  echo " $status $title - $artist "
+  echo "  $status $artist - $title  "
 else
-  echo
+  echo ""
 fi

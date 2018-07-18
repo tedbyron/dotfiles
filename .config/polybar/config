@@ -12,9 +12,6 @@ monitor = ${env:MONITOR:eDP1}
 bottom = true
 width = 100%
 height = 25
-;offset-x = 1%
-;offset-y = 1%
-;radius = 6.0
 fixed-center = true
 
 background = ${colors.background}
@@ -23,8 +20,8 @@ foreground = ${colors.foreground}
 line-size = 2
 line-color = ${colors.foreground-alt}
 
-border-left-size = 14
-border-right-size = 14
+border-size = 1
+border-color = ${colors.foreground-alt}
 
 padding-left = 0
 padding-right = 2
@@ -33,32 +30,27 @@ module-margin-left = 1
 module-margin-right = 1
 
 font-0 = monospace:size=10;3
-font-1 = unifont:size=12:antialias=false;3
+font-1 = unifont:size=12:antialias=false;2
 
 modules-left = i3 spotify
-modules-center =
-modules-right = volume xbacklight temperature memory cpu filesystem battery wlan date
-; eth powermenu xkeyboard
+modules-center = xwindow
+modules-right = volume xbacklight temperature memory filesystem battery wlan date
 
 ; tray-position = right
 ; tray-padding = 2
-;tray-transparent = true
+; tray-transparent = true
 
-wm-restack = i3
+; wm-restack = i3
+; override-redirect = true
 
 cursor-click = pointer
 cursor-scroll = ns-resize
-
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
 
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
-override-redirect = false
 ; pin-workspaces = true
 
 ws-icon-0 = 1;一
@@ -101,6 +93,15 @@ label-foreground = ${colors.background}
 label-background = ${colors.secondary}
 exec = $HOME/.config/polybar/spotify.sh
 
+[module/xwindow]
+type = internal/xwindow
+
+format = <label>
+format-padding = 2
+
+label = %title%
+label-maxlen = 50
+
 [module/volume]
 type = internal/volume
 
@@ -108,10 +109,10 @@ format-volume = <label-volume> <bar-volume>
 label-volume = 音
 label-volume-foreground = ${root.foreground}
 
-format-muted-foreground = ${colors.alert}
+format-muted-foreground = ${colors.foreground}
 label-muted = 靜音
 
-bar-volume-width = 15
+bar-volume-width = 12
 bar-volume-foreground-0 = ${colors.secondary}
 bar-volume-foreground-1 = ${colors.secondary}
 bar-volume-foreground-2 = ${colors.secondary}
@@ -135,7 +136,7 @@ type = internal/xbacklight
 format = <label> <bar>
 label = 亮
 
-bar-width = 15
+bar-width = 12
 bar-indicator = ┃
 bar-indicator-font = 2
 bar-indicator-foreground = ${colors.foreground-alt}
@@ -176,13 +177,6 @@ inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
 
-[module/cpu]
-type = internal/cpu
-interval = 2
-format-prefix = "中 "
-format-prefix-foreground = ${colors.foreground}
-label = %percentage:2%%
-
 [module/memory]
 type = internal/memory
 interval = 2
@@ -197,6 +191,7 @@ interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 label-connected = %essid%
+label-connected-maxlen = 7
 
 ; format-disconnected =
 format-disconnected = <label-disconnected>
