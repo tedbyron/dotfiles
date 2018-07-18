@@ -2,6 +2,7 @@ capitaine-cursors
 chromium-widevine
 discord
 keeweb-desktop
+oomox
 pipes.sh
 polybar
 slack-desktop

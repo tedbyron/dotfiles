@@ -43,7 +43,7 @@ set wildmode=list:longest,full
 set scrolloff=5
 set cursorline
 set noshowmode
-set clipboard=unnamed
+set clipboard^=unnamed,unnamedplus
 
 set laststatus=2
 set ttimeoutlen=10

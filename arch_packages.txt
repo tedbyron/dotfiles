@@ -42,6 +42,7 @@ git
 glibc
 go
 grep
+gvim
 gzip
 htop
 i3-gaps
@@ -72,6 +73,7 @@ mpv
 nano
 neofetch
 netctl
+oomox
 openssh
 pacman
 papirus-icon-theme
@@ -109,7 +111,6 @@ urxvt-perls
 usbutils
 util-linux
 vi
-vim
 virtualbox
 virtualbox-guest-iso
 virtualbox-host-modules-arch
@@ -122,5 +123,6 @@ xorg-server
 xorg-xbacklight
 xorg-xinit
 xorg-xprop
+xorg-xwininfo
 yay
 youtube-dl
