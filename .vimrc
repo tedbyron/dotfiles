@@ -57,3 +57,5 @@ highlight CursorLine cterm=NONE ctermbg=237
 highlight CursorLineNR ctermfg=gray
 
 let mapleader=' '
+nmap o o<Esc>
+nmap O O<Esc>
