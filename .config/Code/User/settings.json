@@ -8,6 +8,7 @@
     "files.insertFinalNewline": true,
     "editor.fontSize": 15,
     "editor.fontFamily": "Iosevka",
+    "editor.fontLigatures": true,
     "editor.cursorStyle": "line",
     "editor.wordWrapColumn": 80,
     "editor.wrappingIndent": "same",
