@@ -43,7 +43,7 @@ set $ws9 "9"
 set $ws10 "10"
 
 # windows
-default_border pixel 1
+default_border none
 gaps inner 15
 
 bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
@@ -155,7 +155,7 @@ mode "resize" {
 set $terminal urxvt
 set $browser chromium
 set $browser_private chromium --incognito
-set $editor atom
+set $editor code
 set $music spotify
 
 bindsym $mod+u        exec --no-startup-id $terminal -e ranger

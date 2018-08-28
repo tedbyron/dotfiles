@@ -20,8 +20,9 @@ foreground = ${colors.foreground}
 line-size = 2
 line-color = ${colors.foreground-alt}
 
-border-size = 1
-border-color = ${colors.foreground-alt}
+border-left = 14
+border-right = 14
+border-color = #000000
 
 padding-left = 0
 padding-right = 2
@@ -34,7 +35,7 @@ font-1 = unifont:size=12:antialias=false;2
 
 modules-left = i3 spotify
 modules-center = xwindow
-modules-right = volume xbacklight temperature memory filesystem battery wlan date
+modules-right = volume xbacklight temperature battery wlan date
 
 ; tray-position = right
 ; tray-padding = 2
@@ -177,13 +178,6 @@ inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
 
-[module/memory]
-type = internal/memory
-interval = 2
-format-prefix = "內 "
-format-prefix-foreground = ${colors.foreground}
-label = %percentage_used%%
-
 [module/wlan]
 type = internal/network
 interface = wlp58s0
@@ -191,7 +185,7 @@ interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
 label-connected = %essid%
-label-connected-maxlen = 7
+label-connected-maxlen = 10
 
 ; format-disconnected =
 format-disconnected = <label-disconnected>
@@ -224,21 +218,11 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-[module/filesystem]
-type = internal/fs
-interval = 300
-
-mount-0 = /
-
-label-mounted = %{F#eee}盤%{F-} %percentage_used%%
-label-unmounted = %mountpoint% 沒加載
-label-unmounted-foreground = ${colors.alert}
-
 [module/battery]
 type = internal/battery
 battery = BAT0
 adapter = AC
-full-at = 99
+full-at = 100
 poll-interval = 15
 
 format-charging = <animation-charging> <label-charging>

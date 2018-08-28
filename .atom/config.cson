@@ -43,7 +43,7 @@
     telemetryConsent: "no"
     uriHandlerRegistration: "always"
   editor:
-    fontFamily: "Iosevka, Menlo, Consolas, DejaVu Sans Mono, monospace"
+    fontFamily: "Iosevka SS07, Menlo, Consolas, DejaVu Sans Mono, monospace"
     fontSize: 16
     scrollPastEnd: true
     showIndentGuide: true
