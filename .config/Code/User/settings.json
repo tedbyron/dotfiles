@@ -33,5 +33,6 @@
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
     "explorer.confirmDelete": false,
-    "editor.multiCursorModifier": "alt"
+    "editor.multiCursorModifier": "alt",
+    "extensions.ignoreRecommendations": true
 }
