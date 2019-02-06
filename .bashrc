@@ -5,6 +5,7 @@ if [[ -d "$HOME/.npm-global" && -x "$(command -v npm)" ]]; then
   [[ -z "$(echo $PATH | grep -o $HOME/.npm-global)" ]] && export PATH="$PATH:$HOME/.npm-global"
 fi
 
+# exports
 export EDITOR=vim
 export PAGER="less -R"
 export SUDO_EDITOR=vim
@@ -19,6 +20,7 @@ PS1+="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || echo '\[\e[31m\]'\`└ " # exit 
 PS1+="\`[[ \$(git rev-parse --is-inside-work-tree 2>/dev/null) == 'true' ]] && { [[ \$(git status -s) ]] && echo -n '\[\e[33m\]' || echo -n '\[\e[32m\]'; } && printf '%s ' \$(git rev-parse --abbrev-ref HEAD)\`" # git status and branch
 PS1+="\`[[ $(id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(tput sgr0)\]" # user
 
+# aliases
 alias sudo="sudo "
 
 alias dmesg="dmesg --color=always | less"
@@ -43,6 +45,7 @@ alias trash="gio trash"
 alias neofetch="clear;neofetch --cpu_brand off --uptime_shorthand on --gpu_brand off --gtk_shorthand on --music_player spotify"
 alias com.github.babluboy.bookworm="bookworm"
 
+# overloads
 man() {
   env \
   LESS_TERMCAP_mb=$(printf "\e[1;32m") \
@@ -62,6 +65,7 @@ bookworm() {
   command "/usr/bin/com.github.babluboy.bookworm" "$@" &
 }
 
+# miscellaneous
 setxkbmap -option compose:ralt
 
 # [[ $- != *i* ]] && return
