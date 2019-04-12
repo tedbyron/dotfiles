@@ -59,3 +59,4 @@ highlight CursorLineNR ctermfg=gray
 let mapleader=' '
 nmap o o<Esc>
 nmap O O<Esc>
+inoremap <S-Tab> <C-d>
