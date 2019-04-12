@@ -17,9 +17,15 @@
     "editor.wordWrap": "bounded",
     "editor.wordWrapColumn": 80,
     "editor.wrappingIndent": "same",
+    "emmet.includeLanguages": {
+        "twig": "html"
+    },
     "explorer.autoReveal": false,
     "explorer.openEditors.visible": 0,
     "extensions.ignoreRecommendations": true,
+    "files.associations": {
+        "*.html": "twig"
+    },
     "files.autoSave": "off",
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
