@@ -1,4 +1,9 @@
 {
+    "discord.detailsDebugging": "Debugging a project",
+    "discord.lowerDetailsDebugging": "😃",
+    "discord.lowerDetailsEditing": "😃",
+    "discord.lowerDetailsNotFound": "😃",
+    "discord.lowerDetailsIdle": "😴",
     "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.acceptSuggestionOnEnter": "off",
     "editor.cursorStyle": "line",
@@ -34,12 +39,16 @@
     "git.confirmSync": false,
     "git.enableCommitSigning": true,
     "git.enableSmartCommit": true,
-    "gitlens.advanced.telemetry.enabled": false,
     "python.linting.enabled": true,
     "python.pythonPath": "C:\\Users\\Theodore Byron\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
     "scm.alwaysShowProviders": true,
     "search.showLineNumbers": true,
     "search.smartCase": true,
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
     "telemetry.enableTelemetry": false,
     "telemetry.enableCrashReporter": false,
     "terminal.external.linuxExec": "urxvt",
