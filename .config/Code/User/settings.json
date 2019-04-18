@@ -1,9 +1,4 @@
 {
-    "discord.detailsDebugging": "Debugging a project",
-    "discord.lowerDetailsDebugging": "😃",
-    "discord.lowerDetailsEditing": "😃",
-    "discord.lowerDetailsNotFound": "😃",
-    "discord.lowerDetailsIdle": "😴",
     "editor.acceptSuggestionOnCommitCharacter": false,
     "editor.acceptSuggestionOnEnter": "off",
     "editor.cursorStyle": "line",
@@ -29,7 +24,8 @@
     "explorer.openEditors.visible": 0,
     "extensions.ignoreRecommendations": true,
     "files.associations": {
-        "*.html": "twig"
+        "*.html": "twig",
+        "*.js": "javascriptreact"
     },
     "files.autoSave": "off",
     "files.insertFinalNewline": true,
