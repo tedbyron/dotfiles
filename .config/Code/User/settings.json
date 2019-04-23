@@ -40,6 +40,7 @@
     "scm.alwaysShowProviders": true,
     "search.showLineNumbers": true,
     "search.smartCase": true,
+    "search.usePCRE2": true,
     "spellright.documentTypes": [
         "markdown",
         "latex",
