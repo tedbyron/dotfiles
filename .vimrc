@@ -6,13 +6,14 @@ endif
 
 call plug#begin()
 Plug 'itchyny/lightline.vim'
-Plug 'joshdick/onedark.vim'
+Plug 'sonph/onehalf'
 call plug#end()
 
-let g:onedark_termcolors=16
-colorscheme onedark
-let g:lightline={'colorscheme': 'onedark'}
+colorscheme onehalflight
+let g:lightline={'colorscheme': 'onehalfdark'}
 
+syntax on
+set t_Co=256
 set history=500
 set mouse=a
 set number
