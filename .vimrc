@@ -53,9 +53,9 @@ set nobackup
 set nowb
 set noswapfile
 
-highlight LineNr ctermfg=darkgray
-highlight CursorLine cterm=NONE ctermbg=237
-highlight CursorLineNR ctermfg=gray
+highlight LineNr ctermfg=gray
+highlight CursorLine cterm=NONE ctermbg=255
+highlight CursorLineNR ctermfg=darkgray
 
 let mapleader=' '
 nmap o o<Esc>
