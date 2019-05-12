@@ -12,7 +12,7 @@
     "editor.multiCursorModifier": "alt",
     "editor.renderLineHighlight": "all",
     "editor.roundedSelection": false,
-    "editor.rulers": [],
+    "editor.rulers": [80],
     "editor.showFoldingControls": "always",
     "editor.tabSize": 2,
     "editor.wordWrap": "on",
