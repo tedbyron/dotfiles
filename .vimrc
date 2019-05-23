@@ -9,7 +9,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'sonph/onehalf'
 call plug#end()
 
-colorscheme onehalflight
+colorscheme onehalfdark
 let g:lightline={'colorscheme': 'onehalfdark'}
 
 syntax on
@@ -53,9 +53,8 @@ set nobackup
 set nowb
 set noswapfile
 
-highlight LineNr ctermfg=gray
-highlight CursorLine cterm=NONE ctermbg=255
-highlight CursorLineNR ctermfg=darkgray
+hi Normal ctermbg=NONE
+hi LineNr ctermbg=NONE
 
 let mapleader=' '
 nmap o o<Esc>
