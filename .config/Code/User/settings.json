@@ -26,6 +26,9 @@
     "editor.wordWrap": "on",
     "editor.wordWrapColumn": 80,
     "editor.wrappingIndent": "same",
+    "emmet.includeLanguages": {
+        "twig": "html"
+    },
     "explorer.autoReveal": false,
     "explorer.openEditors.visible": 0,
     "extensions.ignoreRecommendations": true,
