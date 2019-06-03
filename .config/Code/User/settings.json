@@ -1,5 +1,6 @@
 {
     "debug.console.fontSize": 16,
+    "diffEditor.ignoreTrimWhitespace": true,
     "discord.detailsDebugging": "Debugging a file",
     "discord.detailsEditing": "Editing a file",
     "discord.workspaceElapsedTime": true,
@@ -75,6 +76,9 @@
     "window.newWindowDimensions": "inherit",
     "window.title": "${activeEditorMedium}",
     "window.zoomLevel": 0,
+    "workbench.colorCustomizations": {
+        "editorIndentGuide.activeBackground": "#5c6370",
+    },
     "workbench.colorTheme": "Atom One Dark",
     "workbench.editor.tabCloseButton": "off",
     "workbench.editor.highlightModifiedTabs": true,
