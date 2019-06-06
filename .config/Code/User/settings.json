@@ -1,4 +1,5 @@
 {
+    "breadcrumbs.enabled": false,
     "debug.console.fontSize": 16,
     "diffEditor.ignoreTrimWhitespace": true,
     "discord.detailsDebugging": "Debugging a file",
