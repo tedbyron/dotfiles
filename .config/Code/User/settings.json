@@ -28,7 +28,7 @@
     "explorer.openEditors.visible": 0,
     "extensions.ignoreRecommendations": true,
     "files.associations": {
-        "*.js": "javascriptreact",
+        "*.js": "javascriptreact"
     },
     "files.autoSave": "off",
     "files.insertFinalNewline": true,
@@ -86,14 +86,14 @@
         "terminal.border": "#f0f0f0",
         "terminal.foreground": "#383a42"
     },
+    "workbench.colorTheme": "Atom One Light"
     "workbench.editor.tabCloseButton": "off",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.fontAliasing": "auto",
+    "workbench.iconTheme": "vscode-icons",
     "workbench.list.horizontalScrolling": true,
     "workbench.startupEditor": "newUntitledFile",
     "zenMode.fullScreen": false,
     "zenMode.hideStatusBar": false,
     "zenMode.hideTabs": false,
-    "workbench.iconTheme": "vscode-icons",
-    "workbench.colorTheme": "Atom One Light",
 }
