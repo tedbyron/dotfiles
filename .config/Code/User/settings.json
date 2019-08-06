@@ -70,7 +70,7 @@
     },
     "typescript.validate.enable": false,
     "window.newWindowDimensions": "inherit",
-    "window.title": "${activeEditorShort}",
+    "window.title": "${activeEditorMedium}",
     "window.zoomLevel": 0,
     "workbench.colorCustomizations": {
         "editorIndentGuide.activeBackground": "#a0a1a7",
