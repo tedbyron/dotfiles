@@ -9,7 +9,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'sonph/onehalf'
 call plug#end()
 
-colorscheme onehalfdark
+colorscheme onehalflight
 let g:lightline={'colorscheme': 'onehalfdark'}
 
 syntax on
