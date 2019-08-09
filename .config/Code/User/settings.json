@@ -94,6 +94,5 @@
     "workbench.list.horizontalScrolling": true,
     "workbench.startupEditor": "newUntitledFile",
     "zenMode.fullScreen": false,
-    "zenMode.hideStatusBar": false,
     "zenMode.hideTabs": false,
 }
