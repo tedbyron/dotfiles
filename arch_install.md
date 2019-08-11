@@ -53,6 +53,10 @@
     ```sh
     genfstab -U /mnt >> /mnt/etc/fstab
     ```
+-   Compare the 
+    ```sh
+    lsblk -o name,label,uuid
+    ```
 -   Change root into new system
     ```sh
     arch-chroot /mnt
@@ -80,7 +84,7 @@
 
         127.0.0.1       localhost
         ::1             localhost
-        127.0.0.1       hostname.localdomain hostname
+        127.0.1.1       hostname.localdomain hostname
     ```
 -   Set root password
     ```sh
@@ -91,18 +95,20 @@
     bootctl --path=/boot install
     vim /boot/loader/loader.conf
 
-        timeout     5
-        default     arch
+        timeout         3
+        console-mode    auto
+        default         arch
+        editor          no
 
-    vim /boot/entries/arch.conf
+    vim /boot/loader/entries/arch.conf
 
         title       Arch Linux
         linux       /vmlinuz-linux
         initrd      /intel-ucode.img
         initrd      /initramfs-linux.img
-        options     root=PARTUUID=ff9999ff-f9f9-9fff-ff99-99ff99f999f rw
+        options     root=PARTUUID=<FS PARTUUID> rw resume=<SWAP PARTUUID>
                     # to get block UID:
-                    # blkid -s PARTUUID -o value /dev/sdxY
+                    # lsblk -o name,label,partuuid
     ```
 
 ## Post-config
@@ -125,9 +131,11 @@
 -   Login as root
 -   Set console font
     ```sh
+    pacman -S terminus-font
+    
     vim /etc/vconsole.conf
 
-        FONT=Lat2-Terminus16
+        FONT=ter-v18n
     ```
 -   Set colored pacman output
     ```sh
@@ -141,9 +149,14 @@
     ```
 -   Enable automatic wifi connection
     ```sh
-    pacman -S wpa_actiond
-    systemctl start netctl-auto@wlan0.service
-    systemctl enable netctl-auto@wlan0.service
+    # shutdown interface
+    ip link set <INTERFACE> down
+    
+    # enable and start the service
+    systemctl enable --now netctl-auto@<INTERFACE>.service
+    
+    # if that fails, check for other services using the interface
+    systemctl --type=service
     ```
 -   Set a sudo group
     ```sh
