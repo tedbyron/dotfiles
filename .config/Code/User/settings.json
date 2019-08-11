@@ -47,7 +47,6 @@
     "scm.alwaysShowProviders": true,
     "search.showLineNumbers": true,
     "search.smartCase": true,
-    "search.usePCRE2": true,
     "spellright.documentTypes": [
         "markdown",
         "latex",
@@ -86,7 +85,7 @@
         "terminal.border": "#f0f0f0",
         "terminal.foreground": "#383a42"
     },
-    "workbench.colorTheme": "Atom One Light"
+    "workbench.colorTheme": "Atom One Light",
     "workbench.editor.tabCloseButton": "off",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.fontAliasing": "auto",
@@ -95,4 +94,5 @@
     "workbench.startupEditor": "newUntitledFile",
     "zenMode.fullScreen": false,
     "zenMode.hideTabs": false,
+    "vsicons.dontShowNewVersionMessage": true,
 }

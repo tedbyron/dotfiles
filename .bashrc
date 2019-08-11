@@ -1,9 +1,4 @@
 [[ -d "$HOME/bin" && -z "$(echo $PATH | grep -o $HOME/bin)" ]] && export PATH="$PATH:$HOME/bin"
-  # npm globals in home dir
-if [[ -d "$HOME/.npm-global" && -x "$(command -v npm)" ]]; then
-  [[ "$(npm prefix -g)" != "$HOME/.npm-global" ]] && npm config set prefix "$HOME/.npm-global"
-  [[ -z "$(echo $PATH | grep -o $HOME/.npm-global)" ]] && export PATH="$PATH:$HOME/.npm-global"
-fi
 
 # exports
 export EDITOR=vim
@@ -25,7 +20,7 @@ alias sudo="sudo "
 
 alias dmesg="dmesg --color=always | less"
 alias bootlog="journalctl -p 3 -xb"
-alias syslog="systemctl --all --failed"
+alias syslog="systemctl --type=service"
 
 alias path="echo -e ${PATH//:/\\\\n}"
 

@@ -1,14 +1,14 @@
 ! xft
-Xft.antialias:  true
-Xft.hinting:    true
+Xft.antialias:  1
+Xft.hinting:    1
 Xft.rgba:       rgb
-Xft.autohint:   false
+Xft.autohint:   0
 Xft.hintstyle:  hintslight
 Xft.lcdfilter:  lcddefault
 
 ! urxvt
 URxvt.perl-ext-common:  default,matcher,selection-to-clipboard
-URxvt.url-launcher:     /usr/bin/chromium
+URxvt.url-launcher:     /usr/bin/firefox
 URxvt.matcher.button:   1
 
 URxvt.saveLines: 100000
