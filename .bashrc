@@ -8,6 +8,14 @@ export LC_COLLATE=C
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
+export LESS=-R
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 PS1="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || { echo '\[\e[31m\]' && exit 1; }\`┌ " # exit status
 PS1+="\[\e[39m\]\A [\[\e[33m\]\u\[\e[39m\]@\[\e[33m\]\H\[\e[39m\]] \w\n" # user, host, working dir
@@ -24,6 +32,8 @@ alias syslog="systemctl --type=service"
 
 alias path="echo -e ${PATH//:/\\\\n}"
 
+alias ping="prettyping --nolegend"
+
 alias df="df -h"
 alias free="free -h"
 
@@ -33,8 +43,8 @@ alias la="ls -A"
 alias lla="ls -lA"
 
 alias grep="grep -i --color=auto"
+alias pgrep="pgrep -ai"
 alias diff="diff --color=auto"
-alias less="less -R"
 
 alias trash="gio trash"
 alias neofetch="clear;neofetch --cpu_brand off --uptime_shorthand on --gpu_brand off --gtk_shorthand on --music_player spotify"
@@ -49,7 +59,7 @@ man() {
   LESS_TERMCAP_se=$(printf "\e[0m") \
   LESS_TERMCAP_us=$(printf "\e[1;34m") \
   LESS_TERMCAP_ue=$(printf "\e[0m") \
-  man "$@"
+  command man "$@"
 }
 
 du() {
@@ -63,6 +73,6 @@ bookworm() {
 # miscellaneous
 setxkbmap -option compose:ralt
 
-# [[ $- != *i* ]] && return
+[[ $- != *i* ]] && return
 
 (cat ~/.cache/wal/sequences &)

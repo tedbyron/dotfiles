@@ -29,6 +29,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 xset r rate 225 20
+amixer -c 0 set 'Headphone Mic Boost' 10db
 wal --theme $HOME/.config/wal/colorschemes/light/onelight.json
 eval $(ssh-agent)
 exec startxfce4

@@ -68,6 +68,7 @@
         "iconColour": "#f57f17"
     },
     "typescript.validate.enable": false,
+    "vsicons.dontShowNewVersionMessage": true,
     "window.newWindowDimensions": "inherit",
     "window.title": "${activeEditorMedium}",
     "window.zoomLevel": 0,
@@ -94,5 +95,4 @@
     "workbench.startupEditor": "newUntitledFile",
     "zenMode.fullScreen": false,
     "zenMode.hideTabs": false,
-    "vsicons.dontShowNewVersionMessage": true,
 }

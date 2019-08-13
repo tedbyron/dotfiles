@@ -75,6 +75,9 @@
     ```sh
     vim /etc/locale.gen  # en_US.UTF-8 UTF-8
     locale-gen
+
+    vim /etc/locale.conf
+    LANG=en_US.UTF-8
     ```
 -   Network config
     ```sh
@@ -107,7 +110,7 @@
         initrd      /intel-ucode.img
         initrd      /initramfs-linux.img
         options     root=PARTUUID=<FS PARTUUID> rw resume=<SWAP PARTUUID>
-                    # to get block UID:
+                    # to get block PARTUUID:
                     # lsblk -o name,label,partuuid
     ```
 
@@ -129,16 +132,14 @@
 ## New system
 
 -   Login as root
--   Set console font
+-   Do important stuff
     ```sh
     pacman -S terminus-font
     
     vim /etc/vconsole.conf
 
         FONT=ter-v18n
-    ```
--   Set colored pacman output
-    ```sh
+
     vim /etc/pacman.conf
 
         Color
