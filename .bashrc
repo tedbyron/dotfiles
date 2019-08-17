@@ -28,7 +28,7 @@ alias sudo="sudo "
 
 alias dmesg="dmesg --color=always | less"
 alias bootlog="journalctl -p 3 -xb"
-alias syslog="systemctl --type=service"
+alias syslog="systemctl --state=failed"
 
 alias path="echo -e ${PATH//:/\\\\n}"
 
@@ -52,7 +52,6 @@ alias com.github.babluboy.bookworm="bookworm"
 
 # overloads
 man() {
-  env \
   LESS_TERMCAP_mb=$(printf "\e[1;32m") \
   LESS_TERMCAP_md=$(printf "\e[1;32m") \
   LESS_TERMCAP_me=$(printf "\e[0m") \

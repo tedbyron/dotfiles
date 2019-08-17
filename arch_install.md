@@ -53,7 +53,7 @@
     ```sh
     genfstab -U /mnt >> /mnt/etc/fstab
     ```
--   Compare the 
+-   Compare the
     ```sh
     lsblk -o name,label,uuid
     ```
@@ -135,13 +135,14 @@
 -   Do important stuff
     ```sh
     pacman -S terminus-font
-    
+
     vim /etc/vconsole.conf
 
         FONT=ter-v18n
 
     vim /etc/pacman.conf
 
+        CleanMethod = KeepCurrent
         Color
     ```
 -   Connect to Wifi
@@ -152,10 +153,10 @@
     ```sh
     # shutdown interface
     ip link set <INTERFACE> down
-    
+
     # enable and start the service
     systemctl enable --now netctl-auto@<INTERFACE>.service
-    
+
     # if that fails, check for other services using the interface
     systemctl --type=service
     ```
