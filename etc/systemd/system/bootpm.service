@@ -1,0 +1,10 @@
+[Unit]
+Description=Power Management Options
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bootpm
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
