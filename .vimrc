@@ -45,6 +45,7 @@ set scrolloff=5
 set cursorline
 set noshowmode
 set clipboard^=unnamed,unnamedplus
+set backspace=indent,eol,start
 
 set laststatus=2
 set ttimeoutlen=10
