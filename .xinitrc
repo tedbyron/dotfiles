@@ -30,5 +30,4 @@ fi
 
 xset r rate 225 20
 wal --theme $HOME/.config/wal/colorschemes/light/onelight.json
-eval $(ssh-agent)
 exec startxfce4

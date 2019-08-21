@@ -1,13 +1,12 @@
-capitaine-cursors
-chromium-widevine
-discord
-keeweb-desktop
-oomox
-pipes.sh
-polybar
-slack-desktop
-spotify
-ttf-emojione
-ttf-iosevka-ss07
-ttf-unifont
-yay
+aic94xx-firmware 30-9
+keeweb-desktop 1.8.2-2
+mugshot 0.4.1-1
+spotify 1:1.1.10.546-1
+ttf-iosevka-ss07 2.2.1-1
+ttf-ms-fonts 2.0-10
+ttf-unifont 12.1.03-1
+victory-gtk-theme-git ba88eb9-1
+visual-studio-code-bin 1.37.1-1
+wd719x-firmware 1-4
+xcursor-retrosmart 1.2-1
+yay 9.2.1-1
