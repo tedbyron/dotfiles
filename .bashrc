@@ -1,4 +1,9 @@
+# add ~/bin to path
 [[ -d "$HOME/bin" && -z "$(echo $PATH | grep -o $HOME/bin)" ]] && export PATH="$PATH:$HOME/bin"
+
+# start ssh-agent
+! pgrep -u "$USER" ssh-agent > /dev/null && ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+[[ ! "$SSH_AUTH_SOCK" ]] && eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
 
 # exports
 export EDITOR=vim
