@@ -7,13 +7,13 @@
 
 # exports
 export EDITOR=vim
-export PAGER="less -R"
-export SUDO_EDITOR=vim
 export LC_COLLATE=C
+export SUDO_EDITOR=vim
+export SSH_ASKPASS=ssh-askpass
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
-export LESS=-R
+export PAGER="less -R"
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
 export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
