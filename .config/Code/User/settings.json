@@ -95,13 +95,6 @@
   "workbench.startupEditor": "newUntitledFile",
   "zenMode.fullScreen": false,
   "zenMode.hideTabs": false,
-  "[plaintext]": {
-    "editor.quickSuggestions": {
-      "other": false,
-      "comments": false,
-      "strings": false
-    }
-  },
   "[markdown]": {
     "editor.quickSuggestions": {
         "other": false,
