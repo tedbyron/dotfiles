@@ -8,6 +8,7 @@
   "editor.fontFamily": "Iosevka SS07",
   "editor.fontLigatures": true,
   "editor.fontSize": 16,
+  "explorer.incrementalNaming": "smart",
   "editor.minimap.enabled": false,
   "editor.minimap.maxColumn": 80,
   "editor.minimap.renderCharacters": false,
@@ -59,7 +60,7 @@
   "terminal.external.windowsExec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-  "todo-tree.defaultHighlight": {
+  "todo-tree.highlights.defaultHighlight": {
     "icon": "issue-opened",
     "type": "text",
     "foreground": "black",
