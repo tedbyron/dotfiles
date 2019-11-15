@@ -58,6 +58,4 @@ hi Normal ctermbg=NONE
 hi LineNr ctermbg=NONE
 
 let mapleader=' '
-nmap o o<Esc>
-nmap O O<Esc>
 inoremap <S-Tab> <C-d>
