@@ -1,19 +1,20 @@
-# add ~/bin to path
-[[ -d "$HOME/bin" && -z "$(echo $PATH | grep -o $HOME/bin)" ]] && export PATH="$PATH:$HOME/bin"
+# PATH
+findutils_path="/usr/local/opt/findutils/libexec/gnubin"
+coreutils_path="/usr/local/opt/coreutils/libexec/gnubin"
+grep_path="/usr/local/opt/grep/libexec/gnubin"
+brew_path="/usr/local/sbin"
 
-# start ssh-agent
-! pgrep -u "$USER" ssh-agent > /dev/null && ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
-[[ ! "$SSH_AUTH_SOCK" ]] && eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
+[[ -d $findutils_path && ":$PATH:" != *":$findutils_path:"* ]] && export PATH="$findutils_path:$PATH"
+[[ -d $coreutils_path && ":$PATH:" != *":$coreutils_path:"* ]] && export PATH="$coreutils_path:$PATH"
+[[ -d $grep_path && ":$PATH:" != *":$grep_path:"* ]] && export PATH="$grep_path:$PATH"
+[[ -d $brew_path && ":$PATH:" != *":$brew_path:"* ]] && export PATH="$brew_path:$PATH"
 
-# exports
-export EDITOR=vim
+# miscellaneous exports
 export LC_COLLATE=C
+export EDITOR=vim
 export SUDO_EDITOR=vim
-export SSH_ASKPASS=ssh-askpass
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
 export PAGER="less -R"
+export GPG_TTY=$(tty)
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
 export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
@@ -23,37 +24,26 @@ export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 PS1="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || { echo '\[\e[31m\]' && exit 1; }\`┌ " # exit status
-PS1+="\[\e[39m\]\A [\[\e[33m\]\u\[\e[39m\]@\[\e[33m\]\H\[\e[39m\]] \w\n" # user, host, working dir
+PS1+="\[\e[39m\]\@ [\[\e[33m\]\u\[\e[39m\]@\[\e[33m\]\h\[\e[39m\]] \w\n" # user, host, working dir
 PS1+="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || echo '\[\e[31m\]'\`└ " # exit status
-PS1+="\`[[ \$(git rev-parse --is-inside-work-tree 2>/dev/null) == 'true' ]] && { [[ \$(git status -s) ]] && echo -n '\[\e[33m\]' || echo -n '\[\e[32m\]'; } && printf '%s ' \$(git rev-parse --abbrev-ref HEAD)\`" # git status and branch
-PS1+="\`[[ $(id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(tput sgr0)\]" # user
+PS1+="\`[[ $(id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(tput sgr0)\]" # root indicator
 
 # aliases
-alias sudo="sudo "
-
-alias dmesg="dmesg --color=always | less"
-alias bootlog="journalctl -p 3 -xb"
-alias syslog="systemctl --state=failed"
-
-alias path="echo -e ${PATH//:/\\\\n}"
-
-alias ping="prettyping --nolegend"
-
+alias brewup="brew update && brew upgrade && brew cleanup"
 alias df="df -h"
-alias free="free -h"
-
-alias ls="ls -Fh --color=auto --group-directories-first"
-alias ll="ls -l"
-alias la="ls -A"
-alias lla="ls -lA"
-
-alias grep="grep -i --color=auto"
-alias pgrep="pgrep -ai"
 alias diff="diff --color=auto"
-
-alias trash="gio trash"
-alias neofetch="clear;neofetch --cpu_brand off --uptime_shorthand on --gpu_brand off --gtk_shorthand on --music_player spotify"
-alias com.github.babluboy.bookworm="bookworm"
+alias free="free -h"
+alias grep="grep -i --color=auto"
+alias ls="ls -Fh --color=auto --group-directories-first"
+alias la="ls -A"
+alias ll="ls -l"
+alias lla="ls -lA"
+alias path="echo -e ${PATH//:/\\\\n}"
+alias pip="pip3"
+alias pgrep="pgrep -ail"
+alias ps="ps ax"
+alias psg="ps | grep -v grep | grep $@"
+alias sudo="sudo "
 
 # overloads
 man() {
@@ -70,13 +60,4 @@ du() {
   command du -hd 1 "$@" 2> >(grep -v 'Permission denied') | command sort -fk 2
 }
 
-bookworm() {
-  command "/usr/bin/com.github.babluboy.bookworm" "$@" &
-}
-
-# miscellaneous
-setxkbmap -option compose:ralt
-
 [[ $- != *i* ]] && return
-
-(cat ~/.cache/wal/sequences &)
