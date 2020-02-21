@@ -21,15 +21,12 @@
   "editor.wordWrap": "on",
   "editor.wordWrapColumn": 80,
   "editor.wrappingIndent": "same",
-  "emmet.includeLanguages": {
-    "twig": "html"
-  },
+  "eslint.lintTask.enable": true,
+  "eslint.run": "onSave",
   "explorer.autoReveal": false,
+  "explorer.confirmDragAndDrop": false,
   "explorer.openEditors.visible": 0,
   "extensions.ignoreRecommendations": true,
-  "files.associations": {
-    "*.js": "javascriptreact"
-  },
   "files.autoSave": "off",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
@@ -50,7 +47,7 @@
   "spellright.documentTypes": [
     "markdown",
     "latex",
-    "plaintext"
+    "plaintext",
   ],
   "telemetry.enableTelemetry": false,
   "telemetry.enableCrashReporter": false,
@@ -65,7 +62,7 @@
     "foreground": "black",
     "background": "#f57f17",
     "opacity": 80,
-    "iconColour": "#f57f17"
+    "iconColour": "#f57f17",
   },
   "typescript.validate.enable": false,
   "vim.cursorStylePerMode.insert": "line",
@@ -93,7 +90,7 @@
     "terminal.ansiYellow": "#c18401",
     "terminal.background": "#fafafa",
     "terminal.border": "#f0f0f0",
-    "terminal.foreground": "#383a42"
+    "terminal.foreground": "#383a42",
   },
   "workbench.colorTheme": "Atom One Light",
   "workbench.editor.tabCloseButton": "off",
@@ -108,8 +105,7 @@
     "editor.quickSuggestions": {
         "other": false,
         "comments": false,
-        "strings": false
+        "strings": false,
     }
   },
-  "explorer.confirmDragAndDrop": false
 }
