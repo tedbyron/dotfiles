@@ -27,7 +27,9 @@
   "editor.multiCursorModifier": "alt",
   "editor.renderLineHighlight": "all",
   "editor.roundedSelection": false,
-  "editor.rulers": [80],
+  "editor.rulers": [
+    80
+  ],
   "editor.tabSize": 2,
   "editor.wordWrap": "on",
   "editor.wordWrapColumn": 80,
@@ -38,6 +40,12 @@
   "explorer.openEditors.visible": 0,
   "extensions.ignoreRecommendations": true,
   "files.autoSave": "off",
+  "files.exclude": {
+    "**/.git": false,
+    "**/.hg": false,
+    "**/.svn": false,
+    "**/CVS": false
+  },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.trimFinalNewlines": true,
@@ -45,11 +53,6 @@
   "git.confirmSync": false,
   "git.enableCommitSigning": true,
   "git.enableSmartCommit": true,
-  "gitlens.advanced.telemetry.enabled": false,
-  "gitlens.blame.ignoreWhitespace": true,
-  "gitlens.currentLine.scrollable": false,
-  "gitlens.currentLine.enabled": false,
-  "gitlens.hovers.enabled": false,
   "html.format.enable": false,
   "javascript.format.enable": false,
   "json.format.enable": false,
@@ -73,7 +76,11 @@
   "scss.lint.zeroUnits": "warning",
   "search.showLineNumbers": true,
   "search.smartCase": true,
-  "spellright.documentTypes": ["markdown", "latex", "plaintext"],
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext"
+  ],
   "telemetry.enableTelemetry": false,
   "telemetry.enableCrashReporter": false,
   "terminal.external.linuxExec": "urxvt",
@@ -135,5 +142,5 @@
       "comments": false,
       "strings": false
     }
-  }
+  },
 }
