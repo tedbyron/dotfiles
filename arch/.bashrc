@@ -61,3 +61,5 @@ man() {
 du() {
   command du -hd 1 "$@" 2> >(grep -v 'Permission denied') | command sort -fk 2
 }
+
+[[ $- != *i* ]] && return
