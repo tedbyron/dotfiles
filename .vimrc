@@ -5,12 +5,12 @@ if empty(glob('$HOME/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin()
-Plug 'itchyny/lightline.vim'
-Plug 'sonph/onehalf'
+  Plug 'itchyny/lightline.vim'
+  Plug 'dracula/vim',{'as':'dracula'}
 call plug#end()
 
-colorscheme onehalflight
-let g:lightline={'colorscheme': 'onehalfdark'}
+colorscheme dracula
+let g:lightline={'colorscheme': 'dracula'}
 
 syntax on
 set t_Co=256

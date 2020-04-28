@@ -13,6 +13,7 @@
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.acceptSuggestionOnEnter": "off",
   "editor.cursorStyle": "line",
+  "editor.find.addExtraSpaceOnTop": false,
   "editor.fontFamily": "Iosevka SS07",
   "editor.fontLigatures": true,
   "editor.fontSize": 16,
@@ -26,11 +27,14 @@
   "editor.multiCursorModifier": "alt",
   "editor.renderLineHighlight": "all",
   "editor.roundedSelection": false,
-  "editor.rulers": [80],
+  "editor.rulers": [80, 100],
   "editor.tabSize": 2,
   "editor.wordWrap": "on",
   "editor.wordWrapColumn": 80,
   "editor.wrappingIndent": "same",
+  "emmet.includeLanguages": {
+    "twig": "html",
+  },
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
   "explorer.autoReveal": false,
@@ -38,6 +42,9 @@
   "explorer.openEditors.visible": 0,
   "extensions.ignoreRecommendations": true,
   "files.autoSave": "off",
+  "files.associations": {
+    "*.html": "twig",
+  },
   "files.exclude": {
     "**/.git": false,
     "**/.hg": false,
@@ -61,6 +68,7 @@
   "prettier.printWidth": 100,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
+  "rust.clippy_preference": "on",
   "rust-client.updateOnStartup": true,
   "scm.alwaysShowProviders": true,
   "scss.lint.boxModel": "error",
@@ -81,6 +89,10 @@
   "terminal.external.windowsExec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
   "terminal.integrated.fontSize": 16,
   "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "todo-tree.filtering.excludeGlobs": [
+    "node_modules/"
+  ],
+  "todo-tree.filtering.ignoreGitSubmodules": true,
   "todo-tree.highlights.defaultHighlight": {
     "icon": "issue-opened",
     "type": "text",
@@ -89,18 +101,9 @@
     "opacity": 80,
     "iconColour": "#f57f17"
   },
-  "todo-tree.filtering.ignoreGitSubmodules": true,
   "todo-tree.tree.showScanModeButton": false,
   "typescript.format.enable": false,
   "typescript.validate.enable": false,
-  "vim.cursorStylePerMode.insert": "line",
-  "vim.cursorStylePerMode.normal": "block",
-  "vim.cursorStylePerMode.replace": "block-outline",
-  "vim.cursorStylePerMode.visual": "block",
-  "vim.cursorStylePerMode.visualblock": "block",
-  "vim.cursorStylePerMode.visualline": "block",
-  "vim.foldfix": true,
-  "vim.useSystemClipboard": true,
   "vsicons.dontShowNewVersionMessage": true,
   "window.nativeTabs": true,
   "window.newWindowDimensions": "inherit",
@@ -112,16 +115,9 @@
   "workbench.fontAliasing": "auto",
   "workbench.iconTheme": "vscode-icons",
   "workbench.list.horizontalScrolling": true,
-  "workbench.startupEditor": "newUntitledFile",
+  "workbench.startupEditor": "none",
   "zenMode.fullScreen": false,
   "zenMode.hideTabs": false,
-  "[markdown]": {
-    "editor.quickSuggestions": {
-      "other": false,
-      "comments": false,
-      "strings": false
-    }
-  },
   "[rust]": {
     "editor.tabSize": 4
   }
