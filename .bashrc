@@ -34,7 +34,6 @@ PS1+="\`[[ $(id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(
 
 # aliases
 alias brewup="brew update && brew upgrade && brew cask upgrade && brew cleanup"
-alias clippy="cargo clippy -- -W clippy::cargo -W clippy::pedantic -W clippy::nursery"
 alias df="df -h"
 alias diff="diff --color=auto"
 alias free="free -h"
