@@ -33,7 +33,7 @@ PS1+="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || echo '\[\e[31m\]'\`└ " # exit 
 PS1+="\`[[ $(id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(tput sgr0)\]" # root indicator
 
 # aliases
-alias brewup="brew update && brew upgrade && brew cask upgrade && brew cleanup"
+alias brewup="brew update && brew upgrade && brew upgrade --cask && brew cleanup"
 alias df="df -h"
 alias diff="diff --color=auto"
 alias free="free -h"

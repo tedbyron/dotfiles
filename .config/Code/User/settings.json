@@ -39,9 +39,6 @@
   "extensions.ignoreRecommendations": true,
   "extensions.showRecommendationsOnlyOnDemand": true,
   "files.autoSave": "off",
-  "files.associations": {
-    "*.html": "twig"
-  },
   "files.exclude": {
     "**/.git": false,
     "**/.hg": false,
@@ -60,7 +57,12 @@
   "json.format.enable": false,
   "markdown.preview.fontSize": 16,
   "prettier.arrowParens": "always",
-  "prettier.disableLanguages": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "prettier.disableLanguages": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "prettier.endOfLine": "lf",
   "prettier.printWidth": 100,
   "prettier.singleQuote": true,
@@ -108,7 +110,6 @@
   "window.newWindowDimensions": "inherit",
   "window.title": "${activeEditorMedium}",
   "window.zoomLevel": 0,
-  "workbench.colorTheme": "Dracula",
   "workbench.editor.tabCloseButton": "off",
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.enableExperiments": false,
@@ -121,4 +122,10 @@
   "[rust]": {
     "editor.tabSize": 4
   },
+  "[twig]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false
+  },
+  "workbench.colorTheme": "Remedy - Dark (Straight)"
 }

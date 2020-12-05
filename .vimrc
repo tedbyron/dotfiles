@@ -6,11 +6,12 @@ endif
 
 call plug#begin()
   Plug 'itchyny/lightline.vim'
-  Plug 'dracula/vim',{'as':'dracula'}
+  Plug 'sainnhe/gruvbox-material',{'as':'gruvbox-material'}
 call plug#end()
 
-colorscheme dracula
-let g:lightline={'colorscheme': 'dracula'}
+let g:gruvbox_material_background = 'soft'
+colorscheme gruvbox-material
+let g:lightline={'colorscheme': 'gruvbox_material'}
 
 syntax on
 set t_Co=256
