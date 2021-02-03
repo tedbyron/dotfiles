@@ -127,5 +127,5 @@
     "editor.formatOnPaste": false,
     "editor.formatOnType": false
   },
-  "workbench.colorTheme": "Remedy - Dark (Straight)"
+  "workbench.colorTheme": "Dracula"
 }
