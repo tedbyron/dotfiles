@@ -37,7 +37,6 @@
   "explorer.confirmDragAndDrop": false,
   "explorer.openEditors.visible": 0,
   "extensions.ignoreRecommendations": true,
-  "extensions.showRecommendationsOnlyOnDemand": true,
   "files.autoSave": "off",
   "files.exclude": {
     "**/.git": false,
@@ -57,12 +56,6 @@
   "json.format.enable": false,
   "markdown.preview.fontSize": 16,
   "prettier.arrowParens": "always",
-  "prettier.disableLanguages": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
   "prettier.endOfLine": "lf",
   "prettier.printWidth": 100,
   "prettier.singleQuote": true,
@@ -79,11 +72,6 @@
   "scss.lint.zeroUnits": "warning",
   "search.showLineNumbers": true,
   "search.smartCase": true,
-  "spellright.documentTypes": [
-    "latex",
-    "markdown",
-    "plaintext"
-  ],
   "telemetry.enableTelemetry": false,
   "telemetry.enableCrashReporter": false,
   "terminal.external.linuxExec": "urxvt",
@@ -91,7 +79,6 @@
   "terminal.external.windowsExec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.fontSize": 16,
-  "terminal.integrated.shell.windows": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
   "todo-tree.filtering.excludeGlobs": ["node_modules/"],
   "todo-tree.filtering.ignoreGitSubmodules": true,
   "todo-tree.highlights.defaultHighlight": {
@@ -105,11 +92,10 @@
   "todo-tree.tree.showScanModeButton": false,
   "typescript.format.enable": false,
   "typescript.validate.enable": false,
-  "vsicons.dontShowNewVersionMessage": true,
   "window.nativeTabs": true,
   "window.newWindowDimensions": "inherit",
   "window.title": "${activeEditorMedium}",
-  "window.zoomLevel": 0,
+  "workbench.colorTheme": "Dracula",
   "workbench.editor.tabCloseButton": "off",
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.enableExperiments": false,
@@ -119,6 +105,9 @@
   "workbench.startupEditor": "none",
   "zenMode.fullScreen": false,
   "zenMode.hideTabs": false,
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[rust]": {
     "editor.tabSize": 4
   },
@@ -126,6 +115,5 @@
     "editor.formatOnSave": false,
     "editor.formatOnPaste": false,
     "editor.formatOnType": false
-  },
-  "workbench.colorTheme": "Dracula"
+  }
 }
