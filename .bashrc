@@ -12,11 +12,10 @@ rust_path="$HOME/.cargo/bin"
 [[ -d $rust_path && ":$PATH:" != *":$rust_path:"* ]] && export PATH="$rust_path:$PATH"
 
 # miscellaneous exports
-export LC_COLLATE=C
+export BAT_THEME=Dracula
 export EDITOR=vim
-export SUDO_EDITOR=vim
-export PAGER="less -R"
 export GPG_TTY=$(tty)
+export LC_COLLATE=C
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
 export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
@@ -24,6 +23,8 @@ export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
 export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+export PAGER="less -FR"
+export SUDO_EDITOR=vim
 
 PS1="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || { echo '\[\e[31m\]' && exit 1; }\`┌ " # exit status
 PS1+="\[\e[39m\]\@ [\[\e[33m\]\u\[\e[39m\]@\[\e[33m\]\h\[\e[39m\]] \w\n" # user, host, working dir
