@@ -1,5 +1,4 @@
 {
-  "breadcrumbs.enabled": false,
   "css.lint.boxModel": "error",
   "css.lint.duplicateProperties": "error",
   "css.lint.float": "error",
@@ -22,10 +21,11 @@
   "editor.minimap.showSlider": "always",
   "editor.renderLineHighlight": "all",
   "editor.roundedSelection": false,
-  "editor.rulers": [80, 100],
+  "editor.rulers": [
+    80,
+    100
+  ],
   "editor.wordWrap": "on",
-  "eslint.format.enable": true,
-  "eslint.lintTask.enable": true,
   "explorer.autoReveal": false,
   "explorer.confirmDragAndDrop": false,
   "explorer.openEditors.visible": 0,
@@ -37,15 +37,6 @@
   "git.confirmSync": false,
   "git.enableCommitSigning": true,
   "git.enableSmartCommit": true,
-  "html.format.enable": false,
-  "javascript.format.enable": false,
-  "json.format.enable": false,
-  "prettier.arrowParens": "always",
-  "prettier.endOfLine": "lf",
-  "prettier.printWidth": 100,
-  "prettier.trailingComma": "es5",
-  "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.notifications.cargoTomlNotFound": false,
   "scss.lint.boxModel": "error",
   "scss.lint.duplicateProperties": "error",
   "scss.lint.float": "error",
@@ -62,7 +53,6 @@
   "terminal.external.osxExec": "iterm.app",
   "terminal.external.windowsExec": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
   "terminal.integrated.copyOnSelection": true,
-  "terminal.integrated.fontSize": 14,
   "todo-tree.filtering.excludeGlobs": [
     "node_modules/",
     ".cache/",
@@ -80,23 +70,23 @@
   },
   "typescript.format.enable": false,
   "typescript.validate.enable": false,
-  "window.nativeTabs": true,
   "window.newWindowDimensions": "inherit",
   "window.title": "${activeEditorMedium}",
   "workbench.editor.tabCloseButton": "off",
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.enableExperiments": false,
   "workbench.fontAliasing": "auto",
-  "workbench.iconTheme": "vscode-icons",
   "workbench.productIconTheme": "fluent-icons",
-  "workbench.sideBar.location": "right",
   "workbench.startupEditor": "none",
   "zenMode.fullScreen": false,
   "zenMode.hideTabs": false,
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.tabSize": 4
   },
   "[rust]": {
+    "editor.tabSize": 4
+  },
+  "[toml]": {
     "editor.tabSize": 4
   },
   "[twig]": {
@@ -115,9 +105,8 @@
     "mtxr.sqltools"
   ],
   "editor.codeLensFontFamily": "Iosevka SS07 Extended",
-  "workbench.colorTheme": "Dracula",
-  "editor.inlayHints.fontFamily": "Iosevka SS07 Extended, Consolas, 'Courier New', monospace",
-  "terminal.integrated.fontFamily": "Iosevka SS07 Extended",
+  "editor.inlayHints.fontFamily": "Iosevka SS07 Extended",
+  "terminal.integrated.fontFamily": "Iosevka Term SS07 Extended",
   "rust-analyzer.procMacro.enable": true,
   "editor.tabSize": 2,
   "settingsSync.ignoredSettings": [
@@ -130,31 +119,34 @@
     "terminal.integrated.fontFamily",
     "scm.inputFontSize"
   ],
-  "scm.inputFontSize": 14,
-  "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "eslint.probe": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "html",
-    "vue",
-    "markdown",
-    "jsx",
-    "js",
-    "ts",
-    "tsx"
-  ],
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
   "editor.scrollbar.horizontal": "visible",
   "editor.scrollbar.vertical": "visible",
   "editor.scrollbar.verticalScrollbarSize": 12,
+  "security.workspace.trust.banner": "never",
+  "breadcrumbs.enabled": false,
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]"
+  ],
+  "todo-tree.regex.regex": "((//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS))|(todo!\\(\\))",
+  "editor.stickyTabStops": true,
+  "workbench.colorTheme": "Dracula",
+  "standard.autoFixOnSave": true,
+  "javascript.validate.enable": false,
+  "workbench.iconTheme": "vscode-icons",
+  "window.nativeTabs": true,
   "markdown.preview.fontSize": 13,
-  "debug.console.fontSize": 14,
-  "editor.fontSize": 14,
-  "security.workspace.trust.banner": "never"
+  "terminal.integrated.fontSize": 13,
+  "debug.console.fontSize": 13,
+  "editor.fontSize": 13,
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "javascript.format.enable": false,
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.inlayHints.enable": false,
 }

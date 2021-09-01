@@ -4,14 +4,12 @@ coreutils_path="/usr/local/opt/coreutils/libexec/gnubin"
 grep_path="/usr/local/opt/grep/libexec/gnubin"
 brew_path="/usr/local/sbin"
 rust_path="$HOME/.cargo/bin"
-mysql_path="/usr/local/mysql/bin"
 
 [[ -d $findutils_path && ":$PATH:" != *":$findutils_path:"* ]] && export PATH="$findutils_path:$PATH"
 [[ -d $coreutils_path && ":$PATH:" != *":$coreutils_path:"* ]] && export PATH="$coreutils_path:$PATH"
 [[ -d $grep_path && ":$PATH:" != *":$grep_path:"* ]] && export PATH="$grep_path:$PATH"
 [[ -d $brew_path && ":$PATH:" != *":$brew_path:"* ]] && export PATH="$brew_path:$PATH"
 [[ -d $rust_path && ":$PATH:" != *":$rust_path:"* ]] && export PATH="$rust_path:$PATH"
-[[ -d $mysql_path && ":$PATH:" != *":$mysql_path:"* ]] && export PATH="$mysql_path:$PATH"
 
 # miscellaneous exports
 export LC_COLLATE=C
@@ -35,10 +33,9 @@ PS1+="\`[[ $(id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(
 # aliases
 alias brewup="brew update && brew upgrade && brew upgrade --cask && brew cleanup"
 alias df="df -h"
-alias diff="diff --color=auto"
 alias free="free -h"
 alias grep="grep -i --color=auto"
-alias ls="ls -Fh --color=auto --group-directories-first"
+alias ls="ls -F --color=auto --group-directories-first"
 alias la="ls -A"
 alias ll="ls -l"
 alias lla="ls -lA"
@@ -47,6 +44,7 @@ alias pip="pip3"
 alias pgrep="pgrep -ail"
 alias ps="ps ax"
 alias psg="ps | grep -v grep | grep $@"
+alias rgf="rg --files -. | rg"
 alias sudo="sudo "
 
 # overloads
