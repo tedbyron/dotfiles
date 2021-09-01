@@ -44,20 +44,20 @@ alias pip="pip3"
 alias pgrep="pgrep -ail"
 alias ps="ps ax"
 alias psg="ps | grep -v grep | grep $@"
-alias rgf="rg --files -. | rg"
 alias sudo="sudo "
 
 # overloads
-man() {
-  LESS_TERMCAP_mb=$(printf "\e[1;32m") \
-  LESS_TERMCAP_md=$(printf "\e[1;32m") \
-  LESS_TERMCAP_me=$(printf "\e[0m") \
-  LESS_TERMCAP_se=$(printf "\e[0m") \
-  LESS_TERMCAP_us=$(printf "\e[1;34m") \
-  LESS_TERMCAP_ue=$(printf "\e[0m") \
-  command man "$@"
-}
 
 du() {
-  command du -hd 1 "$@" 2> >(grep -v 'Permission denied') | command sort -fk 2
+    command du -hd 1 "$@" 2> >(grep -v 'Permission denied') | command sort -fk 2
+}
+
+man() {
+    LESS_TERMCAP_mb=$(printf "\e[1;32m") \
+    LESS_TERMCAP_md=$(printf "\e[1;32m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;34m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    command man "$@"
 }
