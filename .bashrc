@@ -4,40 +4,40 @@
 [[ -z "${PS1}" ]] && return
 
 ################################################################################
-# prompt strings
+# prompt string
 ################################################################################
 
 prompt_command() {
   local -r e_status="$?"
   local e_color
-  local -r red='\[\e[31m\]'
-  local -r green='\[\e[32m\]'
-  local -r yellow='\[\e[33m\]'
-  local -r rc='\[\e[0m\]'
+  local -r red='\[\033[31m\]'
+  local -r green='\[\033[32m\]'
+  local -r yellow='\[\033[33m\]'
+  local -r nc='\[\033[0m\]'
   PS1=''
 
   # print exit status when previous command errors
   if (( e_status == 0 )); then
     e_color="${green}"
-    PS1+="${e_color}┌${rc} "
+    PS1+="${e_color}┌${nc} "
   else
     e_color="${red}"
-    PS1+="${e_color}× ${e_status}\n┌${rc} "
+    PS1+="${e_color}× ${e_status}\n┌${nc} "
   fi
 
   # time, username, hostname, working dir
-  PS1+="\@ [${yellow}\u${rc}@${yellow}\h${rc}] \w\n"
-  PS1+="${e_color}└${rc} "
+  PS1+="\@ [${yellow}\u${nc}@${yellow}\h${nc}] \w\n"
+  PS1+="${e_color}└${nc} "
 
   # change prompt if root user
   if [[ "$(id -u)" -eq 0 ]]; then
-    PS1+="${red}#${rc} "
+    PS1+="${red}\$${nc} "
   else
-    PS1+='$ '
+    PS1+='\$ '
   fi
 }
 
-export PROMPT_COMMAND=prompt_command
+PROMPT_COMMAND=prompt_command
 
 ################################################################################
 # path additions
@@ -95,13 +95,13 @@ fi
 alias ..='cd ..'
 # bat: force decorations and color
 alias bat='bat -f'
-# brew: do everything at once
+# brew: do everything
 alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
 # df: SI units
 alias df='df -H'
-# du: SI units, default max depth 1
+# du: SI units, max depth 1
 alias du='du -Hd 1'
-# dust: default max depth 1
+# dust: max depth 1
 alias dust='dust -d 1'
 # grep: case insensitive, color
 alias grep='grep -i --color=auto'
