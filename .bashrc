@@ -1,21 +1,76 @@
-# PATH
+# shellcheck disable=SC2148
+
+# return if not running interactively
+[[ -z "${PS1}" ]] && return
+
+################################################################################
+# prompt strings
+################################################################################
+
+prompt_command() {
+  local -r e_status="$?"
+  local e_color
+  local -r red='\[\e[31m\]'
+  local -r green='\[\e[32m\]'
+  local -r yellow='\[\e[33m\]'
+  local -r rc='\[\e[0m\]'
+  PS1=''
+
+  # print exit status when previous command errors
+  if (( e_status == 0 )); then
+    e_color="${green}"
+    PS1+="${e_color}┌${rc} "
+  else
+    e_color="${red}"
+    PS1+="${e_color}× ${e_status}\n┌${rc} "
+  fi
+
+  # time, username, hostname, working dir
+  PS1+="\@ [${yellow}\u${rc}@${yellow}\h${rc}] \w\n"
+  PS1+="${e_color}└${rc} "
+
+  # change prompt if root user
+  if [[ "$(id -u)" -eq 0 ]]; then
+    PS1+="${red}#${rc} "
+  else
+    PS1+='$ '
+  fi
+}
+
+export PROMPT_COMMAND=prompt_command
+
+################################################################################
+# path additions
+################################################################################
+
+rust_path="${HOME}/.cargo/bin"
+brew_path="/usr/local/sbin"
+grep_path="/usr/local/opt/grep/libexec/gnubin"
 findutils_path="/usr/local/opt/findutils/libexec/gnubin"
 coreutils_path="/usr/local/opt/coreutils/libexec/gnubin"
-grep_path="/usr/local/opt/grep/libexec/gnubin"
-brew_path="/usr/local/sbin"
-rust_path="$HOME/.cargo/bin"
 
-[[ -d $findutils_path && ":$PATH:" != *":$findutils_path:"* ]] && export PATH="$findutils_path:$PATH"
-[[ -d $coreutils_path && ":$PATH:" != *":$coreutils_path:"* ]] && export PATH="$coreutils_path:$PATH"
-[[ -d $grep_path && ":$PATH:" != *":$grep_path:"* ]] && export PATH="$grep_path:$PATH"
-[[ -d $brew_path && ":$PATH:" != *":$brew_path:"* ]] && export PATH="$brew_path:$PATH"
-[[ -d $rust_path && ":$PATH:" != *":$rust_path:"* ]] && export PATH="$rust_path:$PATH"
+# add paths to $PATH if they exist and aren't in $PATH already
+[[ -d "${rust_path}" && ":${PATH}:" != *":${rust_path}:"* ]] \
+&& export PATH="${rust_path}:${PATH}"
+[[ -d "${brew_path}" && ":${PATH}:" != *":${brew_path}:"* ]] \
+&& export PATH="${brew_path}:${PATH}"
+[[ -d "${grep_path}" && ":${PATH}:" != *":${grep_path}:"* ]] \
+&& export PATH="${grep_path}:${PATH}"
+[[ -d "${findutils_path}" && ":${PATH}:" != *":${findutils_path}:"* ]] \
+&& export PATH="${findutils_path}:${PATH}"
+[[ -d "${coreutils_path}" && ":${PATH}:" != *":${coreutils_path}:"* ]] \
+&& export PATH="${coreutils_path}:${PATH}"
 
-# miscellaneous exports
+# don't source these variables
+unset rust_path brew_path grep_path findutils_path coreutils_path
+
+################################################################################
+# other exports
+################################################################################
+
 export BAT_THEME=Dracula
-export EDITOR=vim
-export GPG_TTY=$(tty)
-export LC_COLLATE=C
+GPG_TTY="$(tty)"
+export GPG_TTY
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
 export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
@@ -23,42 +78,50 @@ export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
 export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
-export PAGER="less -FR"
-export SUDO_EDITOR=vim
 
-PS1="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || { echo '\[\e[31m\]' && exit 1; }\`┌ " # exit status
-PS1+="\[\e[39m\]\@ [\[\e[33m\]\u\[\e[39m\]@\[\e[33m\]\h\[\e[39m\]] \w\n" # user, host, working dir
-PS1+="\`[[ \$? -eq 0 ]] && echo '\[\e[32m\]' || echo '\[\e[31m\]'\`└ " # exit status
-PS1+="\`[[ $(id -u) -ne 0 ]] && echo '\[\e[39m\]' || echo '\[\e[31m\]'\`\\$ \[$(tput sgr0)\]" # root indicator
+if [[ -x "$(command -v vim)" ]]; then
+  export EDITOR=vim
+  export SUDO_EDITOR=vim
+else
+  export EDITOR=vi
+  export SUDO_EDITOR=vi
+fi
 
+################################################################################
 # aliases
-alias brewup="brew update && brew upgrade && brew upgrade --cask && brew cleanup"
-alias df="df -h"
-alias free="free -h"
-alias grep="grep -i --color=auto"
-alias ls="ls -F --color=auto --group-directories-first"
-alias la="ls -A"
-alias ll="ls -l"
-alias lla="ls -lA"
-alias path="echo -e ${PATH//:/\\\\n}"
-alias pip="pip3"
-alias pgrep="pgrep -ail"
-alias ps="ps ax"
-alias psg="ps | grep -v grep | grep $@"
-alias sudo="sudo "
+################################################################################
 
-# overloads
-
-du() {
-    command du -hd 1 "$@" 2> >(grep -v 'Permission denied') | command sort -fk 2
-}
-
-man() {
-    LESS_TERMCAP_mb=$(printf "\e[1;32m") \
-    LESS_TERMCAP_md=$(printf "\e[1;32m") \
-    LESS_TERMCAP_me=$(printf "\e[0m") \
-    LESS_TERMCAP_se=$(printf "\e[0m") \
-    LESS_TERMCAP_us=$(printf "\e[1;34m") \
-    LESS_TERMCAP_ue=$(printf "\e[0m") \
-    command man "$@"
-}
+# cd: change to parent directory
+alias ..='cd ..'
+# bat: force decorations and color
+alias bat='bat -f'
+# brew: do everything at once
+alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
+# df: SI units
+alias df='df -H'
+# du: SI units, default max depth 1
+alias du='du -Hd 1'
+# dust: default max depth 1
+alias dust='dust -d 1'
+# grep: case insensitive, color
+alias grep='grep -i --color=auto'
+# less: quit if one screen, raw control chars
+alias less='less -FR'
+# ls: classify entries, SI units, color, directories first
+alias ls='ls -F --si --color=auto --group-directories-first'
+# ls: almost all
+alias la='ls -A'
+# ls: long list
+alias ll='ls -l'
+# ls: long list, almost all
+alias lla='ls -lA'
+# echo: pretty print $PATH
+alias path='echo -e ${PATH//:/\\n}'
+# pgrep: full match, include ancestors, ignore case, long output
+alias pgrep='pgrep -fail'
+# ps: all processes, full format
+alias ps='ps -ef'
+# rg: smart letter case, follow symbolic links
+alias rg='rg -sL'
+# sudo: expand aliases used with sudo
+alias sudo='sudo '

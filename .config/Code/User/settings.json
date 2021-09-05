@@ -148,5 +148,5 @@
   "eslint.format.enable": true,
   "javascript.format.enable": false,
   "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.inlayHints.enable": false,
+  "rust-analyzer.inlayHints.enable": false
 }
