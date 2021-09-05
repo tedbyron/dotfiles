@@ -1,13 +1,5 @@
-if empty(glob('$HOME/.vim/autoload/plug.vim'))
-  silent !curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $HOME/.vimrc
-endif
-
-call plug#begin()
-  Plug 'itchyny/lightline.vim'
-  Plug 'dracula/vim',{ 'as': 'dracula' }
-call plug#end()
+packadd! dracula
+packadd! lightline
 
 colorscheme dracula
 let g:lightline={'colorscheme': 'dracula'}
