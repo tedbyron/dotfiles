@@ -13,31 +13,93 @@
 
 prompt_command() {
   local -r e_status="$?"
-  local e_color
-  local -r red='\[\033[31m\]'
-  local -r green='\[\033[32m\]'
-  local -r yellow='\[\033[33m\]'
+  local c_err
+  local -r c_red='\[\033[31m\]'
+  local -r c_gre='\[\033[32m\]'
+  local -r c_yel='\[\033[33m\]'
+  local -r c_blu='\[\033[34m\]'
+  local -r c_mag='\[\033[35m\]'
   local -r nc='\[\033[0m\]'
   PS1=''
 
   # print exit status when previous command errors
   if (( e_status == 0 )); then
-    e_color="${green}"
-    PS1+="${e_color}┌${nc} "
+    c_err="${c_gre}"
+    PS1+="${c_err}┌${nc} "
   else
-    e_color="${red}"
-    PS1+="${e_color}× ${e_status}\n┌${nc} "
+    c_err="${c_red}"
+    PS1+="${c_err}× ${e_status}\n┌${nc} "
   fi
 
   # time, username, hostname, working dir
-  PS1+="\@ [${yellow}\u${nc}@${yellow}\h${nc}] \w\n"
-  PS1+="${e_color}└${nc} "
-
-  # change prompt if root user
-  if [[ "$(id -u)" -eq 0 ]]; then
-    PS1+="${red}\$${nc} "
+  PS1+="\@ ["
+  if (( EUID == 0 )); then
+    PS1+="${c_red}\u${nc}"
   else
-    PS1+='\$ '
+    PS1+="${c_yel}\u${nc}"
+  fi
+  PS1+="@${c_yel}\h${nc}] \w\n"
+
+  # check if in git work tree
+  if git rev-parse --is-inside-work-tree &>/dev/null; then
+    local branch commit status c_git
+    # branch name or HEAD if detached
+    branch="$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)"
+    # tag or short commit hash
+    commit="$(git name-rev --name-only --tags --no-undefined HEAD 2>/dev/null \
+    || git rev-parse --short HEAD)"
+    # git status
+    status="$(git status --porcelain)"
+    # branch or HEAD color
+    c_git="${c_blu}"
+
+    PS1+="${c_err}│${nc} ["
+
+    # change color to c_mag if HEAD is detached
+    if [[ "${branch}" == "HEAD" ]]; then
+      c_git="${c_mag}"
+    fi
+    PS1+="${c_git}${branch}${nc}@${c_git}${commit} "
+
+    # work tree clean or get change counts
+    if [[ -z "${status}" ]]; then
+      PS1+="${c_gre}●${nc}]"
+    else
+
+      # loop through $status and increment change counts
+      # https://git-scm.com/docs/git-status#_short_format
+      while read -r line; do
+        case "${line::2}" in
+          " [AMD]") ;; # not updated
+          "M[ MD]") ;; # updated in index
+          "A[ MD]") ;; # added to index
+          "D ") ;; # deleted from index
+          "R[ MD]") ;; # renamed in index
+          "C[ MD]") ;; # copied in index
+          "[MARC] ") ;; # index and work tree matches
+          "[ MARC]M") ;; # work tree changed since index
+          "[ MARC]D") ;; # deleted in work tree
+          "[ D]R") ;; # renamed in work tree
+          "[ D]C") ;; # copied in work tree
+          'UU' | 'AA' | 'DU' | 'UA' | 'UD' | 'AU' | 'DD') ;; # unmerged
+          '??') ;; # untracked
+          '!!') ;; # ignored
+        esac
+      done < <("${status}")
+
+      PS1+="${c_red}●${nc}]"
+    fi
+
+    PS1+='\n'
+  fi
+
+  PS1+="${c_err}└${nc} "
+
+  # change prompt if root user (\$ doesn't work here?)
+  if (( EUID == 0 )); then
+    PS1+="${c_red}#${nc} "
+  else
+    PS1+='$ '
   fi
 }
 
@@ -99,7 +161,7 @@ fi
 alias ..='cd ..'
 # bat: force decorations and color
 alias bat='bat -f'
-# brew: do everything
+# brew: do everything except autoremove (orphaned dependencies)
 alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
 # df: SI units
 alias df='df -H'
@@ -125,7 +187,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias pgrep='pgrep -fail'
 # ps: all processes, full format
 alias ps='ps -ef'
-# rg: smart letter case, follow symbolic links
-alias rg='rg -sL'
+# rg: smart letter case
+alias rg='rg -S'
 # sudo: expand aliases used with sudo
 alias sudo='sudo '
