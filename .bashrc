@@ -136,13 +136,13 @@ unset rust_path brew_path grep_path findutils_path coreutils_path
 export BAT_THEME='Dracula'
 GPG_TTY="$(tty)"
 export GPG_TTY
-export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
-export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
-export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
-export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+export LESS_TERMCAP_mb=$'\033[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\033[1;36m'     # begin bold
+export LESS_TERMCAP_me=$'\033[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\033[1;44;33m'  # begin reverse video
+export LESS_TERMCAP_se=$'\033[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
 
 if [[ -x "$(command -v vim)" ]]; then
   export EDITOR=vim
@@ -158,8 +158,6 @@ fi
 
 # cd: change to parent directory
 alias ..='cd ..'
-# bat: force decorations and color
-alias bat='bat -f'
 # brew: do everything except autoremove (orphaned dependencies)
 alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
 # df: SI units
