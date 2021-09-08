@@ -65,10 +65,9 @@ prompt_command() {
     if [[ -z "${status}" ]]; then
       PS1+="${c_gre}●${nc}]"
     else
-
       # loop through $status and increment change counts
       # https://git-scm.com/docs/git-status#_short_format
-      while read -r line; do
+      while IFS=$'\n' read -r line; do
         case "${line::2}" in
           " [AMD]") ;; # not updated
           "M[ MD]") ;; # updated in index
@@ -85,7 +84,7 @@ prompt_command() {
           '??') ;; # untracked
           '!!') ;; # ignored
         esac
-      done < <("${status}")
+      done <<< "${status}"
 
       PS1+="${c_red}●${nc}]"
     fi
@@ -134,7 +133,7 @@ unset rust_path brew_path grep_path findutils_path coreutils_path
 # other exports
 ################################################################################
 
-export BAT_THEME=Dracula
+export BAT_THEME='Dracula'
 GPG_TTY="$(tty)"
 export GPG_TTY
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
