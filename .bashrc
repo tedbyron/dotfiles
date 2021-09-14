@@ -174,12 +174,10 @@ alias less='less -FR'
 alias ls='ls -F --si --color=auto --group-directories-first'
 # ls: almost all
 alias la='ls -A'
-# ls: long list
-alias ll='ls -l'
 # ls: long list, almost all
-alias lla='ls -lA'
+alias ll='ls -lA'
 # echo: pretty print $PATH
-alias path='echo -e ${PATH//:/\\n}'
+alias path='echo -e "${PATH//:/\\n}"'
 # pgrep: full match, include ancestors, ignore case, long output
 alias pgrep='pgrep -fail'
 # ps: all processes, full format
