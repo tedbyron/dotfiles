@@ -1,10 +1,10 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env bash
 
 # store currently installed binary names and versions in `current_map`
 current_versions() {
   local -a arr
   mapfile -t arr < <(cargo install --list \
-    | awk '/^[[:alpha:]]/{print $1 "\n" $2}')
+    | awk '/^[[:alnum:]]/{print $1 "\n" $2}')
 
   local -r loop_len="${#arr[@]}"
   for (( i=0; i < loop_len; i+=2 )); do
@@ -53,7 +53,7 @@ prompt_and_install() {
     read -r -p '' response
     case "${response}" in
         [yY][eE][sS]|[yY]) cargo install -f "${crate}" ;;
-        *) continue;;
+        *) continue ;;
     esac
   done
 }
