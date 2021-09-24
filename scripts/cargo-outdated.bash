@@ -88,7 +88,6 @@ main() {
   next_versions
   compare_and_echo
 
-  echo
   if [[ "$#" == 1 && "${1,,}" == '-y' ]]; then
     prompt_and_install "$1"
   else
