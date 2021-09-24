@@ -5,7 +5,6 @@ current_versions() {
   local -a arr
   mapfile -t arr < <(cargo install --list \
     | awk '/^[[:alnum:]]/{print $1 "\n" $2}')
-
   local -r loop_len="${#arr[@]}"
   for (( i=0; i < loop_len; i+=2 )); do
     name="${arr[${i}]}"
@@ -20,7 +19,6 @@ next_versions() {
   for crate in "${!current_map[@]}"; do
     ver="$(cargo search --limit 1 "${crate}")"
     name="$(awk 'NR==1{print $1}' <<<"${ver}")"
-
     if [[ -n "${ver}" && "${crate}" == "${name}" ]]; then
       ver="$(awk 'NR==1{print $3}' <<<"${ver}")"
       ver="${ver//[!0-9.]/}"
@@ -36,20 +34,23 @@ compare_and_echo() {
   for crate in "${!current_map[@]}"; do
     ver="${current_map[${crate}]}"
     ver_next="${next_map[${crate}]}"
-
     if [[ "${ver}" != "${ver_next}" ]]; then
-      echo -e "${crate}: ${yellow}${ver}${nt} -> ${green}${ver_next}${nt}"
       install["${crate}"]="${ver_next}"
     fi
   done
+
+  for crate in "${!install[@]}"; do
+    ver="${current_map[${crate}]}"
+    ver_next="${install[${crate}]}"
+    echo -e "${crate} ${yellow}${ver}${nt} -> ${green}${ver_next}${nt}"
+  done | column -t
 }
 
 # prompt to install outdated crates in `install`
 prompt_and_install() {
   for crate in "${!install[@]}"; do
     ver="${install[${crate}]}"
-
-    echo -en "Install ${crate}@${green}${ver}${nt}? [y/N] "
+    echo -en "Install ${crate} v${green}${ver}${nt}? [y/N] "
     read -r -p '' response
     case "${response}" in
         [yY][eE][sS]|[yY]) cargo install -f "${crate}" ;;
