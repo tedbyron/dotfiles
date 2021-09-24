@@ -58,32 +58,42 @@ compare_and_echo() {
 
 # prompt to install outdated crates in `install`
 prompt_and_install() {
-  local
-  for crate in "${!install[@]}"; do
-    vers="${install[${crate}]}"
-    echo -en "Install ${crate} ${green}${vers}${nt}? [y/N] "
-    read -r -p '' y_n
-    case "${y_n}" in
-        [yY][eE][sS]|[yY])
-          read -r -p "Extra args for 'cargo install -f ${crate}': " eargs
-          case "${eargs}" in
-            '') cargo install -f "${crate}" ;;
-            *)  cargo install -f "${eargs}" "${crate}" ;;
-          esac
-          ;;
-        *)
-          continue
-          ;;
-    esac
-  done
+  if [[ -n "$1" ]]; then
+    for crate in "${!install[@]}"; do
+      cargo install -f "${crate}" || exit 1
+    done
+  else
+    for crate in "${!install[@]}"; do
+      vers="${install[${crate}]}"
+      echo -en "Install ${crate} ${green}${vers}${nt}? [y/N] "
+      read -r -p '' y_n
+      case "${y_n}" in
+          [yY][eE][sS]|[yY])
+            read -r -p "Extra args for 'cargo install -f ${crate}': " eargs
+            case "${eargs}" in
+              '') cargo install -f "${crate}" ;;
+              *)  cargo install -f "${eargs}" "${crate}" ;;
+            esac
+            ;;
+          *)
+            continue
+            ;;
+      esac
+    done
+  fi
 }
 
 main() {
   current_versions
   next_versions
   compare_and_echo
+
   echo
-  prompt_and_install
+  if [[ "$#" == 1 && "${1,,}" == '-y' ]]; then
+    prompt_and_install "$1"
+  else
+    prompt_and_install
+  fi
 }
 
-main
+main "$@"
