@@ -39,7 +39,7 @@ next_versions() {
   done
 }
 
-# compare versions and list outdated; get values into `install`
+# compare versions and add outdated to `install`; echo outdated and versions
 compare_and_echo() {
   for crate in "${!current_map[@]}"; do
     vers="${current_map[${crate}]}"
@@ -58,29 +58,30 @@ compare_and_echo() {
 
 # prompt to install outdated crates in `install`
 prompt_and_install() {
-  if [[ -n "$1" ]]; then
-    for crate in "${!install[@]}"; do
-      cargo install -f "${crate}" || exit 1
-    done
-  else
-    for crate in "${!install[@]}"; do
-      vers="${install[${crate}]}"
-      echo -en "Install ${crate} ${green}${vers}${nt}? [y/N] "
-      read -r -p '' y_n
-      case "${y_n}" in
-          [yY][eE][sS]|[yY])
-            read -r -p "Extra args for 'cargo install -f ${crate}': " eargs
-            case "${eargs}" in
-              '') cargo install -f "${crate}" ;;
-              *)  cargo install -f "${eargs}" "${crate}" ;;
-            esac
-            ;;
-          *)
-            continue
-            ;;
-      esac
-    done
-  fi
+  for crate in "${!install[@]}"; do
+    vers="${install[${crate}]}"
+    echo -en "Install ${crate} ${green}${vers}${nt}? [y/N] "
+    read -r -p '' y_n
+    case "${y_n}" in
+        [yY][eE][sS]|[yY])
+          read -r -p "Extra args for 'cargo install': " eargs
+          case "${eargs}" in
+            '') cargo install -f "${crate}" ;;
+            *)  cargo install -f "${eargs}" "${crate}" ;;
+          esac
+          ;;
+        *)
+          continue
+          ;;
+    esac
+  done
+}
+
+# install all outdated crates in `install` without prompting
+prompt_and_install_y() {
+  for crate in "${!install[@]}"; do
+    cargo install -f "${crate}" || exit 1
+  done
 }
 
 main() {
@@ -88,8 +89,8 @@ main() {
   next_versions
   compare_and_echo
 
-  if [[ "$#" == 1 && "${1,,}" == '-y' ]]; then
-    prompt_and_install "$1"
+  if [[ "$#" -eq 1 && "${1,,}" == '-y' ]]; then
+    prompt_and_install_y
   else
     prompt_and_install
   fi
