@@ -1,41 +1,7 @@
-**/logs
-/.atom/blob-store
-/.atom/compile-cache
-/.atom/dev
-/.atom/github.cson
-/.atom/packages
-/.atom/recovery
-/.atom/storage
-/.config/sublime-text-3/Packages/User/Color Highlighter/
-/.config/sublime-text-3/Packages/User/GitSavvy/
-/.config/sublime-text-3/Packages/User/Package Control.last-run
-/.config/sublime-text-3/Packages/User/Package Control.ca-list
-/.config/sublime-text-3/Packages/User/Package Control.ca-bundle
-/.config/sublime-text-3/Packages/User/Package Control.system-ca-bundle
-/.config/sublime-text-3/Packages/User/Package Control.cache/
-/.config/sublime-text-3/Packages/User/Package Control.ca-certs/
-/.config/sublime-text-3/Packages/User/Package Control.merged-ca-bundle
-/.config/sublime-text-3/Packages/User/Package Control.user-ca-bundle
 *.cert
 *.csr
-*.deb
-*.gz
 *.key
 *.log
 *.pem
-*.pub
-*.srl
-*.stTheme.cache
-*.sublime-project
-*.sublime-workspace
 *.swp
-*.tar
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.zip
-.apm
 .DS_Store
-.node-gyp
-.npm
-bh_unicode_properties.cache
-nohup.out
