@@ -16,9 +16,9 @@ current_versions() {
   mapfile -t arr < <(cargo install --list \
     | awk '/^[[:alnum:]]/{print $1 "\n" $2}')
   local -r loop_len="${#arr[@]}"
-  for (( i=0; i < loop_len; i+=2 )); do
+  for ((i=0; i < loop_len; i+=2)); do
     name="${arr[${i}]}"
-    vers="${arr[$(( i+1 ))]}"
+    vers="${arr[$((i+1))]}"
     vers="${vers//[!0-9.]/}"
     current_map["${name}"]="${vers}"
   done

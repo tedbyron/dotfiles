@@ -23,7 +23,7 @@ __prompt_command() {
   PS1=''
 
   # print exit status when previous command errors
-  if (( e_status == 0 )); then
+  if ((e_status == 0)); then
     c_err="${c_gre}"
     PS1+="${c_err}┌${nc} "
   else
@@ -33,7 +33,7 @@ __prompt_command() {
 
   # time, username, hostname, working dir
   PS1+="\@ ["
-  if (( EUID == 0 )); then
+  if ((EUID == 0)); then
     PS1+="${c_red}\u${nc}"
   else
     PS1+="${c_yel}\u${nc}"
@@ -95,7 +95,7 @@ __prompt_command() {
   PS1+="${c_err}└${nc} "
 
   # change prompt if root user (\$ doesn't work here?)
-  if (( EUID == 0 )); then
+  if ((EUID == 0)); then
     PS1+="${c_red}#${nc} "
   else
     PS1+='$ '
