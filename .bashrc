@@ -11,7 +11,7 @@
 # prompt string
 ################################################################################
 
-prompt_command() {
+__prompt_command() {
   local -r e_status="$?"
   local c_err
   local -r c_red='\[\033[31m\]'
@@ -102,7 +102,7 @@ prompt_command() {
   fi
 }
 
-PROMPT_COMMAND=prompt_command
+PROMPT_COMMAND=__prompt_command
 
 ################################################################################
 # path additions
