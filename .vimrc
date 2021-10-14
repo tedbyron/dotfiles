@@ -1,5 +1,5 @@
-packadd! dracula
-packadd! lightline
+" packages: dracula, lightline, fugitive, surround, vim-gitgutter,
+" nerdcommenter
 
 colorscheme dracula
 let g:lightline={'colorscheme': 'dracula'}
