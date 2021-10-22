@@ -144,7 +144,10 @@ export LESS_TERMCAP_se=$'\033[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
 
-if [[ -x "$(command -v vim)" ]]; then
+if [[ -x "$(command -v nvim)" ]]; then
+  export EDITOR=nvim
+  export SUDO_EDITOR=nvim
+elif [[ -x "$(command -v vim)" ]]; then
   export EDITOR=vim
   export SUDO_EDITOR=vim
 else
@@ -156,33 +159,38 @@ fi
 # aliases
 ################################################################################
 
-# cd: change to parent directory
+# cd to parent directory
 alias ..='cd ..'
-# brew: do everything except autoremove (orphaned dependencies)
+# do everything except autoremove (orphaned dependencies)
 alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
-# df: SI units
-alias df='df -H'
-# du: SI units, max depth 1
-alias du='du -Hd 1'
-# dust: max depth 1
+# human-readable
+alias df='df -h'
+# human-readable, max depth 1
+alias du='du -hd 1'
+# max depth 1
 alias dust='dust -d 1'
-# grep: case insensitive, color
+# case insensitive, color
 alias grep='grep -i --color=auto'
-# less: quit if one screen, raw control chars
+# quit if one screen, raw control chars
 alias less='less -FR'
-# ls: classify entries, SI units, color, directories first
-alias ls='ls -F --si --color=auto --group-directories-first'
-# ls: almost all
+# classify entries, human-readable, color, directories first
+alias ls='ls -Fh --color=auto --group-directories-first'
+# almost all
 alias la='ls -A'
-# ls: long list, almost all
-alias ll='ls -lA'
-# echo: pretty print $PATH
+# long list, almost all
+alias ll='ls -l'
+# pretty print $PATH
 alias path='echo -e "${PATH//:/\\n}"'
-# pgrep: full match, include ancestors, ignore case, long output
+# full match, include ancestors, ignore case, long output
 alias pgrep='pgrep -fail'
-# ps: all processes, full format
+# all processes, full format
 alias ps='ps -ef'
-# rg: smart letter case
+# smart letter case
 alias rg='rg -S'
-# sudo: expand aliases used with sudo
+# expand aliases used with sudo
 alias sudo='sudo '
+# nvim if exists
+if [[ -x "$(command -v nvim)" ]]; then
+  alias vim='nvim'
+fi
+

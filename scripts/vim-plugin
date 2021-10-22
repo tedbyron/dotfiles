@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+# install vim plugins
+
+# plugins dir
+declare -r plugins_dir="${HOME}/.vim/pack/plugins/start"
+declare -r trash_dir="${HOME}/.Trash"
+
+# plugins
+declare -rA plugins=(
+  ['dracula']='https://github.com/dracula/vim.git'
+  ['lightline']='https://github.com/itchyny/lightline.vim'
+  ['fugitive']='https://github.com/tpope/vim-surround.git/'
+  ['surround']='https://github.com/tpope/vim-fugitive.git/'
+  ['vim-gitgutter']='https://github.com/airblade/vim-gitgutter.git'
+  ['nerdcommenter']='https://github.com/preservim/nerdcommenter.git'
+)
+
+# extra commands to setup a plugin
+declare -rA setup=(
+  ['fugitive']='vim -u NONE -c "helptags fugitive/doc" -c q'
+  ['surround']='vim -u NONE -c "helptags surround/doc" -c q'
+  ['vim-gitgutter']='vim -u NONE -c "helptags vim-gitgutter/doc" -c q'
+)
+
+# check if git is installed
+check_git() {
+  if [[ ! -x "$(command -v git)" ]]; then
+    echo 'This script requires git.'
+    exit 1
+  fi
+}
+
+# check if plugins_dir exists or create it
+check_plugin_dir() {
+  if [[ ! -d "${plugins_dir}" ]]; then
+    mkdir -p "${plugins_dir}" || exit 1
+  fi
+}
+
+# remove plugin dirs for clean install
+clean_plugins() {
+  for plugin in "${!plugins[@]}"; do
+    echo "Removing ${plugin}…"
+    if [[ -d "${trash_dir}/${plugin}" ]]; then
+      rm -rf "${trash_dir:?}/${plugin:?}"
+    fi
+    mv "${plugins_dir}/${plugin}" "${trash_dir}"
+  done
+  echo
+}
+
+# install plugins
+install_plugins() {
+  for plugin in "${!plugins[@]}"; do
+    echo "${plugin}"
+    git clone "${plugins[${plugin}]}" "${plugins_dir}/${plugin}"
+    echo
+  done
+
+  for plugin in "${!setup[@]}"; do
+    eval "${setup[${plugin}]}"
+  done
+}
+
+update_plugins() {
+  local dir
+  for plugin in "${!plugins[@]}"; do
+    echo "${plugin}"
+    dir="${plugins_dir}/${plugin}"
+    cd "${dir}" || { err_msg "cd ${dir} failed"; break; }
+    git fetch
+    git pull
+    echo
+  done
+}
+
+# return an error message and maybe exit
+err_msg() {
+  echo "ERR: $1." >&2
+  if (($# > 1)); then
+    exit 1
+  fi
+}
+
+main() {
+  local -i exit_code=0
+  set -E
+  trap '(( exit_code++ ))' ERR
+
+  if (($# >= 1 && $# <= 2)); then
+    case "$1" in
+      'install')
+        check_git
+        check_plugin_dir
+        if (($# == 2)); then
+          if [[ "${2,,}" == '-f' || "${2,,}" == '--force' ]]; then
+            clean_plugins
+          else
+            err_msg "unknown argument '$2'" 1
+          fi
+        fi
+        install_plugins
+        ;;
+      'update')
+        check_git
+        check_plugin_dir
+        update_plugins
+        ;;
+      *)
+        err_msg "unknown argument '$1'" 1
+        ;;
+    esac
+  else
+    err_msg "$0 requires 1-2 arguments" 1
+  fi
+
+  echo 'Done'
+  exit "${exit_code}"
+}
+
+main "$@"
