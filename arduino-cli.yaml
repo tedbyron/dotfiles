@@ -6,7 +6,7 @@ daemon:
 directories:
   data: /Users/ted/Library/Arduino15
   downloads: /Users/ted/Library/Arduino15/staging
-  user: /Users/ted/Documents/Arduino
+  user: /Users/ted/Arduino
 library:
   enable_unsafe_install: true
 logging:
