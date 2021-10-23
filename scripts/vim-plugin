@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
-# install vim plugins
+# install or update vim plugins
 
-# plugins dir
-declare -r plugins_dir="${HOME}/.vim/pack/plugins/start"
-declare -r trash_dir="${HOME}/.Trash"
-
-# plugins
 declare -rA plugins=(
   ['dracula']='https://github.com/dracula/vim.git'
   ['lightline']='https://github.com/itchyny/lightline.vim'
@@ -15,46 +10,49 @@ declare -rA plugins=(
   ['nerdcommenter']='https://github.com/preservim/nerdcommenter.git'
 )
 
-# extra commands to setup a plugin
 declare -rA setup=(
   ['fugitive']='vim -u NONE -c "helptags fugitive/doc" -c q'
   ['surround']='vim -u NONE -c "helptags surround/doc" -c q'
   ['vim-gitgutter']='vim -u NONE -c "helptags vim-gitgutter/doc" -c q'
 )
 
+declare -r plugins_dir="${HOME}/.vim/pack/plugins/start"
+declare -r trash_dir="${HOME}/.Trash"
+
+declare -r red='\033[31m' # foreground red
+declare -r mag='\033[34m' # foreground magenta
+declare -r nt='\033[0m'   # normal text
+
 # check if git is installed
 check_git() {
   if [[ ! -x "$(command -v git)" ]]; then
-    echo 'This script requires git.'
-    exit 1
+    err_msg 'This script requires git.' 1
   fi
 }
 
 # check if plugins_dir exists or create it
 check_plugin_dir() {
   if [[ ! -d "${plugins_dir}" ]]; then
-    mkdir -p "${plugins_dir}" || exit 1
+    mkdir -p "${plugins_dir}" || err_msg "mkdir -p ${plugins_dir} failed" 1
   fi
 }
 
 # remove plugin dirs for clean install
 clean_plugins() {
   for plugin in "${!plugins[@]}"; do
-    echo "Removing ${plugin}…"
-    if [[ -d "${trash_dir}/${plugin}" ]]; then
+    echo "Removing ${mag}${plugin}${nt}…"
+    if [[ -d "${trash_dir:?}/${plugin:?}" ]]; then
       rm -rf "${trash_dir:?}/${plugin:?}"
     fi
     mv "${plugins_dir}/${plugin}" "${trash_dir}"
   done
-  echo
 }
 
 # install plugins
 install_plugins() {
   for plugin in "${!plugins[@]}"; do
-    echo "${plugin}"
+    echo -e "${mag}${plugin}${nt}"
     git clone "${plugins[${plugin}]}" "${plugins_dir}/${plugin}"
-    echo
   done
 
   for plugin in "${!setup[@]}"; do
@@ -62,21 +60,21 @@ install_plugins() {
   done
 }
 
+# update plugins
 update_plugins() {
   local dir
   for plugin in "${!plugins[@]}"; do
-    echo "${plugin}"
     dir="${plugins_dir}/${plugin}"
+    echo -e "${mag}${plugin}${nt}"
     cd "${dir}" || { err_msg "cd ${dir} failed"; break; }
     git fetch
     git pull
-    echo
   done
 }
 
 # return an error message and maybe exit
 err_msg() {
-  echo "ERR: $1." >&2
+  echo -e "${red}ERR${nt}: $1." >&2
   if (($# > 1)); then
     exit 1
   fi
@@ -114,7 +112,6 @@ main() {
     err_msg "$0 requires 1-2 arguments" 1
   fi
 
-  echo 'Done'
   exit "${exit_code}"
 }
 

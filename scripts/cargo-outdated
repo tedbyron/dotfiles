@@ -8,9 +8,9 @@ declare name
 declare vers
 declare vers_next
 
-declare -r green='\033[32m'   # foreground green
-declare -r yellow='\033[33m'  # foreground yellow
-declare -r nt='\033[0m'       # normal text
+declare -r gre='\033[32m' # foreground green
+declare -r yel='\033[33m' # foreground yello
+declare -r nt='\033[0m'   # normal text
 
 # store currently installed binary names and versions in `current_map`
 current_versions() {
@@ -54,7 +54,7 @@ compare_and_echo() {
   for crate in "${!install[@]}"; do
     vers="${current_map[${crate}]}"
     vers_next="${install[${crate}]}"
-    echo -e "${crate} ${yellow}${vers}${nt} -> ${green}${vers_next}${nt}"
+    echo -e "${crate} ${yel}${vers}${nt} -> ${gre}${vers_next}${nt}"
   done | column -t
 }
 
@@ -62,7 +62,7 @@ compare_and_echo() {
 prompt_and_install() {
   for crate in "${!install[@]}"; do
     vers="${install[${crate}]}"
-    echo -en "Install ${crate} ${green}${vers}${nt}? [y/N] "
+    echo -en "Install ${crate} ${gre}${vers}${nt}? [y/N] "
     read -r -p '' y_n
     case "${y_n}" in
         [yY][eE][sS]|[yY])
