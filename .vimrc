@@ -1,51 +1,77 @@
-" packages: dracula, lightline, fugitive, surround, vim-gitgutter,
-" nerdcommenter
+set nocompatible
 
+" colorscheme
+set t_Co=256
 colorscheme dracula
 let g:lightline={'colorscheme': 'dracula'}
 
-syntax on
-set t_Co=256
+" syntax highlighting
+if has('syntax')
+  syntax on
+endif
+
+" enable mouse in all modes
+if has('mouse')
+  set mouse=a
+endif
+
+" cmdline-history
 set history=500
-set mouse=a
+
+" read file if changed externally
+set autoread
+
+" layout
 set number
 set ruler
-set autoread
-set ai
-set si
+set cursorline
+set autoindent
+set smartindent
 set wrap
 set linebreak
 set nolist
 set textwidth=0
 set wrapmargin=0
-set ignorecase
-set smartcase
-set hlsearch
-set nohls
-set incsearch
-set magic
 set expandtab
 set shiftwidth=2
 set softtabstop=2
-set autoindent
-set showmatch
-set showcmd
-set showmode
+set laststatus=2
+set scrolloff=5
+
+" commands
 set wildmenu
 set wildmode=list:longest,full
-set scrolloff=5
-set cursorline
+set showcmd
+" set cmdheight=2
+set visualbell
+set t_vb=
+
+" search
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set magic
 set noshowmode
+
+" use system clipboard
 set clipboard^=unnamed,unnamedplus
+
+" show matching {bracket,brace,paren} when inserted
+set showmatch
+
+" backspace over autoindent, line breaks, and start of insert action
 set backspace=indent,eol,start
 
-set laststatus=2
-set ttimeoutlen=10
+" timeout on keycodes but not mappings
+set notimeout ttimeout ttimeoutlen=200
 
+" don't write backup/swap files
 set nobackup
-set nowb
+set nowritebackup
 set noswapfile
 
+" don't use background colo
 hi Normal ctermbg=NONE
 hi LineNr ctermbg=NONE
 

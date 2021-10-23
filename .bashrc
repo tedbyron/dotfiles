@@ -178,7 +178,7 @@ alias ls='ls -Fh --color=auto --group-directories-first'
 # almost all
 alias la='ls -A'
 # long list, almost all
-alias ll='ls -l'
+alias ll='ls -lA'
 # pretty print $PATH
 alias path='echo -e "${PATH//:/\\n}"'
 # full match, include ancestors, ignore case, long output
@@ -193,4 +193,3 @@ alias sudo='sudo '
 if [[ -x "$(command -v nvim)" ]]; then
   alias vim='nvim'
 fi
-

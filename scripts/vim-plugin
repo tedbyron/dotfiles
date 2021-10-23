@@ -2,15 +2,17 @@
 # install or update vim plugins
 
 declare -rA plugins=(
-  ['dracula']='https://github.com/dracula/vim.git'
-  ['lightline']='https://github.com/itchyny/lightline.vim'
-  ['fugitive']='https://github.com/tpope/vim-surround.git/'
-  ['surround']='https://github.com/tpope/vim-fugitive.git/'
-  ['vim-gitgutter']='https://github.com/airblade/vim-gitgutter.git'
-  ['nerdcommenter']='https://github.com/preservim/nerdcommenter.git'
+  ['dracula']='https://github.com/dracula/vim'
+  ['lightline']='https://github.com/itchyny/lightline'
+  ['sleuth']='https://github.com/tpope/vim-sleuth'
+  ['fugitive']='https://github.com/tpope/vim-surround'
+  ['surround']='https://github.com/tpope/vim-fugitive'
+  ['vim-gitgutter']='https://github.com/airblade/vim-gitgutter'
+  ['nerdcommenter']='https://github.com/preservim/nerdcommenter'
 )
 
 declare -rA setup=(
+  ['sleuth']='vim -u NONE -c "helptags sleuth/doc" -c q'
   ['fugitive']='vim -u NONE -c "helptags fugitive/doc" -c q'
   ['surround']='vim -u NONE -c "helptags surround/doc" -c q'
   ['vim-gitgutter']='vim -u NONE -c "helptags vim-gitgutter/doc" -c q'
@@ -46,6 +48,7 @@ clean_plugins() {
     fi
     mv "${plugins_dir}/${plugin}" "${trash_dir}"
   done
+  echo
 }
 
 # install plugins
