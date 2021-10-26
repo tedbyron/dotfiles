@@ -3,7 +3,7 @@
 
 declare -rA plugins=(
   ['dracula']='https://github.com/dracula/vim'
-  ['lightline']='https://github.com/itchyny/lightline'
+  ['lightline']='https://github.com/itchyny/lightline.vim'
   ['sleuth']='https://github.com/tpope/vim-sleuth'
   ['fugitive']='https://github.com/tpope/vim-surround'
   ['surround']='https://github.com/tpope/vim-fugitive'

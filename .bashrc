@@ -3,10 +3,6 @@
 # return if not running interactively
 [[ -z "${PS1}" ]] && return
 
-# bash completion
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] \
-&& source "/usr/local/etc/profile.d/bash_completion.sh"
-
 ################################################################################
 # prompt string
 ################################################################################
