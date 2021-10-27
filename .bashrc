@@ -104,23 +104,31 @@ PROMPT_COMMAND=__prompt_command
 # path additions
 ################################################################################
 
+coreutils_path='/usr/local/opt/coreutils/libexec/gnubin'
+findutils_path='/usr/local/opt/findutils/libexec/gnubin'
+grep_path='/usr/local/opt/grep/libexec/gnubin'
+brew_path='/usr/local/sbin'
 rust_path="${HOME}/.cargo/bin"
-brew_path="/usr/local/sbin"
-grep_path="/usr/local/opt/grep/libexec/gnubin"
-findutils_path="/usr/local/opt/findutils/libexec/gnubin"
-coreutils_path="/usr/local/opt/coreutils/libexec/gnubin"
+node_path="/usr/local/opt/node@16/bin"
 
 # add paths to $PATH if they exist and aren't in $PATH already
-[[ -d "${rust_path}" && ":${PATH}:" != *":${rust_path}:"* ]] \
-&& export PATH="${rust_path}:${PATH}"
-[[ -d "${brew_path}" && ":${PATH}:" != *":${brew_path}:"* ]] \
-&& export PATH="${brew_path}:${PATH}"
-[[ -d "${grep_path}" && ":${PATH}:" != *":${grep_path}:"* ]] \
-&& export PATH="${grep_path}:${PATH}"
-[[ -d "${findutils_path}" && ":${PATH}:" != *":${findutils_path}:"* ]] \
-&& export PATH="${findutils_path}:${PATH}"
 [[ -d "${coreutils_path}" && ":${PATH}:" != *":${coreutils_path}:"* ]] \
 && export PATH="${coreutils_path}:${PATH}"
+
+[[ -d "${findutils_path}" && ":${PATH}:" != *":${findutils_path}:"* ]] \
+&& export PATH="${findutils_path}:${PATH}"
+
+[[ -d "${brew_path}" && ":${PATH}:" != *":${brew_path}:"* ]] \
+&& export PATH="${brew_path}:${PATH}"
+
+[[ -d "${grep_path}" && ":${PATH}:" != *":${grep_path}:"* ]] \
+&& export PATH="${grep_path}:${PATH}"
+
+[[ -d "${rust_path}" && ":${PATH}:" != *":${rust_path}:"* ]] \
+&& export PATH="${rust_path}:${PATH}"
+
+[[ -d "${node_path}" && ":${PATH}:" != *":${node_path}:"* ]] \
+&& export PATH="${node_path}:${PATH}"
 
 # don't source these variables
 unset rust_path brew_path grep_path findutils_path coreutils_path
@@ -129,9 +137,14 @@ unset rust_path brew_path grep_path findutils_path coreutils_path
 # other exports
 ################################################################################
 
+export LDFLAGS="-L/usr/local/opt/node@16/lib"
+export CPPFLAGS="-I/usr/local/opt/node@16/include"
+
 export BAT_THEME='Dracula'
+
 GPG_TTY="$(tty)"
 export GPG_TTY
+
 export LESS_TERMCAP_mb=$'\033[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\033[1;36m'     # begin bold
 export LESS_TERMCAP_me=$'\033[0m'        # reset bold/blink
