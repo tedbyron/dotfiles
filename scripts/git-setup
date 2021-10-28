@@ -17,7 +17,9 @@ setup_git() {
   git config --global core.eol        'lf'
   git config --global user.name       'Teddy Byron'
   git config --global user.email      'ted@tedbyron.com'
-  git config --global user.signingkey "$1"
+  if [[ -n "$1" ]]; then
+    git config --global user.signingkey "$1"
+  fi
   git config --global commit.gpgsign  true
   git config --global tag.gpgsign     true
 }
@@ -37,7 +39,7 @@ main() {
   check_git
 
   case "$#" in
-    1) setup_git "$1";;
+    0|1) setup_git "$@";;
     *) err_msg "$0 requires 1 argument: user.signingkey" 1 ;;
   esac
 
