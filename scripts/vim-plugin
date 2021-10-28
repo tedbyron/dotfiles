@@ -28,7 +28,7 @@ declare -r nt='\033[0m'   # normal text
 # check if git is installed
 check_git() {
   if [[ ! -x "$(command -v git)" ]]; then
-    err_msg 'This script requires git.' 1
+    err_msg 'This script requires git' 1
   fi
 }
 

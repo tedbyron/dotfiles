@@ -64,8 +64,8 @@ prompt_and_install() {
     vers="${install[${crate}]}"
     echo -en "Install ${crate} ${gre}${vers}${nt}? [y/N] "
     read -r -p '' y_n
-    case "${y_n}" in
-        [yY][eE][sS]|[yY])
+    case "${y_n,,}" in
+        y|yes)
           read -r -p "Extra args for 'cargo install': " eargs
           case "${eargs}" in
             '') cargo install -f "${crate}" ;;

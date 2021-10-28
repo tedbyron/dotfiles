@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# setup global git options
+
+declare -r red='\033[31m' # foreground red
+declare -r nt='\033[0m'   # normal text
+
+# check if git is installed
+check_git() {
+  if [[ ! -x "$(command -v git)" ]]; then
+    err_msg 'This script requires git' 1
+  fi
+}
+
+# setup git
+setup_git() {
+  git config --global core.autocrlf   false
+  git config --global core.eol        'lf'
+  git config --global user.name       'Teddy Byron'
+  git config --global user.email      'ted@tedbyron.com'
+  git config --global user.signingkey "$1"
+  git config --global commit.gpgsign  true
+  git config --global tag.gpgsign     true
+}
+
+err_msg() {
+  echo -e "${red}ERR${nt}: $1." >&2
+  if (($# > 1)); then
+    exit 1
+  fi
+}
+
+main() {
+  local -i exit_code=0
+  set -E
+  trap '(( exit_code++ ))' ERR
+
+  check_git
+
+  case "$#" in
+    1) setup_git "$1";;
+    *) err_msg "$0 requires 1 argument: user.signingkey" 1 ;;
+  esac
+
+  exit "${exit_code}"
+}
+
+main "$@"
