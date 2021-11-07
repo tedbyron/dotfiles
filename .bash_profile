@@ -8,5 +8,8 @@
 [[ -f "${HOME}/.profile" ]] && source "${HOME}/.profile"
 
 # bash completion
-[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] \
-&& source "/usr/local/etc/profile.d/bash_completion.sh"
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] \
+&& source "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
+# homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"

@@ -104,12 +104,12 @@ PROMPT_COMMAND=__prompt_command
 # path additions
 ################################################################################
 
-coreutils_path='/usr/local/opt/coreutils/libexec/gnubin'
-findutils_path='/usr/local/opt/findutils/libexec/gnubin'
-grep_path='/usr/local/opt/grep/libexec/gnubin'
-brew_path='/usr/local/sbin'
+coreutils_path='/opt/homebrew/opt/coreutils/libexec/gnubin'
+findutils_path='/opt/homebrew/opt/findutils/libexec/gnubin'
+grep_path='/opt/homebrew/opt/grep/libexec/gnubin'
+brew_path='/opt/homebrew/sbin'
 rust_path="${HOME}/.cargo/bin"
-node_path="/usr/local/opt/node@16/bin"
+node_path="/opt/homebrew/opt/node@16/bin"
 
 # add paths to $PATH if they exist and aren't in $PATH already
 [[ -d "${coreutils_path}" && ":${PATH}:" != *":${coreutils_path}:"* ]] \
@@ -131,14 +131,14 @@ node_path="/usr/local/opt/node@16/bin"
 && export PATH="${node_path}:${PATH}"
 
 # don't source these variables
-unset rust_path brew_path grep_path findutils_path coreutils_path
+unset rust_path brew_path grep_path findutils_path coreutils_path node_path
 
 ################################################################################
 # other exports
 ################################################################################
 
-export LDFLAGS="-L/usr/local/opt/node@16/lib"
-export CPPFLAGS="-I/usr/local/opt/node@16/include"
+export LDFLAGS="-L/opt/homebrew/opt/node@16/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/node@16/include"
 
 export BAT_THEME='Dracula'
 
