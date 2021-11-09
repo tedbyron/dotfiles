@@ -140,6 +140,8 @@ unset rust_path brew_path grep_path findutils_path coreutils_path node_path
 export LDFLAGS="-L/opt/homebrew/opt/node@16/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/node@16/include"
 
+export HOMEBREW_NO_ANALYTICS=1
+
 export BAT_THEME='Dracula'
 
 GPG_TTY="$(tty)"

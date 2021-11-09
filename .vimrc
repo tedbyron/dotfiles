@@ -71,7 +71,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-" don't use background colo
+" don't use background color
 hi Normal ctermbg=NONE
 hi LineNr ctermbg=NONE
 
