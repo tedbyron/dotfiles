@@ -1,14 +1,16 @@
 set nocompatible
 
-" colorscheme
-set t_Co=256
-colorscheme dracula
-let g:lightline={'colorscheme': 'dracula'}
-
 " syntax highlighting
 if has('syntax')
   syntax on
 endif
+
+packadd! dracula
+
+" colorscheme
+set t_Co=256
+colorscheme dracula
+let g:lightline={'colorscheme': 'dracula'}
 
 " enable mouse in all modes
 if has('mouse')
