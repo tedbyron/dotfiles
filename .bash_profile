@@ -5,11 +5,11 @@
 ################################################################################
 
 # homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$("${HOMEBREW_PREFIX}"/bin/brew shellenv)"
 
 [[ -f "${HOME}/.bashrc" ]] && source "${HOME}/.bashrc"
 [[ -f "${HOME}/.profile" ]] && source "${HOME}/.profile"
 
 # bash completion
-[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] \
-&& source "/opt/homebrew/etc/profile.d/bash_completion.sh"
+[[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]] \
+&& source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"

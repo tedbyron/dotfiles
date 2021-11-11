@@ -104,12 +104,12 @@ PROMPT_COMMAND=__prompt_command
 # path additions
 ################################################################################
 
-coreutils_path='/opt/homebrew/opt/coreutils/libexec/gnubin'
-findutils_path='/opt/homebrew/opt/findutils/libexec/gnubin'
-grep_path='/opt/homebrew/opt/grep/libexec/gnubin'
-brew_path='/opt/homebrew/sbin'
+coreutils_path="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
+findutils_path="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
+grep_path="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
+brew_path="${HOMEBREW_PREFIX}/sbin"
 rust_path="${HOME}/.cargo/bin"
-node_path="/opt/homebrew/opt/node@16/bin"
+node_path="${HOMEBREW_PREFIX}/opt/node@16/bin"
 
 # add paths to $PATH if they exist and aren't in $PATH already
 [[ -d "${coreutils_path}" && ":${PATH}:" != *":${coreutils_path}:"* ]] \
@@ -137,8 +137,8 @@ unset rust_path brew_path grep_path findutils_path coreutils_path node_path
 # other exports
 ################################################################################
 
-export LDFLAGS="-L/opt/homebrew/opt/node@16/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/node@16/include"
+export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/node@16/lib"
+export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/node@16/include"
 
 export HOMEBREW_NO_ANALYTICS=1
 
