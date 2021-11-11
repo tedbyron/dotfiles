@@ -1,0 +1,126 @@
+format = '''
+┌ \[$username$hostname\] $directory $fill $status$cmd_duration$all
+└ $character '''
+right_format = ''
+scan_timeout = 30
+command_timeout = 500
+add_newline = false
+
+[aws]
+format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
+style = 'yellow'
+
+[character]
+format = '$symbol'
+success_symbol = '[>](green)'
+error_symbol = '[×](red)'
+vicmd_symbol = '[v](green)'
+
+[cmake]
+format = '\[[$symbol($version)]($style)\]'
+version_format = '${raw}'
+style = 'cyan'
+
+[cmd_duration]
+format = '\[[$duration]($style)\] '
+style = 'yellow'
+
+[directory]
+format = '[$path]($style)( [$read_only]($read_only_style))'
+style = 'cyan'
+
+[docker_context]
+format = '\[[$symbol$context]($style)\]'
+style = 'cyan'
+
+[fill]
+symbol = ' ' # ─ ━
+
+[git_branch]
+format = '([$symbol$branch]($style) )'
+symbol = '' # 
+style = 'blue'
+
+[git_commit]
+commit_hash_length = 7
+format = '[$hash$tag]($style) '
+style = 'bright-black'
+only_detached = false
+
+[git_state]
+style = 'yellow'
+
+[git_metrics]
+format = '(([+$added]($added_style))([-$deleted]($deleted_style)) )'
+added_style = 'green'
+deleted_style = 'red'
+disabled = false
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+deleted = '×'
+style = 'red'
+
+[golang]
+format = '\[[$symbol($version)]($style)\]'
+version_format = '${raw}'
+style = 'cyan'
+
+[hostname]
+ssh_only = false
+format = '[$hostname]($style)'
+style = 'yellow'
+
+[jobs]
+style = 'cyan'
+
+[line_break]
+disabled = true
+
+[memory_usage]
+format = '\[$symbol[$ram( | $swap)]($style)\]'
+style = 'white'
+
+[nix_shell]
+format = '\[[$symbol$state( \($name\))]($style)\]'
+style = 'cyan'
+
+[nodejs]
+format = '\[[$symbol($version)]($style)\]'
+version_format = '${raw}'
+style = 'green'
+not_capable_style = 'red'
+
+[package]
+format = '\[[$symbol$version]($style)\]'
+version_format = '${raw}'
+style = '214'
+display_private = true
+
+[python]
+format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+version_format = '${raw}'
+style = 'yellow'
+
+[rust]
+format = '\[[$symbol($version)]($style)\]'
+version_format = '${raw}'
+style = 'red'
+
+[status]
+format = '[$symbol$status]($style) '
+symbol = '×'
+style = 'red'
+disabled = false
+
+[time]
+format = '\[[$time]($style)\]'
+time_format = "%R"
+style = 'white'
+disabled = true
+
+[username]
+style_root = 'red'
+style_user = 'yellow'
+format = '[$user]($style)@'
+show_always = true
