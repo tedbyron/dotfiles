@@ -57,31 +57,10 @@ __prompt_command() {
     fi
     PS1+="${c_git}${branch}${nc}@${c_git}${commit} "
 
-    # work tree clean or get change counts
+    # work tree
     if [[ -z "${status}" ]]; then
       PS1+="${c_gre}●${nc}]"
     else
-      # loop through $status and increment change counts
-      # https://git-scm.com/docs/git-status#_short_format
-      while IFS=$'\n' read -r line; do
-        case "${line::2}" in
-          " [AMD]") ;; # not updated
-          "M[ MD]") ;; # updated in index
-          "A[ MD]") ;; # added to index
-          "D ") ;; # deleted from index
-          "R[ MD]") ;; # renamed in index
-          "C[ MD]") ;; # copied in index
-          "[MARC] ") ;; # index and work tree matches
-          "[ MARC]M") ;; # work tree changed since index
-          "[ MARC]D") ;; # deleted in work tree
-          "[ D]R") ;; # renamed in work tree
-          "[ D]C") ;; # copied in work tree
-          'UU' | 'AA' | 'DU' | 'UA' | 'UD' | 'AU' | 'DD') ;; # unmerged
-          '??') ;; # untracked
-          '!!') ;; # ignored
-        esac
-      done <<< "${status}"
-
       PS1+="${c_red}●${nc}]"
     fi
 
@@ -114,19 +93,14 @@ node_path="${HOMEBREW_PREFIX}/opt/node@16/bin"
 # add paths to $PATH if they exist and aren't in $PATH already
 [[ -d "${coreutils_path}" && ":${PATH}:" != *":${coreutils_path}:"* ]] \
 && export PATH="${coreutils_path}:${PATH}"
-
 [[ -d "${findutils_path}" && ":${PATH}:" != *":${findutils_path}:"* ]] \
 && export PATH="${findutils_path}:${PATH}"
-
 [[ -d "${brew_path}" && ":${PATH}:" != *":${brew_path}:"* ]] \
 && export PATH="${brew_path}:${PATH}"
-
 [[ -d "${grep_path}" && ":${PATH}:" != *":${grep_path}:"* ]] \
 && export PATH="${grep_path}:${PATH}"
-
 [[ -d "${rust_path}" && ":${PATH}:" != *":${rust_path}:"* ]] \
 && export PATH="${rust_path}:${PATH}"
-
 [[ -d "${node_path}" && ":${PATH}:" != *":${node_path}:"* ]] \
 && export PATH="${node_path}:${PATH}"
 
@@ -203,4 +177,5 @@ alias sudo='sudo '
 # nvim if exists
 if [[ -x "$(command -v nvim)" ]]; then
   alias vim='nvim'
+  alias v='nvim'
 fi
