@@ -1,11 +1,11 @@
 [[ ! -o interactive ]] && return
 
 # get some env vars
-eval $(/opt/homebrew/bin/brew shellenv)
+eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 
 # source antigen
-source ${HOMEBREW_PREFIX}/share/antigen/antigen.zsh
+source "${HOMEBREW_PREFIX}/share/antigen/antigen.zsh"
 
 ################################################################################
 # Plugins
@@ -65,26 +65,26 @@ export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 # Path exports
 ################################################################################
 
-coreutils_path=${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin
-findutils_path=${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin
-grep_path=${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin
-brew_path=${HOMEBREW_PREFIX}/sbin
-rust_path=${HOME}/.cargo/bin
-node_path=${HOMEBREW_PREFIX}/opt/node@16/bin
+coreutils_path="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
+findutils_path="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
+grep_path="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
+brew_path="${HOMEBREW_PREFIX}/sbin"
+rust_path="${HOME}/.cargo/bin"
+node_path="${HOMEBREW_PREFIX}/opt/node@16/bin"
 
 # add paths to $PATH if they exist and aren't in $PATH already
-[[ -d ${coreutils_path} && :${PATH}: != *:${coreutils_path}:* ]] \
-&& export PATH=${coreutils_path}:${PATH}
-[[ -d ${findutils_path} && :${PATH}: != *:${findutils_path}:* ]] \
-&& export PATH=${findutils_path}:${PATH}
-[[ -d ${brew_path} && :${PATH}: != *:${brew_path}:* ]] \
-&& export PATH=${brew_path}:${PATH}
-[[ -d ${grep_path} && :${PATH}: != *:${grep_path}:* ]] \
-&& export PATH=${grep_path}:${PATH}
-[[ -d ${rust_path} && :${PATH}: != *:${rust_path}:* ]] \
-&& export PATH=${rust_path}:${PATH}
-[[ -d ${node_path} && :${PATH}: != *:${node_path}:* ]] \
-&& export PATH=${node_path}:${PATH}
+[[ -d "${coreutils_path}" && :"${PATH}": != *":${coreutils_path}:"* ]] \
+&& export PATH="${coreutils_path}:${PATH}"
+[[ -d "${findutils_path}" && :"${PATH}": != *":${findutils_path}:"* ]] \
+&& export PATH="${findutils_path}:${PATH}"
+[[ -d "${brew_path}" && :"${PATH}": != *":${brew_path}:"* ]] \
+&& export PATH="${brew_path}:${PATH}"
+[[ -d "${grep_path}" && :"${PATH}": != *":${grep_path}:"* ]] \
+&& export PATH="${grep_path}:${PATH}"
+[[ -d "${rust_path}" && :"${PATH}": != *:"${rust_path}:"* ]] \
+&& export PATH="${rust_path}:${PATH}"
+[[ -d "${node_path}" && :"${PATH}": != *":${node_path}:"* ]] \
+&& export PATH="${node_path}:${PATH}"
 
 # Don't source these variables
 unset rust_path brew_path grep_path findutils_path coreutils_path node_path
@@ -100,7 +100,7 @@ export HOMEBREW_NO_ANALYTICS=1
 
 export BAT_THEME='Dracula'
 
-GPG_TTY=$(tty)
+GPG_TTY="$(tty)"
 export GPG_TTY
 
 export LESS_TERMCAP_mb=$'\033[1;31m'     # begin blink
@@ -112,14 +112,14 @@ export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
 
 if (( ${+commands[nvim]} )); then
-  export EDITOR=nvim
-  export SUDO_EDITOR=nvim
+  export EDITOR='nvim'
+  export SUDO_EDITOR='nvim'
 elif (( ${+commands[vim]} )); then
-  export EDITOR=vim
-  export SUDO_EDITOR=vim
+  export EDITOR='vim'
+  export SUDO_EDITOR='vim'
 else
-  export EDITOR=vi
-  export SUDO_EDITOR=vi
+  export EDITOR='vi'
+  export SUDO_EDITOR='vi'
 fi
 
 ################################################################################
