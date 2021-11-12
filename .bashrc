@@ -3,81 +3,8 @@
 # return if not running interactively
 [[ -z "${PS1}" ]] && return
 
-################################################################################
-# prompt string
-################################################################################
-
-__prompt_command() {
-  local -r e_status="$?"
-  local c_err
-  local -r c_red='\[\033[31m\]'
-  local -r c_gre='\[\033[32m\]'
-  local -r c_yel='\[\033[33m\]'
-  local -r c_blu='\[\033[34m\]'
-  local -r c_mag='\[\033[35m\]'
-  local -r nc='\[\033[0m\]'
-  PS1=''
-
-  # print exit status when previous command errors
-  if ((e_status == 0)); then
-    c_err="${c_gre}"
-    PS1+="${c_err}┌${nc} "
-  else
-    c_err="${c_red}"
-    PS1+="${c_err}× ${e_status}\n┌${nc} "
-  fi
-
-  # time, username, hostname, working dir
-  PS1+="\@ ["
-  if ((EUID == 0)); then
-    PS1+="${c_red}\u${nc}"
-  else
-    PS1+="${c_yel}\u${nc}"
-  fi
-  PS1+="@${c_yel}\h${nc}] \w\n"
-
-  # check if in git work tree
-  if git rev-parse --is-inside-work-tree &>/dev/null; then
-    local branch commit status c_git
-    # branch name or HEAD if detached
-    branch="$(git rev-parse --abbrev-ref --symbolic-full-name HEAD)"
-    # tag or short commit hash
-    commit="$(git name-rev --name-only --tags --no-undefined HEAD 2>/dev/null \
-    || git rev-parse --short HEAD)"
-    # git status
-    status="$(git status --porcelain)"
-    # branch or HEAD color
-    c_git="${c_blu}"
-
-    PS1+="${c_err}│${nc} ["
-
-    # change color to c_mag if HEAD is detached
-    if [[ "${branch}" == "HEAD" ]]; then
-      c_git="${c_mag}"
-    fi
-    PS1+="${c_git}${branch}${nc}@${c_git}${commit} "
-
-    # work tree
-    if [[ -z "${status}" ]]; then
-      PS1+="${c_gre}●${nc}]"
-    else
-      PS1+="${c_red}●${nc}]"
-    fi
-
-    PS1+='\n'
-  fi
-
-  PS1+="${c_err}└${nc} "
-
-  # change prompt if root user (\$ doesn't work here?)
-  if ((EUID == 0)); then
-    PS1+="${c_red}#${nc} "
-  else
-    PS1+='$ '
-  fi
-}
-
-PROMPT_COMMAND=__prompt_command
+# get somem env vars
+eval "$(starship init bash)"
 
 ################################################################################
 # path additions
@@ -130,14 +57,14 @@ export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
 
 if [[ -x "$(command -v nvim)" ]]; then
-  export EDITOR=nvim
-  export SUDO_EDITOR=nvim
+  export EDITOR='nvim'
+  export SUDO_EDITOR='nvim'
 elif [[ -x "$(command -v vim)" ]]; then
-  export EDITOR=vim
-  export SUDO_EDITOR=vim
+  export EDITOR='vim'
+  export SUDO_EDITOR='vim'
 else
-  export EDITOR=vi
-  export SUDO_EDITOR=vi
+  export EDITOR='vi'
+  export SUDO_EDITOR='vi'
 fi
 
 ################################################################################

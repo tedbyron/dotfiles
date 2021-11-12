@@ -5,5 +5,5 @@
     <strong><a href="https://github.com/tedbyron">@tedbyron</a>'s dotfiles.</strong>
   </p>
 
-  <img src="./screen.png" />
+  <img src="./.config/screen.png" alt="screenshot of terminal" />
 </div>

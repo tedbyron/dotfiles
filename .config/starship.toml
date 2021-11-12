@@ -12,7 +12,7 @@ add_newline = false
 
 [character]
 format = '$symbol'
-success_symbol = '[>](green)'
+success_symbol = '[>](white)'
 error_symbol = '[x](red)'
 vicmd_symbol = '[<](green)'
 
