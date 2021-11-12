@@ -1,7 +1,8 @@
 [[ ! -o interactive ]] && return
 
-# eval
+# get some env vars
 eval $(/opt/homebrew/bin/brew shellenv)
+eval "$(starship init zsh)"
 
 # source antigen
 source ${HOMEBREW_PREFIX}/share/antigen/antigen.zsh
@@ -51,7 +52,7 @@ antigen apply
 bindkey -e
 
 # zsh-autosuggestions
-# bindkey '^ ' autosuggest-accept
+bindkey '^ ' autosuggest-accept
 
 # zsh-history-substring-search
 bindkey '^[[A' history-substring-search-up
@@ -59,12 +60,6 @@ bindkey '^[[B' history-substring-search-down
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
-################################################################################
-# Prompt string
-################################################################################
-
-# TODO
 
 ################################################################################
 # Path exports

@@ -4,4 +4,6 @@
   <p>
     <strong><a href="https://github.com/tedbyron">@tedbyron</a>'s dotfiles.</strong>
   </p>
+
+  <img src="./screen.png" />
 </div>
