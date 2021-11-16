@@ -1,6 +1,6 @@
 [[ ! -o interactive ]] && return
 
-# get some env vars
+# set some env vars
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 

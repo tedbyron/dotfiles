@@ -3,7 +3,7 @@
 # return if not running interactively
 [[ -z "${PS1}" ]] && return
 
-# get somem env vars
+# set some env vars
 eval "$(starship init bash)"
 
 ################################################################################
