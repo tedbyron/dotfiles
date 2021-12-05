@@ -123,6 +123,11 @@ format = '\[[$symbol$context]($style)\] '
 symbol = 'docker '
 style = 'cyan'
 
+[elixir]
+format = '\[[$symbol($version)]($style)\] '
+symbol = 'elixir '
+style = 'blue'
+
 [golang]
 format = '\[[$symbol($version)]($style)\] '
 version_format = '${raw}'
