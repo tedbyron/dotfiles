@@ -125,6 +125,7 @@ style = 'cyan'
 
 [elixir]
 format = '\[[$symbol($version)]($style)\] '
+version_format = '${raw}'
 symbol = 'ex '
 style = 'blue'
 
