@@ -36,7 +36,7 @@
   },
   "Horizontal Spacing" : 1,
   "Right Option Key Sends" : 0,
-  "Rows" : 49,
+  "Rows" : 58,
   "Default Bookmark" : "No",
   "Cursor Guide Color" : {
     "Red Component" : 0.70213186740875244,
@@ -88,7 +88,7 @@
     "Blue Component" : 0.35294118523597717
   },
   "Initial Use Transparency" : false,
-  "Columns" : 89,
+  "Columns" : 107,
   "Idle Code" : 0,
   "Ansi 13 Color" : {
     "Green Component" : 0.47450980392156861,
@@ -293,7 +293,8 @@
     "Alpha Component" : 0.5,
     "Green Component" : 0.1491314172744751
   },
-  "Scrollback Lines" : 1000,
+  "Allow Title Setting" : true,
+  "Scrollback Lines" : 2000,
   "Send Code When Idle" : false,
   "Close Sessions On End" : true,
   "Terminal Type" : "xterm-256color",
@@ -627,8 +628,8 @@
     "Red Component" : 0.54509803921568623,
     "Blue Component" : 0.99215686274509807
   },
-  "Normal Font" : "Iosevka-Term-SS07-Extended 13",
-  "Custom Directory" : "No",
+  "Normal Font" : "Iosevka-Term-SS07-Extended 14",
+  "Custom Directory" : "Recycle",
   "Ansi 0 Color" : {
     "Green Component" : 0,
     "Red Component" : 0,

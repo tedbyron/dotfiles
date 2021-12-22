@@ -50,7 +50,6 @@ antigen apply
 
 # emacs mode
 bindkey -e
-
 # zsh-autosuggestions
 bindkey '^ ' autosuggest-accept
 
@@ -65,29 +64,32 @@ export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 # Path exports
 ################################################################################
 
+brew_path="${HOMEBREW_PREFIX}/sbin"
 coreutils_path="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
 findutils_path="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
 grep_path="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
-brew_path="${HOMEBREW_PREFIX}/sbin"
-rust_path="${HOME}/.cargo/bin"
 node_path="${HOMEBREW_PREFIX}/opt/node@16/bin"
+rust_path="${HOME}/.cargo/bin"
+secrets_path="${HOME}/.secrets"
 
 # add paths to $PATH if they exist and aren't in $PATH already
+[[ -d "${brew_path}" && :"${PATH}": != *":${brew_path}:"* ]] \
+&& export PATH="${brew_path}:${PATH}"
 [[ -d "${coreutils_path}" && :"${PATH}": != *":${coreutils_path}:"* ]] \
 && export PATH="${coreutils_path}:${PATH}"
 [[ -d "${findutils_path}" && :"${PATH}": != *":${findutils_path}:"* ]] \
 && export PATH="${findutils_path}:${PATH}"
-[[ -d "${brew_path}" && :"${PATH}": != *":${brew_path}:"* ]] \
-&& export PATH="${brew_path}:${PATH}"
 [[ -d "${grep_path}" && :"${PATH}": != *":${grep_path}:"* ]] \
 && export PATH="${grep_path}:${PATH}"
-[[ -d "${rust_path}" && :"${PATH}": != *:"${rust_path}:"* ]] \
-&& export PATH="${rust_path}:${PATH}"
 [[ -d "${node_path}" && :"${PATH}": != *":${node_path}:"* ]] \
 && export PATH="${node_path}:${PATH}"
+[[ -d "${rust_path}" && :"${PATH}": != *":${rust_path}:"* ]] \
+&& export PATH="${rust_path}:${PATH}"
+[[ -r "${secrets_path}" ]] && source "${secrets_path}"
 
 # Don't source these variables
-unset rust_path brew_path grep_path findutils_path coreutils_path node_path
+unset rust_path brew_path grep_path findutils_path coreutils_path node_path \
+secrets_path
 
 ################################################################################
 # Miscellaneous exports

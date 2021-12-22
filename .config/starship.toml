@@ -50,6 +50,7 @@ version_format = '${raw}'
 symbol = ''
 style = '214'
 display_private = true
+disabled = true
 
 [status]
 format = '[$symbol$status]($style) '
@@ -108,53 +109,124 @@ style = 'red'
 ################################################################################
 
 [aws]
-format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\] '
-symbol = 'aws '
-style = 'yellow'
+disabled = true
 
 [cmake]
-format = '\[[$symbol($version)]($style)\] '
-version_format = '${raw}'
-symbol = 'cmake '
-style = 'cyan'
+disabled = true
+
+[cobol]
+disabled = true
+
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
 
 [docker_context]
-format = '\[[$symbol$context]($style)\] '
-symbol = 'docker '
-style = 'cyan'
+disabled = true
+
+[dotnet]
+disabled = true
 
 [elixir]
-format = '\[[$symbol($version)]($style)\] '
-version_format = '${raw}'
-symbol = 'ex '
-style = 'blue'
+disabled = true
+
+[elm]
+disabled = true
+
+[erlang]
+disabled = true
+
+[gcloud]
+disabled = true
 
 [golang]
-format = '\[[$symbol($version)]($style)\] '
-version_format = '${raw}'
-symbol = 'go '
-style = 'cyan'
+disabled = true
+
+[helm]
+disabled = true
+
+[hg_branch]
+disabled = true
+
+[java]
+disabled = true
+
+[julia]
+disabled = true
+
+[kotlin]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[lua]
+disabled = true
+
+[nim]
+disabled = true
 
 [nix_shell]
-format = '\[[$symbol$state( \($name\))]($style)\] '
-symbol = 'nix '
-style = 'cyan'
+disabled = true
 
 [nodejs]
-format = '\[[$symbol($version)]($style)\] '
-version_format = '${raw}'
-symbol = 'node '
-style = 'green'
-not_capable_style = 'red'
+disabled = true
+
+[ocaml]
+disabled = true
+
+[openstack]
+disabled = true
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[pulumi]
+disabled = true
+
+[purescript]
+disabled = true
 
 [python]
-format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\] '
-version_format = '${raw}'
-symbol = 'py '
-style = 'yellow'
+disabled = true
+
+[red]
+disabled = true
+
+[ruby]
+disabled = true
 
 [rust]
-format = '\[[$symbol($version)]($style)\] '
-version_format = '${raw}'
-symbol = 'rs '
-style = 'red'
+disabled = true
+
+[scala]
+disabled = true
+
+[sudo]
+disabled = true
+
+[swift]
+disabled = true
+
+[terraform]
+disabled = true
+
+[vagrant]
+disabled = true
+
+[vlang]
+disabled = true
+
+[zig]
+disabled = true
