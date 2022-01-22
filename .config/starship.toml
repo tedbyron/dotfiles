@@ -10,6 +10,9 @@ add_newline = false
 # Builtin
 ################################################################################
 
+[battery]
+format = '[$percentage]($style) '
+
 [character]
 format = '$symbol'
 success_symbol = '[>](white)'
