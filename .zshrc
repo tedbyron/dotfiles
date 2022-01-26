@@ -16,7 +16,6 @@ antigen use oh-my-zsh
 #antigen bundle archlinux
 #antigen bundle aws
 antigen bundle brew
-antigen bundle cargo
 #antigen bundle debian
 antigen bundle docker
 antigen bundle fd
@@ -31,7 +30,6 @@ antigen bundle python
 antigen bundle ripgrep
 #antigen bundle rsync
 antigen bundle rust
-antigen bundle rustup
 #antigen bundle systemd
 #antigen bundle ubuntu
 #antigen bundle yarn # yarn 1 completions
