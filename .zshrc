@@ -1,7 +1,7 @@
 [[ ! -o interactive ]] && return
 
 # set some env vars
-eval "$(brew shellenv)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(starship init zsh)"
 
 # source antigen
