@@ -10,7 +10,6 @@ Plug 'preservim/nerdtree'
 Plug 'airblade/vim-gitgutter'
 
 " interface
-Plug 'dracula/vim'
 Plug 'itchyny/lightline.vim'
 
 " commands
@@ -26,9 +25,11 @@ if has('syntax')
   syntax on       " syntax highlighting
 endif
 
+packadd! dracula_pro
+
 set t_Co=256
-colorscheme dracula
-let g:lightline={'colorscheme': 'dracula'}
+colorscheme dracula_pro
+let g:lightline={'colorscheme': 'dracula_pro'}
 
 if has('mouse')
   set mouse=a     " enable mouse in all modes
