@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# setup global git options
+# Set global git options.
 
 declare -r red='\033[31m' # foreground red
 declare -r nt='\033[0m'   # normal text
