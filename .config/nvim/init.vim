@@ -54,7 +54,7 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set laststatus=2  " always show status line
-set scrolloff=5   " lines to keep above and below cursor
+set scrolloff=3   " lines to keep above and below cursor
 
 " commands
 set wildmenu
