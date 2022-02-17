@@ -57,7 +57,6 @@ brew_path="${HOMEBREW_PREFIX}/sbin"
 coreutils_path="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
 findutils_path="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
 grep_path="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
-emacs_path="${HOME}/.config/emacs/bin"
 rust_path="${HOME}/.cargo/bin"
 
 # add paths to $PATH if they exist and aren't in $PATH already
@@ -65,19 +64,16 @@ export PATH="${brew_path}:${PATH}"
 export PATH="${coreutils_path}:${PATH}"
 export PATH="${findutils_path}:${PATH}"
 export PATH="${grep_path}:${PATH}"
-export PATH="${emacs_path}:${PATH}"
 export PATH="${rust_path}:${PATH}"
 
 # don't source these variables
-unset rust_path emacs_path brew_path grep_path findutils_path coreutils_path \
-node_path
+unset rust_path brew_path grep_path findutils_path coreutils_path node_path
 
 ################################################################################
 # Miscellaneous exports
 ################################################################################
 
 export HOMEBREW_NO_ANALYTICS=1
-export LSP_USE_PLISTS=1
 
 export BAT_THEME='Dracula'
 
