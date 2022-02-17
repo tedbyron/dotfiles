@@ -8,12 +8,16 @@ Plug 'tpope/vim-surround'
 " integrations
 Plug 'preservim/nerdtree'
 Plug 'airblade/vim-gitgutter'
+Plug 'folke/which-key.nvim'
 
 " interface
 Plug 'itchyny/lightline.vim'
 
 " commands
+Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
 
 " other
 Plug 'tpope/vim-sleuth'
@@ -26,6 +30,7 @@ if has('syntax')
 endif
 
 packadd! dracula_pro
+let g:dracula_colorterm = 0
 
 set t_Co=256
 colorscheme dracula_pro
@@ -39,7 +44,7 @@ set history=500   " cmdline-history
 set autoread      " read file if changed externally
 
 " layout
-set number        " line numbers
+set number relativenumber " line numbers
 set ruler         " cursor line and column number
 set cursorline    " highlight cursor line
 set autoindent    " continue indent on newlines
@@ -65,10 +70,9 @@ set visualbell
 set t_vb=
 
 " search
-set ignorecase
-set smartcase
-set hlsearch
-set incsearch
+set path+=.;,./**
+set ignorecase smartcase
+set hlsearch incsearch
 set magic
 set noshowmode
 
@@ -90,3 +94,7 @@ hi LineNr ctermbg=NONE
 
 let mapleader=' '
 inoremap <S-Tab> <C-d>
+
+lua << EOF
+  require("which-key").setup({}) 
+EOF
