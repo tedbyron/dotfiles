@@ -21,7 +21,7 @@ Plug 'tpope/vim-unimpaired'
 
 " other
 Plug 'tpope/vim-sleuth'
-Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 

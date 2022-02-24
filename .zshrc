@@ -53,21 +53,14 @@ export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 # Path exports
 ################################################################################
 
-brew_path="${HOMEBREW_PREFIX}/sbin"
-coreutils_path="${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
-findutils_path="${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
-grep_path="${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
-rust_path="${HOME}/.cargo/bin"
-
-# add paths to $PATH if they exist and aren't in $PATH already
-export PATH="${brew_path}:${PATH}"
-export PATH="${coreutils_path}:${PATH}"
-export PATH="${findutils_path}:${PATH}"
-export PATH="${grep_path}:${PATH}"
-export PATH="${rust_path}:${PATH}"
-
-# don't source these variables
-unset rust_path brew_path grep_path findutils_path coreutils_path node_path
+path+=( \
+  "${HOMEBREW_PREFIX}/sbin" \
+  "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin" \
+  "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin" \
+  "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin" \
+  "${HOME}/.cargo/bin" \
+  "${HOME}/.local/share/solana/install/active_release/bin" \
+)
 
 ################################################################################
 # Miscellaneous exports
