@@ -53,13 +53,14 @@ export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 # Path exports
 ################################################################################
 
-path+=( \
-  "${HOMEBREW_PREFIX}/sbin" \
-  "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin" \
-  "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin" \
-  "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin" \
-  "${HOME}/.cargo/bin" \
-  "${HOME}/.local/share/solana/install/active_release/bin" \
+path=(
+  "${HOMEBREW_PREFIX}/sbin"
+  "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
+  "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
+  "${HOMEBREW_PREFIX}/opt/llvm/bin"
+  "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
+  "${HOME}/.cargo/bin"
+  $path
 )
 
 ################################################################################
