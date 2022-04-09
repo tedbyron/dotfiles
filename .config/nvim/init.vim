@@ -2,26 +2,23 @@ set nocompatible
 
 call plug#begin(stdpath('data') . '/plugged')
 
-" code display
 Plug 'tpope/vim-surround'
-
-" integrations
-Plug 'preservim/nerdtree'
-Plug 'airblade/vim-gitgutter'
-Plug 'folke/which-key.nvim'
-
-" interface
-Plug 'itchyny/lightline.vim'
-
-" commands
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
-
-" other
 Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-commentary'
+
+if exists('g:vscode')
+  Plug 'asvetliakov/vim-easymotion', { 'as': 'vsc-easymotion' }
+else
+  Plug 'preservim/nerdtree'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'itchyny/lightline.vim'
+  Plug 'folke/which-key.nvim'
+  Plug 'tpope/vim-commentary'
+  Plug 'easymotion/vim-easymotion'
+endif
 
 call plug#end()
 
@@ -95,6 +92,13 @@ hi LineNr ctermbg=NONE
 let mapleader=' '
 inoremap <S-Tab> <C-d>
 
+if exists('g:vscode')
+  xmap gc  <Plug>VSCodeCommentary
+  nmap gc  <Plug>VSCodeCommentary
+  omap gc  <Plug>VSCodeCommentary
+  nmap gcc <Plug>VSCodeCommentaryLine
+else
 lua << EOF
   require("which-key").setup({}) 
 EOF
+endif
