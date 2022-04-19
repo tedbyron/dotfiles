@@ -97,37 +97,20 @@ fi
 # Aliases
 ################################################################################
 
-# cd to parent directory
-alias ..='cd ..'
-# do everything except autoremove (orphaned dependencies)
 alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
-# human-readable
 alias df='df -h'
-# human-readable, max depth 1
 alias du='du -hd 1'
-# max depth 1
 alias dust='dust -d 1'
-# case insensitive, color
 alias grep='grep -i --color=auto'
-# quit if one screen, raw control chars
 alias less='less -FR'
-# classify entries, human-readable, color, directories first
 alias ls='ls -Fh --color=auto --group-directories-first'
-# almost all
 alias la='ls -A'
-# long list, almost all
-alias ll='ls -lA'
-# pretty print $PATH
+alias l='ls -lA'
 alias path='echo -e ${PATH//:/\\n}'
-# full match, include ancestors, ignore case, long output
 alias pgrep='pgrep -fail'
-# all processes, full format
 alias ps='ps -ef'
-# smart letter case
 alias rg='rg -S'
-# expand aliases used with sudo
 alias sudo='sudo '
-# nvim if exists
 if (( ${+commands[nvim]} )); then
   alias vim='nvim'
   alias v='nvim'
