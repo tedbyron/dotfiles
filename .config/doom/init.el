@@ -1,54 +1,54 @@
 ;;; $DOOMDIR/init.el -*- lexical-binding: t; -*-
 
 (doom! :input
-       ;;chinese
-       ;;japanese
-       ;;layout
+       ;; chinese
+       ;; japanese
+       ;; layout
 
        :completion
        (company +childframe)
-       ;;helm
-       ;;ido
-       ;;ivy
+       ;; helm
+       ;; ido
+       ;; ivy
        (vertico +icons)
 
        :ui
-       ;;deft
+       ;; deft
        doom
        doom-dashboard
        doom-quit
-       ;;(emoji +unicode)
+       ;; (emoji +unicode)
        hl-todo
-       ;;hydra
-       ;;indent-guides
+       ;; hydra
+       ;; indent-guides
        (ligatures +iosevka)
-       ;;minimap
+       ;; minimap
        modeline
        nav-flash
-       ;;neotree
+       ;; neotree
        ophints
        (popup
         +all
         +defaults)
-       ;;tabs
+       ;; tabs
        (treemacs +lsp)
-       ;;unicode
+       ;; unicode
        vc-gutter
-       ;;vi-tilde-fringe
+       ;; vi-tilde-fringe
        (window-select +numbers)
        workspaces
-       zen
+       ;; zen
 
        :editor
        (evil +everywhere)
        file-templates
        fold
        (format +onsave)
-       ;;god
-       ;;lispy
+       ;; god
+       ;; lispy
        multiple-cursors
-       ;;objed
-       ;;parinfer
+       ;; objed
+       ;; parinfer
        rotate-text
        snippets
        word-wrap
@@ -61,37 +61,37 @@
        vc
 
        :term
-       ;;eshell
-       ;;shell
-       ;;term
+       ;; eshell
+       ;; shell
+       ;; term
        vterm
 
        :checkers
        syntax
-       ;;(spell +everywhere)
-       ;;grammar
+       ;; (spell +everywhere)
+       ;; grammar
 
        :tools
-       ;;ansible
-       ;;biblio
+       ;; ansible
+       ;; biblio
        (debugger +lsp)
-       ;;direnv
-       ;;docker
-       ;;editorconfig
-       ;;ein
+       ;; direnv
+       ;; docker
+       ;; editorconfig
+       ;; ein
        (eval +overlay)
-       ;;gist
+       ;; gist
        lookup
        (lsp +peek)
        (magit +forge)
-       ;;make
-       ;;pass
+       ;; make
+       ;; pass
        pdf
-       ;;prodigy
+       ;; prodigy
        rgb
-       ;;taskrunner
-       ;;terraform
-       ;;tmux
+       ;; taskrunner
+       ;; terraform
+       ;; tmux
        upload
 
        :os
@@ -99,88 +99,90 @@
        tty
 
        :lang
-       ;;agda
-       ;;beancount
-       ;;cc
-       ;;clojure
-       ;;common-lisp
-       ;;coq
-       ;;crystal
-       ;;csharp
+       ;; agda
+       ;; beancount
+       ;; cc
+       ;; clojure
+       ;; common-lisp
+       ;; coq
+       ;; crystal
+       ;; csharp
        data
-       ;;(dart +flutter +lsp)
-       ;;dhall
-       ;;(elixir +lsp)
-       ;;elm
+       ;; (dart +flutter +lsp)
+       ;; dhall
+       ;; (elixir +lsp)
+       ;; elm
        emacs-lisp
-       ;;(erlang +lsp)
-       ;;ess
-       ;;factor
-       ;;faust
-       ;;fortran
-       ;;fsharp
-       ;;fstar
-       ;;gdscript
-       ;;(go +lsp)
-       ;;(haskell +lsp)
-       ;;hy
-       ;;idris
+       ;; (erlang +lsp)
+       ;; ess
+       ;; factor
+       ;; faust
+       ;; fortran
+       ;; fsharp
+       ;; fstar
+       ;; gdscript
+       ;; (go +lsp)
+       ;; (haskell +lsp)
+       ;; hy
+       ;; idris
        (json +lsp)
-       ;;(java +lsp)
+       ;; (java +lsp)
        (javascript +lsp)
-       ;;julia
-       ;;kotlin
-       ;;latex
-       ;;lean
-       ;;ledger
-       ;;lua
+       ;; julia
+       ;; kotlin
+       ;; latex
+       ;; lean
+       ;; ledger
+       ;; lua
        markdown
-       ;;nim
-       ;;nix
-       ;;ocaml
+       ;; nim
+       nix
+       ;; ocaml
        (org
         +pretty
         +dragndrop
         +pandoc
         +present
         +roam2)
-       ;;php
-       ;;plantuml
-       ;;purescript
-       ;;python
-       ;;qt
-       ;;racket
-       ;;raku
-       ;;rest
-       ;;rst
-       ;;(ruby +rails)
+       ;; php
+       ;; plantuml
+       ;; purescript
+       (python
+        +lsp
+        +conda)
+       ;; qt
+       ;; racket
+       ;; raku
+       ;; rest
+       ;; rst
+       ;; (ruby +rails)
        (rust +lsp)
-       ;;scala
-       ;;(scheme +guile)
+       ;; scala
+       ;; (scheme +guile)
        sh
-       ;;sml
-       ;;solidity
-       ;;swift
-       ;;terra
+       ;; sml
+       solidity
+       ;; swift
+       ;; terra
        (web +lsp)
        (yaml +lsp)
-       ;;zig
+       ;; zig
 
        :email
-       ;;(mu4e +org +gmail)
-       ;;notmuch
-       ;;(wanderlust +gmail)
+       ;; (mu4e +org +gmail)
+       ;; notmuch
+       ;; (wanderlust +gmail)
 
        :app
-       ;;calendar
-       ;;emms
-       ;;everywhere
-       ;;irc
-       ;;(rss +org)
-       ;;twitter
+       ;; calendar
+       ;; emms
+       ;; everywhere
+       ;; irc
+       ;; (rss +org)
+       ;; twitter
 
        :config
-       ;;literate
+       ;; literate
        (default
          +bindings
          +smartparens))
