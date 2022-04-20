@@ -59,7 +59,6 @@ path=(
   "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
   "${HOMEBREW_PREFIX}/opt/llvm/bin"
   "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
-  "${HOME}/.config/emacs/bin"
   "${HOME}/.cargo/bin"
   $path
 )
