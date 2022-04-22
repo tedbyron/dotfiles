@@ -136,7 +136,7 @@
        ;; lua
        markdown
        ;; nim
-       nix
+       ;; nix
        ;; ocaml
        (org
         +pretty
@@ -147,9 +147,9 @@
        ;; php
        ;; plantuml
        ;; purescript
-       (python
-        +lsp
-        +conda)
+       ;; (python
+       ;;  +lsp
+       ;;  +conda)
        ;; qt
        ;; racket
        ;; raku

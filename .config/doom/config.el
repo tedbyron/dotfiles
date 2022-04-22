@@ -5,9 +5,7 @@
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode 1))
 
-;; frame size
-(add-to-list 'default-frame-alist '(height . 48))
-(add-to-list 'default-frame-alist '(width . 120))
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (map! :desc "Frame maximized" :leader "t M" #'toggle-frame-maximized)
 
 (setq-default major-mode 'org-mode
@@ -16,7 +14,6 @@
 
 (setq user-full-name "Teddy Byron"
       user-mail-address "ted@tedbyron.com"
-
       password-cache-expiry 60
 
       ;; editor
