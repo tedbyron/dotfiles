@@ -75,7 +75,7 @@ export GPG_TTY
 export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/llvm/lib \
 -L${HOMEBREW_PREFIX}/opt/libpq/bin"
 export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/llvm/include \
--L${HOMEBREW_PREFIX}/opt/libpq/include"
+-I${HOMEBREW_PREFIX}/opt/libpq/include"
 
 export LESS_TERMCAP_mb=$'\033[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\033[1;36m'     # begin bold
