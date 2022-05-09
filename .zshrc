@@ -60,7 +60,6 @@ path=(
   "${HOMEBREW_PREFIX}/opt/llvm/bin"
   "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
   "${HOME}/.cargo/bin"
-  "${HOME}/.config/emacs/bin"
   $path
 )
 
