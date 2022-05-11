@@ -2,24 +2,23 @@ set nocompatible
 
 call plug#begin(stdpath('data') . '/plugged')
 
-Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-sneak'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-sleuth'
 
 if exists('g:vscode')
   Plug 'asvetliakov/vim-easymotion', { 'as': 'vsc-easymotion' }
 else
-  Plug 'preservim/nerdtree'
   Plug 'airblade/vim-gitgutter'
-  Plug 'itchyny/lightline.vim'
-  Plug 'folke/which-key.nvim'
-  Plug 'tpope/vim-commentary'
   Plug 'easymotion/vim-easymotion'
+  Plug 'folke/which-key.nvim'
+  Plug 'itchyny/lightline.vim'
+  Plug 'preservim/nerdtree'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-sleuth'
 endif
-
 call plug#end()
 
 if has('syntax')
@@ -98,6 +97,7 @@ if exists('g:vscode')
   omap gc  <Plug>VSCodeCommentary
   nmap gcc <Plug>VSCodeCommentaryLine
   nnoremap z= <Cmd>call VSCodeNotify('keyboard-quickfix.openQuickFix')<CR>
+  nnoremap z- <Cmd>call VSCodeNotify('editor.action.rename')<CR>
 else
 lua << EOF
   require("which-key").setup({}) 
