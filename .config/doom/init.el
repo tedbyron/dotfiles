@@ -24,19 +24,19 @@
        (ligatures +iosevka)
        ;; minimap
        modeline
-       nav-flash
+       ;; nav-flash
        ;; neotree
        ophints
        (popup
         +all
         +defaults)
        ;; tabs
-       (treemacs +lsp)
+       ;; (treemacs +lsp)
        ;; unicode
        vc-gutter
        ;; vi-tilde-fringe
        (window-select +numbers)
-       workspaces
+       ;; workspaces
        ;; zen
 
        :editor
@@ -80,7 +80,7 @@
        ;; editorconfig
        ;; ein
        (eval +overlay)
-       ;; gist
+       gist
        lookup
        (lsp +peek)
        (magit +forge)
@@ -121,7 +121,7 @@
        ;; fsharp
        ;; fstar
        ;; gdscript
-       ;; (go +lsp)
+       (go +lsp)
        ;; (haskell +lsp)
        ;; hy
        ;; idris
@@ -161,7 +161,7 @@
        ;; (scheme +guile)
        sh
        ;; sml
-       solidity
+       ;; solidity
        ;; swift
        ;; terra
        (web +lsp)
