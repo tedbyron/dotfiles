@@ -98,6 +98,12 @@ if exists('g:vscode')
   nmap gcc <Plug>VSCodeCommentaryLine
   nnoremap z= <Cmd>call VSCodeNotify('keyboard-quickfix.openQuickFix')<CR>
   nnoremap z- <Cmd>call VSCodeNotify('editor.action.rename')<CR>
+  nnoremap <leader>hs <Cmd>call VSCodeNotify('git.stageSelectedRanges')<CR>
+  nnoremap <leader>hu <Cmd>call VSCodeNotify('git.unstageSelectedRanges')<CR>
+  nnoremap [c <Cmd>call VSCodeNotify('editor.action.dirtydiff.previous')<CR>
+  nnoremap ]c <Cmd>call VSCodeNotify('editor.action.dirtydiff.next')<CR>
+  nnoremap [e <Cmd>call VSCodeNotify('editor.action.marker.prev')<CR>
+  nnoremap ]e <Cmd>call VSCodeNotify('editor.action.marker.next')<CR>
 else
 lua << EOF
   require("which-key").setup({}) 
