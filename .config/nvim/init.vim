@@ -97,6 +97,7 @@ if exists('g:vscode')
   nmap gc  <Plug>VSCodeCommentary
   omap gc  <Plug>VSCodeCommentary
   nmap gcc <Plug>VSCodeCommentaryLine
+  nnoremap z= <Cmd>call VSCodeNotify('keyboard-quickfix.openQuickFix')<CR>
 else
 lua << EOF
   require("which-key").setup({}) 
