@@ -122,6 +122,9 @@ disabled = true
 [buf]
 disabled = true
 
+[c]
+disabled = true
+
 [cmake]
 disabled = true
 
@@ -225,6 +228,12 @@ disabled = true
 disabled = true
 
 [scala]
+disabled = true
+
+[singularity]
+disabled = true
+
+[spack]
 disabled = true
 
 [sudo]
