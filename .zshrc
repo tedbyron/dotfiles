@@ -123,11 +123,13 @@ if (( ${+commands[nvim]} )); then
 fi
 
 alias p='pnpm'
+alias pdlx='pnpm dlx'
 alias pa='pnpm add'
 alias pad='pnpm add --save-dev'
 alias pao='pnpm add --save-optional'
 alias pap='pnpm add --save-peer'
 alias pb='pnpm build'
+alias ppr='pnpm preview'
 alias pp='pnpm prune'
 alias psp='pnpm store prune'
 alias pd='pnpm dev'
