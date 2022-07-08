@@ -11,20 +11,6 @@ source "${HOMEBREW_PREFIX}/share/antigen/antigen.zsh"
 # Plugins
 ################################################################################
 
-antigen use oh-my-zsh
-
-antigen bundle brew
-antigen bundle fd
-antigen bundle git
-antigen bundle gh
-antigen bundle mix
-antigen bundle node
-antigen bundle npm
-antigen bundle nvm
-antigen bundle ripgrep
-antigen bundle rust
-antigen bundle yarn
-
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-history-substring-search
@@ -129,14 +115,59 @@ if (( ${+commands[nvim]} )); then
   alias v='nvim'
 fi
 
+alias y='yarn'
+alias ya='yarn add'
+alias yad='yarn add --dev'
+alias yao='yarn add --optional'
+alias yap='yarn add --peer'
+alias yb='yarn build'
+alias yc='yarn check'
+alias ycc='yarn cache clean'
+alias ycfg='yarn config'
+alias ycg='yarn config get'
+alias ycs='yarn config set'
+alias ycu='yarn config unset'
+alias yd='yarn dev'
+alias ydd='yarn dedupe'
+alias ye='yarn exec'
+alias yep='yarn explain peer-requirements'
+alias yf='yarn format'
+alias yi='yarn info'
+alias yin='yarn info --name-only'
+alias yinit='yarn init'
+alias yir='yarn info --recursive'
+alias yl='yarn lint'
+alias ylf='yarn lint --fix'
+alias yn='yarn npm'
+alias ypack='yarn pack'
+alias ypli='yarn plugin import'
+alias ypll='yarn plugin list'
+alias yplr='yarn plugin runtime'
+alias ypr='yarn preview'
+alias yrb='yarn rebuild'
+alias yrm='yarn rm'
+alias ys='yarn search'
+alias yse='yarn serve'
+alias yst='yarn start'
+alias yt='yarn test'
+alias yui='yarn upgrade-interactive'
+alias yup='yarn up'
+alias yv='yarn --version'
+alias yver='yarn version'
+alias yw='yarn workspace'
+alias ywf='yarn workspaces focus'
+alias ywfe='yarn workspaces foreach'
+alias ywl='yarn workspaces list'
+alias yx='yarn dlx'
+
 alias p='pnpm'
 alias pa='pnpm add'
 alias pad='pnpm add --save-dev'
 alias pao='pnpm add --save-optional'
 alias pap='pnpm add --save-peer'
 alias pb='pnpm build'
-alias pd='pnpm dev'
 alias pc='pnpm check'
+alias pd='pnpm dev'
 alias pf='pnpm format'
 alias pi='pnpm i'
 alias pinit='pnpm init'
