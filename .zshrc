@@ -1,26 +1,27 @@
 [[ ! -o interactive ]] && return
 
-# set some env vars
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(starship init zsh)"
-
-# source antigen
-source "${HOMEBREW_PREFIX}/share/antigen/antigen.zsh"
+source ~/.local/share/zsh-snap/znap.zsh
+zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
+znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
+znap eval brew '/opt/homebrew/bin/brew shellenv'
+znap eval starship 'starship init zsh --print-full-init'
+znap prompt
 
 ################################################################################
-# Plugins
+# plugins
 ################################################################################
 
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-history-substring-search
+znap source ohmyzsh/ohmyzsh \
+  lib/{directories,git,theme-and-appearance} \
+  plugins/git
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-completions
+znap source zsh-users/zsh-history-substring-search
 # must be last: https://github.com/zsh-users/zsh-syntax-highlighting#faq
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-antigen apply
+znap source zsh-users/zsh-syntax-highlighting
 
 ################################################################################
-# Keybinds
+# keybinds
 ################################################################################
 
 # emacs mode
@@ -36,7 +37,7 @@ bindkey -M emacs '^N' history-substring-search-down
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 ################################################################################
-# Path
+# path
 ################################################################################
 
 path=(
@@ -51,7 +52,14 @@ path=(
 )
 
 ################################################################################
-# Miscellaneous exports
+# functions
+################################################################################
+
+znap fpath _rustup 'rustup completions zsh'
+znap fpath _cargo 'rustup completions zsh cargo'
+
+################################################################################
+# misc exports
 ################################################################################
 
 export HOMEBREW_NO_ANALYTICS=1
@@ -93,7 +101,7 @@ export PNPM_HOME="/Users/ted/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
 ################################################################################
-# Aliases
+# aliases
 ################################################################################
 
 alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'

@@ -31,7 +31,7 @@ read_only = " ro"
 style = 'cyan'
 
 [fill]
-symbol = '─' # ─ ━
+symbol = ' ' # ─ ━
 
 [hostname]
 ssh_only = false

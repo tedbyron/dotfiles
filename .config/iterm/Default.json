@@ -47,6 +47,7 @@
   },
   "Non-ASCII Anti Aliased" : true,
   "Use Bright Bold" : true,
+  "Show Mark Indicators" : false,
   "Ansi 10 Color" : {
     "Green Component" : 0.98039215686274506,
     "Red Component" : 0.31372549019607843,
@@ -72,7 +73,7 @@
     "Blue Component" : 0.90032327175140381
   },
   "Working Directory" : "\/Users\/ted",
-  "Blinking Cursor" : true,
+  "Blinking Cursor" : false,
   "Disable Window Resizing" : true,
   "Sync Title" : false,
   "Prompt Before Closing 2" : false,
@@ -282,8 +283,8 @@
       "Action" : 10
     }
   },
-  "Window Type" : 0,
   "Cursor Boost" : 0,
+  "Window Type" : 0,
   "Background Image Location" : "",
   "Blur" : false,
   "Badge Color" : {
