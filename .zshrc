@@ -1,7 +1,5 @@
-[[ ! -o interactive ]] && return
-
-source ~/.local/share/zsh-snap/znap.zsh
 zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
+source ~/.local/share/zsh-snap/znap.zsh
 znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 znap eval brew '/opt/homebrew/bin/brew shellenv'
 znap eval starship 'starship init zsh --print-full-init'
@@ -153,7 +151,7 @@ alias ypll='yarn plugin list'
 alias yplr='yarn plugin runtime'
 alias ypr='yarn preview'
 alias yrb='yarn rebuild'
-alias yrm='yarn rm'
+alias yrm='yarn remove'
 alias ys='yarn search'
 alias yse='yarn serve'
 alias yst='yarn start'

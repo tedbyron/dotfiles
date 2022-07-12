@@ -216,7 +216,7 @@
 		</dict>
 	</dict>
 	<key>Default Bookmark Guid</key>
-	<string>5F347EAC-35A0-4A77-8EC1-5836F3F10177</string>
+	<string>32C89769-4543-481D-BC66-C503C1A382D7</string>
 	<key>DimInactiveSplitPanes</key>
 	<false/>
 	<key>HapticFeedbackForEsc</key>
@@ -417,7 +417,7 @@
 				<integer>1</integer>
 			</dict>
 			<key>Blinking Cursor</key>
-			<true/>
+			<false/>
 			<key>Blur</key>
 			<false/>
 			<key>Bold Color</key>
@@ -492,7 +492,7 @@
 				<real>0.90032327175140381</real>
 			</dict>
 			<key>Guid</key>
-			<string>5F347EAC-35A0-4A77-8EC1-5836F3F10177</string>
+			<string>32C89769-4543-481D-BC66-C503C1A382D7</string>
 			<key>Horizontal Spacing</key>
 			<integer>1</integer>
 			<key>Idle Code</key>
@@ -848,6 +848,8 @@
 			<false/>
 			<key>Shortcut</key>
 			<string></string>
+			<key>Show Mark Indicators</key>
+			<false/>
 			<key>Show Status Bar</key>
 			<false/>
 			<key>Silence Bell</key>
