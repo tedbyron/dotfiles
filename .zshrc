@@ -60,6 +60,7 @@ znap fpath _cargo 'rustup completions zsh cargo'
 # misc exports
 ################################################################################
 
+export STARSHIP_LOG=error
 export HOMEBREW_NO_ANALYTICS=1
 
 GPG_TTY="$(tty)"
