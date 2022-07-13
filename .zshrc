@@ -10,7 +10,7 @@ znap prompt
 ################################################################################
 
 znap source ohmyzsh/ohmyzsh \
-  lib/{completion,directories} \
+  lib/{completion,correction,directories,history} \
   plugins/git
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-completions
@@ -19,8 +19,14 @@ znap source zsh-users/zsh-history-substring-search
 znap source zsh-users/zsh-syntax-highlighting
 
 ################################################################################
-# keybinds
+# zsh
 ################################################################################
+
+setopt auto_cd
+setopt interactive_comments
+setopt long_list_jobs
+setopt multios
+setopt no_beep
 
 # emacs mode
 bindkey -e
