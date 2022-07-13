@@ -10,7 +10,7 @@ znap prompt
 ################################################################################
 
 znap source ohmyzsh/ohmyzsh \
-  lib/{directories,git,theme-and-appearance} \
+  lib/{completion,directories,git,theme-and-appearance} \
   plugins/git
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-completions
