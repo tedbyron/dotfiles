@@ -6,7 +6,7 @@ brew install d12frosted/emacs-plus/emacs-plus@28 \
     --with-native-comp \
     --with-xwidgets \
     --with-modern-doom-icon
-ln -sf /usr/local/opt/emacs-plus@28/Emacs.app /Applications
+ln -sf ${HOMEBREW_PREFIX}/opt/emacs-plus@28/Emacs.app /Applications
 brew services restart d12frosted/emacs-plus/emacs-plus@28
 
 gh repo clone hlissner/doom-emacs ~/.config/emacs \

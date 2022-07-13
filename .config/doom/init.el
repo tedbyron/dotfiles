@@ -76,7 +76,7 @@
        ;; biblio
        (debugger +lsp)
        ;; direnv
-       ;; docker
+       docker
        ;; editorconfig
        ;; ein
        (eval +overlay)
@@ -90,7 +90,7 @@
        ;; prodigy
        rgb
        ;; taskrunner
-       ;; terraform
+       terraform
        ;; tmux
        upload
 
@@ -121,7 +121,7 @@
        ;; fsharp
        ;; fstar
        ;; gdscript
-       (go +lsp)
+       ;; (go +lsp)
        ;; (haskell +lsp)
        ;; hy
        ;; idris
