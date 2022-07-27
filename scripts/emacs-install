@@ -1,20 +1,15 @@
 #!/usr/bin/env zsh
 
-gh repo clone hlissner/doom-emacs ~/.config/emacs \
-    -- \
-    --depth 1
+gh repo clone hlissner/doom-emacs ~/.config/emacs -- --depth 1
 
-brew tap railwaycat/emacsmacport
-brew install emacs-mac \
-    --with-emacs-big-sur-icon \
+brew tap d12frosted/emacs-plus
+brew install emacs-plus@28 \
+    --with-xwidgets \
     --with-imagemagick \
-    --with-glib \
-    --with-mac-metal \
     --with-native-comp \
-    --with-rsvg \
-    --with-starter \
-    --with-xwidgets
+    --with-modern-doom3-icon \
 
 ln -sf ${HOMEBREW_PREFIX}/opt/emacs-mac/Emacs.app /Applications
+brew services restart emacs-plus@28
 
 ~/.config/emacs/bin/doom install
