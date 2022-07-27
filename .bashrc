@@ -1,9 +1,7 @@
 # shellcheck disable=SC2148,SC1091
 
-# return if not running interactively
 [[ -z "${PS1}" ]] && return
 
-# set some env vars
 eval "$(starship init bash)"
 
 ################################################################################
@@ -17,7 +15,6 @@ brew_path="${HOMEBREW_PREFIX}/sbin"
 rust_path="${HOME}/.cargo/bin"
 node_path="${HOMEBREW_PREFIX}/opt/node@16/bin"
 
-# add paths to $PATH if they exist and aren't in $PATH already
 [[ -d "${coreutils_path}" && ":${PATH}:" != *":${coreutils_path}:"* ]] \
 && export PATH="${coreutils_path}:${PATH}"
 [[ -d "${findutils_path}" && ":${PATH}:" != *":${findutils_path}:"* ]] \
@@ -31,7 +28,6 @@ node_path="${HOMEBREW_PREFIX}/opt/node@16/bin"
 [[ -d "${node_path}" && ":${PATH}:" != *":${node_path}:"* ]] \
 && export PATH="${node_path}:${PATH}"
 
-# don't source these variables
 unset rust_path brew_path grep_path findutils_path coreutils_path node_path
 
 ################################################################################
@@ -71,37 +67,21 @@ fi
 # aliases
 ################################################################################
 
-# cd to parent directory
 alias ..='cd ..'
-# do everything except autoremove (orphaned dependencies)
 alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
-# human-readable
 alias df='df -h'
-# human-readable, max depth 1
 alias du='du -hd 1'
-# max depth 1
 alias dust='dust -d 1'
-# case insensitive, color
 alias grep='grep -i --color=auto'
-# quit if one screen, raw control chars
 alias less='less -FR'
-# classify entries, human-readable, color, directories first
 alias ls='ls -Fh --color=auto --group-directories-first'
-# almost all
 alias la='ls -A'
-# long list, almost all
 alias ll='ls -lA'
-# pretty print $PATH
 alias path='echo -e "${PATH//:/\\n}"'
-# full match, include ancestors, ignore case, long output
 alias pgrep='pgrep -fail'
-# all processes, full format
 alias ps='ps -ef'
-# smart letter case
 alias rg='rg -S'
-# expand aliases used with sudo
 alias sudo='sudo '
-# nvim if exists
 if [[ -x "$(command -v nvim)" ]]; then
   alias vim='nvim'
   alias v='nvim'

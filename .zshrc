@@ -28,12 +28,9 @@ setopt long_list_jobs
 setopt multios
 setopt no_beep
 
-# emacs mode
 bindkey -e
-# zsh-autosuggestions
 bindkey '^ ' autosuggest-accept
 
-# zsh-history-substring-search
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M emacs '^P' history-substring-search-up
@@ -50,6 +47,7 @@ path=(
   "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
   "${HOMEBREW_PREFIX}/opt/llvm/bin"
   "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
+  "${HOME}/.config/emacs/bin"
   "${HOME}/.cargo/bin"
   "${HOME}/.mix/escripts"
   $path

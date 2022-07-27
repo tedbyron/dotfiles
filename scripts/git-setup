@@ -1,21 +1,18 @@
-#!/usr/bin/env bash
-# Set global git options.
+#!/usr/bin/env zsh
 
-declare -r red='\033[31m' # foreground red
-declare -r nt='\033[0m'   # normal text
+declare -r red='\033[31m'
+declare -r nt='\033[0m'
 
-# check if git is installed
 check_git() {
   if [[ ! -x "$(command -v git)" ]]; then
     err_msg 'This script requires git' 1
   fi
 }
 
-# setup git
 setup_git() {
   git config --global core.autocrlf       false
   git config --global core.eol            'lf'
-  if [[ -x "$(command -v nvim)" ]]; then  
+  if [[ -x "$(command -v nvim)" ]]; then
     git config --global core.editor       'nvim'
   else
     git config --global core.editor       'vim'
