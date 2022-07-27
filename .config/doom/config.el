@@ -33,7 +33,7 @@
 
       ;; modeline
       display-time-24hr-format t
-      ;; display-time-default-load-average nil
+      display-time-default-load-average nil
 
       ;; doom
       doom-theme 'doom-dracula
@@ -53,12 +53,6 @@
       all-the-icons-scale-factor 1.0
       projectile-project-search-path '("~/git/")
       which-key-idle-delay 0.75)
-
-;; (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-(add-hook! '+doom-dashboard-mode-hook
-  (hide-mode-line-mode 1)
-  (hl-line-mode -1))
-;; (setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
 
 (after! org
   (setq doom-modeline-enable-word-count t))

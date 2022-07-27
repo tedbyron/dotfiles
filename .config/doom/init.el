@@ -20,8 +20,8 @@
        ;; (emoji +unicode)
        hl-todo
        ;; hydra
-       ;; indent-guides
-       (ligatures +iosevka)
+       indent-guides
+       ;; ligatures
        ;; minimap
        modeline
        ;; nav-flash
@@ -37,7 +37,7 @@
        ;; vi-tilde-fringe
        (window-select +numbers)
        ;; workspaces
-       ;; zen
+       zen
 
        :editor
        (evil +everywhere)
@@ -48,7 +48,7 @@
        ;; lispy
        multiple-cursors
        ;; objed
-       ;; parinfer
+       parinfer
        rotate-text
        snippets
        word-wrap
@@ -64,7 +64,7 @@
        ;; eshell
        ;; shell
        ;; term
-       vterm
+       ;; vterm
 
        :checkers
        syntax
@@ -76,7 +76,7 @@
        ;; biblio
        (debugger +lsp)
        ;; direnv
-       docker
+       (docker +lsp)
        ;; editorconfig
        ;; ein
        (eval +overlay)
@@ -101,72 +101,81 @@
        :lang
        ;; agda
        ;; beancount
-       ;; cc
-       ;; clojure
+       ;; (cc +lsp)
+       ;; (clojure +lsp)
        ;; common-lisp
        ;; coq
        ;; crystal
-       ;; csharp
-       data
+       ;; (csharp +lsp +unity)
        ;; (dart +flutter +lsp)
+       data
        ;; dhall
        ;; (elixir +lsp)
-       ;; elm
+       ;; (elm +lsp)
        emacs-lisp
        ;; (erlang +lsp)
-       ;; ess
+       ;; (ess +lsp)
        ;; factor
        ;; faust
        ;; fortran
-       ;; fsharp
+       ;; (fsharp +lsp)
        ;; fstar
-       ;; gdscript
+       ;; (gdscript +lsp)
        ;; (go +lsp)
        ;; (haskell +lsp)
        ;; hy
        ;; idris
-       (json +lsp)
-       ;; (java +lsp)
+       ;; (java +meghanada +eclim +lsp)
        (javascript +lsp)
-       ;; julia
-       ;; kotlin
-       ;; latex
+       (json +lsp)
+       ;; (julia +lsp)
+       ;; (kotlin +lsp)
+       ;; (latex +latexmk +cdlatex +fold +lsp)
        ;; lean
        ;; ledger
-       ;; lua
-       markdown
+       ;; (lua +fennel +moonscript)
+       (markdown +grip)
        ;; nim
        ;; nix
-       ;; ocaml
+       ;; (ocaml +lsp)
        (org
-        +pretty
+        ;; +brain
         +dragndrop
+        ;; +gnuplot
+        ;; +hugo
+        ;; +journal
+        ;; +jupyter
+        ;; +noter
         +pandoc
+        ;; +pomodoro
         +present
+        +pretty
         +roam2)
-       ;; php
+       ;; (php +hack +lsp)
        ;; plantuml
-       ;; purescript
-       ;; (python
-       ;;  +lsp
-       ;;  +conda)
+       ;; (purescript +lsp)
+       ;; (python +cython +lsp +pyright +pyenv +conda +poetry)
        ;; qt
-       ;; racket
+       ;; (racket +lsp +xp)
        ;; raku
        ;; rest
        ;; rst
-       ;; (ruby +rails)
+       ;; (ruby +lsp +rvm +rbenv +rails +chruby)
        (rust +lsp)
-       ;; scala
-       ;; (scheme +guile)
-       sh
+       ;; (scala +lsp)
+       ;; (scheme +chez +chibi +chicken +gambit +gauche +guile +kawa +mit +racket)
+       (sh
+        ;; +fish
+        ;; +lsp
+        ;; +powershell
+        )
        ;; sml
        ;; solidity
-       ;; swift
+       ;; (swift +lsp)
        ;; terra
        (web +lsp)
        (yaml +lsp)
-       ;; zig
+       ;; (zig +lsp)
 
        :email
        ;; (mu4e +org +gmail)
