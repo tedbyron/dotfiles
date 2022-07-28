@@ -1,6 +1,6 @@
 ;;; $DOOMDIR/init.el -*- lexical-binding: t; -*-
 
-(doom! :input
+(doom! ;; :input
        ;; chinese
        ;; japanese
        ;; layout
@@ -20,23 +20,23 @@
        ;; (emoji +unicode)
        hl-todo
        ;; hydra
-       indent-guides
+       ;; indent-guides
        ;; ligatures
        ;; minimap
        modeline
-       ;; nav-flash
+       nav-flash
        ;; neotree
        ophints
        (popup
         +all
         +defaults)
-       ;; tabs
-       ;; (treemacs +lsp)
+       tabs
+       (treemacs +lsp)
        ;; unicode
        vc-gutter
        ;; vi-tilde-fringe
        (window-select +numbers)
-       ;; workspaces
+       workspaces
        zen
 
        :editor
@@ -68,8 +68,8 @@
 
        :checkers
        syntax
-       ;; (spell +everywhere)
-       ;; grammar
+       spell
+       grammar
 
        :tools
        ;; ansible
@@ -164,11 +164,11 @@
        (rust +lsp)
        ;; (scala +lsp)
        ;; (scheme +chez +chibi +chicken +gambit +gauche +guile +kawa +mit +racket)
-       (sh
+       (sh)
         ;; +fish
         ;; +lsp
         ;; +powershell
-        )
+        
        ;; sml
        ;; solidity
        ;; (swift +lsp)
