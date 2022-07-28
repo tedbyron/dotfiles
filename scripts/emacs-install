@@ -1,15 +1,21 @@
 #!/usr/bin/env zsh
 
-gh repo clone hlissner/doom-emacs ~/.config/emacs -- --depth 1
+if [[ ! -e ~/.config/emacs ]]; then
+    gh repo clone hlissner/doom-emacs ~/.config/emacs -- --depth 1
+fi
 
-brew tap d12frosted/emacs-plus
+brew tap d12frosted/emacs-plus -q
+
+brew uninstall emacs-plus@28 -q
 brew install emacs-plus@28 \
     --with-xwidgets \
     --with-imagemagick \
     --with-native-comp \
     --with-modern-doom3-icon \
 
-ln -sf ${HOMEBREW_PREFIX}/opt/emacs-mac/Emacs.app /Applications
+ln -sf ${HOMEBREW_PREFIX}/opt/emacs-plus@28/Emacs.app /Applications
 brew services restart emacs-plus@28
 
-~/.config/emacs/bin/doom install
+~/.config/emacs/bin/doom i
+~/.config/emacs/bin/doom s -up
+~/.config/emacs/bin/doom doc
