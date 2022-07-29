@@ -96,7 +96,7 @@
 
        :os
        (:if IS-MAC macos)
-       tty
+       (tty +osc)
 
        :lang
        ;; agda

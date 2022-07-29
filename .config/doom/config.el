@@ -61,11 +61,8 @@
 
 (use-package! centaur-tabs
   :hook
-  (Info-mode . centaur-tabs-local-mode)
-  (calendar-mode . centaur-tabs-local-mode)
   (dired-mode . centaur-tabs-local-mode)
-  (fundamental-mode . centaur-tabs-local-mode)
-  (ibuffer-mode . centaur-tabs-local-mode))
+  (special-mode . centaur-tabs-local-mode))
 
 (defvar required-fonts '("Curlio Nerd Font Mono"))
 (defvar available-fonts
@@ -126,4 +123,7 @@
 (add-hook! '+doom-dashboard-mode-hook (hide-mode-line-mode 1) (hl-line-mode -1))
 (setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+;; (defun +doom-dashboard-remove-widget-loaded ()
+;;   (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded))
+;; (add-hook! 'doom-init-ui-hook :append (+doom-dashboard-remove-widget-loaded))
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
