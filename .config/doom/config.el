@@ -18,11 +18,6 @@
 (setq +word-wrap-extra-indent nil
       all-the-icons-scale-factor 1.0
       auto-save-default t
-      centaur-tabs-height 26
-      centaur-tabs-icon-scale-factor 0.8
-      centaur-tabs-show-new-tab-button nil
-      centaur-tabs-set-bar 'over
-      centaur-tabs-set-close-button nil
       display-line-numbers-type 'relative
       display-time-24hr-format t
       display-time-default-load-average nil
@@ -58,11 +53,6 @@
 
 (after! org
   (setq doom-modeline-enable-word-count t))
-
-(use-package! centaur-tabs
-  :hook
-  (dired-mode . centaur-tabs-local-mode)
-  (special-mode . centaur-tabs-local-mode))
 
 (defvar required-fonts '("Curlio Nerd Font Mono"))
 (defvar available-fonts
