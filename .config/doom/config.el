@@ -1,31 +1,47 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(height . 48))
+(add-to-list 'default-frame-alist '(width . 120))
+
 (+global-word-wrap-mode 1)
 (display-time-mode -1)
-(global-display-fill-column-indicator-mode t)
-(global-subword-mode t)
+(global-display-fill-column-indicator-mode 1)
+(global-subword-mode 1)
+(lsp-treemacs-sync-mode 1)
 (menu-bar-mode -1)
+(treemacs-follow-mode 1)
 ;; (unless (string-match-p "^Power N/A" (battery))
-;;   (display-battery-mode 1))
+;;   (display-battery-mode t))
 
 (delq! t custom-theme-load-path)
 
 (setq-default delete-by-moving-to-trash t
-              fill-column 100
+              fill-column 101
               window-combination-resize t
               x-stretch-cursor t)
 
 (setq +word-wrap-extra-indent nil
-      all-the-icons-scale-factor 1.0
+      +zen-text-scale 0
+      all-the-icons-scale-factor 1
       auto-save-default t
+      company-selection-wrap-around t
       display-line-numbers-type 'relative
       display-time-24hr-format t
       display-time-default-load-average nil
       doom-font (font-spec :family "Curlio Nerd Font Mono" :size 14 :weight 'normal)
+      doom-modeline-buffer-modification-icon nil
+      doom-modeline-github t
+      doom-modeline-major-mode-icon t
       doom-theme 'doom-dracula
+      ;; doom-themes-treemacs-theme "doom-colors"
+      doom-themes-treemacs-enable-variable-pitch nil
+      evil-ex-substitute-global t
       evil-split-window-below t
       evil-vsplit-window-right t
       evil-want-fine-undo t
+      frame-title-format 'invocation-name
+      ns-use-proxy-icon nil
       org-directory "~/org"
       org-ellipsis "…"
       password-cache-expiry 120
@@ -35,11 +51,8 @@
       undo-limit 64000000
       user-full-name "Teddy Byron"
       user-mail-address "ted@tedbyron.com"
-      which-key-idle-delay 0.5)
-
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-(add-to-list 'default-frame-alist '(height . 48))
-(add-to-list 'default-frame-alist '(width . 120))
+      which-key-idle-delay 0.5
+      writeroom-width 100)
 
 (custom-set-faces!
   `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))
@@ -51,8 +64,13 @@
 (map! :map doom-leader-toggle-map "M" #'toggle-frame-maximized)
 (map! :map evil-window-map "SPC" #'evil-window-rotate-downwards)
 
-(after! org
-  (setq doom-modeline-enable-word-count t))
+(after! lsp-mode
+  (setq lsp-auto-guess-root t
+        lsp-enable-on-type-formatting t
+        lsp-enable-relative-indentation t
+        lsp-headerline-breadcrumb-enable t
+        lsp-semantic-tokens-enable t
+        ))
 
 (defvar required-fonts '("Curlio Nerd Font Mono"))
 (defvar available-fonts
@@ -113,7 +131,5 @@
 (add-hook! '+doom-dashboard-mode-hook (hide-mode-line-mode 1) (hl-line-mode -1))
 (setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-;; (defun +doom-dashboard-remove-widget-loaded ()
-;;   (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded))
-;; (add-hook! 'doom-init-ui-hook :append (+doom-dashboard-remove-widget-loaded))
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
