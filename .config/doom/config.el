@@ -1,9 +1,5 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-(add-to-list 'default-frame-alist '(height . 48))
-(add-to-list 'default-frame-alist '(width . 120))
-
 (+global-word-wrap-mode 1)
 (display-time-mode -1)
 (global-display-fill-column-indicator-mode 1)
@@ -14,7 +10,9 @@
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode t))
 
-(delq! t custom-theme-load-path)
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(height . 48))
+(add-to-list 'default-frame-alist '(width . 120))
 
 (setq-default delete-by-moving-to-trash t
               fill-column 101
@@ -93,16 +91,19 @@
                        (lambda ()
                          (message "%s missing the following fonts: %s"
                                   (propertize "Warning:" 'face '(bold warning))
-                                  (mapconcat (lambda (font) (propertize font 'face 'font-lock-variable-name-face))
+                                  (mapconcat (lambda (font)
+                                               (propertize font 'face 'font-lock-variable-name-face))
                                              ',missing-fonts
                                              ", "))
                          (sleep-for 0.5))))))
   ";; No missing fonts")
 
 (defun doom-modeline-conditional-buffer-encoding ()
-  "Only show the modeline when encoding is not UTF-8 or line endings are not LF"
+  "Only show the modeline encoding and line endings when encoding is not UTF-8 or line endings are
+  not LF"
   (setq-local doom-modeline-buffer-encoding
-              (unless (and (memq (plist-get (coding-system-plist buffer-file-coding-system) :category)
+              (unless (and (memq (plist-get (coding-system-plist buffer-file-coding-system)
+                                            :category)
                                  '(coding-category-undecided coding-category-utf-8))
                            (not (memq (coding-system-eol-type buffer-file-coding-system) '(1 2))))
                 t)))
@@ -121,7 +122,8 @@
         :desc "Previous buffer" :ne "p" #'previous-buffer
         :desc "Restore last session" :ne "R" #'doom/quickload-session
         :desc "Open private configuration" :ne "c" #'doom/open-private-config
-        ;; :desc "Open literate configuration" :ne "C" (cmd! (find-file (expand-file-name "config.org" doom-private-dir)))
+        ;; :desc "Open literate configuration"
+        ;; :ne "C" (cmd! (find-file (expand-file-name "config.org" doom-private-dir)))
         :desc "Find dotfile" :ne "." (cmd! (doom-project-find-file "~/git/dotfiles"))
         ;; :desc "Dashboard keymap" :ne "h" (cmd! (which-key-show-keymap '+doom-dashboard-mode-map))
         :desc "Quit" :ne "Q" #'save-buffers-kill-terminal))
