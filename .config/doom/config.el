@@ -1,45 +1,55 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(+global-word-wrap-mode 1)
-(display-time-mode -1)
-(global-display-fill-column-indicator-mode 1)
-(global-subword-mode 1)
-(lsp-treemacs-sync-mode 1)
-(menu-bar-mode -1)
-(treemacs-follow-mode 1)
-;; (unless (string-match-p "^Power N/A" (battery))
-;;   (display-battery-mode t))
-
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(height . 48))
 (add-to-list 'default-frame-alist '(width . 120))
 
-(setq-default delete-by-moving-to-trash t
-              fill-column 101
-              window-combination-resize t
-              x-stretch-cursor t)
+(+global-word-wrap-mode)
+(display-time-mode -1) ; TODO: display time in fullscreen
+(global-subword-mode)
+(lsp-treemacs-sync-mode)
+(treemacs-follow-mode)
 
-(setq +word-wrap-extra-indent nil
+;; (appendq! +ligatures-in-modes '(emacs-lisp-mode))
+;; +ligatures-extra-alist
+;; (remove)
+;; (let-alist '+ligatures-extra-alist
+;;   .emacs-lisp-mode."lambda")
+
+(when (eq window-system 'ns)
+  (ns-set-resource nil "ApplePressAndHoldEnabled" "NO")
+  (setq ns-use-proxy-icon nil))
+(unless IS-MAC (menu-bar-mode -1))
+;; (unless (string-match-p "^Power N/A" (battery)) ; TODO: display battery in fullscreen
+;;   (display-battery-mode t))
+
+(setq-default fill-column 101)
+
+(setq +ligatures-extras-in-modes nil
+      +word-wrap-extra-indent nil
       +zen-text-scale 0
       all-the-icons-scale-factor 1
       auto-save-default t
       company-selection-wrap-around t
+      delete-by-moving-to-trash t
       display-line-numbers-type 'relative
       display-time-24hr-format t
       display-time-default-load-average nil
-      doom-font (font-spec :family "Curlio Nerd Font Mono" :size 14 :weight 'normal)
+      doom-font (font-spec :family "Curlio" :size 14 :weight 'normal)
       doom-modeline-buffer-modification-icon nil
       doom-modeline-github t
+      doom-modeline-icon nil
       doom-modeline-major-mode-icon t
+      doom-modeline-percent-position nil
+      doom-scratch-initial-major-mode 'lisp-interaction-mode
       doom-theme 'doom-dracula
-      ;; doom-themes-treemacs-theme "doom-colors"
       doom-themes-treemacs-enable-variable-pitch nil
+      doom-themes-treemacs-theme "doom-colors"
       evil-ex-substitute-global t
       evil-split-window-below t
       evil-vsplit-window-right t
       evil-want-fine-undo t
       frame-title-format 'invocation-name
-      ns-use-proxy-icon nil
       org-directory "~/org"
       org-ellipsis "…"
       password-cache-expiry 120
@@ -50,6 +60,7 @@
       user-full-name "Teddy Byron"
       user-mail-address "ted@tedbyron.com"
       which-key-idle-delay 0.5
+      window-combination-resize t
       writeroom-width 100)
 
 (custom-set-faces!
@@ -62,15 +73,16 @@
 (map! :map doom-leader-toggle-map "M" #'toggle-frame-maximized)
 (map! :map evil-window-map "SPC" #'evil-window-rotate-downwards)
 
+(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+
 (after! lsp-mode
   (setq lsp-auto-guess-root t
         lsp-enable-on-type-formatting t
         lsp-enable-relative-indentation t
         lsp-headerline-breadcrumb-enable t
-        lsp-semantic-tokens-enable t
-        ))
+        lsp-semantic-tokens-enable t))
 
-(defvar required-fonts '("Curlio Nerd Font Mono"))
+(defvar required-fonts '("Curlio"))
 (defvar available-fonts
   (delete-dups (or (font-family-list)
                    (split-string (shell-command-to-string "fc-list : family")
@@ -83,24 +95,22 @@
                                          available-fonts))
                  font))
              required-fonts)))
-(if missing-fonts
-    (pp-to-string
-     `(unless noninteractive
-        (add-hook! 'doom-init-ui-hook
-          (run-at-time nil nil
-                       (lambda ()
-                         (message "%s missing the following fonts: %s"
-                                  (propertize "Warning:" 'face '(bold warning))
-                                  (mapconcat (lambda (font)
-                                               (propertize font 'face 'font-lock-variable-name-face))
-                                             ',missing-fonts
-                                             ", "))
-                         (sleep-for 0.5))))))
-  ";; No missing fonts")
+(when missing-fonts
+  (pp-to-string
+   `(unless noninteractive
+      (add-hook! 'doom-init-ui-hook
+        (run-at-time nil nil
+                     (lambda ()
+                       (message "%s missing the following fonts: %s"
+                                (propertize "Warning:" 'face '(bold warning))
+                                (mapconcat (lambda (font)
+                                             (propertize font 'face 'font-lock-variable-name-face))
+                                           ',missing-fonts
+                                           ", "))
+                       (sleep-for 0.5)))))))
 
 (defun doom-modeline-conditional-buffer-encoding ()
-  "Only show the modeline encoding and line endings when encoding is not UTF-8 or line endings are
-  not LF"
+  "Only show the modeline encoding and line endings when encoding is not UTF-8 or line endings are not LF"
   (setq-local doom-modeline-buffer-encoding
               (unless (and (memq (plist-get (coding-system-plist buffer-file-coding-system)
                                             :category)
@@ -127,11 +137,9 @@
         :desc "Find dotfile" :ne "." (cmd! (doom-project-find-file "~/git/dotfiles"))
         ;; :desc "Dashboard keymap" :ne "h" (cmd! (which-key-show-keymap '+doom-dashboard-mode-map))
         :desc "Quit" :ne "Q" #'save-buffers-kill-terminal))
-(add-transient-hook! #'+doom-dashboard-mode (+doom-dashboard-setup-modified-keymap))
-(add-transient-hook! #'+doom-dashboard-mode :append (+doom-dashboard-setup-modified-keymap))
-(add-hook! 'doom-init-ui-hook :append (+doom-dashboard-setup-modified-keymap))
+(add-hook! 'doom-init-ui-hook (+doom-dashboard-setup-modified-keymap))
 (add-hook! '+doom-dashboard-mode-hook (hide-mode-line-mode 1) (hl-line-mode -1))
-(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor (list nil))
+(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor nil)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)

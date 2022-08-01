@@ -21,7 +21,7 @@
        hl-todo
        ;; hydra
        ;; indent-guides
-       ;; ligatures
+       ligatures
        ;; minimap
        modeline
        nav-flash
