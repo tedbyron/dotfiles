@@ -9,6 +9,7 @@
 (global-subword-mode)
 (lsp-treemacs-sync-mode)
 (treemacs-follow-mode)
+(treemacs-project-follow-mode)
 
 (when (eq window-system 'ns)
   (ns-set-resource nil "ApplePressAndHoldEnabled" "NO")
@@ -17,22 +18,26 @@
 ;; (unless (string-match-p "^Power N/A" (battery)) ; TODO: display battery in fullscreen
 ;;   (display-battery-mode t))
 
-(setq-default fill-column 101)
+(setq-default comment-column 0
+              fill-column 101)
 
 (setq +word-wrap-extra-indent nil
       +zen-text-scale 0
       all-the-icons-scale-factor 1
       auto-save-default t
+      company-box-doc-delay 0.2
       company-selection-wrap-around t
       delete-by-moving-to-trash t
       display-line-numbers-type 'relative
       display-time-24hr-format t
       display-time-default-load-average nil
-      doom-font (font-spec :family "Curlio" :size 14 :weight 'normal)
+      doom-font (font-spec :family "Curlio" :size 14.0 :weight 'normal)
       doom-modeline-buffer-modification-icon nil
       doom-modeline-github t
+      doom-modeline-icon nil
+      doom-modeline-major-mode-icon t
       doom-modeline-percent-position nil
-      doom-scratch-initial-major-mode 'lisp-interaction-mode
+      doom-scratch-initial-major-mode #'lisp-interaction-mode
       doom-theme 'doom-dracula
       doom-themes-treemacs-enable-variable-pitch nil
       doom-themes-treemacs-theme "doom-colors"
@@ -52,7 +57,11 @@
       user-mail-address "ted@tedbyron.com"
       which-key-idle-delay 0.5
       window-combination-resize t
-      writeroom-width 100)
+      writeroom-width 100
+      x-stretch-cursor t)
+
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook 'doom-project-hook #'treemacs-display-current-project-exclusively)
 
 (custom-set-faces!
   `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))
@@ -60,18 +69,19 @@
   `('fill-column-indicator :foreground ,(doom-color 'base3))
   `('hl-line :background ,(doom-color 'base3)))
 
-(map! :map doom-leader-map "d" #'+doom-dashboard/open)
-(map! :map doom-leader-toggle-map "M" #'toggle-frame-maximized)
-(map! :map evil-window-map "SPC" #'evil-window-rotate-downwards)
-
-(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+(map! :leader "d" #'+doom-dashboard/open)
+(map! :desc "Frame maximized"
+      :map doom-leader-toggle-map "M" #'toggle-frame-maximized)
 
 (after! lsp-mode
   (setq lsp-auto-guess-root t
         lsp-enable-on-type-formatting t
         lsp-enable-relative-indentation t
-        lsp-headerline-breadcrumb-enable t
+        lsp-headerline-breadcrumb-enable nil
+        lsp-headerline-breadcrumb-icons-enable nil
         lsp-semantic-tokens-enable t))
+(after! lsp-ui
+  (setq lsp-ui-doc-delay 0.2))
 
 (defvar required-fonts '("Curlio") "List of required fonts.")
 (defvar available-fonts
@@ -124,7 +134,7 @@ not LF."
         :desc "Switch workspace buffer" :ne "b" #'+vertico/switch-workspace-buffer
         :desc "Switch buffer" :ne "B" #'consult-buffer
         :desc "Ibuffer" :ne "i" #'ibuffer
-        :desc "Previous buffer" :ne "p" #'previous-buffer
+        :desc "Previous buffer" :ne "q" #'previous-buffer
         :desc "Restore last session" :ne "R" #'doom/quickload-session
         :desc "Open private configuration" :ne "c" #'doom/open-private-config
         ;; :desc "Open literate configuration"
