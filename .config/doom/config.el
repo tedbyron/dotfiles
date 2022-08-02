@@ -10,12 +10,6 @@
 (lsp-treemacs-sync-mode)
 (treemacs-follow-mode)
 
-;; (appendq! +ligatures-in-modes '(emacs-lisp-mode))
-;; +ligatures-extra-alist
-;; (remove)
-;; (let-alist '+ligatures-extra-alist
-;;   .emacs-lisp-mode."lambda")
-
 (when (eq window-system 'ns)
   (ns-set-resource nil "ApplePressAndHoldEnabled" "NO")
   (setq ns-use-proxy-icon nil))
@@ -25,8 +19,7 @@
 
 (setq-default fill-column 101)
 
-(setq +ligatures-extras-in-modes nil
-      +word-wrap-extra-indent nil
+(setq +word-wrap-extra-indent nil
       +zen-text-scale 0
       all-the-icons-scale-factor 1
       auto-save-default t
@@ -38,8 +31,6 @@
       doom-font (font-spec :family "Curlio" :size 14 :weight 'normal)
       doom-modeline-buffer-modification-icon nil
       doom-modeline-github t
-      doom-modeline-icon nil
-      doom-modeline-major-mode-icon t
       doom-modeline-percent-position nil
       doom-scratch-initial-major-mode 'lisp-interaction-mode
       doom-theme 'doom-dracula
@@ -82,11 +73,12 @@
         lsp-headerline-breadcrumb-enable t
         lsp-semantic-tokens-enable t))
 
-(defvar required-fonts '("Curlio"))
+(defvar required-fonts '("Curlio") "List of required fonts.")
 (defvar available-fonts
   (delete-dups (or (font-family-list)
                    (split-string (shell-command-to-string "fc-list : family")
-                                 "[,\n]"))))
+                                 "[,\n]")))
+  "List of available fonts.")
 (defvar missing-fonts
   (delq nil (mapcar
              (lambda (font)
@@ -94,7 +86,8 @@
                                            (string-match-p (format "^%s$" font) f))
                                          available-fonts))
                  font))
-             required-fonts)))
+             required-fonts))
+  "List of `required-fonts' missing from `available-fonts'.")
 (when missing-fonts
   (pp-to-string
    `(unless noninteractive
@@ -110,7 +103,8 @@
                        (sleep-for 0.5)))))))
 
 (defun doom-modeline-conditional-buffer-encoding ()
-  "Only show the modeline encoding and line endings when encoding is not UTF-8 or line endings are not LF"
+  "Only show the modeline encoding and line endings when encoding is not UTF-8 or line endings are
+not LF."
   (setq-local doom-modeline-buffer-encoding
               (unless (and (memq (plist-get (coding-system-plist buffer-file-coding-system)
                                             :category)
@@ -120,6 +114,7 @@
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 
 (defun +doom-dashboard-setup-modified-keymap ()
+  "Create quicker mappings for the doom dashboard."
   (setq +doom-dashboard-mode-map (make-sparse-keymap))
   (map! :map +doom-dashboard-mode-map
         :desc "Find file" :ne "f" #'find-file
@@ -139,7 +134,7 @@
         :desc "Quit" :ne "Q" #'save-buffers-kill-terminal))
 (add-hook! 'doom-init-ui-hook (+doom-dashboard-setup-modified-keymap))
 (add-hook! '+doom-dashboard-mode-hook (hide-mode-line-mode 1) (hl-line-mode -1))
-(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor nil)
+(setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor '(nil))
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
