@@ -93,7 +93,7 @@
        pdf
        ;; prodigy
        rgb
-       taskrunner
+       ;; taskrunner
        terraform
        ;; tmux
        ;; upload

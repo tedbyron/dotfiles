@@ -93,9 +93,12 @@
   `('fill-column-indicator :foreground ,(doom-color 'base3))
   `('hl-line :background ,(doom-color 'base3)))
 
-(map! :leader "d" #'+doom-dashboard/open)
-(map! :desc "Frame maximized"
-      :map doom-leader-toggle-map "M" #'toggle-frame-maximized)
+(map! :leader
+      :desc "M-x"             ";" #'execute-extended-command
+      :desc "Eval expression" ":" #'pp-eval-expression
+      :desc "Dashboard"       "d" #'+doom-dashboard/open)
+(map! :map doom-leader-toggle-map
+      :desc "Frame maximized" "M" #'toggle-frame-maximized)
 
 (defvar required-fonts '("Curlio") "Fonts required to load this config.")
 (defvar available-fonts
