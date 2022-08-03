@@ -1,0 +1,3 @@
+[submodule ".config/doom/include/parinfer-rust"]
+	path = .config/doom/include/parinfer-rust
+	url = https://github.com/eraserhd/parinfer-rust

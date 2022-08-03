@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+# shellcheck disable=2164
+
+cd parinfer-rust
+RUSTFLAGS="-Ctarget-cpu=apple-m1 -Ccodegen-units=1" \
+    cargo build --release --features emacs
+cp target/release/libparinfer_rust.dylib \
+    "$HOME/.config/emacs/.local/etc/parinfer-rust/parinfer-rust-darwin.so"

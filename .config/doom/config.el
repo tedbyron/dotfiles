@@ -19,7 +19,7 @@
 ;;   (display-battery-mode t))
 
 (setq-default comment-column 0
-              fill-column 101)
+              fill-column 100)
 
 (setq +word-wrap-extra-indent nil
       +zen-text-scale 0
@@ -60,18 +60,9 @@
       writeroom-width 100
       x-stretch-cursor t)
 
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook! (c-or-c++-mode sh-mode) (setq fill-column 80))
 (add-hook 'doom-project-hook #'treemacs-display-current-project-exclusively)
-
-(custom-set-faces!
-  `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))
-  `('doom-modeline-project-dir :foreground ,(doom-color 'green))
-  `('fill-column-indicator :foreground ,(doom-color 'base3))
-  `('hl-line :background ,(doom-color 'base3)))
-
-(map! :leader "d" #'+doom-dashboard/open)
-(map! :desc "Frame maximized"
-      :map doom-leader-toggle-map "M" #'toggle-frame-maximized)
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
 (after! lsp-mode
   (setq lsp-auto-guess-root t
@@ -83,12 +74,21 @@
 (after! lsp-ui
   (setq lsp-ui-doc-delay 0.2))
 
-(defvar required-fonts '("Curlio") "List of required fonts.")
+(custom-set-faces!
+  `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))
+  `('doom-modeline-project-dir :foreground ,(doom-color 'green))
+  `('fill-column-indicator :foreground ,(doom-color 'base3))
+  `('hl-line :background ,(doom-color 'base3)))
+
+(map! :leader "d" #'+doom-dashboard/open)
+(map! :desc "Frame maximized"
+      :map doom-leader-toggle-map "M" #'toggle-frame-maximized)
+
+(defvar required-fonts '("Curlio"))
 (defvar available-fonts
   (delete-dups (or (font-family-list)
                    (split-string (shell-command-to-string "fc-list : family")
-                                 "[,\n]")))
-  "List of available fonts.")
+                                 "[,\n]"))))
 (defvar missing-fonts
   (delq nil (mapcar
              (lambda (font)
@@ -96,8 +96,7 @@
                                            (string-match-p (format "^%s$" font) f))
                                          available-fonts))
                  font))
-             required-fonts))
-  "List of `required-fonts' missing from `available-fonts'.")
+             required-fonts)))
 (when missing-fonts
   (pp-to-string
    `(unless noninteractive
@@ -113,8 +112,6 @@
                        (sleep-for 0.5)))))))
 
 (defun doom-modeline-conditional-buffer-encoding ()
-  "Only show the modeline encoding and line endings when encoding is not UTF-8 or line endings are
-not LF."
   (setq-local doom-modeline-buffer-encoding
               (unless (and (memq (plist-get (coding-system-plist buffer-file-coding-system)
                                             :category)
@@ -124,7 +121,6 @@ not LF."
 (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
 
 (defun +doom-dashboard-setup-modified-keymap ()
-  "Create quicker mappings for the doom dashboard."
   (setq +doom-dashboard-mode-map (make-sparse-keymap))
   (map! :map +doom-dashboard-mode-map
         :desc "Find file" :ne "f" #'find-file
