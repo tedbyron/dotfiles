@@ -2,6 +2,8 @@ zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
 source ~/.local/share/zsh-snap/znap.zsh
 [[ "$TERM_PROGRAM" == "iTerm.app" ]] && znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 znap eval brew '/opt/homebrew/bin/brew shellenv'
+[[ "$TERM_PROGRAM" == "iTerm.app" ]] \
+  && znap eval iterm2 'curl -fsSL https://iterm2.com/shell_integration/zsh'
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
@@ -82,12 +84,11 @@ export LESS_TERMCAP_se=$'\033[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
 
-if (( ${+commands[nvim]} )); then
-  export EDITOR='nvim'
-  export SUDO_EDITOR='nvim'
-elif (( ${+commands[vim]} )); then
-  export EDITOR='vim'
-  export SUDO_EDITOR='vim'
+if (( ${+commands[emacs]} )); then
+  export ALTERNATE_EDITOR=''
+  export EDITOR='emacsclient -t'
+  export SUDO_EDITOR='emacsclient -t'
+  export VISUAL='emacsclient -c -a emacs'
 else
   export EDITOR='vi'
   export SUDO_EDITOR='vi'
@@ -106,7 +107,8 @@ export PATH="$PNPM_HOME:$PATH"
 # aliases
 ################################################################################
 
-alias brewup='brew update; brew upgrade; brew upgrade --cask; brew cleanup'
+alias up='brew update; brew upgrade; brew upgrade --cask; brew cleanup; \
+rustup update; cargo install-update -a'
 alias df='df -h'
 alias du='du -hd 1'
 alias dust='dust -d 1'
@@ -120,10 +122,6 @@ alias pgrep='pgrep -fail'
 alias ps='ps -ef'
 alias rg='rg -S'
 alias sudo='sudo '
-if (( ${+commands[nvim]} )); then
-  alias vim='nvim'
-  alias v='nvim'
-fi
 
 alias y='yarn'
 alias ya='yarn add'

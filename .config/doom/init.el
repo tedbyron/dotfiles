@@ -48,7 +48,7 @@
        ;; lispy
        multiple-cursors
        ;; objed
-       parinfer
+       ;; parinfer
        rotate-text
        snippets
        word-wrap
@@ -67,7 +67,7 @@
        ;; vterm
 
        :checkers
-       syntax
+       (syntax +childframe)
        (spell +aspell)
        grammar
 
@@ -81,18 +81,22 @@
        ;; ein
        (eval +overlay)
        gist
-       lookup
+       (lookup
+        +dictionary
+        +docsets
+        ;; +offline
+        )
        (lsp +peek)
        (magit +forge)
        ;; make
-       ;; pass
+       ;; (pass +auth)
        pdf
        ;; prodigy
        rgb
-       ;; taskrunner
+       taskrunner
        terraform
        ;; tmux
-       upload
+       ;; upload
 
        :os
        (:if IS-MAC macos)
@@ -114,7 +118,7 @@
        ;; (elm +lsp)
        emacs-lisp
        ;; (erlang +lsp)
-       ;; (ess +lsp)
+       ;; (ess +stan)
        ;; factor
        ;; faust
        ;; fortran
@@ -125,15 +129,15 @@
        ;; (haskell +lsp)
        ;; hy
        ;; idris
-       ;; (java +meghanada +eclim +lsp)
+       ;; (java +lsp +meghanada)
        (javascript +lsp)
        (json +lsp)
        ;; (julia +lsp)
        ;; (kotlin +lsp)
-       ;; (latex +latexmk +cdlatex +fold +lsp)
+       ;; (latex +cdlatex +fold +latexmk +lsp)
        ;; lean
        ;; ledger
-       ;; (lua +fennel +moonscript)
+       ;; (lua +fennel +lsp +moonscript)
        (markdown +grip)
        ;; nim
        ;; nix
@@ -143,6 +147,7 @@
         +dragndrop
         ;; +gnuplot
         ;; +hugo
+        ;; +ipython
         ;; +journal
         ;; +jupyter
         ;; +noter
@@ -150,25 +155,26 @@
         ;; +pomodoro
         +present
         +pretty
+        ;; +roam
         +roam2)
        ;; (php +hack +lsp)
        ;; plantuml
        ;; (purescript +lsp)
-       ;; (python +cython +lsp +pyright +pyenv +conda +poetry)
+       ;; (python +conda +cython +lsp +poetry +pyenv +pyright)
        ;; qt
        ;; (racket +lsp +xp)
        ;; raku
        ;; rest
        ;; rst
-       ;; (ruby +lsp +rvm +rbenv +rails +chruby)
+       ;; (ruby +chruby +lsp +rails +rbenv +rvm)
        (rust +lsp)
        ;; (scala +lsp)
        ;; (scheme +chez +chibi +chicken +gambit +gauche +guile +kawa +mit +racket)
-       (sh)
+       (sh
         ;; +fish
         ;; +lsp
         ;; +powershell
-        
+        )
        ;; sml
        ;; solidity
        ;; (swift +lsp)
