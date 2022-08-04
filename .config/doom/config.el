@@ -10,7 +10,7 @@
 (global-whitespace-mode)
 (lsp-treemacs-sync-mode)
 (treemacs-follow-mode)
-(treemacs-project-follow-mode)
+;; (treemacs-project-follow-mode)
 
 (when (and (display-graphic-p))
   (ns-set-resource nil "ApplePressAndHoldEnabled" "NO")
@@ -37,7 +37,7 @@
       doom-font (font-spec :family "Curlio" :size 14.0 :weight 'normal)
       doom-modeline-buffer-modification-icon nil
       doom-modeline-github t
-      doom-modeline-icon nil
+      doom-modeline-icon t
       doom-modeline-major-mode-icon t
       doom-modeline-percent-position nil
       doom-scratch-initial-major-mode #'lisp-interaction-mode
@@ -91,7 +91,8 @@
   `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))
   `('doom-modeline-project-dir :foreground ,(doom-color 'green))
   `('fill-column-indicator :foreground ,(doom-color 'base3))
-  `('hl-line :background ,(doom-color 'base3)))
+  `('hl-line :background ,(doom-color 'base3))
+  '(treemacs-root-face :inherit treemacs-file-face)) ; TODO
 
 (map! :leader
       :desc "M-x"             ";" #'execute-extended-command
