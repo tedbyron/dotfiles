@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; config.el -*- lexical-binding: t; -*-
 
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(height . 48))
@@ -7,12 +7,11 @@
 (+global-word-wrap-mode)
 (display-time-mode -1) ; TODO: display time in fullscreen
 (global-subword-mode)
-(global-whitespace-mode)
 (lsp-treemacs-sync-mode)
 (treemacs-follow-mode)
-;; (treemacs-project-follow-mode)
+(treemacs-project-follow-mode)
 
-(when (and (display-graphic-p))
+(when (and IS-MAC (display-graphic-p))
   (ns-set-resource nil "ApplePressAndHoldEnabled" "NO")
   (setq ns-use-proxy-icon nil))
 (unless IS-MAC (menu-bar-mode -1))
@@ -27,6 +26,13 @@
       +zen-text-scale 0
       all-the-icons-scale-factor 1.0
       auto-save-default t
+      centaur-tabs-close-button "×"
+      centaur-tabs-height 25
+      centaur-tabs-icon-scale-factor 0.8
+      centaur-tabs-set-bar 'over
+      centaur-tabs-set-close-button nil
+      centaur-tabs-set-modified-marker nil
+      centaur-tabs-show-new-tab-button nil
       comment-auto-fill-only-comments t
       company-box-doc-delay 0.2
       company-selection-wrap-around t
@@ -34,14 +40,17 @@
       display-line-numbers-type 'relative
       display-time-24hr-format t
       display-time-default-load-average nil
+      doom-dracula-colorful-headers t
       doom-font (font-spec :family "Curlio" :size 14.0 :weight 'normal)
       doom-modeline-buffer-modification-icon nil
+      doom-modeline-enable-word-count t
       doom-modeline-github t
-      doom-modeline-icon t
+      doom-modeline-icon nil
       doom-modeline-major-mode-icon t
       doom-modeline-percent-position nil
       doom-scratch-initial-major-mode #'lisp-interaction-mode
       doom-theme 'doom-dracula
+      doom-themes-enable-bold nil
       doom-themes-treemacs-enable-variable-pitch nil
       doom-themes-treemacs-theme "doom-colors"
       evil-ex-substitute-global t
@@ -67,15 +76,16 @@
 
 (setq-hook! '(c-or-c++-mode-hook emacs-lisp-mode-hook sh-mode-hook)
   fill-column 80)
-;; (setq-hook! 'prog-mode-hook
-;;   comment-column 0) ; FIXME: figure out why setq-default not working
+(setq-hook! 'prog-mode-hook
+  comment-column 0) ; FIXME: setq-default no work
 (setq-hook! 'text-mode-hook
   comment-auto-fill-only-comments nil)
 
-(add-hook 'doom-project-hook #'treemacs-display-current-project-exclusively)
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook 'projectile-after-switch-project-hook
+          #'treemacs-display-current-project-exclusively)
 
-(add-hook! (prog-mode text-mode) #'auto-fill-mode)
+(add-hook! (prog-mode text-mode) #'auto-fill-mode #'whitespace-mode)
 
 (after! lsp-mode
   (setq lsp-auto-guess-root t
@@ -86,6 +96,11 @@
         lsp-semantic-tokens-enable t))
 (after! lsp-ui
   (setq lsp-ui-doc-delay 0.2))
+
+(use-package! centaur-tabs
+  :hook
+  (dired-mode . centaur-tabs-local-mode)
+  (special-mode . centaur-tabs-local-mode))
 
 (custom-set-faces!
   `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))

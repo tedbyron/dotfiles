@@ -1,4 +1,4 @@
-;;; $DOOMDIR/init.el -*- lexical-binding: t; -*-
+;;; init.el -*- lexical-binding: t; -*-
 
 (doom! ;; :input
        ;; chinese
@@ -30,7 +30,7 @@
        (popup
         +all
         +defaults)
-       ;; tabs
+       tabs
        (treemacs +lsp)
        ;; unicode
        vc-gutter
