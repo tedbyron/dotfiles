@@ -46,7 +46,6 @@ path=(
   "${HOMEBREW_PREFIX}/sbin"
   "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
   "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
-  "${HOMEBREW_PREFIX}/opt/llvm/bin"
   "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
   "${HOME}/.config/emacs/bin"
   "${HOME}/.cargo/bin"
@@ -69,11 +68,6 @@ export HOMEBREW_NO_ANALYTICS=1
 
 GPG_TTY="$(tty)"
 export GPG_TTY
-
-export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/llvm/lib \
--L${HOMEBREW_PREFIX}/opt/libpq/bin"
-export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/llvm/include \
--I${HOMEBREW_PREFIX}/opt/libpq/include"
 
 export LESS_TERMCAP_mb=$'\033[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\033[1;36m'     # begin bold

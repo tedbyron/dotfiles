@@ -11,9 +11,6 @@
 (treemacs-follow-mode)
 (treemacs-project-follow-mode)
 
-(when (and IS-MAC (display-graphic-p))
-  (ns-set-resource nil "ApplePressAndHoldEnabled" "NO")
-  (setq ns-use-proxy-icon nil))
 (unless IS-MAC (menu-bar-mode -1))
 ;; TODO: display battery in fullscreen
 ;; (unless (string-match-p "^Power N/A" (battery))
@@ -65,6 +62,7 @@
       scroll-margin 3
       truncate-string-ellipsis "…"
       undo-limit 64000000
+      uniquify-buffer-name-style 'forward
       user-full-name "Teddy Byron"
       user-mail-address "ted@tedbyron.com"
       which-key-idle-delay 0.5
@@ -87,6 +85,13 @@
 
 (add-hook! (prog-mode text-mode) #'auto-fill-mode #'whitespace-mode)
 
+(after! centaur-tabs
+  (add-hook! '(+popup-buffer-mode-hook
+               dired-mode-hook)
+             #'centaur-tabs-local-mode)
+  (add-hook! 'writeroom-mode-hook
+    (centaur-tabs-local-mode (if (bound-and-true-p writeroom-mode)
+                                 +1 -1))))
 (after! lsp-mode
   (setq lsp-auto-guess-root t
         lsp-enable-on-type-formatting t
@@ -96,11 +101,6 @@
         lsp-semantic-tokens-enable t))
 (after! lsp-ui
   (setq lsp-ui-doc-delay 0.2))
-
-(use-package! centaur-tabs
-  :hook
-  (dired-mode . centaur-tabs-local-mode)
-  (special-mode . centaur-tabs-local-mode))
 
 (custom-set-faces!
   `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))

@@ -4,17 +4,33 @@ if [[ ! -e ~/.config/emacs ]]; then
     gh repo clone hlissner/doom-emacs ~/.config/emacs -- --depth 1
 fi
 
-brew tap d12frosted/emacs-plus -q
+# brew tap d12frosted/emacs-plus -q
 
-brew uninstall emacs-plus@28 -q
-brew install emacs-plus@28 \
-    --with-xwidgets \
+# brew uninstall emacs-plus@28 -q
+# brew install emacs-plus@28 \
+#     --with-imagemagick \
+#     --with-modern-doom3-icon \
+#     --with-native-comp \
+#     --with-xwidgets
+
+# ln -sf ${HOMEBREW_PREFIX}/opt/emacs-plus@28/Emacs.app /Applications
+# brew services restart emacs-plus@28
+
+brew tap railwaycat/emacsmacport
+
+brew install emacs-mac \
+    --with-emacs-big-sur-icon \
     --with-imagemagick \
+    --with-mac-metal \
     --with-native-comp \
-    --with-modern-doom3-icon
+    --with-natural-title-bar \
+    --with-rsvg \
+    --with-starter \
+    --with-xwidgets
 
-ln -sf ${HOMEBREW_PREFIX}/opt/emacs-plus@28/Emacs.app /Applications
-brew services restart emacs-plus@28
+osascript -e 'tell application "Finder" to make alias file to POSIX file "/opt/homebrew/opt/emacs-mac/Emacs.app" at POSIX file "/Applications"'
+defaults write org.gnu.Emacs TransparentTitleBar DARK
+defaults write org.gnu.Emacs HideDocumentIcon YES
 
 ~/.config/emacs/bin/doom i
 ~/.config/emacs/bin/doom s -up
