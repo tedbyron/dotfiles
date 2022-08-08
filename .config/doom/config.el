@@ -3,6 +3,7 @@
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(height . 48))
 (add-to-list 'default-frame-alist '(width . 120))
+;; (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 (+global-word-wrap-mode)
 (display-time-mode -1) ; TODO: display time in fullscreen
@@ -32,6 +33,7 @@
       centaur-tabs-show-new-tab-button nil
       comment-auto-fill-only-comments t
       company-box-doc-delay 0.2
+      ;; company-idle-delay 0
       company-selection-wrap-around t
       delete-by-moving-to-trash t
       display-line-numbers-type 'relative
@@ -55,6 +57,7 @@
       evil-vsplit-window-right t
       evil-want-fine-undo t
       frame-title-format 'invocation-name
+      ;; inhibit-compacting-font-caches t
       org-directory "~/org"
       org-ellipsis "…"
       password-cache-expiry 120
@@ -85,6 +88,9 @@
 
 (add-hook! (prog-mode text-mode) #'auto-fill-mode #'whitespace-mode)
 
+(advice-add #'doom-modeline-segment--buffer-size :override #'ignore)
+(advice-add #'doom-modeline-segment--modals      :override #'ignore)
+
 (after! centaur-tabs
   (add-hook! '(+popup-buffer-mode-hook
                dired-mode-hook)
@@ -104,10 +110,12 @@
 
 (custom-set-faces!
   `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))
-  `('doom-modeline-project-dir :foreground ,(doom-color 'green))
-  `('fill-column-indicator :foreground ,(doom-color 'base3))
-  `('hl-line :background ,(doom-color 'base3))
-  '(treemacs-root-face :inherit treemacs-file-face)) ; TODO
+  `('doom-modeline-project-dir     :foreground ,(doom-color 'green))
+  `('fill-column-indicator         :foreground ,(doom-color 'base3))
+  `('hl-line                       :background ,(doom-color 'base3))
+  '(treemacs-root-face               :inherit treemacs-file-face) ; TODO
+  '(centaur-tabs-selected-modified   :inherit centaur-tabs-selected) ; TODO
+  '(centaur-tabs-unselected-modified :inherit centaur-tabs-unselected))
 
 (map! :leader
       :desc "M-x"             ";" #'execute-extended-command
@@ -166,26 +174,17 @@
   "Set up a keymap for faster navigation from the dashboard."
   (setq +doom-dashboard-mode-map (make-sparse-keymap))
   (map! :map +doom-dashboard-mode-map
-        :desc "Find file"
-        :ne "f" #'find-file
-        :desc "Recent files"
-        :ne "r" #'consult-recent-file
-        :desc "Notes"
-        :ne "n" #'org-roam-node-find
-        :desc "Agenda"
-        :ne "a" #'org-agenda
+        :desc "Find file" :ne "f" #'find-file
+        :desc "Recent files" :ne "r" #'consult-recent-file
+        :desc "Notes" :ne "n" #'org-roam-node-find
+        :desc "Agenda" :ne "a" #'org-agenda
         :desc "Switch workspace buffer"
         :ne "b" #'+vertico/switch-workspace-buffer
-        :desc "Switch buffer"
-        :ne "B" #'consult-buffer
-        :desc "Ibuffer"
-        :ne "i" #'ibuffer
-        :desc "Previous buffer"
-        :ne "q" #'previous-buffer
-        :desc "Restore last session"
-        :ne "R" #'doom/quickload-session
-        :desc "Open private configuration"
-        :ne "c" #'doom/open-private-config
+        :desc "Switch buffer" :ne "B" #'consult-buffer
+        :desc "Ibuffer" :ne "i" #'ibuffer
+        :desc "Previous buffer" :ne "q" #'previous-buffer
+        :desc "Restore last session" :ne "R" #'doom/quickload-session
+        :desc "Open private configuration" :ne "c" #'doom/open-private-config
         ;; :desc "Open literate configuration"
         ;; :ne "C" (cmd! (find-file
         ;;                (expand-file-name "config.org" doom-private-dir)))
@@ -193,8 +192,7 @@
         :ne "." (cmd! (doom-project-find-file "~/git/dotfiles"))
         ;; :desc "Dashboard keymap"
         ;; :ne "h" (cmd! (which-key-show-keymap '+doom-dashboard-mode-map))
-        :desc "Quit"
-        :ne "Q" #'save-buffers-kill-terminal))
+        :desc "Quit" :ne "Q" #'save-buffers-kill-terminal))
 (add-hook! 'doom-init-ui-hook (+doom-dashboard-setup-modified-keymap))
 (add-hook! '+doom-dashboard-mode-hook (hide-mode-line-mode 1) (hl-line-mode -1))
 (setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor '(nil))
