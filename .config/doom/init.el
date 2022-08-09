@@ -33,7 +33,7 @@
        tabs
        (treemacs +lsp)
        ;; unicode
-       vc-gutter
+       (vc-gutter +diff-hl +pretty)
        ;; vi-tilde-fringe
        (window-select +numbers)
        workspaces

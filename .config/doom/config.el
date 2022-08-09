@@ -68,7 +68,7 @@
       uniquify-buffer-name-style 'forward
       user-full-name "Teddy Byron"
       user-mail-address "ted@tedbyron.com"
-      which-key-idle-delay 0.5
+      ;; which-key-idle-delay 0.5
       whitespace-line-column nil
       whitespace-style '(face trailing tabs spaces lines-tail empty)
       window-combination-resize t
@@ -92,7 +92,9 @@
 (advice-add #'doom-modeline-segment--modals      :override #'ignore)
 
 (after! centaur-tabs
-  (add-hook! '(+popup-buffer-mode-hook
+  (add-hook! '(+doom-dashboard-mode-hook
+               +popup-buffer-mode-hook
+               Info-mode-hook
                dired-mode-hook)
              #'centaur-tabs-local-mode)
   (add-hook! 'writeroom-mode-hook
@@ -117,6 +119,9 @@
   '(centaur-tabs-selected-modified   :inherit centaur-tabs-selected) ; TODO
   '(centaur-tabs-unselected-modified :inherit centaur-tabs-unselected))
 
+(map! (:when IS-MAC)
+      "<swipe-right>" nil
+      "<swipe-left>" nil)
 (map! :leader
       :desc "M-x"             ";" #'execute-extended-command
       :desc "Eval expression" ":" #'pp-eval-expression
