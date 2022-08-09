@@ -8,14 +8,14 @@
 (+global-word-wrap-mode)
 (display-time-mode -1) ; TODO: display time in fullscreen
 (global-subword-mode)
-(lsp-treemacs-sync-mode)
-(treemacs-follow-mode)
-(treemacs-project-follow-mode)
 
 (unless IS-MAC (menu-bar-mode -1))
 ;; TODO: display battery in fullscreen
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode t))
+
+(put '+format-with-lsp 'safe-local-variable #'booleanp)
+(put 'lsp-eslint-package-manager 'safe-local-variable #'stringp)
 
 (setq-default comment-column 0
               fill-column 100)
@@ -49,6 +49,7 @@
       evil-split-window-below t
       evil-vsplit-window-right t
       evil-want-fine-undo t
+      fancy-splash-image (concat doom-private-dir "splashes/e.png")
       frame-title-format 'invocation-name
       ;; inhibit-compacting-font-caches t
       org-directory "~/org"
@@ -71,18 +72,16 @@
 (setq-hook! '(c-or-c++-mode-hook emacs-lisp-mode-hook sh-mode-hook)
   fill-column 80)
 (setq-hook! 'prog-mode-hook
-  comment-column 0) ; FIXME: setq-default no work
+  comment-column 0) ; TODO: setq-default no work
 (setq-hook! 'text-mode-hook
   comment-auto-fill-only-comments nil)
 
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 (add-hook 'projectile-after-switch-project-hook
           #'treemacs-display-current-project-exclusively)
-
 (add-hook! (prog-mode text-mode) #'auto-fill-mode #'whitespace-mode)
 
-(advice-add #'doom-modeline-segment--buffer-size :override #'ignore) ; FIXME
-;; (advice-add #'doom-modeline-segment--modals      :override #'ignore)
+(remove-hook 'doom-modeline-mode-hook #'size-indication-mode)
 
 (after! lsp-mode
   (setq lsp-auto-guess-root t
@@ -91,15 +90,24 @@
         lsp-headerline-breadcrumb-enable nil
         lsp-headerline-breadcrumb-icons-enable nil
         lsp-semantic-tokens-enable t))
+(after! lsp-treemacs
+  (lsp-treemacs-sync-mode))
 (after! lsp-ui
   (setq lsp-ui-doc-delay 0.2))
+(after! treemacs
+  (treemacs-follow-mode)
+  (treemacs-project-follow-mode)
+  (setq treemacs-project-follow-cleanup t))
 
 (custom-set-faces!
-  `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))
-  `('doom-modeline-project-dir     :foreground ,(doom-color 'green))
-  `('fill-column-indicator         :foreground ,(doom-color 'base3))
-  `('hl-line                       :background ,(doom-color 'base3))
-  '(treemacs-root-face :inherit treemacs-file-face)) ; TODO
+  `('doom-modeline-buffer-modified  :foreground ,(doom-color 'yellow))
+  `('doom-modeline-project-dir      :foreground ,(doom-color 'green))
+  `('doom-themes-treemacs-root-face :foreground ,(doom-color 'green)
+                                    :height 0.8)
+  `('fill-column-indicator          :foreground ,(doom-color 'base3))
+  `('hl-line                        :background ,(doom-color 'base3))
+  `('treemacs-root-face             :foreground ,(doom-color 'green)
+                                    :height 1.0))
 
 (map! (:when IS-MAC)
       "<swipe-right>" nil
@@ -180,12 +188,17 @@
         ;; :desc "Dashboard keymap"
         ;; :ne "h" (cmd! (which-key-show-keymap '+doom-dashboard-mode-map))
         :desc "Quit" :ne "Q" #'save-buffers-kill-terminal))
-(add-hook! 'doom-init-ui-hook (+doom-dashboard-setup-modified-keymap))
-(add-hook! '+doom-dashboard-mode-hook (hide-mode-line-mode 1) (hl-line-mode -1))
+(add-hook 'doom-init-ui-hook
+          #'+doom-dashboard-setup-modified-keymap)
+(add-hook! '+doom-dashboard-mode-hook
+           #'hide-mode-line-mode
+           (hl-line-mode -1))
+(add-hook! 'doom-first-file-hook
+  (remove-hook! '+doom-dashboard-functions
+    #'doom-dashboard-widget-loaded))
 (setq-hook! '+doom-dashboard-mode-hook evil-normal-state-cursor '(nil))
 (remove-hook! '+doom-dashboard-functions
   #'doom-dashboard-widget-shortmenu
-  #'doom-dashboard-widget-loaded
   #'doom-dashboard-widget-footer)
 
 (defun sort-words (reverse beg end)

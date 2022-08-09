@@ -16,7 +16,7 @@
        ;; deft
        doom
        doom-dashboard
-       doom-quit
+       ;; doom-quit
        ;; (emoji +unicode)
        hl-todo
        ;; hydra
@@ -68,8 +68,8 @@
 
        :checkers
        (syntax +childframe)
-       (spell +aspell)
-       grammar
+       ;; (spell +aspell)
+       ;; grammar
 
        :tools
        ;; ansible
