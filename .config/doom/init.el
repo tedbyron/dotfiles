@@ -30,7 +30,7 @@
        (popup
         +all
         +defaults)
-       tabs
+       ;; tabs
        (treemacs +lsp)
        ;; unicode
        (vc-gutter +diff-hl +pretty)

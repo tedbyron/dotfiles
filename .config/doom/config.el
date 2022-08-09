@@ -24,13 +24,6 @@
       +zen-text-scale 0
       all-the-icons-scale-factor 1.0
       auto-save-default t
-      centaur-tabs-close-button "×"
-      centaur-tabs-height 25
-      centaur-tabs-icon-scale-factor 0.8
-      centaur-tabs-set-bar 'over
-      centaur-tabs-set-close-button nil
-      centaur-tabs-set-modified-marker nil
-      centaur-tabs-show-new-tab-button nil
       comment-auto-fill-only-comments t
       company-box-doc-delay 0.2
       ;; company-idle-delay 0
@@ -44,8 +37,8 @@
       doom-modeline-buffer-modification-icon nil
       doom-modeline-enable-word-count t
       doom-modeline-github t
-      doom-modeline-icon nil
-      doom-modeline-major-mode-icon t
+      doom-modeline-icon t
+      doom-modeline-major-mode-icon nil
       doom-modeline-percent-position nil
       doom-scratch-initial-major-mode #'lisp-interaction-mode
       doom-theme 'doom-dracula
@@ -88,18 +81,9 @@
 
 (add-hook! (prog-mode text-mode) #'auto-fill-mode #'whitespace-mode)
 
-(advice-add #'doom-modeline-segment--buffer-size :override #'ignore)
-(advice-add #'doom-modeline-segment--modals      :override #'ignore)
+(advice-add #'doom-modeline-segment--buffer-size :override #'ignore) ; FIXME
+;; (advice-add #'doom-modeline-segment--modals      :override #'ignore)
 
-(after! centaur-tabs
-  (add-hook! '(+doom-dashboard-mode-hook
-               +popup-buffer-mode-hook
-               Info-mode-hook
-               dired-mode-hook)
-             #'centaur-tabs-local-mode)
-  (add-hook! 'writeroom-mode-hook
-    (centaur-tabs-local-mode (if (bound-and-true-p writeroom-mode)
-                                 +1 -1))))
 (after! lsp-mode
   (setq lsp-auto-guess-root t
         lsp-enable-on-type-formatting t
@@ -115,9 +99,7 @@
   `('doom-modeline-project-dir     :foreground ,(doom-color 'green))
   `('fill-column-indicator         :foreground ,(doom-color 'base3))
   `('hl-line                       :background ,(doom-color 'base3))
-  '(treemacs-root-face               :inherit treemacs-file-face) ; TODO
-  '(centaur-tabs-selected-modified   :inherit centaur-tabs-selected) ; TODO
-  '(centaur-tabs-unselected-modified :inherit centaur-tabs-unselected))
+  '(treemacs-root-face :inherit treemacs-file-face)) ; TODO
 
 (map! (:when IS-MAC)
       "<swipe-right>" nil
