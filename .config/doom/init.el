@@ -31,7 +31,7 @@
         +all
         +defaults)
        ;; tabs
-       (treemacs +lsp)
+       ;; (treemacs +lsp)
        ;; unicode
        (vc-gutter +diff-hl +pretty)
        ;; vi-tilde-fringe

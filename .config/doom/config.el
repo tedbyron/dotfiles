@@ -1,6 +1,6 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'initial-frame-alist '(fullscreen . fullheight))
 (add-to-list 'default-frame-alist '(height . 48))
 (add-to-list 'default-frame-alist '(width . 120))
 ;; (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
@@ -43,15 +43,13 @@
       doom-scratch-initial-major-mode #'lisp-interaction-mode
       doom-theme 'doom-dracula
       doom-themes-enable-bold nil
-      doom-themes-treemacs-enable-variable-pitch nil
-      doom-themes-treemacs-theme "doom-colors"
       evil-ex-substitute-global t
       evil-snipe-scope 'buffer
       evil-split-window-below t
       evil-vsplit-window-right t
       evil-want-fine-undo t
-      fancy-splash-image (concat doom-private-dir "splashes/e.png")
       frame-title-format 'invocation-name
+      gcmh-high-cons-threshold #x10000000
       ;; inhibit-compacting-font-caches t
       org-directory "~/org"
       org-ellipsis "…"
@@ -77,10 +75,11 @@
 (setq-hook! 'text-mode-hook
   comment-auto-fill-only-comments nil)
 
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
-(add-hook 'projectile-after-switch-project-hook
-          #'treemacs-display-current-project-exclusively)
-(add-hook! (prog-mode text-mode) #'auto-fill-mode #'whitespace-mode)
+(add-hook 'prog-mode-hook
+          #'display-fill-column-indicator-mode)
+(add-hook! (prog-mode text-mode)
+           #'auto-fill-mode
+           (unless buffer-read-only (whitespace-mode)))
 
 (remove-hook 'doom-modeline-mode-hook #'size-indication-mode)
 
@@ -91,24 +90,30 @@
         lsp-headerline-breadcrumb-enable nil
         lsp-headerline-breadcrumb-icons-enable nil
         lsp-semantic-tokens-enable t))
-(after! lsp-treemacs
-  (lsp-treemacs-sync-mode))
 (after! lsp-ui
   (setq lsp-ui-doc-delay 0.2))
-(after! treemacs
-  (treemacs-follow-mode)
-  (treemacs-project-follow-mode)
-  (setq treemacs-project-follow-cleanup t))
+
+;; (after! lsp-treemacs
+;;   (lsp-treemacs-sync-mode))
+;; (after! treemacs
+;;   (add-hook 'projectile-after-switch-project-hook
+;;             #'treemacs-display-current-project-exclusively)
+;;   (custom-set-faces!
+;;     `('doom-themes-treemacs-root-face :foreground ,(doom-color 'green)
+;;                                       :height 0.8)
+;;     `('treemacs-root-face             :foreground ,(doom-color 'green)
+;;                                       :height 1.0))
+;;   (treemacs-follow-mode)
+;;   (treemacs-project-follow-mode)
+;;   (setq doom-themes-treemacs-enable-variable-pitch nil
+;;         doom-themes-treemacs-theme "doom-colors"
+;;         treemacs-project-follow-cleanup t))
 
 (custom-set-faces!
   `('doom-modeline-buffer-modified  :foreground ,(doom-color 'yellow))
   `('doom-modeline-project-dir      :foreground ,(doom-color 'green))
-  `('doom-themes-treemacs-root-face :foreground ,(doom-color 'green)
-                                    :height 0.8)
   `('fill-column-indicator          :foreground ,(doom-color 'base3))
-  `('hl-line                        :background ,(doom-color 'base3))
-  `('treemacs-root-face             :foreground ,(doom-color 'green)
-                                    :height 1.0))
+  `('hl-line                        :background ,(doom-color 'base3)))
 
 (map! (:when IS-MAC)
       "<swipe-right>" nil
