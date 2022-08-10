@@ -171,6 +171,60 @@
 (add-hook 'after-change-major-mode-hook
           #'doom-modeline-conditional-buffer-encoding)
 
+(defun +doom-dashboard-ascii-banner ()
+  (let* ((banner '(
+"                 .\"-,.__                                               "
+"                 `.     `.  ,                                          "
+"              .--'  .._,'\"-' `.                                        "
+"             .    .'         `'                                        "
+"             `.   /          ,'                                        "
+"               `  '--.   ,-\"'                                          "
+"                `\"`   |  \\                                             "
+"                   -. \\, |                                             "
+"                    `--Y.'      ___.                                   "
+"                         \\     L._, \\                                  "
+"               _.,        `.   <  <\\                _                  "
+"             ,' '           `, `.   | \\            ( `                 "
+"          ../, `.            `  |    .\\`.           \\ \\_               "
+"         ,' ,..  .           _.,'    ||\\l            )  '\".            "
+"        , ,'   \\           ,'.-.`-._,'  |           .  _._`.           "
+"      ,' /      \\ \\        `' ' `--/   | \\          / /   ..\\          "
+"    .'  /        \\ .         |\\__ - _ ,'` `        / /     `.`.        "
+"    |  '          ..         `-...-\"  |  `-'      / /        . `.      "
+"    | /           |L__           |    |          / /          `. `.    "
+"   , /            .   .          |    |         / /             ` `    "
+"  / /          ,. ,`._ `-_       |    |  _   ,-' /               ` \\   "
+" / .           \\\"`_/. `-_ \\_,.  ,'    +-' `-'  _,        ..,-.    \\`.  "
+".  '         .-f    ,'   `    '.       \\__.---'     _   .'   '     \\ \\ "
+"' /          `.'    l     .' /          \\..      ,_|/   `.  ,'`     L` "
+"|'      _.-\"\"` `.    \\ _,'  `            \\ `.___`.'\"`-.  , |   |    | \\"
+"||    ,'      `. `.   '       _,...._        `  |    `/ '  |   '     .|"
+"||  ,'          `. ;.,.---' ,'       `.   `.. `-'  .-' /_ .'    ;_   ||"
+"|| '              V      / /           `   | `   ,'   ,' '.    !  `. ||"
+"||/            _,-------7 '              . |  `-'    l         /    `||"
+". |          ,' .-   ,' ||               | .-.        `.      .'     ||"
+" `'        ,'    `\".'    |               |    `.        '. -.'       `'"
+"          /      ,'      |               |,'    \\-.._,.'/'             "
+"          .     /        .               .       \\    .''              "
+"        .`.    |         `.             /         :_,'.'               "
+"          \\ `...\\   _     ,'-.        .'         /_.-'                 "
+"           `-.__ `,  `'   .  _.>----''.  _  __  /                      "
+"                .'        /\"'          |  \"'   '_                      "
+"               /_|.-'\\ ,\".             '.'`__'-( \\                     "
+"                 / ,\"'\"\\,'               `/  `-.|\"                     "
+                   ))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat line (make-string (max 0 (- longest-line (length line)))
+                                          32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+(setq +doom-dashboard-ascii-banner-fn #'+doom-dashboard-ascii-banner)
+
 (defun +doom-dashboard-setup-modified-keymap ()
   "Set up a keymap for faster navigation from the dashboard."
   (setq +doom-dashboard-mode-map (make-sparse-keymap))
