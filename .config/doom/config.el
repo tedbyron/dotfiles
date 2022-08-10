@@ -46,6 +46,7 @@
       doom-themes-treemacs-enable-variable-pitch nil
       doom-themes-treemacs-theme "doom-colors"
       evil-ex-substitute-global t
+      evil-snipe-scope 'buffer
       evil-split-window-below t
       evil-vsplit-window-right t
       evil-want-fine-undo t
