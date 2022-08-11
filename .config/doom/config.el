@@ -9,6 +9,12 @@
 (display-time-mode -1) ; TODO: display time in fullscreen
 (global-subword-mode)
 
+(when (and IS-MAC (display-graphic-p))
+  (setq mac-mouse-wheel-smooth-scroll nil
+        mouse-wheel-follow-mouse t
+        mouse-wheel-progressive-speed nil
+        mouse-wheel-scroll-amount '(1 ((shift) . hscroll) ((meta) . 6))
+        scroll-conservatively 101))
 (unless IS-MAC (menu-bar-mode -1))
 ;; TODO: display battery in fullscreen
 ;; (unless (string-match-p "^Power N/A" (battery))
