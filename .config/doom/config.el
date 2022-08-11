@@ -24,7 +24,8 @@
 (setq-default comment-column 0
               fill-column 100)
 
-(setq +word-wrap-extra-indent nil
+(setq +file-templates-dir (expand-file-name "templates" doom-private-dir)
+      +word-wrap-extra-indent nil
       +zen-text-scale 0
       all-the-icons-scale-factor 1.0
       auto-save-default t
@@ -36,8 +37,9 @@
       display-line-numbers-type 'relative
       display-time-24hr-format t
       display-time-default-load-average nil
+      doom-big-font (font-spec :family "Curlio" :size 21.0)
       doom-dracula-colorful-headers t
-      doom-font (font-spec :family "Curlio" :size 14.0 :weight 'normal)
+      doom-font (font-spec :family "Curlio" :size 14.0)
       doom-modeline-buffer-modification-icon nil
       doom-modeline-enable-word-count t
       doom-modeline-github t
@@ -47,8 +49,11 @@
       doom-scratch-initial-major-mode #'lisp-interaction-mode
       doom-theme 'doom-dracula
       doom-themes-enable-bold nil
+      doom-unicode-font (font-spec :family "Curlio")
+      doom-variable-pitch-font (font-spec :family "Inter")
       evil-ex-substitute-global t
       evil-snipe-scope 'buffer
+      evil-snipe-smart-case t
       evil-split-window-below t
       evil-vsplit-window-right t
       evil-want-fine-undo t
@@ -58,7 +63,6 @@
       org-directory "~/org"
       org-ellipsis "…"
       password-cache-expiry 120
-      projectile-project-search-path '("~/git")
       scroll-margin 3
       truncate-string-ellipsis "…"
       undo-limit 64000000
@@ -72,21 +76,19 @@
       writeroom-width 100
       x-stretch-cursor t)
 
-(setq-hook! '(c-or-c++-mode-hook emacs-lisp-mode-hook sh-mode-hook)
+(setq-hook! '(c-or-c++-mode-hook
+              emacs-lisp-mode-hook
+              sh-mode-hook)
   fill-column 80)
-(setq-hook! 'prog-mode-hook
-  comment-column 0) ; TODO: setq-default no work
-(setq-hook! 'text-mode-hook
-  comment-auto-fill-only-comments nil)
+(setq-hook! 'prog-mode-hook comment-column 0) ; TODO: setq-default no work
+(setq-hook! 'text-mode-hook comment-auto-fill-only-comments nil)
 
-(add-hook 'prog-mode-hook
-          #'display-fill-column-indicator-mode)
-(add-hook! (prog-mode text-mode)
-           #'auto-fill-mode
-           (unless buffer-read-only (whitespace-mode)))
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
 
 (remove-hook 'doom-modeline-mode-hook #'size-indication-mode)
 
+(after! avy
+  (setq avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i)))
 (after! lsp-mode
   (setq lsp-auto-guess-root t
         lsp-enable-on-type-formatting t
@@ -96,6 +98,14 @@
         lsp-semantic-tokens-enable t))
 (after! lsp-ui
   (setq lsp-ui-doc-delay 0.2))
+(after! projectile
+  (setq projectile-ignored-projects '("~/" "/tmp")
+        projectile-ignored-project-function
+        (lambda (root)
+          (or (file-remote-p root)
+              (string-match ".*\\.Trash.*" root)
+              (string-match ".*\\.config.*" root)))
+        projectile-project-search-path '("~/git")))
 
 ;; (after! lsp-treemacs
 ;;   (lsp-treemacs-sync-mode))
@@ -114,10 +124,10 @@
 ;;         treemacs-project-follow-cleanup t))
 
 (custom-set-faces!
-  `('doom-modeline-buffer-modified  :foreground ,(doom-color 'yellow))
-  `('doom-modeline-project-dir      :foreground ,(doom-color 'green))
-  `('fill-column-indicator          :foreground ,(doom-color 'base3))
-  `('hl-line                        :background ,(doom-color 'base3)))
+  `('doom-modeline-buffer-modified :foreground ,(doom-color 'yellow))
+  `('doom-modeline-project-dir     :foreground ,(doom-color 'green))
+  `('fill-column-indicator         :foreground ,(doom-color 'base3))
+  `('hl-line                       :background ,(doom-color 'base3)))
 
 (map! (:when IS-MAC)
       "<swipe-right>" nil
@@ -126,6 +136,8 @@
       :desc "M-x"             ";" #'execute-extended-command
       :desc "Eval expression" ":" #'pp-eval-expression
       :desc "Dashboard"       "d" #'+doom-dashboard/open)
+(map! :map doom-leader-buffer-map
+      :desc "Kill buffer and window" "D" #'kill-buffer-and-window)
 (map! :map doom-leader-toggle-map
       :desc "Frame maximized" "M" #'toggle-frame-maximized)
 
@@ -176,46 +188,45 @@
           #'doom-modeline-conditional-buffer-encoding)
 
 (defun +doom-dashboard-ascii-banner ()
-  (let* ((banner '(
-"                 .\"-,.__"
-"                 `.     `.  ,"
-"              .--'  .._,'\"-' `."
-"             .    .'         `'"
-"             `.   /          ,'"
-"               `  '--.   ,-\"'"
-"                `\"`   |  \\"
-"                   -. \\, |"
-"                    `--Y.'      ___."
-"                         \\     L._, \\"
-"               _.,        `.   <  <\\                _"
-"             ,' '           `, `.   | \\            ( `"
-"          ../, `.            `  |    .\\`.           \\ \\_"
-"         ,' ,..  .           _.,'    ||\\l            )  '\"."
-"        , ,'   \\           ,'.-.`-._,'  |           .  _._`."
-"      ,' /      \\ \\        `' ' `--/   | \\          / /   ..\\"
-"    .'  /        \\ .         |\\__ - _ ,'` `        / /     `.`."
-"    |  '          ..         `-...-\"  |  `-'      / /        . `."
-"    | /           |L__           |    |          / /          `. `."
-"   , /            .   .          |    |         / /             ` `"
-"  / /          ,. ,`._ `-_       |    |  _   ,-' /               ` \\"
-" / .           \\\"`_/. `-_ \\_,.  ,'    +-' `-'  _,        ..,-.    \\`."
-".  '         .-f    ,'   `    '.       \\__.---'     _   .'   '     \\ \\"
-"' /          `.'    l     .' /          \\..      ,_|/   `.  ,'`     L`"
-"|'      _.-\"\"` `.    \\ _,'  `            \\ `.___`.'\"`-.  , |   |    | \\"
-"||    ,'      `. `.   '       _,...._        `  |    `/ '  |   '     .|"
-"||  ,'          `. ;.,.---' ,'       `.   `.. `-'  .-' /_ .'    ;_   ||"
-"|| '              V      / /           `   | `   ,'   ,' '.    !  `. ||"
-"||/            _,-------7 '              . |  `-'    l         /    `||"
-". |          ,' .-   ,' ||               | .-.        `.      .'     ||"
-" `'        ,'    `\".'    |               |    `.        '. -.'       `'"
-"          /      ,'      |               |,'    \\-.._,.'/'"
-"          .     /        .               .       \\    .''"
-"        .`.    |         `.             /         :_,'.'"
-"          \\ `...\\   _     ,'-.        .'         /_.-'"
-"           `-.__ `,  `'   .  _.>----''.  _  __  /"
-"                .'        /\"'          |  \"'   '_"
-"               /_|.-'\\ ,\".             '.'`__'-( \\"
-"                 / ,\"'\"\\,'               `/  `-.|\""
+  (let* ((banner '("                 .\"-,.__"
+                   "                 `.     `.  ,"
+                   "              .--'  .._,'\"-' `."
+                   "             .    .'         `'"
+                   "             `.   /          ,'"
+                   "               `  '--.   ,-\"'"
+                   "                `\"`   |  \\"
+                   "                   -. \\, |"
+                   "                    `--Y.'      ___."
+                   "                         \\     L._, \\"
+                   "               _.,        `.   <  <\\                _"
+                   "             ,' '           `, `.   | \\            ( `"
+                   "          ../, `.            `  |    .\\`.           \\ \\_"
+                   "         ,' ,..  .           _.,'    ||\\l            )  '\"."
+                   "        , ,'   \\           ,'.-.`-._,'  |           .  _._`."
+                   "      ,' /      \\ \\        `' ' `--/   | \\          / /   ..\\"
+                   "    .'  /        \\ .         |\\__ - _ ,'` `        / /     `.`."
+                   "    |  '          ..         `-...-\"  |  `-'      / /        . `."
+                   "    | /           |L__           |    |          / /          `. `."
+                   "   , /            .   .          |    |         / /             ` `"
+                   "  / /          ,. ,`._ `-_       |    |  _   ,-' /               ` \\"
+                   " / .           \\\"`_/. `-_ \\_,.  ,'    +-' `-'  _,        ..,-.    \\`."
+                   ".  '         .-f    ,'   `    '.       \\__.---'     _   .'   '     \\ \\"
+                   "' /          `.'    l     .' /          \\..      ,_|/   `.  ,'`     L`"
+                   "|'      _.-\"\"` `.    \\ _,'  `            \\ `.___`.'\"`-.  , |   |    | \\"
+                   "||    ,'      `. `.   '       _,...._        `  |    `/ '  |   '     .|"
+                   "||  ,'          `. ;.,.---' ,'       `.   `.. `-'  .-' /_ .'    ;_   ||"
+                   "|| '              V      / /           `   | `   ,'   ,' '.    !  `. ||"
+                   "||/            _,-------7 '              . |  `-'    l         /    `||"
+                   ". |          ,' .-   ,' ||               | .-.        `.      .'     ||"
+                   " `'        ,'    `\".'    |               |    `.        '. -.'       `'"
+                   "          /      ,'      |               |,'    \\-.._,.'/'"
+                   "          .     /        .               .       \\    .''"
+                   "        .`.    |         `.             /         :_,'.'"
+                   "          \\ `...\\   _     ,'-.        .'         /_.-'"
+                   "           `-.__ `,  `'   .  _.>----''.  _  __  /"
+                   "                .'        /\"'          |  \"'   '_"
+                   "               /_|.-'\\ ,\".             '.'`__'-( \\"
+                   "                 / ,\"'\"\\,'               `/  `-.|\""
                    ))
          (longest-line (apply #'max (mapcar #'length banner))))
     (put-text-property

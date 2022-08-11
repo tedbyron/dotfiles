@@ -46,5 +46,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! calibredb)
 (package! nov)
 (package! string-inflection)
