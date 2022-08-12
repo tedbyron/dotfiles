@@ -97,8 +97,7 @@
 (after! avy
   (setq avy-keys '(?a ?r ?s ?t ?d ?h ?n ?e ?i)))
 (after! lsp-mode
-  (setq lsp-auto-guess-root t
-        lsp-enable-on-type-formatting t
+  (setq lsp-enable-on-type-formatting t
         lsp-enable-relative-indentation t
         lsp-headerline-breadcrumb-enable nil
         lsp-headerline-breadcrumb-icons-enable nil
