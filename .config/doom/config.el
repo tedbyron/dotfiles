@@ -120,17 +120,22 @@
         :desc "cargo clippy" "b c" #'rustic-cargo-clippy
         :desc "cargo check" "b C" #'rustic-cargo-check)
   (setq lsp-rust-analyzer-cargo-watch-command "clippy"
-        lsp-rust-clippy-preference "on"
+        lsp-rust-analyzer-display-closure-return-type-hints t
+        lsp-rust-analyzer-display-reborrow-hints "always"
+        lsp-rust-analyzer-hide-named-constructor t
+        lsp-rust-analyzer-import-enforce-granularity t
+        lsp-rust-analyzer-import-granularity "module"
         lsp-rust-analyzer-proc-macro-enable t
-        rustic-compile-backtrace "1"
-        rustic-clippy-arguments
-        (string-join '("--all-targets"
-                       "--all-features"
-                       "--"
-                       "-Wclippy::all"
-                       "-Wclippy::nursery"
-                       "-Wrust_2018_idioms")
-                     " ")))
+        lsp-rust-clippy-preference "on"
+        rustic-compile-backtrace "1")
+  (let ((clippy-args ["--all-targets"
+                      "--all-features"
+                      "--"
+                      "-Wclippy::all"
+                      "-Wclippy::nursery"
+                      "-Wrust_2018_idioms"]))
+    (setq lsp-rust-analyzer-cargo-watch-args clippy-args
+          rustic-clippy-arguments (string-join clippy-args " "))))
 
 ;; (after! lsp-treemacs
 ;;   (lsp-treemacs-sync-mode))
