@@ -89,7 +89,8 @@
 (setq-hook! 'prog-mode-hook comment-column 0) ; TODO: setq-default no work
 (setq-hook! 'text-mode-hook comment-auto-fill-only-comments nil)
 
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook! '(conf-toml-mode-hook prog-mode-hook)
+           #'display-fill-column-indicator-mode)
 
 (remove-hook 'doom-modeline-mode-hook #'size-indication-mode)
 
@@ -101,6 +102,7 @@
         lsp-enable-relative-indentation t
         lsp-headerline-breadcrumb-enable nil
         lsp-headerline-breadcrumb-icons-enable nil
+        lsp-lens-enable nil
         lsp-semantic-tokens-enable t))
 (after! lsp-ui
   (setq lsp-ui-doc-delay 0.2))
@@ -112,6 +114,23 @@
               (string-match ".*\\.Trash.*" root)
               (string-match ".*\\.config.*" root)))
         projectile-project-search-path '("~/git")))
+(after! rustic
+  (map! :localleader
+        :map rustic-mode-map
+        :desc "cargo clippy" "b c" #'rustic-cargo-clippy
+        :desc "cargo check" "b C" #'rustic-cargo-check)
+  (setq lsp-rust-analyzer-cargo-watch-command "clippy"
+        lsp-rust-clippy-preference "on"
+        lsp-rust-analyzer-proc-macro-enable t
+        rustic-compile-backtrace "1"
+        rustic-clippy-arguments
+        (string-join '("--all-targets"
+                       "--all-features"
+                       "--"
+                       "-Wclippy::all"
+                       "-Wclippy::nursery"
+                       "-Wrust_2018_idioms")
+                     " ")))
 
 ;; (after! lsp-treemacs
 ;;   (lsp-treemacs-sync-mode))
