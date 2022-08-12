@@ -49,7 +49,7 @@
       doom-modeline-buffer-modification-icon nil
       doom-modeline-enable-word-count t
       doom-modeline-github t
-      doom-modeline-icon t
+      doom-modeline-icon nil
       doom-modeline-major-mode-icon nil
       doom-modeline-percent-position nil
       doom-scratch-initial-major-mode #'lisp-interaction-mode
