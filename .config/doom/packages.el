@@ -46,6 +46,7 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! brightscript-mode)
 (package! calibredb)
 (package! nov)
 (package! string-inflection)
