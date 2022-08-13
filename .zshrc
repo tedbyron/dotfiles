@@ -47,7 +47,6 @@ path=(
   "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
   "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
   "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
-  "${HOME}/.config/emacs/bin"
   "${HOME}/.cargo/bin"
   $path
 )
@@ -77,15 +76,8 @@ export LESS_TERMCAP_se=$'\033[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
 
-if (( ${+commands[emacs]} )); then
-  export ALTERNATE_EDITOR=''
-  export EDITOR='emacsclient -t'
-  export SUDO_EDITOR='emacsclient -t'
-  export VISUAL='emacsclient -c -a emacs'
-else
-  export EDITOR='vi'
-  export SUDO_EDITOR='vi'
-fi
+export EDITOR='nvim'
+export SUDO_EDITOR='nvim'
 
 export BAT_THEME='Dracula'
 
