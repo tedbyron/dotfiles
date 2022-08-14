@@ -1,2 +1,4 @@
 .DS_Store
-.config/nvim/lua
+lua
+result
+local.nix

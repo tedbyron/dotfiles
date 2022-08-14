@@ -6,9 +6,7 @@ znap eval brew '/opt/homebrew/bin/brew shellenv'
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-################################################################################
 # plugins
-################################################################################
 
 znap source ohmyzsh/ohmyzsh \
   lib/{completion,correction,directories,history} \
@@ -19,9 +17,7 @@ znap source zsh-users/zsh-history-substring-search
 # must be last: https://github.com/zsh-users/zsh-syntax-highlighting#faq
 znap source zsh-users/zsh-syntax-highlighting
 
-################################################################################
 # zsh
-################################################################################
 
 setopt auto_cd
 setopt interactive_comments
@@ -38,9 +34,7 @@ bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
-################################################################################
 # path
-################################################################################
 
 path=(
   "${HOMEBREW_PREFIX}/sbin"
@@ -51,16 +45,12 @@ path=(
   $path
 )
 
-################################################################################
 # functions
-################################################################################
 
 znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'
 
-################################################################################
 # misc exports
-################################################################################
 
 export STARSHIP_LOG=error
 export HOMEBREW_NO_ANALYTICS=1
@@ -88,9 +78,7 @@ export NVM_DIR="$HOME/.nvm"
 export PNPM_HOME="/Users/ted/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
-################################################################################
 # aliases
-################################################################################
 
 alias up='brew update; brew upgrade; brew upgrade --cask; brew cleanup; \
 rustup update; cargo install-update -a'
