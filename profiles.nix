@@ -12,55 +12,48 @@ let
   mkProfile =
     { system
     , user ? defaultUser
-    , config
+    , modules ? [ ]
     }:
     {
       inherit system;
 
-      modules = [{
+      modules = modules ++ [{
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${user.name} = {
             imports = [ ./home.nix ];
-
-            home.stateVersion = "22.11";
             home.username = user.name;
           };
         };
-        system.stateVersion = 4;
         users.users.${user.name} = {
           description = user.description;
-          home =
-            if elem system platforms.darwin
-            then /Users/${user.name}
-            else /home/${user.name};
-          isHidden = false;
+          home = "${if elem system platforms.darwin then "/Users" else "/home"}/${user.name}";
           name = user.name;
         };
-      }] ++ [ config ];
+      }];
     };
 in
 {
   teds-mac = mkProfile {
     system = "aarch64-darwin";
-    config = {
+    modules = [{
       networking = rec {
         computerName = "Ted's Mac";
         hostName = "teds-mac";
         localHostName = hostName;
       };
-    };
+    }];
   };
 
   teds-work-mac = mkProfile {
     system = "x86_64-darwin";
-    config = {
+    modules = [{
       networking = rec {
         computerName = "Ted's Work Mac";
         hostName = "teds-work-mac";
         localHostName = hostName;
       };
-    };
+    }];
   };
 }

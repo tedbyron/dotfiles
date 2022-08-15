@@ -27,13 +27,13 @@
 
       mkDarwinSystem = profile:
         darwinSystem {
+          inherit inputs;
           inherit (profile) system;
 
           modules = [
             home-manager.darwinModules.home-manager
             ./darwin.nix
           ] ++ profile.modules;
-          specialArgs = { inherit inputs nixpkgs; };
         };
 
       profiles = import ./profiles.nix { inherit nixpkgs; };

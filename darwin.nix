@@ -123,6 +123,8 @@ in
     };
 
     # pam.enableSudoTouchIdAuth = true;
+
+    stateVersion = 4;
   };
 
   users.nix.configureBuildUsers = true;
