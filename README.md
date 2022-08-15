@@ -37,7 +37,7 @@
   ```sh
   cd ~/dotfiles
 
-  nix build .#darwinConfigurations.teds-mac.system \
+  nix build .#darwinConfigurations.<CONFIG_NAME>.system \
     --experimental-features 'nix-command flakes'
   ```
 
