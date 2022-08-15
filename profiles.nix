@@ -1,4 +1,8 @@
+{ nixpkgs }:
 let
+  inherit (builtins) elem;
+  inherit (nixpkgs.lib) platforms;
+
   defaultUser = {
     name = "ted";
     description = "Teddy Byron";
@@ -8,7 +12,7 @@ let
   mkProfile =
     { system
     , user ? defaultUser
-    , config ? { }
+    , config
     }:
     {
       inherit system;
@@ -18,10 +22,21 @@ let
           useGlobalPkgs = true;
           useUserPackages = true;
           users.${user.name} = {
+            imports = [ ./home.nix ];
+
             home.stateVersion = "22.11";
             home.username = user.name;
-            imports = [ ./home.nix ];
           };
+        };
+        system.stateVersion = 4;
+        users.users.${user.name} = {
+          description = user.description;
+          home =
+            if elem system platforms.darwin
+            then /Users/${user.name}
+            else /home/${user.name};
+          isHidden = false;
+          name = user.name;
         };
       }] ++ [ config ];
     };

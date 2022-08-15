@@ -36,7 +36,7 @@
           specialArgs = { inherit inputs nixpkgs; };
         };
 
-      profiles = import ./profiles.nix;
+      profiles = import ./profiles.nix { inherit nixpkgs; };
     in
     {
       darwinConfigurations = {
