@@ -32,11 +32,11 @@
 
           modules = [
             home-manager.darwinModules.home-manager
-            ./darwin.nix
+            ./modules/darwin.nix
           ] ++ profile.modules;
         };
 
-      profiles = import ./profiles.nix { inherit nixpkgs; };
+      profiles = import ./modules/profiles.nix { inherit nixpkgs; };
     in
     {
       darwinConfigurations = {
