@@ -1,6 +1,4 @@
 { pkgs, ... }:
-let inherit (pkgs.stdenvNoCC) isAarch64;
-in
 {
   environment = {
     loginShell = pkgs.zsh;
@@ -9,7 +7,10 @@ in
   };
 
   homebrew = {
-    brewPrefix = if isAarch64 then "/opt/homebrew/bin" else "/usr/local/bin";
+    brewPrefix =
+      if pkgs.stdenvNoCC.isAarch64
+      then "/opt/homebrew/bin"
+      else "/usr/local/bin";
     brews = [ ];
     casks = [ ];
     cleanup = "zap";
@@ -73,13 +74,11 @@ in
         "com.apple.trackpad.enableSecondaryClick" = true;
         # "com.apple.trackpad.scaling" = 2.0; # FIXME
       };
-
       alf = {
         allowdownloadsignedenabled = 1;
         globalstate = 1;
         stealthenabled = 1;
       };
-
       dock = {
         autohide = true;
         expose-group-by-app = false;
@@ -93,7 +92,6 @@ in
         wvous-tl-corner = 1;
         wvous-tr-corner = 1;
       };
-
       finder = {
         AppleShowAllExtensions = true;
         AppleShowAllFiles = false;
@@ -103,11 +101,9 @@ in
         ShowStatusBar = true;
         _FXShowPosixPathInTitle = true;
       };
-
       loginwindow.GuestEnabled = false;
       magicmouse.MouseButtonMode = "TwoButton";
       screencapture.disable-shadow = true;
-
       trackpad = {
         Clicking = true;
         FirstClickThreshold = 0;

@@ -1,12 +1,9 @@
 { nixpkgs }:
 let
-  inherit (builtins) elem;
-  inherit (nixpkgs.lib) platforms;
-
   defaultUser = {
-    name = "ted";
     description = "Teddy Byron";
     email = "ted@tedbyron.com";
+    name = "ted";
   };
 
   mkProfile =
@@ -23,13 +20,17 @@ let
           useUserPackages = true;
           users.${user.name} = {
             imports = [ ./home.nix ];
-            home.username = user.name;
+            home.userInfo = user.name;
           };
         };
         users.users.${user.name} = {
-          description = user.description;
-          home = "${if elem system platforms.darwin then "/Users" else "/home"}/${user.name}";
-          name = user.name;
+          inherit (user) description name;
+
+          home = (
+            if builtins.elem system nixpkgs.lib.platforms.darwin
+            then "/Users/"
+            else "/home/"
+          ) + user.name;
         };
       }];
     };

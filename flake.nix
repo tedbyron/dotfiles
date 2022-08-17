@@ -23,10 +23,8 @@
 
   outputs = { nixpkgs, darwin, home-manager, ... }@inputs:
     let
-      inherit (darwin.lib) darwinSystem;
-
       mkDarwinSystem = profile:
-        darwinSystem {
+        darwin.lib.darwinSystem {
           inherit inputs;
           inherit (profile) system;
 
