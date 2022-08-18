@@ -83,6 +83,7 @@ style = 'blue'
 [git_commit]
 commit_hash_length = 7
 format = '[$hash$tag]($style) '
+tag_symbol = ' '
 style = 'white'
 only_detached = false
 
