@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 if [[ ! -e ~/.config/emacs ]]; then
     gh repo clone hlissner/doom-emacs ~/.config/emacs -- --depth 1

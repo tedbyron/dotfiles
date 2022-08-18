@@ -11,15 +11,19 @@
       if pkgs.stdenvNoCC.isAarch64
       then "/opt/homebrew/bin"
       else "/usr/local/bin";
+
     brews = [ ];
     casks = [ ];
     cleanup = "zap";
     enable = true;
+
     global = {
       brewfile = true;
       noLock = true;
     };
+
     masApps = { };
+
     taps = [
       "homebrew/bundle"
       "homebrew/cask"
@@ -33,20 +37,32 @@
       "https://cache.nixos.org/"
       "https://nix-community.cachix.org"
     ];
+
     binaryCachePublicKeys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
+
     extraOptions =
       ''
         auto-optimise-store = true
         experimental-features = nix-command flakes
       '';
+
+    gc.automatic = true;
     package = pkgs.nixUnstable;
     trustedUsers = [ "root" "@admin" ];
   };
 
   nixpkgs.config.allowUnfree = true;
+
+  programs = {
+    gnupg.agent.enable = true;
+    gnupg.agent.enableSSHSupport = true;
+    man.enable = true;
+    nix-index.enable = true;
+    zsh.enable = true;
+  };
 
   services.nix-daemon.enable = true;
 
@@ -74,11 +90,13 @@
         "com.apple.trackpad.enableSecondaryClick" = true;
         # "com.apple.trackpad.scaling" = 2.0; # FIXME
       };
+
       alf = {
         allowdownloadsignedenabled = 1;
         globalstate = 1;
         stealthenabled = 1;
       };
+
       dock = {
         autohide = true;
         expose-group-by-app = false;
@@ -92,6 +110,7 @@
         wvous-tl-corner = 1;
         wvous-tr-corner = 1;
       };
+
       finder = {
         AppleShowAllExtensions = true;
         AppleShowAllFiles = false;
@@ -101,9 +120,11 @@
         ShowStatusBar = true;
         _FXShowPosixPathInTitle = true;
       };
+
       loginwindow.GuestEnabled = false;
       magicmouse.MouseButtonMode = "TwoButton";
       screencapture.disable-shadow = true;
+
       trackpad = {
         Clicking = true;
         FirstClickThreshold = 0;
@@ -117,8 +138,6 @@
       enableKeyMapping = true;
       remapCapsLockToEscape = true;
     };
-
-    # pam.enableSudoTouchIdAuth = true;
 
     stateVersion = 4;
   };

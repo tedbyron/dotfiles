@@ -1,6 +1,6 @@
 format = '''
-┌ $time$username$hostname$directory$fill $status$cmd_duration$all
-└ $character '''
+╭ $username$hostname$directory$fill $status$cmd_duration$all
+╰ $character '''
 right_format = ''
 scan_timeout = 30
 command_timeout = 500
@@ -65,7 +65,7 @@ disabled = false
 format = '[$time]($style) '
 time_format = '%R'
 style = 'white'
-disabled = false
+disabled = true
 
 [username]
 style_root = 'red'
