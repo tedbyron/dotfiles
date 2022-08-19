@@ -50,7 +50,6 @@ in
     gpg.enable = true;
     home-manager.enable = true;
     jq.enable = true;
-    just.enable = true;
     man.enable = true;
     navi.enable = true;
 

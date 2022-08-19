@@ -17,7 +17,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
+  outputs = { nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
     let
       defaultUser = {
         description = "Teddy Byron";
@@ -30,7 +30,6 @@
         { system
         , user ? defaultUser
         , modules
-        , homeManagerModules ? [ ]
         }:
         darwin.lib.darwinSystem {
           inherit inputs system;

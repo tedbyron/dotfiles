@@ -38,7 +38,7 @@
   lfs.enable = true;
 
   signing = {
-    key = config.user.key;
+    inherit (config.user) key;
     signByDefault = true;
   };
 
