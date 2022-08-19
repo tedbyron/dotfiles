@@ -1,7 +1,8 @@
 { pkgs, ... }:
 {
   environment = {
-    loginShell = pkgs.zsh;
+    loginShell = "${pkgs.zsh}/bin/zsh -l";
+    pathsToLink = [ "/usr/share/zsh" ];
     shells = with pkgs; [ bashInteractive zsh ];
     systemPackages = with pkgs; [ ];
   };

@@ -1,5 +1,5 @@
 format = '''
-╭ $username$hostname$directory$fill $status$cmd_duration$all
+╭ $username$hostname$directory$shlvl$fill $status$cmd_duration$all
 ╰ $character '''
 right_format = ''
 scan_timeout = 30
@@ -54,6 +54,13 @@ symbol = ''
 style = '214'
 display_private = true
 disabled = true
+
+[shlvl]
+threshold = 2
+format = '[$symbol$shlvl]($style) '
+symbol = ''
+style = 'bright-black'
+disabled = false
 
 [status]
 format = '[$symbol$status]($style) '
