@@ -14,10 +14,6 @@
       inputs.utils.follows = "flake-utils";
     };
 
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
     flake-utils.url = "github:numtide/flake-utils";
   };
 

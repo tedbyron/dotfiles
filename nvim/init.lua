@@ -6,7 +6,7 @@ local nvim_command = vim.api.nvim_command
 
 local packer_path = fn.stdpath('data') .. '/site/pack/packer/start'
 
-function ensure (user, repo)
+local function ensure(user, repo)
   local install_path = format('%s/%s', packer_path, repo)
 
   if fn.empty(fn.glob(install_path)) == 1 then
