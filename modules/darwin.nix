@@ -15,15 +15,15 @@
 
     brews = [ ];
     casks = [ ];
-    cleanup = "zap";
     enable = true;
-
-    global = {
-      brewfile = true;
-      noLock = true;
-    };
-
+    global.brewfile = true;
     masApps = { };
+
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+      upgrade = true;
+    };
 
     taps = [
       "homebrew/bundle"
@@ -34,25 +34,31 @@
   };
 
   nix = {
-    binaryCaches = [
-      "https://cache.nixos.org/"
-      "https://nix-community.cachix.org"
-    ];
+    configureBuildUsers = true;
 
-    binaryCachePublicKeys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-
-    extraOptions =
-      ''
-        auto-optimise-store = true
-        experimental-features = nix-command flakes
-      '';
+    extraOptions = ''
+      auto-optimise-store = true
+      experimental-features = nix-command flakes
+    '';
 
     gc.automatic = true;
     package = pkgs.nixUnstable;
-    trustedUsers = [ "root" "@admin" ];
+
+    settings = {
+      substituters = [
+        "https://cache.nixos.org/"
+        "https://nix-community.cachix.org"
+        "https://nixpkgs.cachix.org"
+      ];
+
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="
+      ];
+
+      trusted-users = [ "@admin" ];
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -129,9 +135,7 @@
       trackpad = {
         Clicking = true;
         FirstClickThreshold = 0;
-        SecondClickThreshold = 0;
-        TrackpadRightClick = false;
-        TrackpadThreeFingerDrag = true;
+        TrackpadRightClick = true;
       };
     };
 
@@ -142,6 +146,4 @@
 
     stateVersion = 4;
   };
-
-  users.nix.configureBuildUsers = true;
 }

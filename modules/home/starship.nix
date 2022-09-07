@@ -14,7 +14,7 @@
     # Builtin
     battery.format = "[$percentage]($style) ";
     character = {
-      format = "$symbol";
+      format = "$symbol ";
       success_symbol = "[\\$](green)";
       error_symbol = "[\\$](red)";
       vicmd_symbol = "[N](green)";

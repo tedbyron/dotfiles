@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AllowClipboardAccess</key>
-	<true/>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>Dracula</key>
@@ -218,32 +216,28 @@
 		</dict>
 	</dict>
 	<key>Default Bookmark Guid</key>
-	<string>5F347EAC-35A0-4A77-8EC1-5836F3F10177</string>
-	<key>DimBackgroundWindows</key>
-	<false/>
+	<string>32C89769-4543-481D-BC66-C503C1A382D7</string>
 	<key>DimInactiveSplitPanes</key>
-	<false/>
-	<key>FocusFollowsMouse</key>
 	<false/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
-	<key>HideScrollbar</key>
-	<true/>
+	<key>HideActivityIndicator</key>
+	<false/>
 	<key>HideTabNumber</key>
-	<true/>
+	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_11440E9F-6814-4569-ACA5-D7B67AF7824B</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_11440E9F-6814-4569-ACA5-D7B67AF7824B_selection</key>
 	<integer>0</integer>
+	<key>NeverWarnAboutShortLivedSessions_32C89769-4543-481D-BC66-C503C1A382D7</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_32C89769-4543-481D-BC66-C503C1A382D7_selection</key>
+	<integer>0</integer>
 	<key>NeverWarnAboutShortLivedSessions_5F347EAC-35A0-4A77-8EC1-5836F3F10177</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_5F347EAC-35A0-4A77-8EC1-5836F3F10177_selection</key>
-	<integer>0</integer>
-	<key>NeverWarnAboutShortLivedSessions_DD4C205D-592D-4993-A3C3-5940B548141C</key>
-	<true/>
-	<key>NeverWarnAboutShortLivedSessions_DD4C205D-592D-4993-A3C3-5940B548141C_selection</key>
 	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
@@ -502,7 +496,7 @@
 				<real>0.90032327175140381</real>
 			</dict>
 			<key>Guid</key>
-			<string>5F347EAC-35A0-4A77-8EC1-5836F3F10177</string>
+			<string>32C89769-4543-481D-BC66-C503C1A382D7</string>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Idle Code</key>
@@ -1389,6 +1383,8 @@
 		</dict>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
+	<true/>
+	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
 	<key>PerPaneBackgroundImage</key>
 	<false/>
@@ -1425,29 +1421,29 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnQuit</key>
-	<false/>
+	<true/>
+	<key>SeparateWindowTitlePerTab</key>
+	<true/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
+	<key>ShowNewOutputIndicator</key>
+	<true/>
 	<key>ShowPaneTitles</key>
 	<false/>
 	<key>SoundForEsc</key>
 	<false/>
-	<key>SplitPaneDimmingAmount</key>
-	<real>0.094524370211999359</real>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
-	<key>UseBorder</key>
-	<false/>
+	<key>TabsHaveCloseButton</key>
+	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WindowNumber</key>
 	<false/>
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
-	<key>kCPKSelectionViewPreferredModeKey</key>
-	<integer>0</integer>
-	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
-	<false/>
 </dict>
 </plist>

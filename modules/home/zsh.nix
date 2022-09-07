@@ -1,9 +1,10 @@
 { config, ... }:
 {
-  autocd = true;
-  defaultKeymap = "viins";
-  dotDir = ".config/zsh";
   enable = true;
+
+  autocd = true;
+  defaultKeymap = "emacs";
+  dotDir = ".config/zsh"; # relative to home directory
   enableAutosuggestions = true;
   enableCompletion = true;
   enableSyntaxHighlighting = true;
@@ -15,7 +16,7 @@
   };
 
   localVariables = { };
-  profileExtra = '''';
+  # profileExtra = '''';
   sessionVariables = { };
   shellAliases = { };
   shellGlobalAliases = { };

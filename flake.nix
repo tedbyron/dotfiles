@@ -17,7 +17,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
+  outputs = { nixpkgs, darwin, home-manager, ... }@inputs:
     let
       defaultUser = {
         description = "Teddy Byron";
@@ -38,8 +38,6 @@
             home-manager.darwinModules.home-manager
             ./modules/darwin.nix
             {
-              inherit (user);
-
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
@@ -52,11 +50,7 @@
               users.users.${user.name} = {
                 inherit (user) description name;
 
-                home = (
-                  if builtins.elem system nixpkgs.lib.platforms.darwin
-                  then "/Users/"
-                  else "/home/"
-                ) + user.name;
+                home = "/Users/${user.name}";
               };
             }
           ] ++ modules;
@@ -68,8 +62,8 @@
           system = "aarch64-darwin";
           modules = [{
             networking = rec {
-              computerName = "Ted's Mac";
-              hostName = "teds-mac";
+              computerName = "teds-mac";
+              hostName = computerName;
               localHostName = hostName;
             };
           }];
@@ -79,8 +73,8 @@
           system = "x86_64-darwin";
           modules = [{
             networking = rec {
-              computerName = "Ted's Work Mac";
-              hostName = "teds-work-mac";
+              computerName = "teds-mac";
+              hostName = computerName;
               localHostName = hostName;
             };
           }];

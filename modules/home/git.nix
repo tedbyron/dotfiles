@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 {
-  delta.enable = true;
   enable = true;
+
+  delta.enable = true;
 
   extraConfig = {
     core = {

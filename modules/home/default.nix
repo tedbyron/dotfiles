@@ -1,10 +1,17 @@
 { config, lib, pkgs, ... }:
-let inherit (pkgs.stdenvNoCC) isDarwin;
-in
 {
   imports = [ ./options.nix ];
 
   home = {
+    file.".gnupg/gpg-agent.conf".text = ''
+      pinentry-program ${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac
+    '';
+
+    homeDirectory =
+      if pkgs.stdenvNoCC.isDarwin
+      then "/Users/${config.user.name}"
+      else "/home/${config.user.name}";
+
     packages = with pkgs; [
       curl
       du-dust
@@ -14,7 +21,7 @@ in
       ripgrep
       shellcheck
       tokei
-    ] ++ lib.optionals isDarwin [ pinentry_mac ];
+    ] ++ lib.optionals stdenvNoCC.isDarwin [ pinentry_mac ];
 
     stateVersion = "22.11";
   };
