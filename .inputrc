@@ -1,6 +1,0 @@
-set colored-stats on
-set completion-ignore-case on
-set completion-map-case on
-set page-completions off
-set show-all-if-ambiguous on
-set visible-stats on

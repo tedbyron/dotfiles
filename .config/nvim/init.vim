@@ -12,6 +12,7 @@ if exists('g:vscode')
   Plug 'asvetliakov/vim-easymotion', { 'as': 'vsc-easymotion' }
 else
   Plug 'airblade/vim-gitgutter'
+  Plug 'dracula/vim'
   Plug 'easymotion/vim-easymotion'
   Plug 'folke/which-key.nvim'
   Plug 'itchyny/lightline.vim'
@@ -25,12 +26,11 @@ if has('syntax')
   syntax on       " syntax highlighting
 endif
 
-packadd! dracula_pro
 let g:dracula_colorterm = 0
 
 set t_Co=256
-colorscheme dracula_pro
-let g:lightline={'colorscheme': 'dracula_pro'}
+colorscheme dracula
+let g:lightline={'colorscheme': 'dracula'}
 
 if has('mouse')
   set mouse=a     " enable mouse in all modes

@@ -1,0 +1,41 @@
+[core]
+	autocrlf = false
+	eol = lf
+	editor = nvim
+	pager = delta
+[user]
+	name = Teddy Byron
+	email = ted@tedbyron.com
+	signingkey = E0496EDDDF6BB87D
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+	prompt = false
+[pull]
+	ff = only
+[maintenance]
+	repo = /Users/ted/.local/share/zsh-snap
+	repo = /Users/ted/.local/share/ohmyzsh
+	repo = /Users/ted/.local/share/zsh-autosuggestions
+	repo = /Users/ted/.local/share/zsh-completions
+	repo = /Users/ted/.local/share/zsh-history-substring-search
+	repo = /Users/ted/.local/share/zsh-syntax-highlighting
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	line-numbers = true
+	navigate = true
+	side-by-side = true
+	syntax-theme = Dracula
+	wrap-max-lines = unlimited
+[diff]
+	colorMoved = default
