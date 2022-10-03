@@ -9,17 +9,12 @@
 
   homebrew = {
     brewPrefix =
-      if pkgs.stdenv.isAarch64
+      if pkgs.stdenvNoCC.isAarch64
       then "/opt/homebrew/bin"
       else "/usr/local/bin";
 
     brews = [ ];
-
-    casks = [
-      "qbittorrent"
-      "vlc"
-    ];
-
+    casks = [ ];
     enable = true;
     global.brewfile = true;
     masApps = { };
