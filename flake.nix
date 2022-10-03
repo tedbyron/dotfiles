@@ -2,82 +2,45 @@
   description = "Ted's Nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
 
-    darwin = {
-      url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-    };
+    darwin.url = "github:lnl7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    flake-compat = { url = "github:edolstra/flake-compat"; flake = false; };
     flake-utils.url = "github:numtide/flake-utils";
+
+    comma.url = "github:nix-community/comma";
+    comma.inputs.nixpkgs.follows = "nixpkgs";
+    spacebar.url = "github:cmacrae/spacebar";
+    spacebar.inputs.nixpkgs.follows = "nixpkgs";
+    neovim-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-overlay.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, darwin, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, darwin, home-manager, flake-utils, ... }@inputs:
     let
-      defaultUser = {
-        description = "Teddy Byron";
-        email = "ted@tedbyron.com";
-        name = "ted";
-        key = "E0496EDDDF6BB87D";
-      };
+      inherit (darwin.lib) darwinSystem;
+      inherit (nixpkgs.lib) attrValues;
 
-      mkDarwinSystem =
-        { system
-        , user ? defaultUser
-        , modules
-        }:
-        darwin.lib.darwinSystem {
-          inherit inputs system;
-
-          modules = [
-            home-manager.darwinModules.home-manager
-            ./modules/darwin.nix
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user.name} = {
-                  inherit user;
-                  imports = [ ./modules/home ];
-                };
-              };
-
-              users.users.${user.name} = {
-                inherit (user) description name;
-
-                home = "/Users/${user.name}";
-              };
-            }
-          ] ++ modules;
-        };
+      nixpkgsConfig.config = { allowUnfree = true; };
     in
     {
       darwinConfigurations = {
-        teds-mac = mkDarwinSystem {
+        teds-mac = darwinSystem {
           system = "aarch64-darwin";
-          modules = [{
-            networking = rec {
-              computerName = "teds-mac";
-              hostName = computerName;
-              localHostName = hostName;
-            };
-          }];
-        };
-
-        teds-work-mac = mkDarwinSystem {
-          system = "x86_64-darwin";
-          modules = [{
-            networking = rec {
-              computerName = "teds-mac";
-              hostName = computerName;
-              localHostName = hostName;
-            };
-          }];
+          modules = attrValues self.darwinModules ++ [
+            ./darwin/aarch64/configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              inherit nixpkgs;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPkgs = true;
+              home-manager.users.ted = import ./home.nix;
+            }
+          ];
         };
       };
     };
