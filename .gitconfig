@@ -19,11 +19,6 @@
 	ff = only
 [maintenance]
 	repo = /Users/ted/.local/share/zsh-snap
-	repo = /Users/ted/.local/share/ohmyzsh
-	repo = /Users/ted/.local/share/zsh-autosuggestions
-	repo = /Users/ted/.local/share/zsh-completions
-	repo = /Users/ted/.local/share/zsh-history-substring-search
-	repo = /Users/ted/.local/share/zsh-syntax-highlighting
 	repo = /Users/ted/.local/share/zsh-snap/ohmyzsh
 	repo = /Users/ted/.local/share/zsh-snap/zsh-autosuggestions
 	repo = /Users/ted/.local/share/zsh-snap/zsh-completions
