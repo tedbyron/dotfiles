@@ -1,5 +1,13 @@
 return {
   {
+    'tokyonight.nvim',
+    enabled = false,
+  },
+  {
+    'catppuccin',
+    enabled = false,
+  },
+  {
     'mofiqul/dracula.nvim',
     lazy = false,
     opts = {

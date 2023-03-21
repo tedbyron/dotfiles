@@ -2,10 +2,8 @@
   <h1><code>dotfiles</code></h1>
 
   <p>
-    <strong><a href="https://github.com/tedbyron">@tedbyron</a>'s dotfiles.</strong>
+    <strong>My dotfiles</strong>
   </p>
-
-  <!-- <img src="./.config/screen.png" alt="screenshot of terminal" /> -->
 </div>
 
 # Installation

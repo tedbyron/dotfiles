@@ -189,7 +189,7 @@ disabled = true
 disabled = true
 
 [nix_shell]
-disabled = true
+disabled = false
 
 [nodejs]
 disabled = true

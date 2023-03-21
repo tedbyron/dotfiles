@@ -1,6 +1,6 @@
 return {
   {
-    "neovim/nvim-lspconfig",
+    'neovim/nvim-lspconfig',
     opts = {
       servers = { eslint = {} },
       setup = {
@@ -15,5 +15,12 @@ return {
         end,
       },
     },
+  },
+  {
+    'null-ls.nvim',
+    opts = function(_, opts)
+      local nls = require('null-ls')
+      opts.sources[nls.builtins.formatting.prettierd] = nil
+    end,
   },
 }

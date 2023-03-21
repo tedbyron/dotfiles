@@ -41,6 +41,7 @@ path=(
   "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
   "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
   "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
+  "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
   "${HOME}/.cargo/bin"
   $path
 )
@@ -77,6 +78,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export PNPM_HOME="/Users/ted/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+path=($PNPM_HOME $path)
 
 # aliases
 
