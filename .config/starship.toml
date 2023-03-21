@@ -81,7 +81,7 @@ show_always = true
 
 [git_branch]
 format = '([$symbol$branch]($style) )'
-symbol = ''                            # 
+symbol = '' # 
 style = 'blue'
 
 [git_commit]
