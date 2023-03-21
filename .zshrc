@@ -1,6 +1,10 @@
 zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
 source ~/.local/share/zsh-snap/znap.zsh
-znap eval brew '/opt/homebrew/bin/brew shellenv'
+if [[ "$(uname -m)" == 'arm64' ]]; then
+  znap eval brew '/opt/homebrew/bin/brew shellenv'
+else
+  znap eval brew '/usr/local/bin/brew shellenv'
+fi 
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
@@ -43,6 +47,14 @@ path=(
   "${HOME}/.cargo/bin"
   $path
 )
+
+
+if [ -f '/Users/ted/google-cloud-sdk/path.zsh.inc' ]; then 
+  . '/Users/ted/google-cloud-sdk/path.zsh.inc'; 
+fi
+if [ -f '/Users/ted/google-cloud-sdk/completion.zsh.inc' ]; then 
+  . '/Users/ted/google-cloud-sdk/completion.zsh.inc'; 
+fi
 
 # functions
 
