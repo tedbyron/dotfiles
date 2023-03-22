@@ -4,6 +4,7 @@ return {
     lazy = false,
     opts = function(_, opts)
       local bg = require('dracula').colors().bg
+
       opts.show_end_of_buffer = false
       opts.transparent_bg = false
       opts.overrides = {
@@ -11,6 +12,7 @@ return {
         NeoTreeNormalNC = { bg = bg },
       }
     end,
+    priority = 1000,
   },
   {
     'LazyVim/LazyVim',
