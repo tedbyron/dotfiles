@@ -77,6 +77,7 @@ return {
         },
       },
       filesystem = {
+        bind_to_cwd = true,
         commands = {
           system_open = function(state)
             local path = state.tree:get_node():get_id()
