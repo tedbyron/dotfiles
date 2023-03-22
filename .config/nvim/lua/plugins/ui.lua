@@ -1,9 +1,26 @@
 return {
   {
+    'alpha-nvim',
+    opts = {
+      section = {
+        header = {
+          val = {
+            [[                                  __]],
+            [[     ___     ___    ___   __  __ /\_\    ___ ___]],
+            [[    / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\]],
+            [[   /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \]],
+            [[   \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
+            [[    \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+          },
+        },
+      },
+    },
+  },
+  {
     'bufferline.nvim',
     opts = {
       options = {
-        -- indicator = { style = 'none' }
+        indicator = { style = 'none' },
         offsets = {
           {
             filetype = 'neo-tree',
@@ -23,6 +40,10 @@ return {
   {
     'lualine.nvim',
     opts = {
+      options = {
+        component_separators = { '', '' },
+        section_separators = { '▎', '▎' },
+      },
       sections = {
         lualine_a = {
           {
