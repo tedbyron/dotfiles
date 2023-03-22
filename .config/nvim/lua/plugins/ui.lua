@@ -1,19 +1,9 @@
 return {
   {
-    'alpha-nvim',
+    'nvim-notify',
     opts = {
-      section = {
-        header = {
-          val = {
-            [[                                  __]],
-            [[     ___     ___    ___   __  __ /\_\    ___ ___]],
-            [[    / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\]],
-            [[   /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \]],
-            [[   \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-            [[    \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
-          },
-        },
-      },
+      stages = 'fade',
+      render = 'default',
     },
   },
   {
@@ -26,23 +16,23 @@ return {
             filetype = 'neo-tree',
             text = '樹',
           },
+          {
+            filetype = 'Outline',
+            text = '大綱',
+          },
         },
-        -- separator_style = { '', '' }
+        separator_style = 'thin',
         show_buffer_close_icons = false,
         tab_size = 12,
       },
     },
   },
   {
-    'indent-blankline.nvim',
-    enabled = false,
-  },
-  {
     'lualine.nvim',
     opts = {
       options = {
         component_separators = { '', '' },
-        section_separators = { '▎', '▎' },
+        section_separators = { '', '' },
       },
       sections = {
         lualine_a = {
@@ -74,11 +64,32 @@ return {
     },
   },
   {
+    'indent-blankline.nvim',
+    enabled = false,
+  },
+  {
     'mini.indentscope',
     opts = function(_, opts)
       opts.draw = {
         animation = require('mini.indentscope').gen_animation.none(),
       }
     end,
+  },
+  {
+    'alpha-nvim',
+    opts = {
+      section = {
+        header = {
+          val = {
+            [[                                  __]],
+            [[     ___     ___    ___   __  __ /\_\    ___ ___]],
+            [[    / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\]],
+            [[   /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \]],
+            [[   \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
+            [[    \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+          },
+        },
+      },
+    },
   },
 }
