@@ -1,3 +1,5 @@
+local not_vscode = not vim.g.vscode
+
 return {
   {
     'mofiqul/dracula.nvim',
@@ -16,7 +18,7 @@ return {
   },
   {
     'LazyVim/LazyVim',
-    opts = { colorscheme = 'dracula' },
+    opts = { colorscheme = { 'dracula' } },
   },
   {
     'tokyonight.nvim',

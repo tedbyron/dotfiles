@@ -49,11 +49,11 @@ path=(
 )
 
 
-if [ -f '/Users/ted/google-cloud-sdk/path.zsh.inc' ]; then 
-  . '/Users/ted/google-cloud-sdk/path.zsh.inc'; 
+if [[ -f '/Users/ted/google-cloud-sdk/path.zsh.inc' ]]; then 
+  source '/Users/ted/google-cloud-sdk/path.zsh.inc'; 
 fi
-if [ -f '/Users/ted/google-cloud-sdk/completion.zsh.inc' ]; then 
-  . '/Users/ted/google-cloud-sdk/completion.zsh.inc'; 
+if [[ -f '/Users/ted/google-cloud-sdk/completion.zsh.inc' ]]; then 
+  source '/Users/ted/google-cloud-sdk/completion.zsh.inc'; 
 fi
 
 # functions
@@ -83,8 +83,8 @@ export SUDO_EDITOR='nvim'
 export BAT_THEME='Dracula'
 
 export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
-[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
 
 export PNPM_HOME="/Users/ted/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
@@ -98,7 +98,7 @@ alias df='df -h'
 alias du='du -hd 1'
 alias dust='dust -d 1'
 alias grep='grep -i --color=auto'
-alias less='less -FR'
+alias less='less -FRi'
 alias ls='ls -Fh --color=auto --group-directories-first'
 alias la='ls -A'
 alias l='ls -lA'

@@ -5,14 +5,15 @@ env:
   TERM: xterm-256color
 
 window:
+  decorations: buttonless
+  dynamic_padding: true
+  dynamic_title: true
+  option_as_alt: OnlyLeft
   padding:
     x: 5
     y: 5
-  dynamic_padding: false
-  decorations: buttonless
   startup_mode: Maximized
   title: Alacritty
-  dynamic_title: true
 
 font:
   normal:

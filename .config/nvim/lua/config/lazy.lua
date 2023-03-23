@@ -1,4 +1,5 @@
 local lazy_path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+local not_vscode = not vim.g.vscode
 
 if not vim.loop.fs_stat(lazy_path) then
   -- stylua: ignore
@@ -15,11 +16,11 @@ vim.opt.rtp:prepend(lazy_path)
 require('lazy').setup({
   spec = {
     { 'LazyVim/LazyVim', import = 'lazyvim.plugins' },
-    { import = 'lazyvim.plugins.extras.coding.copilot' },
-    { import = 'lazyvim.plugins.extras.formatting.prettier' },
-    { import = 'lazyvim.plugins.extras.lang.json' },
-    { import = 'lazyvim.plugins.extras.lang.typescript' },
-    { import = 'lazyvim.plugins.extras.linting.eslint' },
+    { import = 'lazyvim.plugins.extras.coding.copilot', enabled = not_vscode },
+    { import = 'lazyvim.plugins.extras.formatting.prettier', enabled = not_vscode },
+    { import = 'lazyvim.plugins.extras.lang.json', enabled = not_vscode },
+    { import = 'lazyvim.plugins.extras.lang.typescript', enabled = not_vscode },
+    { import = 'lazyvim.plugins.extras.linting.eslint', enabled = not_vscode },
     { import = 'plugins' },
   },
   defaults = {

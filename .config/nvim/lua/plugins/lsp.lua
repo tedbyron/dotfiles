@@ -1,8 +1,11 @@
 -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
 
+local not_vscode = not vim.g.vscode
+
 return {
   {
     'nvim-lspconfig',
+    enabled = not_vscode,
     opts = {
       servers = {
         bashls = {},
@@ -23,8 +26,14 @@ return {
       },
     },
   },
+  { 'neoconf.nvim', enabled = not_vscode },
+  { 'neodev.nvim', enabled = not_vscode },
+  { 'mason-lspconfig.nvim', enabled = not_vscode },
+  { 'cmp-nvim-lsp', enabled = not_vscode },
+  { 'null-ls.nvim', enabled = not_vscode },
   {
     'mason.nvim',
+    enabled = not_vscode,
     opts = {
       ensure_installed = {
         'actionlint',

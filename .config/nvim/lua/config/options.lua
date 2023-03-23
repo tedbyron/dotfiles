@@ -14,4 +14,3 @@ if vim.g.neovide then
 end
 
 opt.scrolloff = 3
--- opt.iskeyword = opt.iskeyword:gsub("-", "")

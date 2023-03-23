@@ -1,6 +1,9 @@
+local not_vscode = not vim.g.vscode
+
 return {
   {
     'nvim-treesitter',
+    enabled = not_vscode,
     opts = {
       ensure_installed = {
         'bash',
@@ -43,4 +46,5 @@ return {
       },
     },
   },
+  { 'nvim-treesitter-textobjects', enabled = not_vscode },
 }

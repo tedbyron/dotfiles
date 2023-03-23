@@ -1,3 +1,5 @@
+local not_vscode = not vim.g.vscode
+
 -- local function trash(state)
 --   local inputs = require('neotree.ui.inputs')
 --   local node = state.tree:get_node()
@@ -62,6 +64,7 @@ end
 return {
   {
     'neo-tree.nvim',
+    enabled = not_vscode,
     opts = {
       default_component_configs = {
         indent = { with_expanders = false },
@@ -111,8 +114,10 @@ return {
       },
     },
   },
+  { 'nvim-spectre', enabled = not_vscode },
   {
     'telescope.nvim',
+    enabled = not_vscode,
     dependencies = {
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make',
@@ -121,8 +126,13 @@ return {
       end,
     },
   },
+  { 'which-key.nvim', enabled = not_vscode },
+  { 'gitsigns.nvim', enabled = not_vscode },
+  { 'mini.bufremove', enabled = not_vscode },
+  { 'trouble.nvim', enabled = not_vscode },
   {
     'todo-comments.nvim',
+    enabled = not_vscode,
     opts = {
       highlight = { pattern = [[.*<(KEYWORDS)\s*]] },
       search = { pattern = [[\b(KEYWORDS)\b]] },
