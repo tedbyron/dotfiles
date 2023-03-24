@@ -1,5 +1,3 @@
-local not_vscode = not vim.g.vscode
-
 return {
   {
     'mofiqul/dracula.nvim',
@@ -16,16 +14,7 @@ return {
     end,
     priority = 1000,
   },
-  {
-    'LazyVim/LazyVim',
-    opts = { colorscheme = { 'dracula' } },
-  },
-  {
-    'tokyonight.nvim',
-    enabled = false,
-  },
-  {
-    'catppuccin',
-    enabled = false,
-  },
+  { 'LazyVim/LazyVim', opts = { colorscheme = { 'dracula' } } },
+  { 'tokyonight.nvim', enabled = false },
+  { 'catppuccin', enabled = false },
 }

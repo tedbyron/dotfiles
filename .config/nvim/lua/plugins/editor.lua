@@ -121,9 +121,7 @@ return {
     dependencies = {
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make',
-      config = function()
-        require('telescope').load_extension('fzf')
-      end,
+      config = function() require('telescope').load_extension('fzf') end,
     },
   },
   { 'which-key.nvim', enabled = not_vscode },

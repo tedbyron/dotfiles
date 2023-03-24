@@ -43,9 +43,7 @@ return {
         local clients = vim.lsp.get_active_clients({ bufnr = 0 })
 
         if next(clients) == nil then
-          if type(msg) == 'boolean' or #msg == 0 then
-            return ''
-          end
+          if type(msg) == 'boolean' or #msg == 0 then return '' end
           return msg
         end
 
@@ -77,9 +75,7 @@ return {
         lualine_a = {
           {
             'mode',
-            fmt = function(str)
-              return str:sub(1, 1)
-            end,
+            fmt = function(str) return str:sub(1, 1) end,
           },
         },
         lualine_b = {
@@ -119,9 +115,7 @@ return {
             },
           },
           {
-            function()
-              return require('nvim-navic').get_location()
-            end,
+            function() return require('nvim-navic').get_location() end,
             cond = function()
               return package.loaded['nvim-navic'] and require('nvim-navic').is_available()
             end,
@@ -129,18 +123,14 @@ return {
         },
         lualine_x = {
           {
-            function()
-              return require('noice').api.status.command.get()
-            end,
+            function() return require('noice').api.status.command.get() end,
             color = fg('Statement'),
             cond = function()
               return package.loaded['noice'] and require('noice').api.status.command.has()
             end,
           },
           {
-            function()
-              return require('noice').api.status.mode.get()
-            end,
+            function() return require('noice').api.status.mode.get() end,
             color = fg('Constant'),
             cond = function()
               return package.loaded['noice'] and require('noice').api.status.mode.has()
@@ -158,9 +148,7 @@ return {
         },
         lualine_y = { { 'location' } },
         lualine_z = {
-          function()
-            return os.date('%R')
-          end,
+          function() return os.date('%R') end,
         },
       })
     end,
