@@ -1,5 +1,8 @@
 local util = require('config.keymaps.util')
 
+vim.keymap.set({ 'n', 'x', 'o' }, 'gc', '<Plug>VSCodeCommentary')
+vim.keymap.set('n', 'gcc', '<Plug>VSCodeCommentaryLine')
+
 util.noremap_notify('n', '<leader>ea', 'editor.action.quickFix')
 util.noremap_notify('n', '<leader>es', 'editor.action.triggerSuggest')
 util.noremap_notify('n', '<leader>ef', 'editor.action.formatDocument')
