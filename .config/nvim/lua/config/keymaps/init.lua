@@ -6,6 +6,5 @@ noremap('n', '0', '^')
 noremap('n', '^', '0')
 
 if vim.g.vscode then
-  vim.keymap.set({ 'n', 'x' }, '<Tab>', '%')
   require('config.keymaps.vscode')
 end

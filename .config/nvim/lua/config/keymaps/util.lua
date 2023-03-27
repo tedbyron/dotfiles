@@ -9,14 +9,14 @@ end
 
 local function VSCodeNotifyRange(cmd, line1, line2, leaveSelection, ...)
   if not leaveSelection then
-    leaveSelection = false
+    leaveSelection = vim.NIL
   end
   vim.rpcnotify(vim.g.vscode_channel, vscode_range_command_event_name, cmd, line1, line2, 0, 0, leaveSelection, ...)
 end
 
 local function VSCodeNotifyRangePos(cmd, line1, line2, pos1, pos2, leaveSelection, ...)
   if not leaveSelection then
-    leaveSelection = false
+    leaveSelection = vim.NIL
   end
   vim.rpcnotify(
     vim.g.vscode_channel,

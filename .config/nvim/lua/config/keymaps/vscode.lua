@@ -1,7 +1,11 @@
 local util = require('config.keymaps.util')
 
-vim.keymap.set({ 'n', 'x', 'o' }, 'gc', '<Plug>VSCodeCommentary')
-vim.keymap.set('n', 'gcc', '<Plug>VSCodeCommentaryLine')
+for _, mode in pairs({ 'n', 'v', 'o' }) do
+  util.noremap(mode, '<Tab>', vim.api.nvim_eval(string.format('maparg("%%", "%s")', mode)))
+end
+
+vim.keymap.set({ 'n', 'x', 'o' }, 'gc', '<Plug>(VSCodeCommentary)')
+vim.keymap.set('n', 'gcc', '<Plug>(VSCodeCommentaryLine)')
 
 util.noremap_notify('n', '<leader>ea', 'editor.action.quickFix')
 util.noremap_notify('n', '<leader>es', 'editor.action.triggerSuggest')
@@ -21,7 +25,6 @@ util.noremap_notify_visual({ 'n', 'x' }, '<leader>ghr', 'git.revertSelectedRange
 util.noremap_notify('n', '<leader>un', 'notifications.clearAll')
 util.noremap_notify('n', '<leader>ur', 'workbench.action.reloadWindow')
 
--- TODO: hello
 util.noremap_notify('n', ']d', 'editor.action.marker.next')
 util.noremap_notify('n', '[d', 'editor.action.marker.prev')
 util.noremap_notify('n', ']h', 'workbench.action.editor.nextChange')
