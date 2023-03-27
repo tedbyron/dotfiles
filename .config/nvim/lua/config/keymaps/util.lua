@@ -68,10 +68,11 @@ end
 ---@param lhs string
 ---@param rhs string
 ---@param leaveSelection boolean?
-function M.noremap_notify_visual(mode, lhs, rhs, leaveSelection)
+---@param opts table?
+function M.noremap_notify_visual(mode, lhs, rhs, leaveSelection, opts)
   M.noremap(mode, lhs, function()
     VSCodeNotifyVisual(rhs, leaveSelection)
-  end)
+  end, opts)
 end
 
 return M
