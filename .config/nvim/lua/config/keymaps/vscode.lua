@@ -4,8 +4,8 @@ for _, mode in pairs({ 'n', 'v', 'o' }) do
   util.noremap(mode, '<Tab>', vim.api.nvim_eval(string.format('maparg("%%", "%s")', mode)))
 end
 
-vim.keymap.set({ 'n', 'x', 'o' }, 'gc', '<Plug>(VSCodeCommentary)')
-vim.keymap.set('n', 'gcc', '<Plug>(VSCodeCommentaryLine)')
+vim.keymap.set({ 'n', 'x', 'o' }, 'gc', '<Plug>VSCodeCommentary')
+vim.keymap.set('n', 'gcc', '<Plug>VSCodeCommentaryLine')
 
 util.noremap_notify('n', '<leader>ea', 'editor.action.quickFix')
 util.noremap_notify('n', '<leader>es', 'editor.action.triggerSuggest')
