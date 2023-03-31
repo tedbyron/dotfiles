@@ -4,6 +4,8 @@ for _, mode in pairs({ 'n', 'v', 'o' }) do
   util.noremap(mode, '<Tab>', vim.api.nvim_eval(string.format('maparg("%%", "%s")', mode)))
 end
 
+util.noremap_notify('n', '<leader> ', 'workbench.action.quickOpen')
+
 vim.keymap.set({ 'n', 'x', 'o' }, 'gc', '<Plug>VSCodeCommentary')
 vim.keymap.set('n', 'gcc', '<Plug>VSCodeCommentaryLine')
 
