@@ -31,7 +31,8 @@ util.noremap_notify_visual({ 'n', 'x' }, '<Leader>ghs', 'git.stageSelectedRanges
 util.noremap_notify_visual({ 'n', 'x' }, '<Leader>ghu', 'git.unstageSelectedRanges')
 util.noremap_notify_visual({ 'n', 'x' }, '<Leader>ghr', 'git.revertSelectedRanges')
 
-util.noremap_notify('n', '<Leader>un', 'notifications.clearAll')
+util.noremap_notify('n', '<Leader>un', 'notifications.showList')
+util.noremap_notify('n', '<Leader>uN', 'notifications.clearAll')
 util.noremap_notify('n', '<Leader>ur', 'workbench.action.reloadWindow')
 
 util.noremap_notify('n', ']d', 'editor.action.marker.next')
