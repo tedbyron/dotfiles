@@ -17,7 +17,7 @@ format = '[$percentage]($style) '
 format = '$symbol'
 success_symbol = '[\$](green)'
 error_symbol = '[\$](red)'
-vicmd_symbol = '[N](green)'
+vimcmd_symbol = '[N](green)'
 
 [cmd_duration]
 format = '[$duration]($style) '
@@ -79,9 +79,18 @@ show_always = true
 # Git
 ################################################################################
 
+[fossil_branch]
+disabled = true
+[hg_branch]
+disabled = true
+[pijul_channel]
+disabled = true
+[vcsh]
+disabled = true
+
 [git_branch]
 format = '([$symbol$branch]($style) )'
-symbol = '' # 
+symbol = ''                            # 
 style = 'blue'
 
 [git_commit]
@@ -115,144 +124,115 @@ style = 'red'
 
 [aws]
 disabled = true
-
 [azure]
 disabled = true
-
 [buf]
 disabled = true
-
+[bun]
+disabled = true
 [c]
 disabled = true
-
 [cmake]
 disabled = true
-
 [cobol]
 disabled = true
-
 [conda]
 disabled = true
-
+[container]
+disabled = false
 [crystal]
 disabled = true
-
+[daml]
+disabled = true
 [dart]
 disabled = true
-
 [deno]
 disabled = true
-
 [docker_context]
 disabled = true
-
 [dotnet]
 disabled = true
-
 [elixir]
 disabled = true
-
 [elm]
 disabled = true
-
 [erlang]
 disabled = true
-
+[fennel]
+disabled = true
 [gcloud]
 disabled = true
-
 [golang]
 disabled = true
-
+[gradle]
+disabled = true
+[guix_shell]
+disabled = false
+[haskell]
+disabled = true
+[haxe]
+disabled = true
 [helm]
 disabled = true
-
 [java]
 disabled = true
-
 [julia]
 disabled = true
-
 [kotlin]
 disabled = true
-
 [kubernetes]
-disabled = true
-
+disabled = false
 [lua]
 disabled = true
-
-[hg_branch]
+[meson]
 disabled = true
-
 [nim]
 disabled = true
-
 [nix_shell]
 disabled = false
-
 [nodejs]
 disabled = true
-
 [ocaml]
 disabled = true
-
+[opa]
+disabled = true
 [openstack]
 disabled = true
-
 [perl]
 disabled = true
-
 [php]
 disabled = true
-
 [pulumi]
 disabled = true
-
 [purescript]
 disabled = true
-
 [python]
 disabled = true
-
-[rlang]
+[raku]
 disabled = true
-
 [red]
 disabled = true
-
+[rlang]
+disabled = true
 [ruby]
 disabled = true
-
 [rust]
 disabled = true
-
 [scala]
 disabled = true
-
 [singularity]
 disabled = true
-
 [spack]
 disabled = true
-
 [sudo]
 disabled = true
-
 [swift]
 disabled = true
-
 [terraform]
 disabled = true
-
 [vagrant]
 disabled = true
-
 [vlang]
 disabled = true
-
-[vcsh]
-disabled = true
-
 [zig]
 disabled = true

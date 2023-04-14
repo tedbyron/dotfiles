@@ -2,3 +2,6 @@
 result
 local.nix
 lazy-lock.json
+.config/tmux/plugins/*
+!.config/tmux/plugins/tpm
+*.log
