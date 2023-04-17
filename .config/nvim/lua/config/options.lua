@@ -16,4 +16,6 @@ end
 
 opt.scrolloff = 3
 
-if g.vscode then opt.timeout = false end
+if g.vscode then
+  opt.timeout = false
+end
