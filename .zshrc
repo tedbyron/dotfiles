@@ -4,7 +4,7 @@ if [[ "$(uname -m)" == 'arm64' ]]; then
   znap eval brew '/opt/homebrew/bin/brew shellenv'
 else
   znap eval brew '/usr/local/bin/brew shellenv'
-fi 
+fi
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
@@ -49,11 +49,11 @@ path=(
 )
 
 
-if [[ -f '/Users/ted/google-cloud-sdk/path.zsh.inc' ]]; then 
-  source '/Users/ted/google-cloud-sdk/path.zsh.inc'; 
+if [[ -f '/Users/ted/google-cloud-sdk/path.zsh.inc' ]]; then
+  source '/Users/ted/google-cloud-sdk/path.zsh.inc';
 fi
-if [[ -f '/Users/ted/google-cloud-sdk/completion.zsh.inc' ]]; then 
-  source '/Users/ted/google-cloud-sdk/completion.zsh.inc'; 
+if [[ -f '/Users/ted/google-cloud-sdk/completion.zsh.inc' ]]; then
+  source '/Users/ted/google-cloud-sdk/completion.zsh.inc';
 fi
 
 # functions
