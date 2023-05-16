@@ -9,5 +9,4 @@ return {
   { 'cmp-path', enabled = not_vscode },
   { 'cmp_luasnip', enabled = not_vscode },
   { 'cmp_luasnip', enabled = not_vscode },
-  { 'nvim-ts-context-commentstring', enabled = not_vscode },
 }
