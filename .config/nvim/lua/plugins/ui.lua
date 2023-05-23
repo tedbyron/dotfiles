@@ -1,18 +1,13 @@
-local not_vscode = not vim.g.vscode
-
 return {
   {
     'nvim-notify',
-    enabled = not_vscode,
     opts = {
       stages = 'fade',
       render = 'default',
     },
   },
-  { 'dressing.nvim', enabled = not_vscode },
   {
     'bufferline.nvim',
-    enabled = not_vscode,
     opts = {
       options = {
         indicator = { style = 'none' },
@@ -34,7 +29,6 @@ return {
   },
   {
     'lualine.nvim',
-    enabled = not_vscode,
     opts = function(_, opts)
       local icons = require('lazyvim.config').icons
 
@@ -171,14 +165,12 @@ return {
   },
   {
     'mini.indentscope',
-    enabled = not_vscode,
     opts = function(_, opts)
       opts.draw = {
         animation = require('mini.indentscope').gen_animation.none(),
       }
     end,
   },
-  { 'noice.nvim', enabled = not_vscode },
   {
     'alpha-nvim',
     opts = function(_, opts)
@@ -194,7 +186,4 @@ return {
       opts.section.header.val = vim.split(logo, '\n', {})
     end,
   },
-  { 'nvim-navic', enabled = not_vscode },
-  { 'nvim-web-devicons', enabled = not_vscode },
-  { 'nui.nvim', enabled = not_vscode },
 }
