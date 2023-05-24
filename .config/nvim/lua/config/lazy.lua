@@ -14,8 +14,8 @@ vim.opt.rtp:prepend(lazy_path)
 
 require('lazy').setup({
   spec = {
-    { 'LazyVim/LazyVim', import = 'lazyvim.plugins', vscode = true },
-    -- { import = 'lazyvim.plugins.extras.vscode' },
+    { 'LazyVim/LazyVim', import = 'lazyvim.plugins' },
+    { import = 'lazyvim.plugins.extras.vscode' },
     { import = 'plugins' },
   },
   defaults = {

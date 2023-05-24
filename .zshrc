@@ -45,9 +45,9 @@ path=(
   "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
   "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
   "${HOME}/.cargo/bin"
+  "${HOME}/.spicetify"
   $path
 )
-
 
 if [[ -f '/Users/ted/google-cloud-sdk/path.zsh.inc' ]]; then
   source '/Users/ted/google-cloud-sdk/path.zsh.inc';
