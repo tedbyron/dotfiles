@@ -44,6 +44,7 @@ path=(
   "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
   "${HOME}/.cargo/bin"
   "${HOME}/.spicetify"
+  "${HOME}/.fly/bin"
   $path
 )
 
