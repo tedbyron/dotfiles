@@ -222,6 +222,8 @@ disabled = true
 disabled = true
 [singularity]
 disabled = true
+[solidity]
+disabled = true
 [spack]
 disabled = true
 [sudo]
