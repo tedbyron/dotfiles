@@ -106,4 +106,3 @@ alias pgrep='pgrep -fail'
 alias ps='ps -ef'
 alias rg='rg -S'
 alias sudo='sudo '
-
