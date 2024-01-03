@@ -1,0 +1,38 @@
+import = ["/Users/ted/.config/alacritty/colors.toml"]
+
+[env]
+TERM = "alacritty"
+
+[font]
+size = 14.0
+
+[font.bold]
+family = "Curlio"
+style = "Bold"
+
+[font.bold_italic]
+family = "Curlio"
+style = "Bold Italic"
+
+[font.italic]
+family = "Curlio"
+style = "Italic"
+
+[font.normal]
+family = "Curlio"
+style = "Regular"
+
+[selection]
+save_to_clipboard = true
+
+[window]
+decorations = "buttonless"
+dynamic_padding = true
+dynamic_title = true
+option_as_alt = "OnlyLeft"
+startup_mode = "Maximized"
+title = "Alacritty"
+
+[window.padding]
+x = 5
+y = 5
