@@ -6,9 +6,6 @@ return {
     opts = {
       servers = {
         bashls = {},
-        -- bright_script = {},
-        -- clangd = {},
-        -- cmake = {},
         cssls = {},
         -- docker_compose_language_service = {},
         -- dockerls = {},
@@ -36,9 +33,6 @@ return {
       ensure_installed = {
         'actionlint',
         'bash-language-server',
-        -- 'brighterscript',
-        -- 'brighterscript-formatter',
-        -- 'bslint',
         -- 'codelldb',
         'css-lsp',
         -- 'docker-compose-language-service',
