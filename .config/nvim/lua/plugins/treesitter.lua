@@ -37,7 +37,7 @@ return {
         'toml',
         'tsx',
         'typescript',
-        'vim',
+        'vimdoc',
         'vue',
         'yaml',
       },
