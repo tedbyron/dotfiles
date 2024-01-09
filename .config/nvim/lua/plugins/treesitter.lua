@@ -13,7 +13,6 @@ return {
         'gitignore',
         'git_config',
         'git_rebase',
-        'help',
         'hjson',
         'html',
         'javascript',
