@@ -26,7 +26,6 @@ vim.keymap.set('n', '<Leader>w', '<C-w>')
 vim.keymap.set({ 'n', 'x', 'o' }, 'gc', '<Plug>VSCodeCommentary')
 vim.keymap.set('n', 'gcc', '<Plug>VSCodeCommentaryLine')
 
-noremap_action('n', '<Leader>ea', 'editor.action.quickFix')
 noremap_action('n', '<Leader>es', 'editor.action.triggerSuggest')
 noremap_action('n', '<Leader>ef', 'editor.action.formatDocument')
 noremap_action('x', '<Leader>ef', 'editor.action.formatSelection')
