@@ -1,10 +1,9 @@
 local lazy_path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
 if not vim.loop.fs_stat(lazy_path) then
+  -- stylua: ignore
   vim.fn.system({
-    'git',
-    'clone',
-    'https://github.com/folke/lazy.nvim.git',
+    'git', 'clone', 'https://github.com/folke/lazy.nvim.git',
     '--branch=stable',
     '--filter=blob:none',
     lazy_path,
