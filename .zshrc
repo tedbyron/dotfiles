@@ -1,26 +1,16 @@
 zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
 source ~/.local/share/zsh-snap/znap.zsh
-if [[ "$(uname -m)" == 'arm64' ]]; then
-  znap eval brew '/opt/homebrew/bin/brew shellenv'
-else
-  znap eval brew '/usr/local/bin/brew shellenv'
+if [[ "$(uname -s)" == 'Darwin' ]]; then
+  if [[ "$(uname -m)" == 'arm64' ]]; then
+    znap eval brew '/opt/homebrew/bin/brew shellenv'
+  else
+    znap eval brew '/usr/local/bin/brew shellenv'
+  fi
 fi
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-# plugins
-
-znap source ohmyzsh/ohmyzsh \
-  lib/{completion,correction,directories,history} \
-  plugins/git
-znap source zsh-users/zsh-autosuggestions
-znap source zsh-users/zsh-completions
-znap source zsh-users/zsh-history-substring-search
-# must be last: https://github.com/zsh-users/zsh-syntax-highlighting#faq
-znap source zsh-users/zsh-syntax-highlighting
-
 # zsh
-
 setopt auto_cd
 setopt interactive_comments
 setopt long_list_jobs
@@ -32,10 +22,10 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
+bindkey -M emacs '^ ' history-substring-search-up
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 # path
-
 path=(
   "${HOMEBREW_PREFIX}/sbin"
   "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
@@ -48,20 +38,18 @@ path=(
   $path
 )
 
-if [[ -f '/Users/ted/google-cloud-sdk/path.zsh.inc' ]]; then
-  source '/Users/ted/google-cloud-sdk/path.zsh.inc';
+if [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]]; then
+  source "${HOME}/google-cloud-sdk/path.zsh.inc";
 fi
-if [[ -f '/Users/ted/google-cloud-sdk/completion.zsh.inc' ]]; then
-  source '/Users/ted/google-cloud-sdk/completion.zsh.inc';
+if [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]]; then
+  source "${HOME}/google-cloud-sdk/completion.zsh.inc";
 fi
 
 # functions
-
 znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'
 
-# misc exports
-
+# exports
 export STARSHIP_LOG=error
 export HOMEBREW_NO_ANALYTICS=1
 
@@ -85,12 +73,10 @@ export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
 [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
 
-export PNPM_HOME="/Users/ted/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+export PNPM_HOME="${HOME}/Library/pnpm"
 path=($PNPM_HOME $path)
 
 # aliases
-
 alias up='brew update; brew upgrade; brew upgrade --cask; brew cleanup; \
 rustup update; cargo install-update -a'
 alias df='df -h'
@@ -106,3 +92,12 @@ alias pgrep='pgrep -fail'
 alias ps='ps -ef'
 alias rg='rg -S'
 alias sudo='sudo '
+
+# plugins
+znap source ohmyzsh/ohmyzsh \
+  lib/{completion,correction,directories,history} \
+  plugins/git
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-completions
+znap source zsh-users/zsh-syntax-highlighting
+znap source zsh-users/zsh-history-substring-search

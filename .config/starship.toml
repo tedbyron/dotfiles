@@ -1,7 +1,5 @@
-format = '''
-┌ $time$username$hostname$directory$fill $status$cmd_duration$all
-└ $character '''
-right_format = ''
+format = '$directory$character '
+right_format = '$status$cmd_duration$all'
 scan_timeout = 30
 command_timeout = 500
 add_newline = false
@@ -15,8 +13,8 @@ format = '[$percentage]($style) '
 
 [character]
 format = '$symbol'
-success_symbol = '[\$](green)'
-error_symbol = '[\$](red)'
+success_symbol = "[\uf0da](green)"
+error_symbol = "[\uf0da](red)"
 vimcmd_symbol = '[N](green)'
 
 [cmd_duration]
@@ -24,6 +22,7 @@ format = '[$duration]($style) '
 style = 'bright-black'
 
 [directory]
+fish_style_pwd_dir_length = 1
 truncation_length = 5
 truncate_to_repo = true
 format = '[$path]($style)[$read_only]($read_only_style) '
@@ -37,6 +36,7 @@ symbol = ' ' # ─ ━
 ssh_only = false
 format = '[$hostname]($style)\] '
 style = 'yellow'
+disabled = true
 
 [jobs]
 style = 'cyan'
@@ -67,13 +67,14 @@ disabled = false
 format = '[$time]($style) '
 time_format = '%R'
 style = 'white'
-disabled = false
+disabled = true
 
 [username]
 style_root = 'red'
 style_user = 'yellow'
 format = '\[[$user]($style)@'
 show_always = true
+disabled = true
 
 ################################################################################
 # Git
