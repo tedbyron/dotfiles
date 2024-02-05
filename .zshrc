@@ -50,11 +50,17 @@ znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'
 
 # exports
+export EDITOR='nvim'
+export SUDO_EDITOR='nvim'
 export STARSHIP_LOG=error
 export HOMEBREW_NO_ANALYTICS=1
-
 GPG_TTY="$(tty)"
 export GPG_TTY
+export BAT_THEME='Dracula'
+export ZSH_TMUX_AUTOSTART=true
+export ZSH_TMUX_AUTOCONNECT=false
+export ZSH_TMUX_FIXTERM=true
+export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
 
 export LESS_TERMCAP_mb=$'\033[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\033[1;36m'     # begin bold
@@ -63,11 +69,6 @@ export LESS_TERMCAP_so=$'\033[1;44;33m'  # begin reverse video
 export LESS_TERMCAP_se=$'\033[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
-
-export EDITOR='nvim'
-export SUDO_EDITOR='nvim'
-
-export BAT_THEME='Dracula'
 
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
@@ -96,7 +97,7 @@ alias sudo='sudo '
 # plugins
 znap source ohmyzsh/ohmyzsh \
   lib/{completion,correction,directories,history} \
-  plugins/git
+  plugins/{git,tmux}
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-completions
 znap source zsh-users/zsh-syntax-highlighting
