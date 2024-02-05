@@ -77,7 +77,17 @@ export NVM_DIR="$HOME/.nvm"
 export PNPM_HOME="${HOME}/Library/pnpm"
 path=($PNPM_HOME $path)
 
+# plugins
+znap source ohmyzsh/ohmyzsh \
+  lib/{completion,correction,directories,history} \
+  plugins/{git,tmux}
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-completions
+znap source zsh-users/zsh-syntax-highlighting
+znap source zsh-users/zsh-history-substring-search
+
 # aliases
+alias -- -='cd - > /dev/null'
 alias up='brew update; brew upgrade; brew upgrade --cask; brew cleanup; \
 rustup update; cargo install-update -a'
 alias df='df -h'
@@ -93,12 +103,3 @@ alias pgrep='pgrep -fail'
 alias ps='ps -ef'
 alias rg='rg -S'
 alias sudo='sudo '
-
-# plugins
-znap source ohmyzsh/ohmyzsh \
-  lib/{completion,correction,directories,history} \
-  plugins/{git,tmux}
-znap source zsh-users/zsh-autosuggestions
-znap source zsh-users/zsh-completions
-znap source zsh-users/zsh-syntax-highlighting
-znap source zsh-users/zsh-history-substring-search
