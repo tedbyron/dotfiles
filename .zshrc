@@ -50,7 +50,6 @@ export GPG_TTY
 export BAT_THEME='Dracula'
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 export ZSH_TMUX_AUTOSTART=true
-export ZSH_TMUX_AUTOCONNECT=false
 export ZSH_TMUX_FIXTERM=true
 export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
 
