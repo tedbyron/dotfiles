@@ -10,28 +10,19 @@ fi
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-# zsh
-setopt auto_cd
-setopt interactive_comments
-setopt long_list_jobs
-setopt multios
-setopt no_beep
-
-bindkey -e
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
-bindkey -M emacs '^ ' history-substring-search-up
-export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
 # path
+if [[ -v "${HOMEBREW_PREFIX}" ]]; then
+  path=(
+    "${HOMEBREW_PREFIX}/sbin"
+    "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
+    "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
+    "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
+    "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
+    $path
+  )
+fi
+
 path=(
-  "${HOMEBREW_PREFIX}/sbin"
-  "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
-  "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
-  "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
-  "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
   "${HOME}/.cargo/bin"
   "${HOME}/.spicetify"
   "${HOME}/.fly/bin"
@@ -57,6 +48,7 @@ export HOMEBREW_NO_ANALYTICS=1
 GPG_TTY="$(tty)"
 export GPG_TTY
 export BAT_THEME='Dracula'
+export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_AUTOCONNECT=false
 export ZSH_TMUX_FIXTERM=true
@@ -85,6 +77,20 @@ znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-completions
 znap source zsh-users/zsh-syntax-highlighting
 znap source zsh-users/zsh-history-substring-search
+
+# zsh
+setopt auto_cd
+setopt interactive_comments
+setopt long_list_jobs
+setopt multios
+setopt no_beep
+
+bindkey -e
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+bindkey -M emacs '^ ' history-substring-search-up
 
 # aliases
 alias -- -='cd - > /dev/null'
