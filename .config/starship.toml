@@ -1,4 +1,4 @@
-format = '$directory$character '
+format = '$directory$character'
 right_format = '$status$cmd_duration$all'
 scan_timeout = 30
 command_timeout = 500
@@ -12,7 +12,7 @@ add_newline = false
 format = '[$percentage]($style) '
 
 [character]
-format = '$symbol'
+format = '$symbol '
 success_symbol = "[\uf0da](green)"
 error_symbol = "[\uf0da](red)"
 vimcmd_symbol = '[N](green)'
