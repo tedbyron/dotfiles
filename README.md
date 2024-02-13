@@ -1,37 +1,27 @@
-<div align="center">
-  <h1><code>dotfiles</code></h1>
+# dotfiles
 
-  <p>
-    <strong>My dotfiles</strong>
-  </p>
-</div>
+My dotfiles
 
 # Installation
 
-- Install nix
+1. ```sh
+   xcode-select --install
+   ```
 
-  ```
-  sh <(curl -L https://nixos.org/nix/install) --daemon
-  ```
+1. Install nix: <https://github.com/DeterminateSystems/nix-installer>.
 
-- Clone dotfiles
+1. ```sh
+   nix-shell -p nixUnstable gh
+   ```
 
-  ```
-  nix-shell -p nixUnstable gh
-  gh repo clone tedbyron/dotfiles ~/dotfiles -- --depth 1
-  ```
+1. ```sh
+   gh repo clone tedbyron/dotfiles ~/dotfiles -- --filter tree:0 && cd ~/dotfiles
+   ```
 
-- Build a configuration from the flake
+1. Build a config.
 
-  ```
-  cd ~/dotfiles
-  nix build #darwinConfigurations.teds-mac.system \
-    --auto-optimise-store \
-    --experimental-features 'nix-command flakes'
-  ```
+   - macOS:
 
-# Troubleshooting
-
-- SSL error
-
-  <https://nixos.org/manual/nix/stable/installation/env-variables.html#nix_ssl_cert_file-with-macos-and-the-nix-daemon>
+     ```sh
+     nix build .#darwinConfigurations.<CONFIG>.system
+     ```

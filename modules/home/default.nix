@@ -18,7 +18,6 @@ in
       curl
       du-dust
       fd
-      glab
       hyperfine
       ripgrep
       shellcheck
@@ -48,8 +47,6 @@ in
     #   enable = true;
     # };
 
-    exa.enable = true;
-
     gh = {
       enable = true;
       extensions = [ pkgs.gh-dash ];
@@ -58,9 +55,7 @@ in
     git = import ./git.nix { inherit config pkgs; };
     gpg.enable = true;
     home-manager.enable = true;
-    jq.enable = true;
     man.enable = true;
-    navi.enable = true;
 
     neovim = {
       enable = true;

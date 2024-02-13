@@ -1,23 +1,22 @@
 {
-  description = "ted's nix config";
+  description = "tedbyron's nix config";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-    };
-
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, darwin, home-manager, ... }@inputs:
+  outputs = { nixpkgs, home-manager, darwin, ... }@inputs:
     let
       inherit (inputs.flake-utils.lib) system;
 
@@ -57,8 +56,7 @@
           ] ++ modules;
         };
 
-      mkNetworkModule =
-        { name }:
+      mkNetworkModule = { name }:
         let nameNoSpaces = nixpkgs.lib.stringAsChars (x: if x == " " then "-" else x) name;
         in
         {
