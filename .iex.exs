@@ -152,11 +152,12 @@ import H, only: [cd: 1, d: 1]
 import ColorHelpers
 
 IEx.configure(
+  inspect: [pretty: true],
+  history_size: 500,
   default_prompt: H.default_prompt(),
   continuation_prompt: H.continuation_prompt(),
   alive_prompt: H.alive_prompt(),
-  alive_continuation_prompt: H.alive_continuation_prompt(),
-  inspect: [pretty: true]
+  alive_continuation_prompt: H.alive_continuation_prompt()
 )
 
 # Print app versions if available.
