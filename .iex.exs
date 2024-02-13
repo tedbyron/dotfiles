@@ -7,20 +7,30 @@
 # runtime_info/0 runtime_info/1
 # IEx.configure/1 Inspect.Opts
 
-defmodule Color do
-  def color(string, color) do
-    IO.ANSI.format([color, string])
-    |> IO.chardata_to_string()
+defmodule ColorHelpers do
+  @ansi Application.compile_env(:elixir, :ansi_enabled, true)
+
+  def format(string, color) do
+    if @ansi do
+      IO.ANSI.format([color, string]) |> IO.chardata_to_string()
+    else
+      string
+    end
+  end
+
+  def puts(string, color \\ :default_color) do
+    IO.puts(format(string, color))
+    IEx.dont_display_result()
   end
 end
 
-defmodule Helpers do
-  import Color
+defmodule H do
+  import ColorHelpers
 
   @home System.user_home!() |> Path.expand()
   @path_separator if elem(:os.type(), 0) == :unix, do: "/", else: "\\"
 
-  # Format the current working directory like fish shell and color it cyan.
+  # Format the current working directory like fish shell.
   defp cwd do
     case File.cwd() do
       {:ok, cwd} ->
@@ -37,53 +47,65 @@ defmodule Helpers do
       {:error, _} ->
         "nil"
     end
-    |> color(:cyan)
   end
+
+  defp cwd_color, do: format(cwd(), :cyan)
 
   # Color the node name and host yellow.
   defp node_color do
     node()
     |> to_string()
     |> String.split("@")
-    |> Enum.map(&color(&1, :yellow))
+    |> Enum.map(&format(&1, :yellow))
     |> Enum.join("@")
   end
 
-  @caret color("\uf0da", :blue)
-  @bullet color("\u2219", :light_black)
+  @caret "\uf0da"
+  @caret_color format(@caret, :blue)
+  @bullet "\u2219"
+  @bullet format(@bullet, :light_black)
 
-  def default_prompt, do: cwd() <> " " <> @caret
-  def alive_prompt, do: cwd() <> " " <> node_color() <> " " <> @caret
-  def continuation_prompt, do: @bullet <> String.duplicate(" ", String.length(default_prompt()))
+  def default_prompt, do: "#{cwd_color()} #{@caret_color}"
+  def alive_prompt, do: "#{cwd_color()} #{node_color()} #{@caret_color}"
 
-  def alive_continuation_prompt,
-    do: @bullet <> String.duplicate(" ", String.length(alive_prompt()))
+  def continuation_prompt do
+    @bullet <> String.duplicate(" ", String.length("#{cwd()} #{@caret}") - 1)
+  end
 
-  @apps Application.started_applications()
+  def alive_continuation_prompt do
+    @bullet <> String.duplicate(" ", String.length("#{cwd()} #{node()} #{@caret}") - 1)
+  end
 
-  # If `app` is running, puts its name in `color` and version.
-  def puts_app_version(app, color) do
+  defp format_app_version(app, color, vsn, puts) do
+    s = (to_string(app) |> format(color)) <> format(": #{vsn}", :light_black)
+
+    if puts do
+      IO.puts(s)
+      IEx.dont_display_result()
+    else
+      s
+    end
+  end
+
+  @apps Application.loaded_applications()
+
+  # If `app` is running, returns its name in `color` and version.
+  def app_version(app, color \\ :default_color, puts \\ true) do
     with {_, _, vsn} <- Enum.find(@apps, &(elem(&1, 0) == app)) do
-      to_string(app)
-      |> color(color)
-      |> then(&IO.puts("#{&1}: #{vsn}"))
+      format_app_version(app, color, vsn, puts)
     end
   end
 
   # If inside a mix app, puts its name and version.
-  def puts_mix_app_version(color \\ :default_color) do
+  def mix_app_version(color \\ :default_color, puts \\ true) do
     if function_exported?(Mix.Project, :config, 0) do
       config = Mix.Project.config()
 
       with app when not is_nil(app) <- Keyword.get(config, :app),
            vsn when not is_nil(vsn) <- Keyword.get(config, :version) do
-        to_string(app)
-        |> color(color)
-        |> then(&IO.puts("#{&1}: #{vsn}"))
+        format_app_version(app, color, vsn, puts)
       end
     end
-
-    IEx.dont_display_result()
   end
 
   # Extension of `IEx.Helpers.cd/1` to support `to_string/1` types and the `-` param. Updates the
@@ -125,26 +147,38 @@ defmodule Helpers do
   defdelegate d(directory), to: __MODULE__, as: :cd
 end
 
-Application.put_env(:elixir, :ansi_enabled, true)
+# Ensure only `Helpers.d/1` can be used and not `IEx.Helpers.cd/1`.
+import H, only: [cd: 1, d: 1]
+import ColorHelpers
 
 IEx.configure(
-  default_prompt: Helpers.default_prompt(),
-  continuation_prompt: Helpers.continuation_prompt(),
-  alive_prompt: Helpers.alive_prompt(),
-  alive_continuation_prompt: Helpers.alive_continuation_prompt(),
+  default_prompt: H.default_prompt(),
+  continuation_prompt: H.continuation_prompt(),
+  alive_prompt: H.alive_prompt(),
+  alive_continuation_prompt: H.alive_continuation_prompt(),
   inspect: [pretty: true]
 )
 
-Helpers.puts_mix_app_version()
-Helpers.puts_app_version(:phoenix, :light_red)
-Helpers.puts_app_version(:ecto, :light_green)
-Helpers.puts_app_version(:postgrex, :light_cyan)
-Helpers.puts_app_version(:myxql, :light_cyan)
-Helpers.puts_app_version(:tds, :light_cyan)
-Helpers.puts_app_version(:ecto_sqlite3, :light_cyan)
-Helpers.puts_app_version(:ecto_ch, :light_cyan)
-Helpers.puts_app_version(:etso, :light_cyan)
-Helpers.puts_app_version(:redix, :light_cyan)
+# Print app versions if available.
+[
+  H.mix_app_version(:default_color, false),
+  H.app_version(:phoenix, :light_red, false),
+  H.app_version(:ecto, :light_green, false),
+  H.app_version(:postgrex, :light_cyan, false),
+  H.app_version(:myxql, :light_cyan, false),
+  H.app_version(:tds, :light_cyan, false),
+  H.app_version(:ecto_sqlite3, :light_cyan, false),
+  H.app_version(:ecto_ch, :light_cyan, false),
+  H.app_version(:etso, :light_cyan, false),
+  H.app_version(:redix, :light_cyan, false)
+]
+|> Enum.reject(&is_nil/1)
+|> Enum.join(format(", ", :light_black))
+|> then(
+  &if String.length(&1) > 0 do
+    IO.puts(&1)
+  end
+)
 
 # Test list.
 dwarves = [
@@ -171,6 +205,3 @@ fellowship = %{
   elves: ["Legolas"],
   wizards: ["Gandolf"]
 }
-
-# Ensure only `Helpers.d/1` can be used and not `IEx.Helpers.cd/1`.
-import Helpers, only: [cd: 1, d: 1]

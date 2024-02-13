@@ -41,17 +41,13 @@ znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'
 
 # exports
-export EDITOR='nvim'
-export SUDO_EDITOR='nvim'
-export STARSHIP_LOG=error
-export HOMEBREW_NO_ANALYTICS=1
-GPG_TTY="$(tty)"
-export GPG_TTY
-export BAT_THEME='Dracula'
-export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_FIXTERM=true
 export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
+export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+
+GPG_TTY="$(tty)"
+export GPG_TTY
 
 export LESS_TERMCAP_mb=$'\033[1;31m'     # begin blink
 export LESS_TERMCAP_md=$'\033[1;36m'     # begin bold
@@ -67,6 +63,13 @@ export NVM_DIR="$HOME/.nvm"
 
 export PNPM_HOME="${HOME}/Library/pnpm"
 path=($PNPM_HOME $path)
+
+export EDITOR='nvim'
+export SUDO_EDITOR='nvim'
+export STARSHIP_LOG=error
+export HOMEBREW_NO_ANALYTICS=1
+export BAT_THEME='Dracula'
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 # plugins
 znap source ohmyzsh/ohmyzsh \
@@ -108,5 +111,3 @@ alias pgrep='pgrep -fail'
 alias ps='ps -ef'
 alias rg='rg -S'
 alias sudo='sudo '
-
-alias iexps='iex -S mix phx.server'

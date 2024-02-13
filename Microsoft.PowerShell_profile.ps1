@@ -8,3 +8,7 @@ function Invoke-Starship-PreCommand {
 }
 $ENV:STARSHIP_CONFIG = "$HOME\git\dotfiles\.config\starship.toml"
 Invoke-Expression (&starship init powershell)
+
+$env:ERL_AFLAGS = "-kernel shell_history enabled"
+
+Set-Alias -Name iex -Value iex.bat -Force
