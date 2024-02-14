@@ -1,6 +1,6 @@
 zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
 source ~/.local/share/zsh-snap/znap.zsh
-if [[ "$(uname -s)" == 'Darwin' ]]; then
+if [[ "$(uname)" == 'Darwin' ]]; then
   if [[ "$(uname -m)" == 'arm64' ]]; then
     znap eval brew '/opt/homebrew/bin/brew shellenv'
   else
@@ -11,7 +11,7 @@ znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
 # path
-if [[ -v "${HOMEBREW_PREFIX}" ]]; then
+if (( ${+HOMEBREW_PREFIX} )); then
   path=(
     "${HOMEBREW_PREFIX}/sbin"
     "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
@@ -103,7 +103,8 @@ alias du='du -hd 1'
 alias dust='dust -d 1'
 alias grep='grep -i --color=auto'
 alias less='less -FRi'
-alias ls='ls -Fh --color=auto --group-directories-first'
+if (( $+commands[gls] )); then alias ls='gls'; fi
+alias ls='ls -FHh --color=auto --group-directories-first'
 alias la='ls -A'
 alias l='ls -lA'
 alias path='echo -e ${PATH//:/\\n}'
