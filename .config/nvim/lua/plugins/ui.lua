@@ -14,11 +14,11 @@ return {
         offsets = {
           {
             filetype = 'neo-tree',
-            text = '樹',
+            text = 'tree',
           },
           {
             filetype = 'Outline',
-            text = '大綱',
+            text = 'outline',
           },
         },
         separator_style = 'thin',
