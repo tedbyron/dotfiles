@@ -5,22 +5,10 @@ TERM = "alacritty"
 
 [font]
 size = 14.0
-
-[font.bold]
-family = "Curlio"
-style = "Bold"
-
-[font.bold_italic]
-family = "Curlio"
-style = "Bold Italic"
-
-[font.italic]
-family = "Curlio"
-style = "Italic"
-
-[font.normal]
-family = "Curlio"
-style = "Regular"
+normal = { family = "Curlio", style = "Regular" }
+bold = { family = "Curlio", style = "Bold" }
+italic = { family = "Curlio", style = "Italic" }
+bold_italic = { family = "Curlio", style = "Bold Italic" }
 
 [selection]
 save_to_clipboard = true
@@ -30,9 +18,5 @@ decorations = "buttonless"
 dynamic_padding = true
 dynamic_title = true
 option_as_alt = "OnlyLeft"
-startup_mode = "Maximized"
 title = "Alacritty"
-
-[window.padding]
-x = 5
-y = 5
+padding = { x = 5, y = 5 }
