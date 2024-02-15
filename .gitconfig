@@ -1,6 +1,7 @@
 [core]
 	autocrlf = false
 	eol = lf
+	fsmonitor = true
 	editor = nvim
 	pager = delta
 [user]
@@ -15,6 +16,8 @@
 	tool = vimdiff
 	conflictstyle = diff3
 	prompt = false
+[fetch]
+	writeCommitGraph = true
 [pull]
 	ff = only
 [maintenance]
@@ -41,3 +44,7 @@
 	colorMoved = default
 [init]
 	defaultBranch = main
+[rerere]
+	enabled = true
+[alias]
+	blame = blame -CCCw
