@@ -2,11 +2,11 @@
   description = "tedbyron's nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -14,70 +14,30 @@
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, home-manager, darwin, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
-      inherit (inputs.flake-utils.lib) system;
+      inherit (lib.my) mapHosts;
+      inherit (flake-utils.lib) system;
 
-      defaultUser = {
-        description = "Teddy Byron";
-        email = "ted@tedbyron.com";
-        name = "ted";
-        key = "E0496EDDDF6BB87D";
-      };
+      overlays = [ inputs.neovim-nightly-overlay.overlay ];
 
-      mkDarwinSystem =
-        { system
-        , user ? defaultUser
-        , modules
-        }:
-        darwin.lib.darwinSystem {
-          inherit inputs system;
-
-          modules = [
-            home-manager.darwinModules.home-manager
-            ./modules/darwin.nix
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user.name} = {
-                  inherit user;
-                  imports = [ ./modules/home ];
-                };
-              };
-
-              users.users.${user.name} = {
-                inherit (user) description name;
-                home = "/Users/${user.name}";
-              };
-            }
-          ] ++ modules;
+      lib = nixpkgs.lib.extend (self: super: {
+        my = import ./lib {
+          inherit inputs nixpkgs overlays;
+          lib = self;
         };
-
-      mkNetworkModule = { name }:
-        let nameNoSpaces = nixpkgs.lib.stringAsChars (x: if x == " " then "-" else x) name;
-        in
-        {
-          networking = {
-            computerName = name;
-            hostName = nameNoSpaces;
-            localHostName = nameNoSpaces;
-          };
-        };
+      });
     in
     {
-      darwinConfigurations = {
-        teds-mac = mkDarwinSystem {
-          system = system.aarch64-darwin;
-          modules = [ mkNetworkModule "teds-mac" ];
-        };
-
-        teds-work-mac = mkDarwinSystem {
-          system = system.x86_64-darwin;
-          modules = [ mkNetworkModule "teds-work-mac" ];
-        };
-      };
+      darwinConfigurations = (mapHosts system.aarch64-darwin ./hosts/aarch64-darwin);
     };
 }

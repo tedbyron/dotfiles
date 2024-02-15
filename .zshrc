@@ -10,7 +10,7 @@ fi
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-# path
+# Path
 if (( ${+HOMEBREW_PREFIX} )); then
   path=(
     "${HOMEBREW_PREFIX}/sbin"
@@ -36,11 +36,11 @@ if [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]]; then
   source "${HOME}/google-cloud-sdk/completion.zsh.inc";
 fi
 
-# functions
+# Functions
 znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'
 
-# exports
+# Exports
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_FIXTERM=true
 export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
@@ -57,13 +57,6 @@ export LESS_TERMCAP_se=$'\033[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
 
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
-[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
-
-export PNPM_HOME="${HOME}/Library/pnpm"
-path=($PNPM_HOME $path)
-
 export EDITOR='nvim'
 export SUDO_EDITOR='nvim'
 export STARSHIP_LOG=error
@@ -71,7 +64,7 @@ export HOMEBREW_NO_ANALYTICS=1
 export BAT_THEME='Dracula'
 export ERL_AFLAGS="-kernel shell_history enabled"
 
-# plugins
+# Zsh
 znap source ohmyzsh/ohmyzsh \
   lib/{completion,correction,directories,history} \
   plugins/{git,tmux}
@@ -80,7 +73,6 @@ znap source zsh-users/zsh-completions
 znap source zsh-users/zsh-syntax-highlighting
 znap source zsh-users/zsh-history-substring-search
 
-# zsh
 setopt auto_cd
 setopt interactive_comments
 setopt long_list_jobs
@@ -88,16 +80,12 @@ setopt multios
 setopt no_beep
 
 bindkey -e
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+bindkey -M emacs '^ ' history-substring-search-up
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
-bindkey -M emacs '^ ' history-substring-search-up
 
-# aliases
+# Aliases
 alias -- -='cd - > /dev/null'
-alias up='brew update; brew upgrade; brew upgrade --cask; brew cleanup; \
-rustup update; cargo install-update -a'
 alias df='df -h'
 alias du='du -hd 1'
 alias dust='dust -d 1'
@@ -106,9 +94,9 @@ alias less='less -FRi'
 if (( $+commands[gls] )); then alias ls='gls'; fi
 alias ls='ls -FHh --color=auto --group-directories-first'
 alias la='ls -A'
-alias l='ls -lA'
+alias l='ls -Al'
 alias path='echo -e ${PATH//:/\\n}'
-alias pgrep='pgrep -fail'
-alias ps='ps -ef'
+alias pgrep='pgrep -afil'
+alias ps='ps -Aafx'
 alias rg='rg -S'
 alias sudo='sudo '

@@ -1,25 +1,25 @@
 format = '$directory$character'
-right_format = '$status$cmd_duration$all'
+right_format = '$status$cmd_duration$jobs$all'
 scan_timeout = 30
 command_timeout = 500
 add_newline = false
 
-################################################################################
 # Builtin
-################################################################################
-
 [battery]
 format = '[$percentage]($style) '
 
 [character]
 format = '$symbol '
-success_symbol = "[\uf0da](green)"
-error_symbol = "[\uf0da](red)"
-vimcmd_symbol = '[N](green)'
+success_symbol = "[\uf0da](green)" # nerd font nf-fa-caret-right
+error_symbol = "[\uf0da](red)"     # nerd font nf-fa-caret-right
+vimcmd_symbol = "[N](green)"
 
 [cmd_duration]
 format = '[$duration]($style) '
 style = 'bright-black'
+
+[custom]
+disabled = true
 
 [directory]
 fish_style_pwd_dir_length = 1
@@ -29,13 +29,16 @@ format = '[$path]($style)[$read_only]($read_only_style) '
 read_only = " ro"
 style = 'cyan'
 
+[env_var]
+disabled = true
+
 [fill]
 symbol = ' ' # ─ ━
 
 [hostname]
-ssh_only = false
-format = '[$hostname]($style)\] '
-style = 'yellow'
+# ssh_only = false
+# format = '[$hostname]($style)\] '
+# style = 'yellow'
 disabled = true
 
 [jobs]
@@ -44,17 +47,29 @@ style = 'cyan'
 [line_break]
 disabled = true
 
+[localip]
+disabled = true
+
 [memory_usage]
-format = '\[$symbol[$ram( | $swap)]($style)\] '
-style = 'white'
+# format = '\[$symbol[$ram( | $swap)]($style)\] '
+# style = 'white'
+disabled = true
+
+[os]
 disabled = true
 
 [package]
-format = '\[[$symbol$version]($style)\] '
-version_format = '${raw}'
-symbol = ''
-style = '214'
-display_private = true
+# format = '\[[$symbol$version]($style)\] '
+# version_format = '${raw}'
+# symbol = ''
+# style = '214'
+# display_private = true
+disabled = true
+
+[shell]
+disabled = true
+
+[shlvl]
 disabled = true
 
 [status]
@@ -64,23 +79,22 @@ style = 'red'
 disabled = false
 
 [time]
-format = '[$time]($style) '
-time_format = '%R'
-style = 'white'
+# format = '[$time]($style) '
+# time_format = '%R'
+# style = 'white'
 disabled = true
 
 [username]
-style_root = 'red'
-style_user = 'yellow'
-format = '\[[$user]($style)@'
-show_always = true
+# style_root = 'red'
+# style_user = 'yellow'
+# format = '\[[$user]($style)@'
+# show_always = true
 disabled = true
 
-################################################################################
-# Git
-################################################################################
-
+# VCS
 [fossil_branch]
+disabled = true
+[fossil_metrics]
 disabled = true
 [hg_branch]
 disabled = true
@@ -108,7 +122,6 @@ style = 'yellow'
 format = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
 added_style = 'green'
 deleted_style = 'red'
-disabled = false
 
 [git_status]
 format = '([$all_status$ahead_behind]($style) )'
@@ -119,10 +132,7 @@ renamed = 'r'
 deleted = 'x'
 style = 'red'
 
-################################################################################
 # Environments
-################################################################################
-
 [aws]
 disabled = true
 [azure]
@@ -140,7 +150,7 @@ disabled = true
 [conda]
 disabled = true
 [container]
-disabled = false
+symbol = "\uf4b7" # nerd icon nf-oct-container
 [crystal]
 disabled = true
 [daml]
@@ -149,6 +159,10 @@ disabled = true
 disabled = true
 [deno]
 disabled = true
+[direnv]
+format = '[$symbol$loaded/$allowed]($style)'
+symbol = "✴"
+disabled = false
 [docker_context]
 disabled = true
 [dotnet]
@@ -168,7 +182,7 @@ disabled = true
 [gradle]
 disabled = true
 [guix_shell]
-disabled = false
+disabled = true
 [haskell]
 disabled = true
 [haxe]
@@ -182,7 +196,7 @@ disabled = true
 [kotlin]
 disabled = true
 [kubernetes]
-disabled = false
+disabled = true
 [lua]
 disabled = true
 [meson]
@@ -190,7 +204,7 @@ disabled = true
 [nim]
 disabled = true
 [nix_shell]
-disabled = false
+symbol = "\uf313" # nerd font nf-linux-nixos
 [nodejs]
 disabled = true
 [ocaml]
@@ -232,6 +246,8 @@ disabled = true
 [swift]
 disabled = true
 [terraform]
+disabled = true
+[typst]
 disabled = true
 [vagrant]
 disabled = true
