@@ -1,6 +1,7 @@
 { inputs, nixpkgs, lib, ... }:
 let
-  inherit (lib.my) mapModules;
+  inherit (builtins) elem;
+  inherit (lib.my) filterAttrs mapModules removeSuffix;
   inherit (inputs.flake-utils.lib) system;
 
   darwinSystems = [ system.aarch64-darwin system.x86_64-darwin ];
@@ -10,25 +11,27 @@ let
   #   else inputs.home-manager.nixosModules;
 in
 rec {
+  # mkHost :: Path -> { system: String, ... } -> AttrSet
   mkHost = path: { system, ... }@attrs:
-    if darwinSystems ? system
+    (if darwinSystems ? system
     then inputs.darwin.lib.darwinSystem
-    else lib.nixosSystem {
-      inherit system;
+    else lib.nixosSystem)
+      {
+        inherit system;
 
-      specialArgs = { inherit lib inputs system; };
+        specialArgs = { inherit lib inputs system; };
 
-      modules = [
-        {
-          nixpkgs.pkgs = pkgs;
-          networking.hostName = removeSuffix ".nix" (baseNameOf path);
-        }
-        (filterAttrs (n: v: !elem n [ "system" ]) attrs)
-        ../.
-        (import path)
-      ];
-    };
+        modules = [
+          {
+            nixpkgs.pkgs = nixpkgs;
+            networking.hostName = removeSuffix ".nix" (baseNameOf path);
+          }
+          (filterAttrs (n: v: !elem n [ "system" ]) attrs)
+          ../.
+          (import path)
+        ];
+      };
 
-  mapHosts = dir: { system, ... }@attrs:
-    mapModules dir (hostPath: mkHost system hostPath attrs);
+  # mapHosts :: String -> Path -> AttrSet
+  mapHosts = system: dir: mapModules dir (hostPath: mkHost system hostPath);
 }

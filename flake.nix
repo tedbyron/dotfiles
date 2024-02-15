@@ -23,17 +23,17 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs = { nixpkgs, flake-utils, ... }@inputs:
     let
       inherit (lib.my) mapHosts;
       inherit (flake-utils.lib) system;
 
       overlays = [ inputs.neovim-nightly-overlay.overlay ];
 
-      lib = nixpkgs.lib.extend (self: super: {
+      lib = nixpkgs.lib.extend (final: prev: {
         my = import ./lib {
           inherit inputs nixpkgs overlays;
-          lib = self;
+          lib = final;
         };
       });
     in

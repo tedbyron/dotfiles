@@ -7,6 +7,5 @@ in
   #   (String -> Any -> Bool) ->
   #   (String -> Any -> { name = String; value = Any; }) ->
   #   AttrSet
-  mapFilterAttrs = pred: f: attrs:
-    filterAttrs pred (mapAttrs' f attrs);
+  mapFilterAttrs = pred: f: attrs: filterAttrs pred (mapAttrs' f attrs);
 }
