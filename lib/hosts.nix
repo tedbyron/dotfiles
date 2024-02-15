@@ -1,6 +1,6 @@
 { inputs, nixpkgs, lib, ... }:
 let
-  inherit (lib.my) mapModules mkHost;
+  inherit (lib.my) mapModules;
   inherit (inputs.flake-utils.lib) system;
 
   darwinSystems = [ system.aarch64-darwin system.x86_64-darwin ];
@@ -9,7 +9,7 @@ let
   #   then inputs.darwin.lib.darwinModules
   #   else inputs.home-manager.nixosModules;
 in
-{
+rec {
   mkHost = path: { system, ... }@attrs:
     if darwinSystems ? system
     then inputs.darwin.lib.darwinSystem
