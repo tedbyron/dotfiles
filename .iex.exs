@@ -97,6 +97,18 @@ defmodule H do
     end
   end
 
+  @doc "Configure IEx prompts."
+  @spec configure_prompts() :: atom()
+  def configure_prompts do
+    IEx.configure(
+      default_prompt: prompt(:default),
+      continuation_prompt: prompt(:continuation),
+      alive_prompt: prompt(:alive),
+      alive_continuation_prompt: prompt(:alive_continuation)
+    )
+    IEx.dont_display_result()
+  end
+
   @spec format_app_version(any(), atom(), charlist(), boolean()) :: String.t()
   defp format_app_version(app, color, vsn, puts) do
     s = (to_string(app) |> format(color)) <> format(": #{vsn}", :light_black)
@@ -111,7 +123,7 @@ defmodule H do
 
   @apps Application.loaded_applications()
 
-  @doc "If `app` is running, returns its name and version."
+  @doc "If `app` is running, returns or puts its name and version."
   @spec app_version(atom()) :: String.t() | atom()
   @spec app_version(atom(), atom()) :: String.t() | atom()
   @spec app_version(atom(), atom(), boolean()) :: String.t() | atom()
@@ -121,7 +133,7 @@ defmodule H do
     end
   end
 
-  @doc "If inside a mix app, puts its name and version."
+  @doc "If inside a mix app, returns or puts its name and version."
   @spec mix_app_version() :: String.t() | atom()
   @spec mix_app_version(atom()) :: String.t() | atom()
   @spec mix_app_version(atom(), boolean()) :: String.t() | atom()
@@ -160,16 +172,8 @@ defmodule H do
     end
 
     case File.cd(directory) do
-      :ok ->
-        IEx.configure(
-          default_prompt: default_prompt(),
-          continuation_prompt: continuation_prompt(),
-          alive_prompt: alive_prompt(),
-          alive_continuation_prompt: alive_continuation_prompt()
-        )
-
-      {:error, :enoen} ->
-        IO.puts(:stderr, IEx.color(:eval_error, "No directory #{directory}"))
+      :ok -> configure_prompts()
+      {:error, :enoen} -> IO.puts(:stderr, IEx.color(:eval_error, "No directory #{directory}"))
     end
 
     IEx.dont_display_result()
@@ -183,13 +187,10 @@ end
 import H, only: [cd: 1, d: 1]
 import ColorHelpers
 
+H.configure_prompts()
 IEx.configure(
   inspect: [pretty: true],
   history_size: 500,
-  default_prompt: H.default_prompt(),
-  continuation_prompt: H.continuation_prompt(),
-  alive_prompt: H.alive_prompt(),
-  alive_continuation_prompt: H.alive_continuation_prompt()
 )
 
 # Print app versions if available.
