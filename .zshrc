@@ -1,27 +1,42 @@
+# Setup
 zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
 source ~/.local/share/zsh-snap/znap.zsh
-if [[ "$(uname)" == 'Darwin' ]]; then
-  if [[ "$(uname -m)" == 'arm64' ]]; then
-    znap eval brew '/opt/homebrew/bin/brew shellenv'
-  else
-    znap eval brew '/usr/local/bin/brew shellenv'
-  fi
-fi
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-# Path
-if (( ${+HOMEBREW_PREFIX} )); then
-  path=(
-    "${HOMEBREW_PREFIX}/sbin"
-    "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
-    "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
-    "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
-    "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
-    $path
-  )
-fi
+function () {
+  if [[ "$(uname)" == 'Darwin' ]]; then
+    export HOMEBREW_NO_ANALYTICS=1
 
+    if (( $#commands[(I)(darwin-rebuild)(home-manager)] == 0 )); then
+      if [[ "$(arch)" == 'arm64' ]]; then
+        znap eval brew '/opt/homebrew/bin/brew shellenv'
+      else
+        znap eval brew '/usr/local/bin/brew shellenv'
+      fi
+
+      if (( $+HOMEBREW_PREFIX )); then
+        path=(
+          "${HOMEBREW_PREFIX}/sbin"
+          "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
+          "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
+          "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
+          "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
+          $path
+        )
+      fi
+
+      if [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]]; then
+        znap source "${HOME}/google-cloud-sdk/path.zsh.inc";
+      fi
+      if [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]]; then
+        znap source "${HOME}/google-cloud-sdk/completion.zsh.inc";
+      fi
+    fi
+  fi
+}
+
+# Path
 path=(
   "${HOME}/.cargo/bin"
   "${HOME}/.spicetify"
@@ -29,40 +44,28 @@ path=(
   $path
 )
 
-if [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]]; then
-  source "${HOME}/google-cloud-sdk/path.zsh.inc";
-fi
-if [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]]; then
-  source "${HOME}/google-cloud-sdk/completion.zsh.inc";
-fi
-
 # Functions
 znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'
 
 # Exports
+export BAT_THEME='Dracula'
+export EDITOR='nvim'
+export ERL_AFLAGS="-kernel shell_history enabled"
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+--color=dark
+--color=fg:-1,bg:-1,hl:#5fff87,fg+:-1,bg+:-1,hl+:#ffaf5f
+--color=info:#af87ff,prompt:#5fff87,pointer:#ff87d7,marker:#ff87d7,spinner:#ff87d7
+'
+GPG_TTY="$(tty)"
+export GPG_TTY
+export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+export MANPAGER="zsh -c 'col -bx | bat -l man -p'"
+export STARSHIP_LOG=error
+export SUDO_EDITOR='nvim'
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_FIXTERM=true
 export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
-export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
-GPG_TTY="$(tty)"
-export GPG_TTY
-
-export LESS_TERMCAP_mb=$'\033[1;31m'     # begin blink
-export LESS_TERMCAP_md=$'\033[1;36m'     # begin bold
-export LESS_TERMCAP_me=$'\033[0m'        # reset bold/blink
-export LESS_TERMCAP_so=$'\033[1;44;33m'  # begin reverse video
-export LESS_TERMCAP_se=$'\033[0m'        # reset reverse video
-export LESS_TERMCAP_us=$'\033[1;32m'     # begin underline
-export LESS_TERMCAP_ue=$'\033[0m'        # reset underline
-
-export EDITOR='nvim'
-export SUDO_EDITOR='nvim'
-export STARSHIP_LOG=error
-export HOMEBREW_NO_ANALYTICS=1
-export BAT_THEME='Dracula'
-export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Zsh
 znap source ohmyzsh/ohmyzsh \
@@ -84,15 +87,17 @@ bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 
 # Aliases
+alias -g -- -h='-h 2>&1 | bat -l help -p'
+alias -g -- --help='--help 2>&1 | bat -l help -p'
 alias -- -='cd - > /dev/null'
 alias df='df -h'
 alias du='du -hd 1'
 alias dust='dust -d 1'
 alias gbl='git blame -wCCC'
-alias grep='egrep -i --color=auto'
+alias grep='egrep -i --color auto'
 alias less='less -FRi'
 if (( $+commands[gls] )); then alias ls='gls'; fi
-alias ls='ls -FHh --color=auto --group-directories-first'
+alias ls='ls -FHh --color auto --group-directories-first'
 alias la='ls -A'
 alias l='ls -Al'
 alias path='echo -e ${PATH//:/\\n}'
