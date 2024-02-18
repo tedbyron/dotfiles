@@ -15,29 +15,32 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    nixos-wsl = {
+      url = "github:nix-community/nixos-wsl";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, flake-utils, ... }@inputs:
+  outputs = { nixpkgs, ... }@inputs:
     let
-      inherit (lib.my) mapHosts;
-      inherit (flake-utils.lib) system;
-
-      overlays = [ inputs.neovim-nightly-overlay.overlay ];
+      inherit (lib.ted) mkSystem;
 
       lib = nixpkgs.lib.extend (final: prev: {
-        my = import ./lib {
-          inherit inputs nixpkgs overlays;
+        ted = import ./lib {
+          inherit nixpkgs inputs;
           lib = final;
         };
       });
     in
     {
-      darwinConfigurations = (mapHosts system.aarch64-darwin ./hosts/aarch64-darwin);
+      darwinConfigurations = {
+        gamma = mkSystem "gamma" {
+          system = "aarch64-darwin";
+        };
+
+        delta = mkSystem "delta" {
+          system = "aarch64-darwin";
+        };
+      };
     };
 }
