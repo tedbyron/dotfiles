@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ self, inputs, lib, ... }:
 {
   mkSystem = host: { system
                    , overlays ? [ ]
@@ -16,14 +16,9 @@
     in
     mkSystem {
       inherit system;
-      specialArgs = { inherit host isDarwin isWsl; };
+      specialArgs = { inherit self host isDarwin isWsl; };
 
       modules = [
-        (optionalAttrs isWsl wsl)
-        osModules.home-manager
-        # ../modules
-        (import ../hosts/${host})
-
         {
           nixpkgs = {
             config.allowUnfree = true;
@@ -36,6 +31,11 @@
             useUserPackages = true;
           };
         }
+
+        osModules.home-manager
+        (optionalAttrs isWsl wsl)
+        ../modules
+        (import ../hosts/${host})
       ];
     };
 }

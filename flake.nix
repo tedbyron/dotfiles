@@ -21,13 +21,13 @@
     };
   };
 
-  outputs = { nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, ... }@inputs:
     let
       inherit (lib.ted) mkSystem;
 
       lib = nixpkgs.lib.extend (final: prev: {
         ted = import ./lib {
-          inherit nixpkgs inputs;
+          inherit self inputs nixpkgs;
           lib = final;
         };
       });

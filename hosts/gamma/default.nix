@@ -13,5 +13,5 @@ in
     hostName = name;
   };
 
-  # todo: casks qbittorrent
+  homebrew.casks = [ "qbittorrent" ];
 }
