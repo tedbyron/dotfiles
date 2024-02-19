@@ -5,18 +5,17 @@
                    , isWsl ? false
                    }:
     let
-      inherit (lib) nixosSystem optionalAttrs;
       inherit (inputs.darwin.lib) darwinSystem;
       inherit (inputs.home-manager) darwinModules nixosModules;
       inherit (inputs.nixos-wsl.nixosModules) wsl;
 
       isDarwin = builtins.elem system [ "aarch64-darwin" "x86_64-darwin" ];
       osModules = if isDarwin then darwinModules else nixosModules;
-      mkSystem = if isDarwin then darwinSystem else nixosSystem;
+      mkSystem = if isDarwin then darwinSystem else lib.nixosSystem;
     in
     mkSystem {
       inherit system;
-      specialArgs = { inherit self host isDarwin isWsl; };
+      specialArgs = { inherit self isDarwin isWsl; };
 
       modules = [
         {
@@ -33,7 +32,7 @@
         }
 
         osModules.home-manager
-        (optionalAttrs isWsl wsl)
+        (lib.optionalAttrs isWsl wsl)
         ../modules
         (import ../hosts/${host})
       ];

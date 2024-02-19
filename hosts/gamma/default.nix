@@ -1,4 +1,4 @@
-{ ... }:
+_:
 let
   name = "gamma";
   users = [ "ted" ];
@@ -13,5 +13,5 @@ in
     hostName = name;
   };
 
-  homebrew.casks = [ "qbittorrent" ];
+  # TODO: qbittorrent
 }

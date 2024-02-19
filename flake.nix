@@ -19,6 +19,8 @@
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    flake-compat.url = "github:edolstra/flake-compat";
   };
 
   outputs = { self, nixpkgs, ... }@inputs:

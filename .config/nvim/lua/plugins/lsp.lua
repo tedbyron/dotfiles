@@ -1,4 +1,4 @@
--- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
+-- :h mason-lspconfig-server-map
 
 return {
   {
@@ -9,10 +9,12 @@ return {
         cssls = {},
         -- docker_compose_language_service = {},
         -- dockerls = {},
-        -- elixirls = {},
+        elixirls = {},
         emmet_ls = {},
         html = {},
         jsonls = {},
+        marksman = {},
+        nil_ls = {},
         -- prismals = {},
         postgres_lsp = {},
         rust_analyzer = {},
@@ -36,7 +38,7 @@ return {
         'css-lsp',
         -- 'docker-compose-language-service',
         -- 'dockerfile-language-server',
-        -- 'elixir-ls',
+        'elixir-ls',
         'emmet-ls',
         'eslint-lsp',
         'eslint_d',
@@ -44,6 +46,7 @@ return {
         'json-lsp',
         'lua-language-server',
         'marksman',
+        'nil',
         -- 'prisma-language-server',
         'rust-analyzer',
         'shellcheck',

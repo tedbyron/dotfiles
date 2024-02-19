@@ -1,11 +1,9 @@
-{ pkgs, lib, isDarwin, ... }:
+{ pkgs, lib, isDarwin, isWsl, ... }:
 let
-  name = "ted";
+  name = baseNameOf (toString ./.);
   home = if isDarwin then "/Users/${name}" else "/home/${name}";
 in
 {
-  imports = (lib.optional isDarwin ./darwin.nix);
-
   users.users.${name} = {
     inherit home;
     description = "Teddy Byron";
@@ -13,12 +11,30 @@ in
   };
 
   home-manager.users.${name} = {
+    programs = import ./programs.nix { inherit isDarwin; };
+    targets.genericLinux.enable = isWsl;
+
     home = {
       stateVersion = "23.11";
       homeDirectory = home;
+      packages = import ./packages.nix { inherit pkgs isDarwin; };
+      username = name;
+
+      file.".gnupg/gpg-agent.conf" = {
+        enable = isDarwin;
+        onChange = "gpgconf --reload gpg-agent";
+
+        text =
+          if isDarwin
+          then
+            ''
+              pinentry-program ${pkgs.pinentry_mac.binaryPath}
+            ''
+          else null;
+      };
     };
 
-    targets.darwin = {
+    targets.darwin = lib.optionalAttrs isDarwin {
       currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
       search = "DuckDuckGo";
 

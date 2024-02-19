@@ -1,4 +1,4 @@
-{ ... }:
+_:
 let
   name = "gamma";
   users = [ "ted" ];
@@ -13,8 +13,5 @@ in
     hostName = name;
   };
 
-  homebrew.casks = [
-    "linearmouse"
-    "lunar"
-  ];
+  homebrew.casks = [ "linearmouse" ];
 }

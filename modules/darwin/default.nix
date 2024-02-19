@@ -1,24 +1,69 @@
 { pkgs, lib, ... }:
 {
-  imports = [
-    ./homebrew.nix
-    ./system.nix
-  ];
+  imports = [ ./system.nix ];
 
   security.pam.enableSudoTouchIdAuth = true;
 
+  programs = {
+    gnupg.agent.enable = true;
+    nix-index.enable = true;
+    zsh.enable = true;
+  };
+
   environment = {
     loginShell = "${pkgs.zsh}/bin/zsh -l";
-    shells = with pkgs; [ bashInteractive zsh ];
+
+    shells = with pkgs; [
+      bashInteractive
+      zsh
+    ];
+
+    systemPackages = with pkgs; [
+      binutils
+      coreutils
+      curl
+      diffutils
+      findutils
+      gawkInteractive
+      gnugrep
+      gnutar
+      gnused
+    ];
+
+    # TODO: vlc
   };
+
+  homebrew = {
+    enable = true;
+
+    masApps = {
+      NextDns = 1464122853;
+      Bitwarden = 1352778147;
+    };
+
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+      upgrade = true;
+    };
+  };
+
+  # fonts = with pkgs; [
+  #   (iosevka.override { })
+  # ];
 
   nix = {
     configureBuildUsers = true;
-    gc.automatic = true;
     useDaemon = true;
+
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+    };
 
     settings = {
       auto-optimise-store = true;
+
       experimental-features = lib.concatStrings (lib.intersperse " "
         [
           "auto-allocate-uids"

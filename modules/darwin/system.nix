@@ -25,7 +25,6 @@
       finder = {
         _FXShowPosixPathInTitle = true;
         AppleShowAllExtensions = true;
-        AppleShowAllFiles = false;
         CreateDesktop = false;
         FXDefaultSearchScope = "SCcf";
         FXPreferredViewStyle = "clmv";
@@ -58,7 +57,6 @@
         ApplePressAndHoldEnabled = false;
         AppleScrollerPagingBehavior = true;
         AppleShowAllExtensions = true;
-        AppleShowAllFiles = true;
         InitialKeyRepeat = 15;
         KeyRepeat = 2;
         NSAutomaticDashSubstitutionEnabled = false;

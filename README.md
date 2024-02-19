@@ -9,7 +9,7 @@ My dotfiles
 1. Install nix: <https://github.com/determinatesystems/nix-installer>.
 
 1. ```sh
-   nix-shell -p nixUnstable gh
+   nix-shell -p gh
    ```
 
 1. ```sh
