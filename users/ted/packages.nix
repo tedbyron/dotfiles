@@ -1,6 +1,5 @@
 { pkgs, isDarwin }:
-with pkgs;
-[
+with pkgs; [
   delta
   du-dust
   lychee

@@ -28,6 +28,7 @@
       gnugrep
       gnutar
       gnused
+      python3
     ];
 
     # TODO: vlc
@@ -67,6 +68,7 @@
       experimental-features = lib.concatStrings (lib.intersperse " "
         [
           "auto-allocate-uids"
+          # "configurable-impure-env"
           "flakes"
           "nix-command"
         ]);

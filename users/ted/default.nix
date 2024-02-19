@@ -11,7 +11,7 @@ in
   };
 
   home-manager.users.${name} = {
-    programs = import ./programs.nix { inherit isDarwin; };
+    programs = import ./programs.nix { inherit pkgs isDarwin; };
     targets.genericLinux.enable = isWsl;
 
     home = {
@@ -20,17 +20,29 @@ in
       packages = import ./packages.nix { inherit pkgs isDarwin; };
       username = name;
 
-      file.".gnupg/gpg-agent.conf" = {
-        enable = isDarwin;
-        onChange = "gpgconf --reload gpg-agent";
+      file = {
+        ".config/nvim" = {
+          source = ../../.config/nvim;
+          recursive = true;
+        };
 
-        text =
-          if isDarwin
-          then
-            ''
-              pinentry-program ${pkgs.pinentry_mac.binaryPath}
-            ''
-          else null;
+        ".iex.exs" = {
+          enable = true;
+          source = ../../.iex.exs;
+        };
+
+        ".gnupg/gpg-agent.conf" = {
+          enable = isDarwin;
+          onChange = "gpgconf --reload gpg-agent";
+
+          text =
+            if isDarwin
+            then
+              ''
+                pinentry-program ${pkgs.pinentry_mac.binaryPath}
+              ''
+            else null;
+        };
       };
     };
 

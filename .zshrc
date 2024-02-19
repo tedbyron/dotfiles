@@ -1,4 +1,3 @@
-# Setup
 zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
 source ~/.local/share/zsh-snap/znap.zsh
 znap eval starship 'starship init zsh --print-full-init'
@@ -32,11 +31,12 @@ function () {
       if [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]]; then
         znap source "${HOME}/google-cloud-sdk/completion.zsh.inc";
       fi
+
+      export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
     fi
   fi
 }
 
-# Path
 path=(
   "${HOME}/.cargo/bin"
   "${HOME}/.spicetify"
@@ -44,11 +44,6 @@ path=(
   $path
 )
 
-# Functions
-znap fpath _rustup 'rustup completions zsh'
-znap fpath _cargo 'rustup completions zsh cargo'
-
-# Exports
 export BAT_THEME='Dracula'
 export EDITOR='nvim'
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -65,9 +60,13 @@ export STARSHIP_LOG=error
 export SUDO_EDITOR='nvim'
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_FIXTERM=true
-export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
 
-# Zsh
+setopt auto_cd
+setopt interactive_comments
+setopt long_list_jobs
+setopt multios
+setopt no_beep
+
 znap source ohmyzsh/ohmyzsh \
   lib/{completion,correction,directories,history} \
   plugins/{git,tmux}
@@ -76,28 +75,24 @@ znap source zsh-users/zsh-completions
 znap source zsh-users/zsh-syntax-highlighting
 znap source zsh-users/zsh-history-substring-search
 
-setopt auto_cd
-setopt interactive_comments
-setopt long_list_jobs
-setopt multios
-setopt no_beep
+znap fpath _rustup 'rustup completions zsh'
+znap fpath _cargo 'rustup completions zsh cargo'
 
 bindkey -e
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 
-# Aliases
-alias -g -- -h='-h 2>&1 | bat -l help -p'
-alias -g -- --help='--help 2>&1 | bat -l help -p'
+alias -g -- -h='-h 2>&1 | bat -pl help'
+alias -g -- --help='--help 2>&1 | bat -pl help'
 alias -- -='cd - > /dev/null'
 alias df='df -h'
 alias du='du -hd 1'
 alias dust='dust -d 1'
 alias gbl='git blame -wCCC'
-alias grep='grep -Ei --color auto'
+alias grep='grep -Ei --color=auto'
 alias less='less -FRi'
 if (( $+commands[gls] )); then alias ls='gls'; fi
-alias ls='ls -FHh --color auto --group-directories-first'
+alias ls='ls -FHh --color=auto --group-directories-first'
 alias la='ls -A'
 alias l='ls -Al'
 alias path='echo -e ${PATH//:/\\n}'
