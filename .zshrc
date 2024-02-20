@@ -1,46 +1,43 @@
 zstyle ':znap:*' repos-dir ~/.local/share/zsh-snap
+zstyle ':znap:*:*' git-maintenance off
 source ~/.local/share/zsh-snap/znap.zsh
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-function () {
-  if [[ "$(uname)" == 'Darwin' ]]; then
-    export HOMEBREW_NO_ANALYTICS=1
+if [[ "$(uname)" == 'Darwin' ]]; then
+  export HOMEBREW_NO_ANALYTICS=1
 
-    if (( $#commands[(I)(darwin-rebuild)(home-manager)] == 0 )); then
-      if [[ "$(arch)" == 'arm64' ]]; then
-        znap eval brew '/opt/homebrew/bin/brew shellenv'
-      else
-        znap eval brew '/usr/local/bin/brew shellenv'
-      fi
-
-      if (( $+HOMEBREW_PREFIX )); then
-        path=(
-          "${HOMEBREW_PREFIX}/sbin"
-          "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
-          "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
-          "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
-          "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
-          $path
-        )
-      fi
-
-      if [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]]; then
-        znap source "${HOME}/google-cloud-sdk/path.zsh.inc";
-      fi
-      if [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]]; then
-        znap source "${HOME}/google-cloud-sdk/completion.zsh.inc";
-      fi
-
-      export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
-    fi
+  if [[ "$(arch)" == 'arm64' ]]; then
+    znap eval brew '/opt/homebrew/bin/brew shellenv'
+  else
+    znap eval brew '/usr/local/bin/brew shellenv'
   fi
-}
+
+  if (( $+HOMEBREW_PREFIX )); then
+    path=(
+      "${HOMEBREW_PREFIX}/sbin"
+      "${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
+      "${HOMEBREW_PREFIX}/opt/findutils/libexec/gnubin"
+      "${HOMEBREW_PREFIX}/opt/grep/libexec/gnubin"
+      "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
+      $path
+    )
+  fi
+
+  if [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]]; then
+    znap source "${HOME}/google-cloud-sdk/path.zsh.inc";
+  fi
+  if [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]]; then
+    znap source "${HOME}/google-cloud-sdk/completion.zsh.inc";
+  fi
+
+  export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
+fi
 
 path=(
   "${HOME}/.cargo/bin"
-  "${HOME}/.spicetify"
   "${HOME}/.fly/bin"
+  "${HOME}/.spicetify"
   $path
 )
 
@@ -90,6 +87,7 @@ alias du='du -hd 1'
 alias dust='dust -d 1'
 alias gbl='git blame -wCCC'
 alias grep='grep -Ei --color=auto'
+alias h=history
 alias less='less -FRi'
 if (( $+commands[gls] )); then alias ls='gls'; fi
 alias ls='ls -FHh --color=auto --group-directories-first'
