@@ -2,30 +2,107 @@
 
 My dotfiles
 
-1. ```sh
-   xcode-select --install
-   ```
+## Install
 
-1. Install nix: <https://github.com/determinatesystems/nix-installer>.
+- Darwin
 
-1. ```sh
-   nix-shell -p gh
-   ```
+  ```sh
+  xcode-select --install
+  curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix \
+     | sh -s -- install
+  ```
 
-1. ```sh
-   gh repo clone tedbyron/dotfiles ~/dotfiles -- --filter tree:0 && cd ~/dotfiles
-   ```
+  ```sh
+  nix-shell -p gh
+  gh repo clone tedbyron/dotfiles ~/dotfiles -- --filter tree:0
+  exit
+  ```
 
-1. Build a config or switch to a config.
+  ```sh
+  cd ~/dotfiles
+  nix run nix-darwin -- --flake .#darwinConfigurations.gamma.system
+  ```
 
-   - Build:
+## Nix stuff
 
-     ```sh
-     nix build .#darwinConfigurations.gamma.system
-     ```
+### Shell script shebang interpreter
 
-   - Switch:
+<https://nixos.org/manual/nix/unstable/command-ref/new-cli/nix.html?highlight=shebang#shebang-interpreter>.
 
-     ```sh
-     nix run nix-darwin -- --flake .#darwinConfigurations.gamma.system
-     ```
+```sh
+#!/usr/bin/env nix
+#!nix shell nixpkgs#bash nixpkgs#hello nixpkgs#cowsay --command bash
+
+hello | cowsay
+```
+
+```sh
+#!/usr/bin/env nix
+#!nix shell --impure --expr ``
+#!nix with (import (builtins.getFlake "nixpkgs") {});
+#!nix terraform.withPlugins (plugins: [ plugins.openstack ])
+#!nix ``
+#!nix --command bash
+
+terraform "$@"
+```
+
+````sh
+#!/usr/bin/env nix
+//!```cargo
+//![dependencies]
+//!time = "0.1.25"
+//!```
+/*
+#!nix shell nixpkgs#rustc nixpkgs#rust-script nixpkgs#cargo --command rust-script
+*/
+
+fn main() {
+    for argument in std::env::args().skip(1) {
+        println!("{}", argument);
+    };
+    println!("{}", std::env::var("HOME").expect(""));
+    println!("{}", time::now().rfc822z());
+}
+
+// vim: ft=rust
+````
+
+### Linux binaries in darwin
+
+Uses `darwin.linux-builder` to make a VM remote builder.
+<https://nixos.org/manual/nixpkgs/unstable/#sec-darwin-builder>.
+
+- daemon: `org.nixos.linux-builder`
+- storage in `/var/lib/darwin-builder`
+- `/etc/ssh/ssh_config.d/100-linux-builder.conf` creates SSH host-alias `linux-builder`
+- `/etc/nix/machines` contains remote builder entry
+
+```nix
+# nix-darwin configuration.nix
+{
+  nix.linux-builder = {
+    enable = true;
+    ephemeral = true;
+    maxJobs = 4;
+
+    config.virtualisation = {
+      cores = 6;
+
+      darwin-builder = {
+        diskSize = 32 * 1024;
+        memorySize = 8 * 1024;
+      };
+    };
+  };
+}
+```
+
+```sh
+nix build --impure --expr <<EOF
+(with import <nixpkgs> { system = "aarch64-linux"; };
+  runCommand "foo" {} ''
+    uname -a > $out
+  '')
+EOF
+```

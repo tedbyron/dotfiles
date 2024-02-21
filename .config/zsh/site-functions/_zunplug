@@ -98,9 +98,9 @@ USAGE
   zunplug <command> [args]
 
 COMMANDS
-  load    [repo] ...  Clone the specified zsh plugin(s) [aliases: l]
-  compile             Recompile zsh plugins             [aliases: c, comp]
-  update              Update zsh plugins                [aliases: u, up]
+  load    [repo] ...  Clone the specified plugin(s) [aliases: l]
+  compile             Recompile plugins             [aliases: c, comp]
+  update              Update and recompile plugins  [aliases: u, up]
 EOF
 }
 
@@ -120,11 +120,14 @@ function zunplug {
     u|up|update)
       _zunplug-update
       ;;
+    '-h'|'--help')
+      _zunplug-help
+      ;;
     *)
       _zunplug-help
-      return 1
+      return 2
       ;;
   esac
 
-  return 0
+  return $?
 }

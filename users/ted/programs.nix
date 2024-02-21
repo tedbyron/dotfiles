@@ -152,6 +152,6 @@ in
   };
 
   zsh = {
-
+    enable = true;
   };
 }

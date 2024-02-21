@@ -21,14 +21,11 @@ in
       username = name;
 
       file = {
+        ".iex.exs".source = ../../.iex.exs;
+
         ".config/nvim" = {
           source = ../../.config/nvim;
           recursive = true;
-        };
-
-        ".iex.exs" = {
-          enable = true;
-          source = ../../.iex.exs;
         };
 
         ".gnupg/gpg-agent.conf" = {
