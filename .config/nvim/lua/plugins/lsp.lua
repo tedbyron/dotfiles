@@ -50,7 +50,6 @@ return {
         -- 'prisma-language-server',
         'rust-analyzer',
         'shellcheck',
-        'shfmt',
         -- 'sqls',
         'stylua',
         'svelte-language-server',
