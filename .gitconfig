@@ -6,7 +6,7 @@
 	autocrlf = false
 	eol = "lf"
 	fsmonitor = true
-	editor = "code --wait"
+	editor = "nvim"
 	pager = "delta"
 [transfer]
 	fsckObjects = true

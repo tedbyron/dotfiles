@@ -25,10 +25,10 @@ if [[ "$(uname)" == 'Darwin' ]]; then
   fi
 
   if [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]]; then
-    znap source "${HOME}/google-cloud-sdk/path.zsh.inc";
+    source "${HOME}/google-cloud-sdk/path.zsh.inc";
   fi
   if [[ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]]; then
-    znap source "${HOME}/google-cloud-sdk/completion.zsh.inc";
+    source "${HOME}/google-cloud-sdk/completion.zsh.inc";
   fi
 
   export ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"

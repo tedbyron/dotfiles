@@ -41,7 +41,7 @@ in
 
     settings = {
       git_protocol = "https";
-      editor = "code --wait";
+      editor = "nvim";
 
       aliases = {
         open = "repo view --web";
