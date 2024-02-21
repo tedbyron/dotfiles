@@ -36,7 +36,7 @@ function _zunplug-script {
   while (( $# )); do
     case $1 in
       -k|--kind)  shift; kind=$1 ;;
-      -*)         echo >&2 "Invalid argument '$1'." && return 2 ;;
+      -*)         echo >&2 "Invalid argument $1" && return 2 ;;
       *)          break ;;
     esac
     shift
@@ -55,7 +55,7 @@ function _zunplug-script {
         ${plugin}/*.{plugin.zsh,zsh-theme,zsh,sh}(N)
         ${plugin}(N)
       )
-      (( $#inits )) || { echo >&2 "No plugin init found '$plugin'." && continue }
+      (( $#inits )) || { echo >&2 "No plugin init found for $plugin" && continue }
       plugin=$inits[1]
       echo "fpath=(\$fpath $plugin:h)"
       echo "$src $plugin"
@@ -74,7 +74,7 @@ function _zunplug-update {
       oldsha=$(command git -C $plugdir rev-parse --short HEAD)
       command git -C $plugdir pull --quiet --ff --depth 1 --rebase --autostash
       newsha=$(command git -C $plugdir rev-parse --short HEAD)
-      [[ $oldsha == $newsha ]] || echo "Plugin updated: $plugdir:t ($oldsha -> $newsha)"
+      [[ $oldsha == $newsha ]] || echo "Plugin updated: ${plugdir:t} ($oldsha -> $newsha)"
     ) &
   done
   wait
@@ -98,14 +98,14 @@ USAGE
   zunplug <command> [args]
 
 COMMANDS
-  load [repo] ... Clone the specified zsh plugin(s) [aliases: l]
-  compile         Recompile zsh plugins             [aliases: c, comp]
-  update          Update zsh plugins                [aliases: u, up]
+  load    [repo] ...  Clone the specified zsh plugin(s) [aliases: l]
+  compile             Recompile zsh plugins             [aliases: c, comp]
+  update              Update zsh plugins                [aliases: u, up]
 EOF
 }
 
 function zunplug {
-  if (( ! $# == 0 || $#@[] > 0 )); then
+  if (( $# == 0 )); then
     _zunplug-help
     return 1
   fi
@@ -121,7 +121,10 @@ function zunplug {
       _zunplug-update
       ;;
     *)
+      _zunplug-help
       return 1
       ;;
   esac
+
+  return 0
 }
