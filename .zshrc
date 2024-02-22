@@ -4,10 +4,10 @@ source ~/.local/share/zsh-snap/znap.zsh
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-if [[ "$(uname)" == 'Darwin' ]]; then
+if [[ "$(uname)" == 'Darwin'* ]]; then
   export HOMEBREW_NO_ANALYTICS=1
 
-  if [[ "$(arch)" == 'arm64' ]]; then
+  if [[ "$(arch)" == 'arm64'* ]]; then
     znap eval brew '/opt/homebrew/bin/brew shellenv'
   else
     znap eval brew '/usr/local/bin/brew shellenv'
@@ -22,6 +22,14 @@ if [[ "$(uname)" == 'Darwin' ]]; then
       "${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin"
       $path
     )
+  fi
+
+  if [[ -d /Library/PostgreSQL/16/bin ]]; then
+    path+=(/Library/PostgreSQL/16/bin)
+
+    if [[ -d /Library/PostgreSQL/16/data ]]; then
+      export PGDATA=/Library/PostgreSQL/16/data
+    fi
   fi
 
   if [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]]; then
@@ -87,7 +95,7 @@ alias du='du -hd 1'
 alias dust='dust -d 1'
 alias gbl='git blame -wCCC'
 alias grep='grep -Ei --color=auto'
-alias h=history
+alias h='history | tail -n100'
 alias less='less -FRi'
 if (( $+commands[gls] )); then alias ls='gls'; fi
 alias ls='ls -FHh --color=auto --group-directories-first'
