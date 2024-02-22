@@ -24,14 +24,6 @@ if [[ "$(uname)" == 'Darwin'* ]]; then
     )
   fi
 
-  if [[ -d /Library/PostgreSQL/16/bin ]]; then
-    path+=(/Library/PostgreSQL/16/bin)
-
-    if [[ -d /Library/PostgreSQL/16/data ]]; then
-      export PGDATA=/Library/PostgreSQL/16/data
-    fi
-  fi
-
   if [[ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]]; then
     source "${HOME}/google-cloud-sdk/path.zsh.inc";
   fi
@@ -89,6 +81,7 @@ bindkey -M emacs '^N' history-substring-search-down
 
 alias -g -- -h='-h 2>&1 | bat -pl help'
 alias -g -- --help='--help 2>&1 | bat -pl help'
+alias -g -- help='help 2>&1 | bat -pl help'
 alias -- -='cd - > /dev/null'
 alias df='df -h'
 alias du='du -hd 1'
