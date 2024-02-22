@@ -43,7 +43,7 @@ path=(
 
 export BAT_THEME='Dracula'
 export EDITOR='nvim'
-export ERL_AFLAGS="-kernel shell_history enabled"
+export ERL_AFLAGS='-kernel shell_history enabled'
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 --color=dark
 --color=fg:-1,bg:-1,hl:#5fff87,fg+:-1,bg+:-1,hl+:#ffaf5f
@@ -52,17 +52,18 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 GPG_TTY="$(tty)"
 export GPG_TTY
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-export MANPAGER="zsh -c 'col -bx | bat -l man -p'"
+export MANPAGER='zsh -c "col -bx | bat -l man -p"'
 export STARSHIP_LOG=error
 export SUDO_EDITOR='nvim'
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_FIXTERM=true
 
 setopt auto_cd
-setopt interactive_comments
+setopt cdable_vars
+setopt pushd_silent
 setopt long_list_jobs
 setopt multios
-setopt no_beep
+unsetopt beep
 
 znap source ohmyzsh/ohmyzsh \
   lib/{completion,correction,directories,history} \
