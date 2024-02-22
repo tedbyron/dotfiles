@@ -106,6 +106,7 @@ defmodule H do
       alive_prompt: prompt(:alive),
       alive_continuation_prompt: prompt(:alive_continuation)
     )
+
     IEx.dont_display_result()
   end
 
@@ -188,9 +189,10 @@ import H, only: [cd: 1, d: 1]
 import ColorHelpers
 
 H.configure_prompts()
+
 IEx.configure(
   inspect: [pretty: true],
-  history_size: 500,
+  history_size: 500
 )
 
 # Print app versions if available.
