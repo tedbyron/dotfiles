@@ -172,6 +172,14 @@ return {
     end,
   },
   {
+    'noice.nvim',
+    opts = {
+      lsp = {
+        hover = { silent = true },
+      },
+    },
+  },
+  {
     'dashboard-nvim',
     opts = function(_, opts)
       local logo = [[
