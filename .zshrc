@@ -59,7 +59,6 @@ export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_FIXTERM=true
 
 setopt auto_cd
-setopt cdable_vars
 setopt pushd_silent
 setopt long_list_jobs
 setopt multios

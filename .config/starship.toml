@@ -22,12 +22,12 @@ style = 'bright-black'
 disabled = true
 
 [directory]
-fish_style_pwd_dir_length = 1
 truncation_length = 5
 truncate_to_repo = true
 format = '[$path]($style)[$read_only]($read_only_style) '
 read_only = " ro"
 style = 'cyan'
+fish_style_pwd_dir_length = 1
 
 [env_var]
 disabled = true
