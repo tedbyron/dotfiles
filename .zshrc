@@ -41,8 +41,8 @@ path=(
   $path
 )
 
-export BAT_THEME='Dracula'
-export EDITOR='nvim'
+export BAT_THEME=Dracula
+export EDITOR=nvim
 export ERL_AFLAGS='-kernel shell_history enabled'
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 --color=dark
@@ -53,8 +53,9 @@ GPG_TTY="$(tty)"
 export GPG_TTY
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 export MANPAGER='zsh -c "col -bx | bat -l man -p"'
+export READNULLCMD=more
 export STARSHIP_LOG=error
-export SUDO_EDITOR='nvim'
+export SUDO_EDITOR=nvim
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_FIXTERM=true
 
