@@ -1,67 +1,67 @@
 [user]
-	name = "Teddy Byron"
-	email = "ted@tedbyron.com"
-	signingkey = "E0496EDDDF6BB87D"
+  name = "Teddy Byron"
+  email = "ted@tedbyron.com"
+  signingkey = "E0496EDDDF6BB87D"
 [core]
-	autocrlf = false
-	eol = "lf"
-	fsmonitor = true
-	editor = "nvim"
-	pager = "delta"
+  autocrlf = false
+  eol = "lf"
+  fsmonitor = true
+  editor = "nvim"
+  pager = "delta"
 [transfer]
-	fsckObjects = true
+  fsckObjects = true
 [submodule]
-	recurse = true
+  recurse = true
 [init]
-	defaultBranch = "main"
+  defaultBranch = "main"
 [branch]
-	sort = "-committerdate"
+  sort = "-committerdate"
 [tag]
-	gpgsign = true
-	sort = "-taggerdate"
+  gpgsign = true
+  sort = "-taggerdate"
 [commit]
-	gpgsign = true
+  gpgsign = true
 [fetch]
-	prune = true
-	pruneTags = true
-	writeCommitGraph = true
+  prune = true
+  pruneTags = true
+  writeCommitGraph = true
 [pull]
-	ff = "only"
+  ff = "only"
 [push]
-	autoSetupRemote = true
-	followTags = true
+  autoSetupRemote = true
+  followTags = true
 [merge]
-	tool = "vscode"
-	conflictstyle = "zdiff3"
-	prompt = false
+  tool = "vscode"
+  conflictstyle = "zdiff3"
+  prompt = false
 [mergetool.vscode]
-	cmd = "code --wait \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\""
+  cmd = "code --wait \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\""
 [rerere]
-	enabled = true
+  enabled = true
 [rebase]
-	autostash = true
-	missingCommitsCheck = "warn"
-	updateRefs = true
+  autostash = true
+  missingCommitsCheck = "warn"
+  updateRefs = true
 [status]
-	submoduleSummary = true
+  submoduleSummary = true
 [blame]
-	date = "iso-local"
+  date = "iso-local"
 [log]
-	date = "iso-local"
+  date = "iso-local"
 [diff]
-	algorithm = "histogram"
-	colorMoved = "default"
-	submodule = "log"
+  algorithm = "histogram"
+  colorMoved = "default"
+  submodule = "log"
 [interactive]
-	diffFilter = "delta --color-only"
+  diffFilter = "delta --color-only"
 [delta]
-	line-numbers = true
-	navigate = true
-	side-by-side = true
-	syntax-theme = "Dracula"
-	wrap-max-lines = "unlimited"
+  line-numbers = true
+  navigate = true
+  side-by-side = true
+  syntax-theme = "Dracula"
+  wrap-max-lines = "unlimited"
 [filter.lfs]
-	clean = "git-lfs clean -- %f"
-	smudge = "git-lfs smudge -- %f"
-	process = "git-lfs filter-process"
-	required = true
+  clean = "git-lfs clean -- %f"
+  smudge = "git-lfs smudge -- %f"
+  process = "git-lfs filter-process"
+  required = true
