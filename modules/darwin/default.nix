@@ -3,6 +3,7 @@
   imports = [ ./system.nix ];
 
   security.pam.enableSudoTouchIdAuth = true;
+  variables.HOMEBREW_NO_ANALYTICS = "1";
 
   programs = {
     gnupg.agent.enable = true;
@@ -30,16 +31,15 @@
       gnused
       python3
     ];
-
-    # TODO: vlc
-
-    variables = {
-      HOMEBREW_NO_ANALYTICS = "1";
-    };
   };
 
   homebrew = {
     enable = true;
+
+    casks = [
+      "mullvadvpn"
+      "vlc"
+    ];
 
     masApps = {
       NextDns = 1464122853;
