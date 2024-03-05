@@ -79,6 +79,7 @@ znap fpath _cargo 'rustup completions zsh cargo'
 bindkey -e
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
+bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 alias -g -- -h='-h 2>&1 | bat -pl help'
 alias -g -- --help='--help 2>&1 | bat -pl help'
