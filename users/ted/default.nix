@@ -11,13 +11,13 @@ in
   };
 
   home-manager.users.${name} = {
-    programs = import ./programs.nix { inherit pkgs isDarwin; };
+    programs = import ./programs.nix { inherit pkgs; };
     targets.genericLinux.enable = isWsl;
 
     home = {
       stateVersion = "23.11";
       homeDirectory = home;
-      packages = import ./packages.nix { inherit pkgs isDarwin; };
+      packages = import ./packages.nix { inherit pkgs; };
       username = name;
 
       file = {

@@ -1,16 +1,12 @@
-{ pkgs, isDarwin }:
+{ pkgs }:
 with pkgs; [
   delta
   du-dust
   ffmpeg
   hexyl
   hyperfine
+  nodejs
   imagemagick
   lychee
-  obsidian
-  spotify
   tokei
-] ++ lib.optionals isDarwin [
-  pinentry_mac
-  rectangle
 ]

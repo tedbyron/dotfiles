@@ -3,7 +3,6 @@
   imports = [ ./system.nix ];
 
   security.pam.enableSudoTouchIdAuth = true;
-  variables.HOMEBREW_NO_ANALYTICS = "1";
 
   programs = {
     gnupg.agent.enable = true;
@@ -13,6 +12,7 @@
 
   environment = {
     loginShell = "${pkgs.zsh}/bin/zsh -l";
+    variables.HOMEBREW_NO_ANALYTICS = "1";
 
     shells = with pkgs; [
       bashInteractive
@@ -26,10 +26,18 @@
       diffutils
       findutils
       gawkInteractive
+      git
       gnugrep
       gnutar
       gnused
       python3
+
+      alacritty
+      obsidian
+      pinentry_mac
+      rectangle
+      spotify
+      vscode
     ];
   };
 

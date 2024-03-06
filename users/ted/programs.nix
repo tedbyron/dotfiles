@@ -1,4 +1,4 @@
-{ pkgs, isDarwin }:
+{ pkgs }:
 let
   inherit (builtins) readFile;
 in

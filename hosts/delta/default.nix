@@ -1,6 +1,6 @@
 _:
 let
-  name = "gamma";
+  name = "delta";
   users = [ "ted" ];
 in
 {
