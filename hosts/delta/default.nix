@@ -18,6 +18,7 @@ in
       { path = "${pkgs.spotify}/Applications/Spotify.app"; }
       { path = "/Applications/Microsoft Teams (work or school).app"; }
       { path = "${pkgs.obsidian}/Applications/Obsidian.app"; }
+      { path = "/Applications/VMware Fusion.app"; }
       { path = "${pkgs.alacritty}/Applications/Alacritty.app"; }
       { path = "${pkgs.vscode}/Applications/Visual Studio Code.app"; }
       {

@@ -2,6 +2,7 @@
 with pkgs; [
   delta
   du-dust
+  elixir
   fd
   ffmpeg
   hexyl

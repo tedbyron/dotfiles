@@ -1,4 +1,4 @@
-format = '$directory$direnv$nix_shell$character'
+format = '$directory$shlvl$direnv$nix_shell$character'
 right_format = '$status$cmd_duration$jobs$all'
 scan_timeout = 30
 command_timeout = 500
@@ -12,7 +12,7 @@ format = '[$percentage]($style) '
 format = '$symbol '
 success_symbol = "[\uf0da](green)" # nerd font nf-fa-caret-right
 error_symbol = "[\uf0da](red)"     # nerd font nf-fa-caret-right
-vimcmd_symbol = "[N](green)"
+vimcmd_symbol = '[N](green)'
 
 [cmd_duration]
 format = '[$duration]($style) '
@@ -25,8 +25,8 @@ style = 'bright-black'
 truncation_length = 5
 truncate_to_repo = true
 format = '[$path]($style)[$read_only]($read_only_style) '
-read_only = " ro"
-style = 'white'
+read_only = ' ro'
+style = 'cyan'
 fish_style_pwd_dir_length = 1
 
 # [env_var]
@@ -70,7 +70,9 @@ disabled = true
 disabled = true
 
 [shlvl]
-disabled = true
+format = '[$shlvl]($style) '
+style = 'yellow'
+disabled = false
 
 [status]
 format = '[$symbol$status]($style) '
@@ -209,7 +211,7 @@ disabled = true
 [nim]
 disabled = true
 [nix_shell]
-format = "[$symbol]($style)"
+format = '[$symbol]($style)'
 symbol = "\uf313"            # nerd font nf-linux-nixos
 style = 'cyan'
 impure_msg = 'i'

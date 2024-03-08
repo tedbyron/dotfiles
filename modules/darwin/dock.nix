@@ -36,7 +36,10 @@ in
   config = lib.mkIf cfg.enable (
     let
       normalize = path: if lib.hasSuffix ".app" path then path + "/" else path;
-      entryURI = path: "file://" + (lib.concatMapStrings (u: lib.escapeURL u + "/") (lib.splitString "/" (normalize path)));
+      entryURI = path: "file://" + (lib.concatMapStrings
+        (u: lib.escapeURL u + "/")
+        (lib.splitString "/" (normalize path))
+      );
       wantURIs = lib.concatMapStrings
         (entry: "${entryURI entry.path}\n")
         cfg.entries;
