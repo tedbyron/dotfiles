@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   name = "gamma";
-  user =  "ted";
+  user = "ted";
 in
 {
   imports = [ ../../users/${user} ];

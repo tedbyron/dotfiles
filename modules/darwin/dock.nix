@@ -40,8 +40,8 @@ in
         let
           normalize = path: if hasSuffix ".app" path then path + "/" else path;
           entryURI = path: "file://" + (builtins.replaceStrings
-            [" "   "!"   "\""  "#"   "$"   "%"   "&"   "'"   "("   ")"]
-            ["%20" "%21" "%22" "%23" "%24" "%25" "%26" "%27" "%28" "%29"]
+            [ " " "!" "\"" "#" "$" "%" "&" "'" "(" ")" ]
+            [ "%20" "%21" "%22" "%23" "%24" "%25" "%26" "%27" "%28" "%29" ]
             (normalize path)
           );
           wantURIs = concatMapStrings

@@ -15,7 +15,7 @@
     in
     mkSystem {
       inherit system;
-      specialArgs = { inherit self inputs isDarwin isWsl; };
+      specialArgs = { inherit self inputs system isDarwin isWsl; };
 
       modules = [
         {

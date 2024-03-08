@@ -7,6 +7,8 @@ with pkgs; [
   hexyl
   hyperfine
   nodejs
+  nil
+  nixpkgs-fmt
   imagemagick
   lychee
   tokei

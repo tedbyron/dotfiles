@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, ... }:
+{ inputs, pkgs, lib, system, ... }:
 {
   imports = [ ./dock.nix ./system.nix ];
 
@@ -57,7 +57,7 @@
 
   fonts = {
     fontDir.enable = true;
-    fonts = [ inputs.curlio ];
+    fonts = [ inputs.curlio.outputs.packages.${system}.curlio-ttf ];
   };
 
   nix = {
