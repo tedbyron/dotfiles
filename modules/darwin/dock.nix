@@ -53,6 +53,7 @@ in
         in
         {
           system.activationScripts.postUserActivation.text = ''
+            echo >&2 "Updating dock..."
             haveURIs="$(${dockutil}/bin/dockutil --list | ${pkgs.coreutils}/bin/cut -f2)"
             if ! diff -wu <(echo -n "$haveURIs") <(echo -n '${wantURIs}') >&2 ; then
               ${dockutil}/bin/dockutil --no-restart --remove all

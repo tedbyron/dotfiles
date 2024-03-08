@@ -33,8 +33,7 @@ in
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --reload gpg-agent";
 
           text =
-            if isDarwin
-            then
+            if isDarwin then
               ''
                 pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
               ''
