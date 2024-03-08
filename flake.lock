@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1709862354,
-        "narHash": "sha256-0/k7HGj0bjWy4S7xASnvuTe/R8vvUz66dHIrmbdbZzI=",
+        "lastModified": 1709871870,
+        "narHash": "sha256-6Vbhrce3umk3P/8AlvOQLeqyXPY/0cOtWyCTEyFceAw=",
         "owner": "tedbyron",
         "repo": "curlio",
-        "rev": "5cb53f89dbe69377da8a61024619b7e817107b29",
+        "rev": "bd791fc88f1efe42f36ded4e409c6a11ec7e2758",
         "type": "github"
       },
       "original": {
@@ -123,11 +123,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1709211223,
-        "narHash": "sha256-1cjd+yXbTlnCwNwEDjn289rJ2f0er5M8pOig4PxniEM=",
+        "lastModified": 1709892121,
+        "narHash": "sha256-JV1F/ZGwgutBCvTDeQuG/UxreU9/B1J4EoTmZm1XLpI=",
         "owner": "nix-community",
         "repo": "nixos-wsl",
-        "rev": "3257ad7f173b0314c8a42fec450fa6556495b97c",
+        "rev": "b8db5fddf63be77204290074930560f4a1fff5a6",
         "type": "github"
       },
       "original": {

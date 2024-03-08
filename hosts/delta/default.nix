@@ -33,6 +33,7 @@ in
     "microsoft-excel"
     "microsoft-teams"
     "microsoft-word"
+    "vmware-fusion"
   ];
 
   networking = {
