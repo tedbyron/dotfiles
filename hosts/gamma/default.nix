@@ -1,10 +1,10 @@
 { pkgs, ... }:
 let
   name = "gamma";
-  users = [ "ted" ];
+  user =  "ted";
 in
 {
-  imports = map (name: ../../users/${name}) users;
+  imports = [ ../../users/${user} ];
 
   system.stateVersion = 4;
 

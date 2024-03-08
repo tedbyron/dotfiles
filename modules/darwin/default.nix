@@ -1,6 +1,6 @@
-{ pkgs, lib, ... }:
+{ inputs, pkgs, lib, ... }:
 {
-  imports = [ ./system.nix ];
+  imports = [ ./dock.nix ./system.nix ];
 
   security.pam.enableSudoTouchIdAuth = true;
 
@@ -31,13 +31,6 @@
       gnutar
       gnused
       python3
-
-      alacritty
-      obsidian
-      pinentry_mac
-      rectangle
-      spotify
-      vscode
     ];
   };
 
@@ -45,6 +38,7 @@
     enable = true;
 
     casks = [
+      "firefox"
       "mullvadvpn"
       "vlc"
     ];
@@ -61,9 +55,10 @@
     };
   };
 
-  # fonts = with pkgs; [
-  #   (iosevka.override { })
-  # ];
+  fonts = {
+    fontDir.enable = true;
+    fonts = [ inputs.curlio ];
+  };
 
   nix = {
     configureBuildUsers = true;

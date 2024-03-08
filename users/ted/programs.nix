@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, isDarwin }:
 let
   inherit (builtins) readFile;
 in
@@ -25,7 +25,7 @@ in
   # eww
 
   firefox = {
-    # enable = true; TODO: darwin fix
+    enable = !isDarwin;
     # TODO: config
   };
 

@@ -1,13 +1,38 @@
-_:
+{ config, pkgs, ... }:
 let
   name = "delta";
-  users = [ "ted" ];
+  user = "ted";
 in
 {
-  imports = map (name: ../../users/${name}) users;
+  imports = [ ../../users/${user} ];
 
-  homebrew.casks = [ "linearmouse" ];
   system.stateVersion = 4;
+
+  custom.dock = {
+    enable = true;
+
+    entries = [
+      { path = "/Applications/Firefox.app"; }
+      { path = "/Applications/Bitwarden.app"; }
+      { path = "${pkgs.spotify}/Applications/Spotify.app"; }
+      { path = "/Applications/Microsoft Teams (work or school).app"; }
+      { path = "${pkgs.obsidian}/Applications/Obsidian.app"; }
+      { path = "${pkgs.alacritty}/Applications/Alacritty.app"; }
+      { path = "${pkgs.vscode}/Applications/Visual Studio Code.app"; }
+      {
+        path = "${config.users.users.${user}.home}/Downloads";
+        section = "others";
+        options = "--display stack --view auto --sort dateadded";
+      }
+    ];
+  };
+
+  homebrew.casks = [
+    "linearmouse"
+    "microsoft-excel"
+    "microsoft-teams"
+    "microsoft-word"
+  ];
 
   networking = {
     computerName = name;

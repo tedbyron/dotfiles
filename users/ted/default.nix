@@ -1,4 +1,4 @@
-{ pkgs, lib, isDarwin, isWsl, ... }:
+{ config, pkgs, lib, isDarwin, isWsl, ... }:
 let
   name = baseNameOf (toString ./.);
   home = if isDarwin then "/Users/${name}" else "/home/${name}";
@@ -11,13 +11,13 @@ in
   };
 
   home-manager.users.${name} = {
-    programs = import ./programs.nix { inherit pkgs; };
+    programs = import ./programs.nix { inherit pkgs isDarwin; };
     targets.genericLinux.enable = isWsl;
 
     home = {
       stateVersion = "23.11";
       homeDirectory = home;
-      packages = import ./packages.nix { inherit pkgs; };
+      packages = import ./packages.nix { inherit pkgs lib isDarwin; };
       username = name;
 
       file = {
@@ -28,15 +28,15 @@ in
           recursive = true;
         };
 
-        ".gnupg/gpg-agent.conf" = {
+        "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
           enable = isDarwin;
-          onChange = "gpgconf --reload gpg-agent";
+          onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --reload gpg-agent";
 
           text =
             if isDarwin
             then
               ''
-                pinentry-program ${pkgs.pinentry_mac.binaryPath}
+                pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
               ''
             else null;
         };

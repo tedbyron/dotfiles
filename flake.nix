@@ -20,7 +20,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-compat.url = "github:edolstra/flake-compat";
+    curlio = {
+      url = "github:tedbyron/curlio";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = { self, nixpkgs, ... }@inputs:

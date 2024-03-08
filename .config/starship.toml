@@ -18,8 +18,8 @@ vimcmd_symbol = "[N](green)"
 format = '[$duration]($style) '
 style = 'bright-black'
 
-[custom]
-disabled = true
+# [custom]
+# disabled = true
 
 [directory]
 truncation_length = 5
@@ -29,8 +29,8 @@ read_only = " ro"
 style = 'cyan'
 fish_style_pwd_dir_length = 1
 
-[env_var]
-disabled = true
+# [env_var]
+# disabled = true
 
 [fill]
 symbol = ' ' # ─ ━

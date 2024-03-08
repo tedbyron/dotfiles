@@ -12,7 +12,7 @@
       alf.globalstate = 1;
       loginwindow.GuestEnabled = false;
       magicmouse.MouseButtonMode = "TwoButton";
-      universalaccess.reduceTransparency = true;
+      universalaccess.reduceTransparency = false;
 
       dock = {
         appswitcher-all-displays = true;
@@ -34,8 +34,7 @@
 
       menuExtraClock = {
         Show24Hour = true;
-        # FIX: https://daiderd.com/nix-darwin/manual/index.html#opt-system.defaults.menuExtraClock.ShowDate
-        ShowDate = 1;
+        ShowDate = 2;
       };
 
       trackpad = {

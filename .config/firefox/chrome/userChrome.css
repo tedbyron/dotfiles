@@ -1,0 +1,152 @@
+@-moz-document url(chrome://browser/content/browser.xhtml)
+{
+  :root {
+    --bookmarks-toolbar-overlapping-browser-height: unset !important;
+  }
+
+  #titlebar {
+    -moz-appearance: none !important;
+  }
+
+  #navigator-toolbox > div {
+    display: contents;
+  }
+
+  .global-notificationbox,
+  #mainPopupSet,
+  #browser,
+  #customization-container,
+  #tab-notification-deck {
+    order: -1;
+  }
+
+  /* tabs last */
+  #titlebar {
+    order: 2;
+  }
+
+  #toolbar-menubar {
+    position: fixed;
+    display: flex;
+    width: 100vw;
+    top: 0;
+    -moz-window-dragging: drag;
+  }
+
+  #navigator-toolbox {
+    border-bottom: none !important;
+  }
+
+  #toolbar-menubar > spacer {
+    flex-grow: 1;
+  }
+
+  #urlbar[breakout][breakout-extend] {
+    display: flex !important;
+    flex-direction: column-reverse;
+    bottom: 0 !important;
+    top: auto !important;
+  }
+
+  .urlbarView-body-inner {
+    border-top-style: none !important;
+  }
+
+  /* window controls */
+  #TabsToolbar > .titlebar-buttonbox-container {
+    display: none;
+  }
+  #toolbar-menubar > .titlebar-buttonbox-container {
+    order: 1000;
+  }
+
+  /* panel sizing */
+  .panel-viewstack {
+    max-height: unset !important;
+  }
+
+  /* fullscreen */
+  #navigator-toolbox[inFullscreen] {
+    margin-top: 0 !important;
+  }
+  #navigator-toolbox[inFullscreen][style*='margin-top'] {
+    visibility: collapse;
+  }
+  #fullscr-toggler {
+    bottom: 0;
+    top: unset !important;
+  }
+
+  /* autohide_toolbox.css */
+  #navigator-toolbox {
+    bottom: 0;
+    transform-origin: bottom;
+  }
+  #main-window > body > box {
+    margin-top: 0 !important;
+  }
+  #toolbar-menubar {
+    z-index: 1;
+    background-color: var(--lwt-accent-color, black);
+  }
+
+  /* static menubar on top of the window (make menubar enabled)
+  * Use when menubar is enabled to always show it */
+
+  /*
+  #browser,#customization-container{ padding-top: var(--uc-menubar-spacer,28px) }
+  */
+
+  /* menubar appear below content, above tabs toolbar */
+
+  /*
+  #toolbar-menubar{ position: static; display: flex; margin-top: 0px !important; background-color: transparent }
+  */
+
+  /* set to "column-reverse" (without quotes) if you want tabs above menubar with the above option */
+  #titlebar {
+    flex-direction: column;
+  }
+}
+
+/* bookmark margin */
+#personal-bookmarks {
+  margin: 0 6px;
+}
+
+.titlebar-spacer[type='pre-tabs'],
+.titlebar-spacer[type='post-tabs'] {
+  width: 4px !important;
+}
+
+/* Selected tabs width */
+.tabbrowser-tab[selected][fadein]:not([pinned]) {
+  /*   max-width: 225px !important; */
+  min-width: 105px !important;
+}
+
+/* Hide tab close button */
+#TabsToolbar .close-icon {
+  display: none !important;
+}
+
+/* Unhide close button when it is selected tab and not pinned */
+#TabsToolbar .tabbrowser-tab:not([pinned]):hover .close-icon {
+  display: unset !important;
+}
+
+/* Reduce spacing between pinned and regular tabs */
+#tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs])
+  > #tabbrowser-arrowscrollbox
+  > .tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {
+  margin-inline-start: 0 !important;
+}
+
+#nav-bar,
+#PersonalToolbar {
+  background-color: #282a36 !important;
+}
+
+#private-browsing-indicator-with-label > label {
+  display: none;
+}
