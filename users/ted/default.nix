@@ -23,6 +23,7 @@ in
       username = name;
 
       file = {
+        ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
         ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".iex.exs".source = ../../.iex.exs;
 
