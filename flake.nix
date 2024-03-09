@@ -20,13 +20,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spicetify-nix = {
-      url = "github:tedbyron/spicetify-nix";
+    curlio = {
+      url = "github:tedbyron/curlio";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    curlio = {
-      url = "github:tedbyron/curlio";
+    spicetify-nix = {
+      url = "github:tedbyron/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };

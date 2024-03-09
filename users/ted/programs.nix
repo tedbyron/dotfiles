@@ -73,6 +73,11 @@ in
     generateCaches = true;
   };
 
+  nix-index = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   neovim = {
     enable = true;
     viAlias = true;
@@ -148,7 +153,7 @@ in
 
   vscode = {
     enable = true;
-    mutableExtensionsDir = true;
+    package = unstable.vscode;
   };
 
   yt-dlp = {

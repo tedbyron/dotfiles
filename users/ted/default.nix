@@ -23,10 +23,11 @@ in
       username = name;
 
       file = {
+        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".iex.exs".source = ../../.iex.exs;
 
-        ".config/nvim" = {
-          source = ../../.config/nvim;
+        ".config/nvim/lua" = {
+          source = ../../.config/nvim/lua;
           recursive = true;
         };
 

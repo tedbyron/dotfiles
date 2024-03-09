@@ -1,9 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, unstable, ... }:
 let
+  inherit (config.home-manager.users.${user}.programs.spicetify) spicedSpotify;
+
   name = "delta";
   user = "ted";
-
-  spicedSpotify = config.home-manager.users.${user}.programs.spicetify.spicedSpotify;
 in
 {
   imports = [ ../../users/${user} ];
@@ -22,7 +22,7 @@ in
       { path = "${pkgs.obsidian}/Applications/Obsidian.app"; }
       { path = "/Applications/VMware Fusion.app"; }
       { path = "${pkgs.alacritty}/Applications/Alacritty.app"; }
-      { path = "${pkgs.vscode}/Applications/Visual Studio Code.app"; }
+      { path = "${unstable.vscode}/Applications/Visual Studio Code.app"; }
       {
         path = "${config.users.users.${user}.home}/Downloads";
         section = "others";
