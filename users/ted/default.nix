@@ -1,7 +1,10 @@
 { inputs, config, pkgs, unstable, lib, system, isDarwin, isWsl, ... }:
 let
   name = baseNameOf (toString ./.);
-  home = if isDarwin then "/Users/${name}" else "/home/${name}";
+  home =
+    if isDarwin
+    then "/Users/${name}"
+    else "/home/${name}";
 in
 {
   users.users.${name} = {
@@ -24,17 +27,13 @@ in
 
       file = {
         ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
-        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
+        ".hushlogin".enable = isDarwin;
         ".iex.exs".source = ../../.iex.exs;
 
+        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".config/nvim/lua" = {
           source = ../../.config/nvim/lua;
           recursive = true;
-        };
-
-        ".hushlogin" = {
-          enable = isDarwin;
-          text = "";
         };
 
         "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
@@ -42,8 +41,8 @@ in
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --reload gpg-agent";
 
           text =
-            if isDarwin then
-              ''
+            if isDarwin
+            then ''
                 pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
               ''
             else null;

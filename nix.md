@@ -2,7 +2,7 @@
 
 ## Shell script shebang interpreter
 
-<https://nixos.org/manual/nix/unstable/command-ref/new-cli/nix.html?highlight=shebang#shebang-interpreter>.
+<https://nixos.org/manual/nix/unstable/command-ref/new-cli/nix.html?highlight=shebang#shebang-interpreter>
 
 ```sh
 #!/usr/bin/env nix
@@ -43,13 +43,12 @@ fn main() {
 // vim: ft=rust
 ````
 
-## Linux binaries in darwin
+## Darwin linux builder VM
 
-Uses `darwin.linux-builder` to make a VM remote builder.
-<https://nixos.org/manual/nixpkgs/unstable/#sec-darwin-builder>.
+<https://nixos.org/manual/nixpkgs/unstable/#sec-darwin-builder>
 
 - daemon: `org.nixos.linux-builder`
-- storage in `/var/lib/darwin-builder`
+- storage: `/var/lib/darwin-builder`
 - `/etc/ssh/ssh_config.d/100-linux-builder.conf` creates SSH host-alias `linux-builder`
 - `/etc/nix/machines` contains remote builder entry
 

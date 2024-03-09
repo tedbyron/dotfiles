@@ -46,7 +46,7 @@ in
       editor = "nvim";
 
       aliases = {
-        prc = "pr checkout";
+        prco = "pr checkout";
         open = "repo view --web";
       };
     };
@@ -163,5 +163,6 @@ in
 
   zsh = {
     enable = true;
+    dotDir = ".config/zsh";
   };
 }

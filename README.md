@@ -7,7 +7,7 @@ My dotfiles
   <img src="../screenshots/screenshots/vscode.png" alt="vs code" width="49%" />
 </div>
 
-## Install
+## Bootstrap
 
 - Darwin
 
