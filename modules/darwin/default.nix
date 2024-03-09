@@ -6,7 +6,6 @@
 
   programs = {
     gnupg.agent.enable = true;
-    nix-index.enable = true;
     zsh.enable = true;
   };
 

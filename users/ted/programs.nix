@@ -73,11 +73,6 @@ in
     generateCaches = true;
   };
 
-  nix-index = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
   neovim = {
     enable = true;
     viAlias = true;
