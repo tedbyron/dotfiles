@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 let
   cfg = config.custom.dock;
-  inherit (pkgs) dockutil;
 in
 {
   options = {
@@ -35,9 +34,11 @@ in
 
   config = lib.mkIf cfg.enable (
     let
+      inherit (pkgs) dockutil;
+
       normalize = path: if lib.hasSuffix ".app" path then path + "/" else path;
       entryURI = path: "file://" + (lib.concatMapStrings
-        (u: lib.escapeURL u + "/")
+        (path: "${lib.escapeURL path}/")
         (lib.splitString "/" (normalize path))
       );
       wantURIs = lib.concatMapStrings
@@ -49,9 +50,9 @@ in
     in
     {
       system.activationScripts.postUserActivation.text = ''
-        echo >&2 "Updating dock..."
         haveURIs="$(${dockutil}/bin/dockutil --list | ${pkgs.coreutils}/bin/cut -f2)"
         if ! diff -wu <(echo -n "$haveURIs") <(echo -n '${wantURIs}') >&2 ; then
+          echo "Updating dock..." >&2
           ${dockutil}/bin/dockutil --no-restart --remove all
           ${createEntries}
           killall Dock

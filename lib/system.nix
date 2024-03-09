@@ -12,10 +12,18 @@
       isDarwin = builtins.elem system [ "aarch64-darwin" "x86_64-darwin" ];
       osModules = if isDarwin then darwinModules else nixosModules;
       mkSystem = if isDarwin then darwinSystem else lib.nixosSystem;
+
+      unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+
+        config.allowUnfree = true;
+        overlays = overlays;
+      };
     in
     mkSystem {
       inherit system;
-      specialArgs = { inherit self inputs system isDarwin isWsl; };
+
+      specialArgs = { inherit self inputs unstable system isDarwin isWsl; };
 
       modules = [
         {

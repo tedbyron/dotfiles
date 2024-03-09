@@ -15,7 +15,6 @@ with pkgs; [
   tokei
 
   obsidian
-  spotify
 ] ++ lib.optionals isDarwin [
   pinentry_mac
   rectangle

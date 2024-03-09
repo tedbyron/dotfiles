@@ -1,11 +1,13 @@
-{ pkgs, isDarwin }:
+{ inputs, pkgs, unstable, system, isDarwin }:
 let
-  inherit (builtins) readFile;
+  inherit (inputs) spicetify-nix;
+
+  spicePkgs = spicetify-nix.packages.${system}.default;
 in
 {
   alacritty = {
     enable = true;
-    settings = fromTOML (readFile ../../.config/alacritty/alacritty.toml);
+    settings = fromTOML (builtins.readFile ../../.config/alacritty/alacritty.toml);
   };
 
   bat = {
@@ -44,6 +46,7 @@ in
       editor = "nvim";
 
       aliases = {
+        prc = "pr checkout";
         open = "repo view --web";
       };
     };
@@ -54,7 +57,7 @@ in
   git = {
     enable = true;
     # delta configured in .gitconfig and installed as a user package
-    extraConfig = fromTOML (readFile ../../.gitconfig);
+    extraConfig = fromTOML (builtins.readFile ../../.gitconfig);
     ignores = [ ".DS_Store" ];
     lfs.enable = true;
   };
@@ -87,13 +90,20 @@ in
     arguments = [ "-S" ];
   };
 
+  spicetify = {
+    enable = true;
+    colorScheme = "Dracula";
+    spotifyPackage = unstable.spotify;
+    theme = spicePkgs.themes.Sleek;
+  };
+
   # sqls
   ssh.enable = true;
 
   starship = {
     enable = true;
     enableZshIntegration = true;
-    settings = fromTOML (readFile ../../.config/starship.toml);
+    settings = fromTOML (builtins.readFile ../../.config/starship.toml);
   };
 
   tmux = {

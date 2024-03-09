@@ -2,6 +2,8 @@
 let
   name = "delta";
   user = "ted";
+
+  spicedSpotify = config.home-manager.users.${user}.programs.spicetify.spicedSpotify;
 in
 {
   imports = [ ../../users/${user} ];
@@ -15,7 +17,7 @@ in
     entries = [
       { path = "/Applications/Firefox.app"; }
       { path = "/Applications/Bitwarden.app"; }
-      { path = "${pkgs.spotify}/Applications/Spotify.app"; }
+      { path = "${spicedSpotify}/Applications/Spotify.app"; }
       { path = "/Applications/Microsoft Teams (work or school).app"; }
       { path = "${pkgs.obsidian}/Applications/Obsidian.app"; }
       { path = "/Applications/VMware Fusion.app"; }

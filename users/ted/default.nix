@@ -1,4 +1,4 @@
-{ config, pkgs, lib, isDarwin, isWsl, ... }:
+{ inputs, config, pkgs, unstable, lib, system, isDarwin, isWsl, ... }:
 let
   name = baseNameOf (toString ./.);
   home = if isDarwin then "/Users/${name}" else "/home/${name}";
@@ -11,7 +11,9 @@ in
   };
 
   home-manager.users.${name} = {
-    programs = import ./programs.nix { inherit pkgs isDarwin; };
+    imports = [ inputs.spicetify-nix.homeManagerModule ];
+
+    programs = import ./programs.nix { inherit inputs pkgs unstable system isDarwin; };
     targets.genericLinux.enable = isWsl;
 
     home = {
