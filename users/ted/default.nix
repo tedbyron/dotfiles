@@ -31,6 +31,11 @@ in
           recursive = true;
         };
 
+        ".hushlogin" = {
+          enable = isDarwin;
+          text = "";
+        };
+
         "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
           enable = isDarwin;
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --reload gpg-agent";
