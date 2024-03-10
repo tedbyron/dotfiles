@@ -36,11 +36,12 @@ in
     let
       dockutil = "${lib.getBin pkgs.dockutil}/bin/dockutil";
 
-      normalize = path: if lib.hasSuffix ".app" path then path + "/" else path;
-      entryURI = path: "file://" + (lib.concatMapStrings
-        (path: "${lib.escapeURL path}/")
-        (lib.splitString "/" (normalize path))
-      );
+      normalize = path:
+        if lib.hasSuffix ".app" path then path + "/" else path;
+      entryURI = path: "file://" + (lib.concatMapStringsSep
+        "/"
+        (path: builtins.replaceStrings [ "%28" "%29" ] [ "(" ")" ] (lib.escapeURL path))
+        (lib.splitString "/" (normalize path)));
       wantURIs = lib.concatMapStrings
         (entry: "${entryURI entry.path}\n")
         cfg.entries;
@@ -50,7 +51,7 @@ in
     in
     {
       system.activationScripts.postUserActivation.text = ''
-        haveURIs="$(${dockutil} --list | ${pkgs.coreutils}/bin/cut -f2)"
+        haveURIs="$(${dockutil} --list | ${lib.getBin pkgs.coreutils}/bin/cut -f2)"
         if ! diff -wu <(echo -n "$haveURIs") <(echo -n '${wantURIs}') >&2 ; then
           echo "Updating dock..." >&2
           ${dockutil} --no-restart --remove all

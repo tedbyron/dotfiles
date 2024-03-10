@@ -1,4 +1,4 @@
-{ inputs, pkgs, unstable, system, isDarwin }:
+{ inputs, pkgs, unstable, lib, system, isDarwin }:
 let
   inherit (inputs) spicetify-nix;
 
@@ -112,7 +112,7 @@ in
     keyMode = "vi";
     mouse = true;
     newSession = true;
-    shell = "${pkgs.zsh}/bin/zsh";
+    shell = "${lib.getBin pkgs.zsh}/bin/zsh";
     shortcut = "a";
 
     extraConfig = ''
@@ -144,11 +144,6 @@ in
         '';
       }
     ];
-  };
-
-  vscode = {
-    enable = true;
-    package = unstable.vscode;
   };
 
   yt-dlp = {

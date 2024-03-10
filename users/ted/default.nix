@@ -16,24 +16,28 @@ in
   home-manager.users.${name} = {
     imports = [ inputs.spicetify-nix.homeManagerModule ];
 
-    programs = import ./programs.nix { inherit inputs pkgs unstable system isDarwin; };
+    programs = import ./programs.nix { inherit inputs pkgs unstable lib system isDarwin; };
     targets.genericLinux.enable = isWsl;
 
     home = {
       stateVersion = "23.11";
       homeDirectory = home;
-      packages = import ./packages.nix { inherit pkgs lib isDarwin; };
+      packages = import ./packages.nix { inherit pkgs unstable lib isDarwin; };
       username = name;
 
       file = {
         ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
-        ".hushlogin".enable = isDarwin;
         ".iex.exs".source = ../../.iex.exs;
 
         ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".config/nvim/lua" = {
           source = ../../.config/nvim/lua;
           recursive = true;
+        };
+
+        ".hushlogin" = {
+          enable = isDarwin;
+          text = "";
         };
 
         "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
@@ -43,8 +47,8 @@ in
           text =
             if isDarwin
             then ''
-                pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
-              ''
+              pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+            ''
             else null;
         };
       };

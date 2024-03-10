@@ -70,6 +70,7 @@ disabled = true
 disabled = true
 
 [shlvl]
+threshold = 3
 format = '[$shlvl]($style) '
 style = 'yellow'
 disabled = false

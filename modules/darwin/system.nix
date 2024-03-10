@@ -20,6 +20,7 @@
         expose-group-by-app = false;
         minimize-to-application = true;
         mru-spaces = false;
+        tilesize = 56;
       };
 
       finder = {

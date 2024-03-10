@@ -1,4 +1,4 @@
-{ pkgs, lib, isDarwin }:
+{ pkgs, unstable, lib, isDarwin }:
 with pkgs; [
   delta
   du-dust
@@ -15,6 +15,7 @@ with pkgs; [
   tokei
 
   obsidian
+  unstable.vscode
 ] ++ lib.optionals isDarwin [
   pinentry_mac
   rectangle
