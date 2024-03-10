@@ -16,7 +16,7 @@ in
   home-manager.users.${name} = {
     imports = [ inputs.spicetify-nix.homeManagerModule ];
 
-    programs = import ./programs.nix { inherit inputs pkgs unstable lib system isDarwin; };
+    programs = import ./programs { inherit inputs pkgs unstable lib system isDarwin; };
     targets.genericLinux.enable = isWsl;
 
     home = {

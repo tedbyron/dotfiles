@@ -7,12 +7,12 @@ with pkgs; [
   ffmpeg
   hexyl
   hyperfine
-  nodejs
   nil
   nixpkgs-fmt
   imagemagick
   lychee
   tokei
+  unstable.nodejs
 
   obsidian
   unstable.vscode

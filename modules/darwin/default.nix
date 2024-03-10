@@ -10,9 +10,6 @@
   };
 
   environment = {
-    loginShell = "${lib.getBin pkgs.zsh}/bin/zsh -l";
-    variables.HOMEBREW_NO_ANALYTICS = "1";
-
     shells = with pkgs; [
       bashInteractive
       zsh
@@ -29,8 +26,14 @@
       gnugrep
       gnutar
       gnused
+      less
       python3
     ];
+
+    variables = {
+      HOMEBREW_NO_ANALYTICS = "1";
+      LANG = "en_US.UTF-8";
+    };
   };
 
   homebrew = {

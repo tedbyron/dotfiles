@@ -1,13 +1,20 @@
-{ self, inputs, nixpkgs, lib }:
+{ self, inputs, lib }:
 let
-  modules = [ ./system.nix ];
+  modules = [
+    ./system.nix
+    ./util.nix
+  ];
 
   ted = lib.makeExtensible (final: builtins.listToAttrs (map
     (path: lib.nameValuePair
       (baseNameOf (toString path))
       (import path {
-        inherit self final inputs nixpkgs lib;
+        inherit self inputs lib;
       }))
     modules));
 in
-ted.extend (final: prev: lib.foldr (a: b: a // b) { } (lib.attrValues prev))
+ted.extend (final: prev:
+  lib.foldr
+    (a: b: a // b)
+    { }
+    (lib.attrValues prev))

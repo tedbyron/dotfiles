@@ -26,6 +26,11 @@
       specialArgs = { inherit self inputs unstable system isDarwin isWsl; };
 
       modules = [
+        osModules.home-manager
+        (lib.optionalAttrs isWsl wsl)
+        ../modules
+        (import ../hosts/${host})
+
         {
           nixpkgs = {
             config.allowUnfree = true;
@@ -38,11 +43,6 @@
             useUserPackages = true;
           };
         }
-
-        osModules.home-manager
-        (lib.optionalAttrs isWsl wsl)
-        ../modules
-        (import ../hosts/${host})
       ];
     };
 }

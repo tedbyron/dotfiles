@@ -41,6 +41,7 @@ path=(
   $path
 )
 
+export BAT_PAGER='less -FRi'
 export BAT_THEME=Dracula
 export EDITOR=nvim
 export ERL_AFLAGS='-kernel shell_history enabled'
@@ -49,21 +50,34 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 --color=fg:-1,bg:-1,hl:#5fff87,fg+:-1,bg+:-1,hl+:#ffaf5f
 --color=info:#af87ff,prompt:#5fff87,pointer:#ff87d7,marker:#ff87d7,spinner:#ff87d7
 '
-GPG_TTY="$(tty)"
-export GPG_TTY
+export GPG_TTY="$(tty)"
 export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-export MANPAGER='zsh -c "col -bx | bat -l man -p"'
-export READNULLCMD=more
+export LESS=-FRi
+export MANPAGER='zsh -c "col -bx | bat -p -l man"'
+export PAGER=less;
+export READNULLCMD=less
 export STARSHIP_LOG=error
-export SUDO_EDITOR=nvim
 export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_FIXTERM=true
 
+setopt always_to_end
 setopt auto_cd
+setopt auto_pushd
+setopt cd_silent
+setopt check_jobs
+setopt check_running_jobs
+setopt combining_chars
+setopt complete_in_word
 setopt pushd_silent
+setopt pushd_to_home
 setopt long_list_jobs
 setopt multios
+
+unsetopt append_create
+unsetopt clobber
+unsetopt clobber_empty
 unsetopt beep
+unsetopt flow_control
 
 znap source ohmyzsh/ohmyzsh \
   lib/{completion,correction,directories,history} \
@@ -81,18 +95,14 @@ bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
-alias -g -- -h='-h 2>&1 | bat -pl help'
-alias -g -- --help='--help 2>&1 | bat -pl help'
-alias -- -='cd - > /dev/null'
 alias df='df -h'
 alias du='du -hd 1'
 alias dust='dust -d 1'
+alias fcir='fc -IR'
 alias gba='git branch -avv'
 alias gbl='git blame -wCCC'
 alias gbr='git branch -rv'
 alias grep='grep -Ei --color=auto'
-alias h='history | tail -n100'
-alias less='less -FRi'
 if (( $+commands[gls] )); then alias ls='gls'; fi
 alias ls='ls -FHh --color=auto --group-directories-first'
 alias la='ls -A'
@@ -102,3 +112,5 @@ alias pgrep='pgrep -afil'
 alias ps='ps -Aafx'
 alias rg='rg -S'
 alias sudo='sudo '
+alias -g -- -h='-h 2>&1 | bat -p -l help'
+alias -g -- --help='--help 2>&1 | bat -p -l help'
