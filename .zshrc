@@ -94,21 +94,23 @@ bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
+alias b=bat
 alias df='df -h'
 alias du='du -hd 1'
 alias dust='dust -d 1'
 alias fcir='fc -IR'
+alias f=fd
 alias gba='git branch -avv'
 alias gbl='git blame -wCCC'
 alias gbr='git branch -rv'
 alias grep='grep -Ei --color=auto'
-if (( $+commands[gls] )) alias ls='gls'
+if (( $+commands[gls] )) alias ls=gls
 alias ls='ls -FHh -I ".DS_Store" --color=auto --group-directories-first'
 alias la='ls -A'
 alias l='ls -Al'
 alias pgrep='pgrep -afil'
 alias ps='ps -Aafx'
-alias rg='rg -S'
+alias rg='rg -.S -g "!.git"'
 alias sudo='sudo '
 
 alias -g -- -h='-h 2>&1 | bat -p -l help'

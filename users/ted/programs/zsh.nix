@@ -79,9 +79,11 @@
   '';
 
   shellAliases = {
+    b = "bat";
     df = "df -h";
     du = "du -hd 1";
     dust = "dust -d 1";
+    f = "fd";
     fcir = "fc -IR";
     gba = "git branch -avv";
     gbl = "git blame -wCCC";
@@ -101,21 +103,17 @@
     # "--help" = "--help 2>&1 | bat -pl help";
   };
 
-  localVariables = {
-    ERL_AFLAGS = "+pc unicode -kernel shell_history enabled";
-    HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
-    STARSHIP_LOG = "error";
-    ZSH_TMUX_AUTOSTART = "true";
-    ZSH_TMUX_FIXTERM = "true";
-  };
-
   sessionVariables = {
     EDITOR = "nvim";
+    ERL_AFLAGS = "+pc unicode -kernel shell_history enabled";
     LESS = "-FRi";
     MANPAGER = "zsh -c \\\"col -bx | bat -p -l man\\\"";
     MANROFFOPT = "-c";
     NULLCMD = ":";
     PAGER = "less";
     READNULLCMD = "bat";
+    STARSHIP_LOG = "error";
+    ZSH_TMUX_AUTOSTART = "true";
+    ZSH_TMUX_FIXTERM = "true";
   };
 }

@@ -8,6 +8,6 @@ function Invoke-Starship-PreCommand {
 }
 
 $env:STARSHIP_CONFIG = "$HOME\git\dotfiles\.config\starship.toml"
-$env:ERL_AFLAGS = "-kernel shell_history enabled"
+$env:ERL_AFLAGS = "+pc unicode -kernel shell_history enabled"
 
 Invoke-Expression (&starship init powershell)
