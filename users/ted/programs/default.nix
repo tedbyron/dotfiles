@@ -7,44 +7,37 @@
 
   bat = {
     enable = true;
-    config.theme = "Dracula";
+
+    config = {
+      style = "changes,numbers";
+      theme = "Dracula";
+    };
+  };
+
+  dircolors = {
+    enable = true;
+    # TODO dircolors: config
   };
 
   direnv = {
     enable = true;
     enableZshIntegration = true;
-    # TODO: config, make timeout longer than 5s...
+    # TODO direnv: make timeout longer than 5s...
   };
 
   # eww
 
   firefox = {
     enable = !isDarwin;
-    # TODO: config
+    # TODO firefox: config
   };
 
-  fzf = {
-    enable = true;
-    changeDirWidgetCommand = "fd -HL -t d -E .git";
-    enableZshIntegration = true;
-    colors = {
-      fg = "-1";
-      bg = "-1";
-      hl = "#50FA7B";
-      "fg+" = "-1";
-      "bg+" = "-1";
-      "hl+" = "#FFB86C";
-      info = "#BD93F9";
-      prompt = "#50FA7B";
-      pointer = "#FF79C6";
-      marker = "#FF79C6";
-      spinner = "#FF79C6";
-    };
-  };
+  fzf = import ./fzf.nix;
 
   gh = {
     enable = true;
     gitCredentialHelper.enable = true;
+
     settings = {
       git_protocol = "https";
       editor = "nvim";
@@ -67,8 +60,8 @@
 
   # git-cliff
   # go
-  gpg.enable = true; # TODO: keys
-  # home-manager.enable = true; #FIX: necessary?
+  gpg.enable = true; # TODO gpg: signing keys
+  # home-manager.enable = true; #FIX necessary?
   # jujutsu
   # keychain
 
@@ -90,15 +83,22 @@
 
   ripgrep = {
     enable = true;
-    arguments = [ "-S" ];
+
+    arguments = [
+      "-."
+      "-S"
+      "-g '!.git'"
+    ];
   };
 
-  spicetify = {
-    enable = true;
-    colorScheme = "Dracula";
-    spotifyPackage = pkgs.spotify; # TODO: unstable
-    theme = inputs.spicetify-nix.packages.${system}.default.themes.Sleek;
-  };
+  spicetify =
+    let spicePkgs = inputs.spicetify-nix.packages.${system}.default;
+    in {
+      enable = true;
+      colorScheme = "Dracula";
+      spotifyPackage = pkgs.spotify; # TODO spotify: unstable
+      theme = spicePkgs.themes.Sleek;
+    };
 
   # sqls
   ssh.enable = true;
@@ -113,6 +113,7 @@
 
   yt-dlp = {
     enable = true;
+
     settings = {
       embed-chapters = true;
       embed-thumbnail = true;

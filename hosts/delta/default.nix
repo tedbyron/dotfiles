@@ -10,7 +10,7 @@ in
 
   system.stateVersion = 4;
 
-  # TODO: move to user, conditional config.networking.hostName
+  # TODO dock: move to user, conditional config.networking.hostName
   custom.dock = {
     enable = true;
 

@@ -24,8 +24,8 @@
       gawkInteractive
       git
       gnugrep
-      gnutar
       gnused
+      gnutar
       less
       python3
     ];

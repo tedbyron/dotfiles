@@ -1,5 +1,6 @@
 { pkgs, unstable, lib, isDarwin }:
 with pkgs; [
+  b3sum
   delta
   du-dust
   elixir
@@ -9,12 +10,11 @@ with pkgs; [
   hyperfine
   nil
   nixpkgs-fmt
+  obsidian
   imagemagick
   lychee
   tokei
   unstable.nodejs
-
-  obsidian
   unstable.vscode
 ] ++ lib.optionals isDarwin [
   pinentry_mac

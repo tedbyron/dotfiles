@@ -2,9 +2,14 @@
   enable = true;
   autocd = true;
   defaultKeymap = "emacs";
-  dirHashes = { };
   enableAutosuggestions = true;
   syntaxHighlighting.enable = true;
+
+  dirHashes = {
+    d = "$HOME/git/dotfiles";
+    dl = "$HOME/Downloads";
+    g = "$HOME/git";
+  };
 
   history.ignorePatterns = [
     ".."
@@ -12,7 +17,6 @@
     "...."
     "....."
     "......"
-
     "~"
     "-"
     "1"
@@ -24,7 +28,7 @@
     "7"
     "8"
     "9"
-
+    "builtin *"
     "cd *"
     "kill *"
     "pkill *"
@@ -35,48 +39,44 @@
 
   historySubstringSearch = {
     enable = true;
+
     searchUpKey = [
       "^[[A"
       "^P"
     ];
+
     searchDownKey = [
       "^[[B"
       "^N"
     ];
   };
 
-  # FIX: hm 24-05
   initExtra = ''
     setopt always_to_end
+    setopt no_append_create
     setopt auto_cd
     setopt auto_pushd
+    setopt no_beep
     setopt cd_silent
     setopt check_jobs
     setopt check_running_jobs
+    setopt no_clobber
+    setopt no_clobber_empty
     setopt combining_chars
     setopt complete_in_word
+    setopt no_flow_control
     setopt pushd_silent
     setopt pushd_to_home
     setopt long_list_jobs
     setopt multios
+    setopt typeset_silent
 
-    unsetopt append_create
-    unsetopt clobber
-    unsetopt clobber_empty
-    unsetopt beep
-    unsetopt flow_control
+    # TODO menuselect: bindkey -M menuselect '^[[Z' reverse-menu-complete
 
-    alias -g -- -h='-h 2>&1 | bat -pl help'
-    alias -g -- --help='--help 2>&1 | bat -pl help'
+    # FIX 24-05
+    alias -g -- -h='-h 2>&1 | bat -p -l help'
+    alias -g -- --help='--help 2>&1 | bat -p -l help'
   '';
-
-  # oh-my-zsh = {
-  #   enable = false;
-  #   plugins = [
-  #     "git"
-  #     "tmux"
-  #   ];
-  # };
 
   shellAliases = {
     df = "df -h";
@@ -87,33 +87,35 @@
     gbl = "git blame -wCCC";
     gbr = "git branch -rv";
     grep = "grep -Ei --color=auto";
-    ls = "ls -FHh --color=auto --group-directories-first";
+    ls = "ls -FHh -I \".DS_Store\" --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";
-    nixpath = "echo -e \${NIX_PATH//:/\\n}";
-    path = "echo -e \${PATH//:/\\n}";
     pgrep = "pgrep -afil";
     ps = "ps -Aafx";
     sudo = "sudo ";
   };
-  # FIX: hm 24-05
+
+  # FIX 24-05
   shellGlobalAliases = {
     # "-h" = "-h 2>&1 | bat -pl help";
     # "--help" = "--help 2>&1 | bat -pl help";
   };
 
   localVariables = {
+    ERL_AFLAGS = "+pc unicode -kernel shell_history enabled";
     HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
-    READNULLCMD = "less";
     STARSHIP_LOG = "error";
     ZSH_TMUX_AUTOSTART = "true";
     ZSH_TMUX_FIXTERM = "true";
   };
+
   sessionVariables = {
     EDITOR = "nvim";
-    ERL_AFLAGS = "-kernel shell_history enabled";
-    # LESS = "-FRi";
+    LESS = "-FRi";
     MANPAGER = "zsh -c \\\"col -bx | bat -p -l man\\\"";
-    # PAGER = "less";
+    MANROFFOPT = "-c";
+    NULLCMD = ":";
+    PAGER = "less";
+    READNULLCMD = "bat";
   };
 }

@@ -26,10 +26,10 @@ in
       username = name;
 
       file = {
+        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
         ".iex.exs".source = ../../.iex.exs;
 
-        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".config/nvim/lua" = {
           source = ../../.config/nvim/lua;
           recursive = true;
@@ -42,14 +42,11 @@ in
 
         "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
           enable = isDarwin;
-          onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --reload gpg-agent";
+          onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
-          text =
-            if isDarwin
-            then ''
-              pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
-            ''
-            else null;
+          text = ''
+            pinentry-program ${lib.getOutput "out" pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+          '';
         };
       };
     };

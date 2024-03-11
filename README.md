@@ -1,7 +1,5 @@
 # dotfiles
 
-My dotfiles
-
 <div float="left">
   <img src="../screenshots/screenshots/nvim.png" alt="neovim" width="49%" />
   <img src="../screenshots/screenshots/vscode.png" alt="vs code" width="49%" />
@@ -18,4 +16,5 @@ My dotfiles
   git clone https://github.com/tedbyron/dotfiles ~/git/dotfiles --filter tree:0
   # give terminal full disk access and restart
   nix run nix-darwin -- switch --flake ~/git/dotfiles#<host>
+  chsh -s /run/current-system/sw/bin/zsh # https://github.com/LnL7/nix-darwin/issues/328
   ```
