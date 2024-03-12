@@ -122,5 +122,5 @@
     };
   };
 
-  zsh = import ./zsh.nix;
+  zsh = import ./zsh.nix { inherit pkgs lib isDarwin; };
 }

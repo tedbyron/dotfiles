@@ -44,11 +44,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
-      inherit (lib.ted) mkSystem nixFilesIn;
+      inherit (lib.ted) mkSystem;
+      inherit (flake-utils.lib.system) aarch64-darwin;
 
-      overlays = builtins.attrValues (nixFilesIn ./overlays);
+      overlays = [ ]; # builtins.attrValues (nixFilesIn ./overlays);
       lib = nixpkgs.lib.extend (final: prev: {
         ted = import ./lib {
           inherit self inputs;
@@ -60,12 +61,12 @@
       darwinConfigurations = {
         gamma = mkSystem "gamma" {
           inherit overlays;
-          system = "aarch64-darwin";
+          system = aarch64-darwin;
         };
 
         delta = mkSystem "delta" {
           inherit overlays;
-          system = "aarch64-darwin";
+          system = aarch64-darwin;
         };
       };
     };

@@ -6,7 +6,10 @@ zstyle ':znap:*:*' git-maintenance off
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-if [[ "$(uname)" == 'Darwin'* ]] {
+HISTORY_IGNORE='(..|...|....|.....|......|~|-|1|2|3|4|5|6|7|8|9|builtin *|cd *|kill *|pkill *|rm *|rmdir *|unlink *)'
+
+is_darwin=$([[ "$(uname)" == 'Darwin'* ]])
+if ($is_darwin) {
   export HOMEBREW_NO_ANALYTICS=1
 
   if [[ "$(arch)" == 'arm64'* ]] {
@@ -72,6 +75,7 @@ setopt no_clobber_empty
 setopt combining_chars
 setopt complete_in_word
 setopt no_flow_control
+setopt pushd_minus
 setopt pushd_silent
 setopt pushd_to_home
 setopt long_list_jobs
@@ -94,18 +98,21 @@ bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
-alias b=bat
 alias df='df -h'
 alias du='du -hd 1'
 alias dust='dust -d 1'
 alias fcir='fc -IR'
-alias f=fd
 alias gba='git branch -avv'
 alias gbl='git blame -wCCC'
 alias gbr='git branch -rv'
+alias grhh=
 alias grep='grep -Ei --color=auto'
 if (( $+commands[gls] )) alias ls=gls
-alias ls='ls -FHh -I ".DS_Store" --color=auto --group-directories-first'
+if ($is_darwin) {
+  alias ls='ls -FHh -I ".DS_Store" --color=auto --group-directories-first'
+} else {
+  alias ls='ls -FHh --color=auto --group-directories-first'
+}
 alias la='ls -A'
 alias l='ls -Al'
 alias pgrep='pgrep -afil'
@@ -115,3 +122,12 @@ alias sudo='sudo '
 
 alias -g -- -h='-h 2>&1 | bat -p -l help'
 alias -g -- --help='--help 2>&1 | bat -p -l help'
+
+hash -d dot=$HOME/git/dotfiles
+hash -d git=$HOME/git
+if ($is_darwin) {
+  hash -d dls=$HOME/Downloads
+  hash -d pub=$HOME/Public
+}
+
+unset is_darwin

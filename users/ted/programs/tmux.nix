@@ -5,15 +5,14 @@
   keyMode = "vi";
   mouse = true;
   newSession = true;
-  shell = "${lib.getBin pkgs.zsh}/bin/zsh";
   shortcut = "a";
+  terminal = "tmux-256color";
 
   extraConfig = ''
     set -g set-clipboard on
     set -g automatic-rename on
     set -g automatic-rename-format "#{?#{==:#{pane_current_command},zsh},#{?#{==:#{pane_current_path},#{HOME}},~,#{b:pane_current_path}},#{pane_current_command}}"
-    set -sa terminal-overrides ",alacritty:RGB"
-    set -ga terminal-overrides ',alacritty:Tc'
+    set -as terminal-overrides ",alacritty:RGB"
 
     bind c new-window -c "#{pane_current_path}"
     bind % split -h -c "#{pane_current_path}"

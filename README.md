@@ -13,7 +13,7 @@
   xcode-select --install
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-  git clone https://github.com/tedbyron/dotfiles ~/git/dotfiles --filter tree:0
+  git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
   # give terminal full disk access and restart
   nix run nix-darwin -- switch --flake ~/git/dotfiles#<host>
   chsh -s /run/current-system/sw/bin/zsh # https://github.com/LnL7/nix-darwin/issues/328

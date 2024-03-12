@@ -1,3 +1,6 @@
+[env]
+TERM = "alacritty"
+
 [font]
 size = 14.0
 normal = { family = "Curlio", style = "Regular" }
