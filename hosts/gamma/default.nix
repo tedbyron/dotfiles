@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  name = "gamma";
+  name = baseNameOf (toString ./.);
   user = "ted";
 in
 {

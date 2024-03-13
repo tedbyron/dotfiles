@@ -54,8 +54,12 @@
     enable = true;
     # delta configured in .gitconfig and installed as a user package
     extraConfig = fromTOML (builtins.readFile ../../../.gitconfig);
-    ignores = [ ".DS_Store" ];
     lfs.enable = true;
+
+    ignores = [
+      ".DS_Store"
+      ".direnv"
+    ];
   };
 
   # git-cliff
@@ -96,7 +100,7 @@
     in {
       enable = true;
       colorScheme = "Dracula";
-      spotifyPackage = pkgs.spotify; # TODO spotify: unstable
+      spotifyPackage = unstable.spotify;
       theme = spicePkgs.themes.Sleek;
     };
 
@@ -109,15 +113,8 @@
     settings = fromTOML (builtins.readFile ../../../.config/starship.toml);
   };
 
-  tmux = import ./tmux.nix { inherit pkgs lib; };
-
-  vscode = {
-    enable = true;
-    enableExtensionUpdateCheck = true;
-    enableUpdateCheck = true;
-    mutableExtensionsDir = true;
-    package = unstable.vscode;
-  };
+  tmux = import ./tmux.nix { inherit pkgs; };
+  vscode.enable = true;
 
   yt-dlp = {
     enable = true;

@@ -31,12 +31,15 @@
     "7"
     "8"
     "9"
+    "> *"
     "builtin *"
     "cd *"
     "kill *"
+    "mkdir *"
     "pkill *"
     "rm *"
     "rmdir *"
+    "touch *"
     "unlink *"
   ];
 
@@ -76,10 +79,10 @@
     setopt combining_chars
     setopt complete_in_word
     setopt no_flow_control
+    setopt long_list_jobs
     setopt pushd_minus
     setopt pushd_silent
     setopt pushd_to_home
-    setopt long_list_jobs
     setopt multios
     setopt typeset_silent
 
@@ -92,7 +95,7 @@
 
   shellAliases = {
     df = "df -h";
-    du = "du -hd 1";
+    du = "du -h -d 1";
     dust = "dust -d 1";
     fcir = "fc -IR";
     gba = "git branch -avv";

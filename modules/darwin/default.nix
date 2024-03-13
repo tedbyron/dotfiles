@@ -1,6 +1,9 @@
 { inputs, pkgs, lib, system, ... }:
 {
-  imports = [ ./dock.nix ./system.nix ];
+  imports = [
+    ./dock.nix
+    ./system.nix
+  ];
 
   security.pam.enableSudoTouchIdAuth = true;
 
@@ -42,6 +45,7 @@
     casks = [
       "firefox"
       "mullvadvpn"
+      "rectangle"
       "vlc"
     ];
 

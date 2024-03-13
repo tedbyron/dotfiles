@@ -6,7 +6,7 @@ zstyle ':znap:*:*' git-maintenance off
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-HISTORY_IGNORE='(..|...|....|.....|......|~|-|1|2|3|4|5|6|7|8|9|builtin *|cd *|kill *|pkill *|rm *|rmdir *|unlink *)'
+HISTORY_IGNORE='(..|...|....|.....|......|~|-|1|2|3|4|5|6|7|8|9|> *|builtin *|cd *|kill *|mkdir *|pkill *|rm *|rmdir *|touch *|unlink *)'
 
 is_darwin=$([[ "$(uname)" == 'Darwin'* ]])
 if ($is_darwin) {
@@ -56,11 +56,12 @@ export HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 export LESS=-FRi
 export MANPAGER='zsh -c "col -bx | bat -p -l man"'
 export MANROFFOPT=-c
+export NULLCMD=:
 export PAGER=less;
-export READNULLCMD=less
+export READNULLCMD=bat
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/ripgreprc
 export STARSHIP_LOG=error
 export ZSH_TMUX_AUTOSTART=true
-export ZSH_TMUX_FIXTERM=true
 
 setopt always_to_end
 setopt no_append_create
@@ -75,10 +76,10 @@ setopt no_clobber_empty
 setopt combining_chars
 setopt complete_in_word
 setopt no_flow_control
+setopt long_list_jobs
 setopt pushd_minus
 setopt pushd_silent
 setopt pushd_to_home
-setopt long_list_jobs
 setopt multios
 setopt typeset_silent
 
@@ -99,7 +100,7 @@ bindkey -M emacs '^N' history-substring-search-down
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
 alias df='df -h'
-alias du='du -hd 1'
+alias du='du -h -d 1'
 alias dust='dust -d 1'
 alias fcir='fc -IR'
 alias gba='git branch -avv'

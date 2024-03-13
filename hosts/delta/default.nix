@@ -1,6 +1,6 @@
-{ config, pkgs, unstable, lib, ... }:
+{ config, lib, ... }:
 let
-  name = "delta";
+  name = baseNameOf (toString ./.);
   user = "ted";
 in
 {
@@ -13,35 +13,30 @@ in
     let
       inherit (userPrograms.spicetify) spicedSpotify;
 
-      userPkgs = config.home-manager.users.${user}.home.packages;
-      getUserPkg = name:
+      userPackages = name:
         lib.findFirst
           (pkg: (builtins.parseDrvName pkg.name).name == name)
           null
-          userPkgs;
-      obsidian = getUserPkg "obsidian";
+          config.home-manager.users.${user}.home.packages;
       userPrograms = config.home-manager.users.${user}.programs;
-      alacritty = userPrograms.alacritty.package;
-      vscode = userPrograms.vscode.package;
     in
     {
       enable = true;
 
-      entries = [
-        { path = "/Applications/Firefox.app/"; }
-        { path = "/Applications/Bitwarden.app/"; }
-        { path = "${spicedSpotify}/Applications/Spotify.app/"; }
-        { path = "/Applications/Microsoft Teams (work or school).app/"; }
-        { path = "${obsidian}/Applications/Obsidian.app/"; }
-        { path = "/Applications/VMware Fusion.app/"; }
-        { path = "${alacritty}/Applications/Alacritty.app/"; }
-        { path = "${vscode}/Applications/Visual Studio Code.app/"; }
-        {
-          path = "${config.users.users.${user}.home}/Downloads/";
-          section = "others";
-          options = "--display stack --view auto --sort dateadded";
-        }
-      ];
+      entries = map (path: { path = path; }) [
+        "/Applications/Firefox.app/"
+        "/Applications/Bitwarden.app/"
+        "${spicedSpotify}/Applications/Spotify.app/"
+        "/Applications/Microsoft Teams (work or school).app/"
+        "${userPackages "obsidian"}/Applications/Obsidian.app/"
+        "/Applications/VMware Fusion.app/"
+        "${userPrograms.alacritty.package}/Applications/Alacritty.app/"
+        "${userPrograms.vscode.package}/Applications/Visual Studio Code.app/"
+      ] ++ [{
+        path = "${config.users.users.${user}.home}/Downloads/";
+        section = "others";
+        options = "--display stack --view auto --sort dateadded";
+      }];
     };
 
   homebrew.casks = [

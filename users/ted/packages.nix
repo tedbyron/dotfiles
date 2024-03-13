@@ -17,5 +17,4 @@ with pkgs; [
   unstable.nodejs
 ] ++ lib.optionals isDarwin [
   pinentry_mac
-  rectangle
 ]

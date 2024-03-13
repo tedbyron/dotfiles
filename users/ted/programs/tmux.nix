@@ -1,4 +1,4 @@
-{ pkgs, lib }:
+{ pkgs }:
 {
   enable = true;
   clock24 = true;
