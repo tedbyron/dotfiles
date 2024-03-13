@@ -57,7 +57,7 @@
     ];
   };
 
-  initExtra = ''
+  initExtraBeforeCompInit = ''
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/completion.zsh
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/correction.zsh
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/directories.zsh
@@ -65,10 +65,11 @@
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/git-lfs/git-lfs.plugin.zsh
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/git/git.plugin.zsh
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/tmux/tmux.plugin.zsh
+  '';
 
+  initExtra = ''
     setopt always_to_end
     setopt no_append_create
-    setopt auto_cd
     setopt auto_pushd
     setopt no_beep
     setopt cd_silent

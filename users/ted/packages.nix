@@ -16,5 +16,6 @@ with pkgs; [
   tokei
   unstable.nodejs
 ] ++ lib.optionals isDarwin [
+  mas
   pinentry_mac
 ]
