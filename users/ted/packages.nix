@@ -15,7 +15,6 @@ with pkgs; [
   lychee
   tokei
   unstable.nodejs
-  unstable.vscode
 ] ++ lib.optionals isDarwin [
   pinentry_mac
   rectangle

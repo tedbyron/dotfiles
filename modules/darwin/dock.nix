@@ -34,8 +34,6 @@ in
 
   config = lib.mkIf cfg.enable (
     let
-      dockutil = "${lib.getBin pkgs.dockutil}/bin/dockutil";
-
       normalize = path:
         if lib.hasSuffix ".app" path then path + "/" else path;
       entryURI = path: "file://" + (lib.concatMapStringsSep
@@ -46,15 +44,15 @@ in
         (entry: "${entryURI entry.path}\n")
         cfg.entries;
       createEntries = lib.concatMapStrings
-        (entry: "${dockutil} --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}\n")
+        (entry: "${pkgs.dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}\n")
         cfg.entries;
     in
     {
       system.activationScripts.postUserActivation.text = ''
-        haveURIs="$(${dockutil} --list | ${lib.getBin pkgs.coreutils}/bin/cut -f2)"
+        haveURIs="$(${pkgs.dockutil}/bin/dockutil --list | ${pkgs.coreutils}/bin/cut -f2)"
         if ! diff -wu <(echo -n "$haveURIs") <(echo -n '${wantURIs}') >&2 ; then
           echo "Updating dock..." >&2
-          ${dockutil} --no-restart --remove all
+          ${pkgs.dockutil}/bin/dockutil --no-restart --remove all
           ${createEntries}
           killall Dock
         fi

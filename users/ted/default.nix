@@ -45,7 +45,7 @@ in
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
           text = ''
-            pinentry-program ${lib.getOutput "out" pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+            pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
           '';
         };
       };

@@ -111,6 +111,14 @@
 
   tmux = import ./tmux.nix { inherit pkgs lib; };
 
+  vscode = {
+    enable = true;
+    enableExtensionUpdateCheck = true;
+    enableUpdateCheck = true;
+    mutableExtensionsDir = true;
+    package = unstable.vscode;
+  };
+
   yt-dlp = {
     enable = true;
 
