@@ -2,8 +2,6 @@
 with pkgs; [
   b3sum
   delta
-  du-dust
-  elixir
   fd
   ffmpeg
   hexyl
@@ -14,6 +12,7 @@ with pkgs; [
   imagemagick
   lychee
   tokei
+  unstable.elixir
   unstable.nodejs
 ] ++ lib.optionals isDarwin [
   mas

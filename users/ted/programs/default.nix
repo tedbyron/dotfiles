@@ -21,8 +21,9 @@
 
   direnv = {
     enable = true;
+    config = fromTOML (builtins.readFile ../../../.config/direnv/direnv.toml);
     enableZshIntegration = true;
-    # TODO direnv: make timeout longer than 5s...
+    nix-direnv.enable = true;
   };
 
   # eww
@@ -68,10 +69,7 @@
   # home-manager.enable = true; #FIX necessary?
   # jujutsu
   # keychain
-
-  man = {
-    generateCaches = true;
-  };
+  man.generateCaches = true;
 
   neovim = {
     enable = true;

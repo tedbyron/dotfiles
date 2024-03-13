@@ -49,7 +49,6 @@
       inherit (lib.ted) mkSystem;
       inherit (flake-utils.lib.system) aarch64-darwin;
 
-      overlays = [ ]; # builtins.attrValues (nixFilesIn ./overlays);
       lib = nixpkgs.lib.extend (final: prev: {
         ted = import ./lib {
           inherit self inputs;
@@ -59,15 +58,8 @@
     in
     {
       darwinConfigurations = {
-        gamma = mkSystem "gamma" {
-          inherit overlays;
-          system = aarch64-darwin;
-        };
-
-        delta = mkSystem "delta" {
-          inherit overlays;
-          system = aarch64-darwin;
-        };
+        gamma = mkSystem "gamma" { system = aarch64-darwin; };
+        delta = mkSystem "delta" { system = aarch64-darwin; };
       };
     };
 }

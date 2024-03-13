@@ -6,7 +6,7 @@ zstyle ':znap:*:*' git-maintenance off
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-HISTORY_IGNORE='(..|...|....|.....|......|~|-|1|2|3|4|5|6|7|8|9|> *|builtin *|cd *|kill *|mkdir *|pkill *|rm *|rmdir *|touch *|unlink *)'
+HISTORY_IGNORE='(..|...|....|.....|......|~|-|1|2|3|4|5|6|7|8|9|> *|builtin *|kill *|mkdir *|pkill *|rm *|rmdir *|touch *|unlink *)'
 
 is_darwin=$([[ "$(uname)" == 'Darwin'* ]])
 if ($is_darwin) {
@@ -27,15 +27,6 @@ if ($is_darwin) {
       $HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin
     )
   }
-
-  if [[ -f $HOME/google-cloud-sdk/path.zsh.inc ]] {
-    . $HOME/google-cloud-sdk/path.zsh.inc
-  }
-  if [[ -f $HOME/google-cloud-sdk/completion.zsh.inc ]] {
-    . $HOME/google-cloud-sdk/completion.zsh.inc
-  }
-
-  export ZSH_TMUX_CONFIG=$HOME/.config/tmux/tmux.conf
 }
 
 path+=(
@@ -62,6 +53,7 @@ export READNULLCMD=bat
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/ripgreprc
 export STARSHIP_LOG=error
 export ZSH_TMUX_AUTOSTART=true
+export ZSH_TMUX_CONFIG=$HOME/.config/tmux/tmux.conf
 
 setopt always_to_end
 setopt no_append_create
@@ -99,9 +91,8 @@ bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 bindkey -M menuselect '^[[Z' reverse-menu-complete
 
-alias df='df -h'
-alias du='du -h -d 1'
-alias dust='dust -d 1'
+alias df='df \-h'
+alias du='du \-h -d 1'
 alias fcir='fc -IR'
 alias gba='git branch -avv'
 alias gbl='git blame -wCCC'

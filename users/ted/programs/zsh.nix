@@ -33,7 +33,6 @@
     "9"
     "> *"
     "builtin *"
-    "cd *"
     "kill *"
     "mkdir *"
     "pkill *"
@@ -95,9 +94,8 @@
   '';
 
   shellAliases = {
-    df = "df -h";
-    du = "du -h -d 1";
-    dust = "dust -d 1";
+    df = "df \\-h";
+    du = "du \\-h -d 1";
     fcir = "fc -IR";
     gba = "git branch -avv";
     gbl = "git blame -wCCC";
@@ -106,7 +104,7 @@
     grhh = "";
     ls =
       if isDarwin
-      then "ls -FHh -I \".DS_Store\" --color=auto --group-directories-first"
+      then "ls -FHh -I '.DS_Store' --color=auto --group-directories-first"
       else "ls -FHh --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";
@@ -124,8 +122,9 @@
   sessionVariables = {
     EDITOR = "nvim";
     ERL_AFLAGS = "+pc unicode -kernel shell_history enabled";
+    HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
     LESS = "-FRi";
-    MANPAGER = "sh -c \\\"col -bx | bat -p -l man\\\"";
+    MANPAGER = "sh -c 'col -bx | bat -p -l man'";
     MANROFFOPT = "-c";
     NULLCMD = ":";
     PAGER = "less";

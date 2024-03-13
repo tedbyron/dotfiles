@@ -1,9 +1,6 @@
 { self, inputs, lib }:
 let
-  modules = [
-    ./system.nix
-    ./util.nix
-  ];
+  modules = [ ./system.nix ];
 
   ted = lib.makeExtensible (final: builtins.listToAttrs (map
     (path: lib.nameValuePair

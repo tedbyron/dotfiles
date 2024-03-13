@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, system, ... }:
+{ inputs, pkgs, system, ... }:
 {
   imports = [
     ./dock.nix
@@ -79,13 +79,11 @@
       auto-optimise-store = true;
       trusted-users = [ "@admin" ];
 
-      experimental-features = lib.concatStrings (lib.intersperse " "
-        [
-          "auto-allocate-uids"
-          # "configurable-impure-env"
-          "flakes"
-          "nix-command"
-        ]);
+      experimental-features = builtins.concatStringsSep " " [
+        "auto-allocate-uids"
+        "flakes"
+        "nix-command"
+      ];
 
       substituters = [
         "https://cache.nixos.org/"
