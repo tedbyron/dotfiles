@@ -1,28 +1,5 @@
 {
   "nodes": {
-    "curlio": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1710047312,
-        "narHash": "sha256-BUcdbMoOulR5KCcnqzvU6S2bcn82f7NNm0KLq3eIy/s=",
-        "owner": "tedbyron",
-        "repo": "curlio",
-        "rev": "1a07fc8ba50a250e1f7a51f026f78d099c6b53b7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tedbyron",
-        "repo": "curlio",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -30,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1710255615,
-        "narHash": "sha256-DFooGP2D6cNfOj35qkptUgG0r+VxuI38QgNAoYxmVE0=",
+        "lastModified": 1710281379,
+        "narHash": "sha256-uFo9hxt982L3nFJeweW4Gip2esiGrIQlbvEGrNTh4AY=",
         "owner": "lnl7",
         "repo": "nix-darwin",
-        "rev": "c7ae5dc969b93f3221f5c228f0ec3de3e2b8084e",
+        "rev": "d9ea313bc4851670dc99c5cc979cb79750e7d670",
         "type": "github"
       },
       "original": {
@@ -98,6 +75,26 @@
         "type": "github"
       }
     },
+    "iosevka": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-z07BDimZ4Aau05aldbhm49FqLKtzCBFoUQhEKHAAVUw=",
+        "path": "./flakes/iosevka",
+        "type": "path"
+      },
+      "original": {
+        "path": "./flakes/iosevka",
+        "type": "path"
+      }
+    },
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -124,11 +121,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1710162809,
-        "narHash": "sha256-i2R2bcnQp+85de67yjgZVvJhd6rRnJbSYNpGmB6Leb8=",
+        "lastModified": 1710283656,
+        "narHash": "sha256-nI+AOy4uK6jLGBi9nsbHjL1EdSIzoo8oa+9oeVhbyFc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ddcd7598b2184008c97e6c9c6a21c5f37590b8d2",
+        "rev": "51063ed4f2343a59fdeebb279bb81d87d453942b",
         "type": "github"
       },
       "original": {
@@ -140,11 +137,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1709961763,
-        "narHash": "sha256-6H95HGJHhEZtyYA3rIQpvamMKAGoa8Yh2rFV29QnuGw=",
+        "lastModified": 1710272261,
+        "narHash": "sha256-g0bDwXFmTE7uGDOs9HcJsfLFhH7fOsASbAuOzDC+fhQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3030f185ba6a4bf4f18b87f345f104e6a6961f34",
+        "rev": "0ad13a6833440b8e238947e47bea7f11071dc2b2",
         "type": "github"
       },
       "original": {
@@ -156,10 +153,10 @@
     },
     "root": {
       "inputs": {
-        "curlio": "curlio",
         "darwin": "darwin",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "iosevka": "iosevka",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",

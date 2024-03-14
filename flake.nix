@@ -25,8 +25,8 @@
       };
     };
 
-    curlio = {
-      url = "github:tedbyron/curlio";
+    iosevka = {
+      url = "path:./flakes/iosevka";
 
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
@@ -44,7 +44,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, iosevka, ... }@inputs:
     let
       inherit (lib.ted) mkSystem;
       inherit (flake-utils.lib.system) aarch64-darwin;
@@ -61,5 +61,7 @@
         gamma = mkSystem "gamma" { system = aarch64-darwin; };
         delta = mkSystem "delta" { system = aarch64-darwin; };
       };
-    };
+    } // flake-utils.lib.eachDefaultSystem (system: {
+      packages = iosevka.outputs.packages.${system};
+    });
 }

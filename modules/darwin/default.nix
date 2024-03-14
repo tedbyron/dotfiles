@@ -1,4 +1,4 @@
-{ inputs, pkgs, system, ... }:
+{ self, pkgs, system, ... }:
 {
   imports = [
     ./dock.nix
@@ -28,8 +28,8 @@
       git
       gnugrep
       gnused
-      gnutar
       less
+      ouch
       python3
     ];
 
@@ -63,7 +63,7 @@
 
   fonts = {
     fontDir.enable = true;
-    fonts = [ inputs.curlio.outputs.packages.${system}.curlio-ttf ];
+    fonts = [ self.outputs.packages.${system}.curlio-ttf ];
   };
 
   nix = {
