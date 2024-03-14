@@ -43,18 +43,19 @@ seven = "curly-serifless"
 
 asterisk = "penta-low"
 brace = "straight"
-guillemet = "straight"
 at = "fourfold-solid-inner"
 dollar = "open"
 cent = "open"
 percent = "rings-continuous-slash"
+
 lig-neq = "vertical"
 lig-equal-chain = "without-notch"
 lig-hyphen-chain = "without-notch"
 
 [buildPlans.curlio.ligations]
 inherits = "javascript"
-enables = ["arrow-l", "hash-hash"]
+enables = ["arrow-l", "center-op-influence-colon", "hash-hash", "slash-asterisk"]
+disables = ["ltgt-slash-tag"]
 
 [buildPlans.curlio.widths.condensed]
 shape = 500

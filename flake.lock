@@ -86,7 +86,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-z07BDimZ4Aau05aldbhm49FqLKtzCBFoUQhEKHAAVUw=",
+        "narHash": "sha256-GfcfAVeTe+clvzkOIWrJbD9qbMNvWOmd8E0ZyeNfTA4=",
         "path": "./flakes/iosevka",
         "type": "path"
       },
