@@ -3,6 +3,7 @@
   enable = true;
   autocd = true;
   defaultKeymap = "emacs";
+  dotDir = ".config/zsh";
   enableAutosuggestions = true;
   syntaxHighlighting.enable = true;
 
@@ -15,22 +16,6 @@
   };
 
   history.ignorePatterns = [
-    ".."
-    "..."
-    "...."
-    "....."
-    "......"
-    "~"
-    "-"
-    "1"
-    "2"
-    "3"
-    "4"
-    "5"
-    "6"
-    "7"
-    "8"
-    "9"
     "> *"
     "builtin *"
     "kill *"
@@ -100,8 +85,10 @@
     gba = "git branch -avv";
     gbl = "git blame -wCCC";
     gbr = "git branch -rv";
+    gdc = "git diff --cached";
     grep = "grep -Ei --color=auto";
     grhh = "";
+    gmv = "git mv";
     ls =
       if isDarwin
       then "ls -FHh -I '.DS_Store' --color=auto --group-directories-first"
@@ -123,7 +110,9 @@
     EDITOR = "nvim";
     ERL_AFLAGS = "+pc unicode -kernel shell_history enabled";
     HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
+    IEX_HOME = "$HOME/.config/iex";
     LESS = "-FRi";
+    LESSHISTFILE = "-";
     MANPAGER = "sh -c 'col -bx | bat -p -l man'";
     MANROFFOPT = "-c";
     NULLCMD = ":";

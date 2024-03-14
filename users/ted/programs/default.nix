@@ -54,13 +54,9 @@
   git = {
     enable = true;
     # delta configured in .gitconfig and installed as a user package
-    extraConfig = fromTOML (builtins.readFile ../../../.gitconfig);
+    extraConfig = fromTOML (builtins.readFile ../../../.config/git/config);
+    ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
-
-    ignores = [
-      ".DS_Store"
-      ".direnv"
-    ];
   };
 
   # git-cliff
