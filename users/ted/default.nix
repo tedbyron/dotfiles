@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, unstable, lib, system, isDarwin, isWsl, ... }:
+{ config, inputs, pkgs, unstable, lib, system, isDarwin, isWsl, ... }:
 let
   name = baseNameOf (toString ./.);
   home =

@@ -33,7 +33,7 @@
     # TODO firefox: config
   };
 
-  fzf = import ./fzf.nix { inherit config user; };
+  fzf = import ./fzf.nix { inherit config isDarwin user; };
 
   gh = {
     enable = true;

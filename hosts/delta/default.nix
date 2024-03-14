@@ -29,7 +29,6 @@ in
         "/Applications/Bitwarden.app/"
         "${userPackages "obsidian"}/Applications/Obsidian.app/"
         "${spicedSpotify}/Applications/Spotify.app/"
-        "/Applications/Microsoft Teams (work or school).app/"
         "/Applications/VMware Fusion.app/"
         "${userPrograms "alacritty"}/Applications/Alacritty.app/"
         "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
@@ -44,9 +43,7 @@ in
 
   homebrew.casks = [
     "lunar"
-    "microsoft-excel"
-    "microsoft-teams"
-    "microsoft-word"
+    "meetingbar"
     "vmware-fusion"
   ];
 

@@ -1,8 +1,14 @@
-{ config, user }:
+{ config, isDarwin, user }:
 {
   enable = true;
-  changeDirWidgetCommand = "fd -HL -E .git -c always -t d --strip-cwd-prefix";
-  defaultCommand = "fd -H -E .git -c always -t f --strip-cwd-prefix";
+  changeDirWidgetCommand =
+    if isDarwin
+    then "fd -HL -E .git -E .DS_Store -c always -t d --strip-cwd-prefix"
+    else "fd -HL -E .git -c always -t d --strip-cwd-prefix";
+  defaultCommand =
+    if isDarwin
+    then "fd -H -E .git -E .DS_Store -c always -t f --strip-cwd-prefix"
+    else "fd -H -E .git -c always -t f --strip-cwd-prefix";
   enableZshIntegration = true;
   fileWidgetCommand = config.home-manager.users.${user}.programs.fzf.defaultCommand;
 

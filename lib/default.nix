@@ -10,8 +10,4 @@ let
       }))
     modules));
 in
-ted.extend (final: prev:
-  lib.foldr
-    (a: b: a // b)
-    { }
-    (lib.attrValues prev))
+ted.extend (final: prev: lib.foldr (a: b: a // b) { } (lib.attrValues prev))
