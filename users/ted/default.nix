@@ -26,9 +26,9 @@ in
       username = name;
 
       file = {
+        ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
         ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
-        ".iex.exs".source = ../../.iex.exs;
 
         ".config/nvim/lua" = {
           source = ../../.config/nvim/lua;
