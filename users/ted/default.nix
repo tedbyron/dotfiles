@@ -16,7 +16,6 @@ in
   home-manager.users.${name} = {
     imports = [ inputs.spicetify-nix.homeManagerModule ];
 
-    programs = import ./programs { inherit inputs pkgs unstable lib system isDarwin; };
     targets.genericLinux.enable = isWsl;
 
     home = {
@@ -49,6 +48,12 @@ in
           '';
         };
       };
+    };
+
+    programs = import ./programs {
+      inherit config inputs pkgs unstable lib system isDarwin;
+
+      user = name;
     };
 
     targets.darwin = lib.optionalAttrs isDarwin {

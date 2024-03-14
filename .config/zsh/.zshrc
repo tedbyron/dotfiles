@@ -6,18 +6,6 @@ zstyle ':znap:*:*' git-maintenance off
 znap eval starship 'starship init zsh --print-full-init'
 znap prompt
 
-HISTORY_IGNORE="(\
-> *|\
-builtin *|\
-kill *|\
-mkdir *|\
-pkill *|\
-rm *|\
-rmdir *|\
-touch *|\
-unlink *\
-)"
-
 if (( $+__DARWIN )) {
     if [[ "$(arch)" == 'arm64'* ]] {
         znap eval brew '/opt/homebrew/bin/brew shellenv'
@@ -42,8 +30,6 @@ path+=(
     $HOME/.spicetify
 )
 
-export GPG_TTY="$(tty)"
-
 setopt always_to_end
 setopt no_append_create
 setopt auto_cd
@@ -64,6 +50,8 @@ setopt pushd_to_home
 setopt multios
 setopt typeset_silent
 
+export GPG_TTY="$(tty)"
+
 znap source ohmyzsh/ohmyzsh \
     lib/{completion,correction,directories,history} \
     plugins/{git,tmux}
@@ -71,6 +59,24 @@ znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-completions
 znap source zsh-users/zsh-syntax-highlighting
 znap source zsh-users/zsh-history-substring-search
+
+unsetopt extended_history
+unsetopt hist_expire_dups_first
+
+HISTSIZE=10000
+SAVEHIST=10000
+HISTORY_IGNORE="(\
+> *|\
+builtin *|\
+kill *|\
+mkdir *|\
+pkill *|\
+rm *|\
+rmdir *|\
+touch *|\
+unlink *\
+)"
+HISTFILE=$ZDOTDIR/.zsh_history
 
 znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'

@@ -1,9 +1,10 @@
-rec {
+{ config, user }:
+{
   enable = true;
   changeDirWidgetCommand = "fd -HL -E .git -c always -t d --strip-cwd-prefix";
   defaultCommand = "fd -H -E .git -c always -t f --strip-cwd-prefix";
   enableZshIntegration = true;
-  fileWidgetCommand = defaultCommand;
+  fileWidgetCommand = config.home-manager.users.${user}.programs.fzf.defaultCommand;
 
   colors = {
     fg = "-1";

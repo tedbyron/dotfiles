@@ -1,4 +1,4 @@
-{ inputs, pkgs, unstable, lib, system, isDarwin }:
+{ config, inputs, pkgs, unstable, lib, system, isDarwin, user }:
 {
   alacritty = {
     enable = true;
@@ -33,7 +33,7 @@
     # TODO firefox: config
   };
 
-  fzf = import ./fzf.nix;
+  fzf = import ./fzf.nix { inherit config user; };
 
   gh = {
     enable = true;

@@ -15,17 +15,21 @@
     pub = "$HOME/Public";
   };
 
-  history.ignorePatterns = [
-    "> *"
-    "builtin *"
-    "kill *"
-    "mkdir *"
-    "pkill *"
-    "rm *"
-    "rmdir *"
-    "touch *"
-    "unlink *"
-  ];
+  history = {
+    path = "$ZDOTDIR/.zsh_history";
+
+    ignorePatterns = [
+      "> *"
+      "builtin *"
+      "kill *"
+      "mkdir *"
+      "pkill *"
+      "rm *"
+      "rmdir *"
+      "touch *"
+      "unlink *"
+    ];
+  };
 
   historySubstringSearch = {
     enable = true;
@@ -49,9 +53,7 @@
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/git-lfs/git-lfs.plugin.zsh
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/git/git.plugin.zsh
     . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/tmux/tmux.plugin.zsh
-  '';
 
-  initExtra = ''
     setopt always_to_end
     setopt no_append_create
     setopt auto_pushd
@@ -70,7 +72,9 @@
     setopt pushd_to_home
     setopt multios
     setopt typeset_silent
+  '';
 
+  initExtra = ''
     bindkey -M menuselect '^[[Z' reverse-menu-complete
 
     # FIX 24-05
