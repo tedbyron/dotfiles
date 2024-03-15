@@ -16,40 +16,110 @@
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
+        inherit (pkgs) lib;
+
         pkgs = import nixpkgs { inherit system; };
-        buildPlans = (fromTOML (builtins.readFile ./private-build-plans.toml)).buildPlans;
+
+        buildPlan = {
+          family = "Curlio";
+          spacing = "term";
+          serifs = "sans";
+          noCvSs = true;
+          exportGlyphNames = false;
+
+          variants = {
+            inherits = "ss20";
+
+            design = {
+              capital-g = "toothless-corner-serifless-hooked";
+              capital-j = "flat-hook-serifed";
+              a = "single-storey-serifless";
+              d = "toothed-serifless";
+              e = "flat-crossbar";
+              f = "flat-hook-serifless-crossbar-at-x-height";
+              g = "single-storey-flat-hook-serifless";
+              i = "hooky";
+              j = "flat-hook-serifed";
+              k = "curly-serifless";
+              l = "hooky";
+              t = "flat-hook";
+              u = "toothed-serifless";
+              y = "cursive-flat-hook-serifless";
+
+              long-s = "bent-hook-serifless";
+              eszet = "sulzbacher-serifless";
+
+              lower-iota = "serifed-flat-tailed";
+              lower-tau = "flat-tailed";
+
+              cyrl-u = "cursive-flat-hook-serifless";
+              cyrl-ef = "serifless";
+              cyrl-yeri = "corner";
+              cyrl-yery = "corner";
+
+              zero = "long-dotted";
+              one = "base";
+              four = "closed";
+              five = "upright-flat";
+              seven = "curly-serifless";
+
+              asterisk = "penta-low";
+              brace = "straight";
+              at = "fourfold-solid-inner";
+              dollar = "open";
+              cent = "open";
+              percent = "rings-continuous-slash";
+
+              lig-neq = "vertical";
+              lig-equal-chain = "without-notch";
+              lig-hyphen-chain = "without-notch";
+            };
+          };
+
+          # https://github.com/be5invis/Iosevka/blob/main/doc/custom-build.md#configuring-ligations
+          ligations = {
+            inherits = "javascript";
+            disables = [ "ltgt-slash-tag" ];
+
+            enables = [
+              "center-op-influence-colon"
+              "arrow-l"
+              "hash-hash"
+            ];
+          };
+
+          widths = {
+            normal = {
+              shape = 600;
+              menu = 5;
+              css = "normal";
+            };
+
+            condensed = {
+              shape = 500;
+              menu = 3;
+              css = "condensed";
+            };
+          };
+        };
 
         all = pkgs.iosevka.override {
           set = "curlio";
-          privateBuildPlan = buildPlans.curlio;
+          privateBuildPlan = buildPlan;
+        };
+
+        buildPlanSingleWidth = width: buildPlan // {
+          widths = lib.filterAttrs (name: _: name == width) buildPlan.widths;
         };
 
         curlio = pkgs.iosevka.override {
           set = "curlio";
-
-          privateBuildPlan = buildPlans.curlio // {
-            widths = {
-              normal = {
-                shape = 600;
-                menu = 5;
-                css = "normal";
-              };
-            };
-          };
+          privateBuildPlan = buildPlanSingleWidth "normal";
         };
 
         curlioCondensed = pkgs.iosevka.override {
           set = "curlio-condensed";
-
-          privateBuildPlan = buildPlans.curlio // {
-            widths = {
-              normal = {
-                shape = 500;
-                menu = 3;
-                css = "condensed";
-              };
-            };
-          };
+          privateBuildPlan = buildPlanSingleWidth "condensed";
         };
 
         mkFont = font: web:

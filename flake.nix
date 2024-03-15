@@ -49,7 +49,7 @@
       inherit (lib.ted) mkSystem;
       inherit (flake-utils.lib.system) aarch64-darwin;
 
-      lib = nixpkgs.lib.extend (final: prev: {
+      lib = nixpkgs.lib.extend (final: _: {
         ted = import ./lib {
           inherit self inputs;
           lib = final;

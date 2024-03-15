@@ -2,7 +2,7 @@
 let
   modules = [ ./system.nix ];
 
-  ted = lib.makeExtensible (final: builtins.listToAttrs (map
+  ted = lib.makeExtensible (_: builtins.listToAttrs (map
     (path: lib.nameValuePair
       (baseNameOf (toString path))
       (import path {
@@ -10,4 +10,4 @@ let
       }))
     modules));
 in
-ted.extend (final: prev: lib.foldr (a: b: a // b) { } (lib.attrValues prev))
+ted.extend (_: prev: lib.foldr (a: b: a // b) { } (lib.attrValues prev))
