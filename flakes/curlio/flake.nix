@@ -127,28 +127,29 @@
             name = font.name;
             dontUnpack = true;
 
-            nativeBuildInputs =
-              if web then with pkgs; [
+            nativeBuildInputs = with pkgs; [
+                fd
+              ] ++ (if web then [
                 python311Packages.brotli
                 python311Packages.fonttools
-              ] else with pkgs; [
+              ] else [
                 nerd-font-patcher
-              ];
+              ]);
 
             buildPhase =
               if web then ''
-                for ttf in ${font}/share/fonts/truetype/*.ttf; do
-                  pyftsubset $ttf \
-                    --output-file="$(basename $ttf .ttf)".woff2 \
-                    --flavor=woff2 \
-                    --layout-features=* \
-                    --desubroutinize \
-                    --unicodes="U+0000-0170,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD,U+00E8"
-                done
+                # pyftsubset calls open with 'wb'
+                cp ${font}/share/fonts/truetype/*.ttf .
+
+                fd -j$NIX_BUILD_CORES -ettf . -x pyftsubset {} \
+                  --output-file={.}.woff2 \
+                  --flavor=woff2 \
+                  --layout-features=* \
+                  --desubroutinize \
+                  --unicodes="U+0000-0170,U+00D7,U+00F7,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-21BB,U+2212,U+2215,U+F8FF,U+FEFF,U+FFFD,U+00E8"
               '' else ''
-                for ttf in ${font}/share/fonts/truetype/*.ttf; do
-                  nerd-font-patcher -s -l -c --careful --makegroup -1 $ttf
-                done
+                fd -j$NIX_BUILD_CORES -ettf . ${font}/share/fonts/truetype -x nerd-font-patcher {} \
+                  --mono --careful --complete --adjust-line-height --makegroup -1
               '';
 
             installPhase =
