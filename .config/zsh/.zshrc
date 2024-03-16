@@ -14,12 +14,12 @@ if (( $+__DARWIN )) {
     }
 
     if (( $+HOMEBREW_PREFIX )) {
-        path+=(
-            $HOMEBREW_PREFIX/sbin
+        path=(
             $HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin
             $HOMEBREW_PREFIX/opt/findutils/libexec/gnubin
             $HOMEBREW_PREFIX/opt/grep/libexec/gnubin
             $HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin
+            $path
         )
     }
 }
@@ -96,9 +96,12 @@ alias gdc='git diff --cached'
 alias grhh=
 alias grep='grep -Ei --color=auto'
 alias gmv='git mv'
-if (( $+commands[gls] )) alias ls=gls
 if (( $+__DARWIN )) {
-    alias ls='ls -FHh -I ".DS_Store" --color=auto --group-directories-first'
+    if (( $+commands[gls] )) {
+        alias ls='gls -FHh -I ".DS_Store" --color=auto --group-directories-first'
+    } else {
+        alias ls='ls -FHh -I ".DS_Store" --color=auto --group-directories-first'
+    }
 } else {
     alias ls='ls -FHh --color=auto --group-directories-first'
 }
@@ -106,7 +109,6 @@ alias la='ls -A'
 alias l='ls -Al'
 alias pgrep='pgrep -afil'
 alias ps='ps -Aafx'
-alias rg='rg -.S -g "!.git"'
 alias sudo='sudo '
 
 alias -g -- -h='-h 2>&1 | bat -p -l help'
