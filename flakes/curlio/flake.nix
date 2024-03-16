@@ -113,12 +113,12 @@
         };
 
         curlio = pkgs.iosevka.override {
-          set = "curlio-normal";
+          set = "curlio";
           privateBuildPlan = buildPlanSingleWidth "normal";
         };
 
         curlioCondensed = pkgs.iosevka.override {
-          set = "curlio-condensed";
+          set = "curlio";
           privateBuildPlan = buildPlanSingleWidth "condensed";
         };
 
