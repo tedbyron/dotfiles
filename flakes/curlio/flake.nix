@@ -113,7 +113,7 @@
         };
 
         curlio = pkgs.iosevka.override {
-          set = "curlio";
+          set = "curlio-normal";
           privateBuildPlan = buildPlanSingleWidth "normal";
         };
 
@@ -124,7 +124,7 @@
 
         mkFont = font: web:
           pkgs.stdenvNoCC.mkDerivation {
-            name = "curlio";
+            name = font.name;
             dontUnpack = true;
 
             nativeBuildInputs =
@@ -153,10 +153,10 @@
 
             installPhase =
               if web then ''
-                install -Dt $out/share/fonts/truetype ${font}/share/fonts/truetype/*.ttf
-                install -Dt $out/share/fonts/woff2 *.woff2
+                install -Dm444 ${font}/share/fonts/truetype/*.ttf -t $out/share/fonts/truetype
+                install -Dm444 *.woff2 -t $out/share/fonts/woff2
               '' else ''
-                install -Dt $out/share/fonts/truetype *.ttf
+                install -Dm444 *.ttf -t $out/share/fonts/truetype
               '';
           };
       in

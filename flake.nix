@@ -25,8 +25,17 @@
       };
     };
 
-    iosevka = {
-      url = "path:./flakes/iosevka";
+    dircolors = {
+      url = "path:./flakes/dircolors";
+
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
+    curlio = {
+      url = "path:./flakes/curlio";
 
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
@@ -44,7 +53,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, iosevka, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
       inherit (lib.ted) mkSystem;
       inherit (flake-utils.lib.system) aarch64-darwin;
@@ -62,6 +71,8 @@
         delta = mkSystem "delta" { system = aarch64-darwin; };
       };
     } // flake-utils.lib.eachDefaultSystem (system: {
-      packages = iosevka.outputs.packages.${system};
+      packages = inputs.curlio.outputs.packages.${system} // {
+        dircolors = inputs.dircolors.outputs.packages.${system}.default;
+      };
     });
 }

@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, unstable, lib, system, isDarwin, user }:
+{ self, config, inputs, pkgs, unstable, lib, system, isDarwin, user }:
 {
   alacritty = {
     enable = true;
@@ -16,7 +16,7 @@
 
   dircolors = {
     enable = true;
-    # TODO dircolors: config
+    settings = import (self.outputs.packages.${system}.dircolors + "/share/nix/dircolors.nix");
   };
 
   direnv = {

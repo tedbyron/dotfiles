@@ -1,4 +1,4 @@
-{ config, inputs, pkgs, unstable, lib, system, isDarwin, isWsl, ... }:
+{ self, config, inputs, pkgs, unstable, lib, system, isDarwin, isWsl, ... }:
 let
   name = baseNameOf (toString ./.);
   home =
@@ -51,7 +51,7 @@ in
     };
 
     programs = import ./programs {
-      inherit config inputs pkgs unstable lib system isDarwin;
+      inherit self config inputs pkgs unstable lib system isDarwin;
 
       user = name;
     };
