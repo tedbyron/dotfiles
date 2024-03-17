@@ -8,9 +8,6 @@
 typeset -A current_map
 typeset -A next_map
 typeset -A install
-typeset name
-typeset vers
-typeset vers_next
 
 typeset -r green='\033[32m'   # foreground green
 typeset -r yellow='\033[33m'  # foreground yellow
@@ -22,7 +19,7 @@ current_versions() {
     mapfile -t arr < <(cargo install --list \
         | awk '/^[[:alnum:]]/{print $1 "\n" $2}')
     for (( i=0; i < ${#arr[@]}; i+=2 )); do
-        name=${arr[${i}]}
+        name=${arr[$i]}
         vers=${arr[$(( i+1 ))]}
         vers=${vers//[!0-9.]/}
         current_map[${name}]=${vers}
@@ -34,7 +31,7 @@ next_versions() {
     for crate in "${!current_map[@]}"; do
         vers=$(cargo search --limit 1 "$crate")
         name=$(awk 'NR==1{print $1}' <<<"$vers")
-        if [[ -n "$vers" && "${crate}" == "$name" ]]; then
+        if [[ -n "$vers" && $crate == "$name" ]]; then
             vers=$(awk 'NR==1{print $3}' <<<"$vers")
             vers=${vers//[!0-9.]/}
         else
@@ -46,6 +43,7 @@ next_versions() {
 
 # Compare versions and add outdated to `install`; echo outdated and versions.
 compare_and_echo() {
+    local vers_next
     for crate in "${!current_map[@]}"; do
         vers=${current_map[$crate]}
         vers_next=${next_map[$crate]}
@@ -68,7 +66,7 @@ prompt_and_install() {
         case $y_n in
             [yY]*)
                 read -rp "Extra args for 'cargo install': " eargs
-                case $eargs in
+                case "$eargs" in
                     '') cargo install -f "$crate" || exit 1 ;;
                     *) cargo install -f "$crate" "$eargs" || exit 1 ;;
                 esac
@@ -89,7 +87,7 @@ main() {
     next_versions
     compare_and_echo
 
-    if [[ $# == 1 && ${1,,} == '-y' ]]; then
+    if [[ $# == 1 && ($1 == '-y' || $1 == '--yes') ]]; then
         prompt_and_install_y
     else
         prompt_and_install

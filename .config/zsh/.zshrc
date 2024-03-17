@@ -25,6 +25,7 @@ if (( $+__DARWIN )) {
 }
 
 path+=(
+    $HOME/.local/bin
     $HOME/.cargo/bin
     $HOME/.fly/bin
     $HOME/.spicetify
@@ -74,8 +75,7 @@ pkill *|\
 rm *|\
 rmdir *|\
 touch *|\
-unlink *\
-)"
+unlink *)"
 HISTFILE=$ZDOTDIR/.zsh_history
 
 znap fpath _rustup 'rustup completions zsh'
