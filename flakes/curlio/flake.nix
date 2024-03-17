@@ -42,6 +42,7 @@
               j = "flat-hook-serifed";
               k = "curly-serifless";
               l = "hooky";
+              r = "hookless-serifless";
               t = "flat-hook";
               u = "toothed-serifless";
               y = "cursive-flat-hook-serifless";
@@ -69,6 +70,7 @@
               dollar = "open";
               cent = "open";
               percent = "rings-continuous-slash";
+              micro-sign = "toothed-serifless";
 
               lig-neq = "vertical";
               lig-equal-chain = "without-notch";
