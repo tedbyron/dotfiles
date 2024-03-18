@@ -24,7 +24,7 @@
       curl
       diffutils
       findutils
-      gawkInteractive
+      gawk
       git
       gnugrep
       gnused

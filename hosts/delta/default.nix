@@ -30,6 +30,7 @@ in
         "${userPackages "obsidian"}/Applications/Obsidian.app/"
         "${spicedSpotify}/Applications/Spotify.app/"
         "/Applications/Microsoft Teams (work or school).app/"
+        "/Applications/Figma.app/"
         "/Applications/VMware Fusion.app/"
         "${userPrograms "alacritty"}/Applications/Alacritty.app/"
         "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
@@ -43,6 +44,7 @@ in
     };
 
   homebrew.casks = [
+    "figma"
     "lunar"
     "meetingbar"
     "microsoft-teams"
