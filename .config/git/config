@@ -1,7 +1,7 @@
 [user]
   name = "Teddy Byron"
-  email = "ted@tedbyron.com"
-  signingkey = "E0496EDDDF6BB87D"
+  email = "ted@ted.ooo"
+  signingkey = "0BE1310591ECE7CF"
 [core]
   autocrlf = false
   eol = "lf"
