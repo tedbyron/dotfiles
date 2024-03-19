@@ -5,6 +5,7 @@
   defaultKeymap = "emacs";
   dotDir = ".config/zsh";
   enableAutosuggestions = true;
+  localVariables.HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
   syntaxHighlighting.enable = true;
 
   dirHashes = {
@@ -113,7 +114,6 @@
   sessionVariables = {
     EDITOR = "nvim";
     ERL_AFLAGS = "+pc unicode -kernel shell_history enabled";
-    HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
     IEX_HOME = "$HOME/.config/iex";
     LESS = "-FRi";
     LESSHISTFILE = "-";

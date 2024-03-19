@@ -16,7 +16,7 @@
 
   dircolors = {
     enable = true;
-    settings = import (self.outputs.packages.${system}.dircolors + "/share/nix/dircolors.nix");
+    settings = import ("${self.outputs.packages.${system}.dircolors}/share/nix/settings.nix");
   };
 
   direnv = {

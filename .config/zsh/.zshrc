@@ -77,6 +77,7 @@ rmdir *|\
 touch *|\
 unlink *)"
 HISTFILE=$ZDOTDIR/.zsh_history
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'

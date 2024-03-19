@@ -131,13 +131,13 @@
             dontUnpack = true;
 
             nativeBuildInputs = with pkgs; [
-                fd
-              ] ++ (if web then [
-                python311Packages.brotli
-                python311Packages.fonttools
-              ] else [
-                nerd-font-patcher
-              ]);
+              fd
+            ] ++ (if web then [
+              python311Packages.brotli
+              python311Packages.fonttools
+            ] else [
+              nerd-font-patcher
+            ]);
 
             buildPhase =
               if web then ''
