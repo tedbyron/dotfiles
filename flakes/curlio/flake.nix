@@ -149,7 +149,6 @@
                   --flavor=woff2 \
                   --layout-features=* \
                   --desubroutinize \
-                  --with-zopfli \
                   --unicodes="U+0000-017F,U+2000-20CF,U+2100-22FF,U+FFFD"
               '' else ''
                 fd -j$NIX_BUILD_CORES -ettf . ${font}/share/fonts/truetype -x nerd-font-patcher {} \
