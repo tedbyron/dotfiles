@@ -86,6 +86,7 @@
             enables = [
               "center-op-influence-colon"
               "arrow-l"
+              "slash-asterisk"
               "hash-hash"
             ];
           };

@@ -6,7 +6,6 @@ with pkgs; [
   ffmpeg
   hexyl
   hyperfine
-  markdownlint-cli
   nil
   nixpkgs-fmt
   obsidian
