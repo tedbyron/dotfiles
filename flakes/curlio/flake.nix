@@ -81,13 +81,16 @@
           # https://github.com/be5invis/Iosevka/blob/main/doc/custom-build.md#configuring-ligations
           ligations = {
             inherits = "javascript";
-            disables = [ "ltgt-slash-tag" ];
 
             enables = [
               "center-op-influence-colon"
               "arrow-l"
-              "slash-asterisk"
               "hash-hash"
+            ];
+
+            disables = [
+              "ltgt-slash-tag"
+              "slash-asterisk"
             ];
           };
 
