@@ -1,21 +1,9 @@
 {
   description = "Dracula dircolors for home-manager";
 
-  inputs = {
-    nixpkgs = {
-      type = "indirect";
-      id = "nixpkgs";
-    };
-
-    flake-utils = {
-      type = "indirect";
-      id = "flake-utils";
-    };
-
-    dracula-dircolors = {
-      url = "github:dracula/dircolors";
-      flake = false;
-    };
+  inputs.dracula-dircolors = {
+    url = "github:dracula/dircolors";
+    flake = false;
   };
 
   outputs = { self, nixpkgs, flake-utils, dracula-dircolors }:

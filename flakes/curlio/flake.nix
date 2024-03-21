@@ -1,18 +1,6 @@
 {
   description = "Iosevka extended ss20 variant + nerd font glyphs";
 
-  inputs = {
-    nixpkgs = {
-      type = "indirect";
-      id = "nixpkgs";
-    };
-
-    flake-utils = {
-      type = "indirect";
-      id = "flake-utils";
-    };
-  };
-
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
