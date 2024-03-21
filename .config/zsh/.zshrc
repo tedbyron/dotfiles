@@ -90,6 +90,7 @@ bindkey -M menuselect '^[[Z' reverse-menu-complete
 alias df='df \-h'
 alias du='du \-h -d 1'
 alias fcir='fc -IR'
+alias fcl='fc -lr'
 alias gba='git branch -avv'
 alias gbl='git blame -wCCC'
 alias gbr='git branch -rv'

@@ -87,6 +87,7 @@
     df = "df \\-h";
     du = "du \\-h -d 1";
     fcir = "fc -IR";
+    fcl = "fc -lr";
     gba = "git branch -avv";
     gbl = "git blame -wCCC";
     gbr = "git branch -rv";
