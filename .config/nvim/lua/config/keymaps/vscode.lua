@@ -41,8 +41,8 @@ noremap_action({ 'n', 'x' }, '<Leader>ghs', 'git.stageSelectedRanges')
 noremap_action({ 'n', 'x' }, '<Leader>ghu', 'git.unstageSelectedRanges')
 noremap_action({ 'n', 'x' }, '<Leader>ghr', 'git.revertSelectedRanges')
 
-noremap_action('n', '<Leader>un', 'notifications.showList')
-noremap_action('n', '<Leader>uN', 'notifications.clearAll')
+noremap_action('n', '<Leader>uN', 'notifications.showList')
+noremap_action('n', '<Leader>un', 'notifications.clearAll')
 noremap_action('n', '<Leader>ur', 'workbench.action.reloadWindow')
 
 noremap_action('n', ']d', 'editor.action.marker.next')
