@@ -109,6 +109,7 @@ if (( $+__DARWIN )) {
 }
 alias la='ls -A'
 alias l='ls -Al'
+alias mv='mv -i'
 alias pgrep='pgrep -afil'
 alias ps='ps -Aafx'
 alias sudo='sudo '

@@ -101,6 +101,7 @@
       else "ls -FHh --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";
+    mv = "mv -i";
     pgrep = "pgrep -afil";
     ps = "ps -Aafx";
     sudo = "sudo ";
