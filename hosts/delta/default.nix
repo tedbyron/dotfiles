@@ -26,6 +26,7 @@ in
 
       entries = map (path: { path = path; }) [
         "/Applications/Firefox.app/"
+        "/Applications/Chromium.app/"
         "/Applications/Bitwarden.app/"
         "${userPackages "obsidian"}/Applications/Obsidian.app/"
         "${spicedSpotify}/Applications/Spotify.app/"
