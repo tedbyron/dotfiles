@@ -48,8 +48,8 @@
 
               zero = "long-dotted";
               one = "base";
-              four = "closed";
-              five = "upright-flat";
+              four = "closed-serifless";
+              five = "upright-flat-serifless";
               seven = "curly-serifless";
 
               asterisk = "penta-low";
