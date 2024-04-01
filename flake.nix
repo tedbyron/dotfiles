@@ -64,8 +64,7 @@
           lib = final;
         };
       });
-    in
-    {
+    in {
       darwinConfigurations = {
         gamma = mkSystem "gamma" { system = aarch64-darwin; };
         delta = mkSystem "delta" { system = aarch64-darwin; };

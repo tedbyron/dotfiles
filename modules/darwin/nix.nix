@@ -1,5 +1,4 @@
-{ unstable, ... }:
-{
+{ unstable, ... }: {
   nix = {
     configureBuildUsers = true;
     package = unstable.nixVersions.nix_2_20;

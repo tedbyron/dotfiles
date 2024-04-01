@@ -1,5 +1,6 @@
 { pkgs, unstable, lib, isDarwin }:
-with pkgs; [
+with pkgs;
+[
   b3sum
   delta
   fd
@@ -14,7 +15,4 @@ with pkgs; [
   tokei
   unstable.elixir
   unstable.nodejs
-] ++ lib.optionals isDarwin [
-  mas
-  pinentry_mac
-]
+] ++ lib.optionals isDarwin [ mas pinentry_mac ]

@@ -1,5 +1,4 @@
-{ pkgs, lib, isDarwin }:
-{
+{ pkgs, lib, isDarwin }: {
   enable = true;
   autocd = true;
   defaultKeymap = "emacs";
@@ -35,15 +34,9 @@
   historySubstringSearch = {
     enable = true;
 
-    searchUpKey = [
-      "^[[A"
-      "^P"
-    ];
+    searchUpKey = [ "^[[A" "^P" ];
 
-    searchDownKey = [
-      "^[[B"
-      "^N"
-    ];
+    searchDownKey = [ "^[[B" "^N" ];
   };
 
   initExtraBeforeCompInit = ''
@@ -95,10 +88,10 @@
     grep = "grep -Ei --color=auto";
     grhh = "";
     gmv = "git mv";
-    ls =
-      if isDarwin
-      then "ls -FHh -I '.DS_Store' --color=auto --group-directories-first"
-      else "ls -FHh --color=auto --group-directories-first";
+    ls = if isDarwin then
+      "ls -FHh -I '.DS_Store' --color=auto --group-directories-first"
+    else
+      "ls -FHh --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";
     mv = "mv -i";

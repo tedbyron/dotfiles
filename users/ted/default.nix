@@ -1,12 +1,8 @@
 { self, config, inputs, pkgs, unstable, lib, system, isDarwin, isWsl, ... }:
 let
   name = baseNameOf (toString ./.);
-  home =
-    if isDarwin
-    then "/Users/${name}"
-    else "/home/${name}";
-in
-{
+  home = if isDarwin then "/Users/${name}" else "/home/${name}";
+in {
   users.users.${name} = {
     inherit home;
     description = "Teddy Byron";
@@ -39,7 +35,9 @@ in
           text = "";
         };
 
-        "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
+        "${
+          config.home-manager.users.${name}.programs.gpg.homedir
+        }/gpg-agent.conf" = {
           enable = isDarwin;
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
@@ -57,7 +55,8 @@ in
     };
 
     targets.darwin = lib.optionalAttrs isDarwin {
-      currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
+      currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage =
+        false;
       search = "DuckDuckGo";
 
       defaults = {

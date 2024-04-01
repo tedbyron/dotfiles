@@ -1,4 +1,1 @@
-{ isDarwin, ... }:
-{
-  imports = [ (if isDarwin then ./darwin else ./nixos) ];
-}
+{ isDarwin, ... }: { imports = [ (if isDarwin then ./darwin else ./nixos) ]; }

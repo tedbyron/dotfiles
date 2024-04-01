@@ -1,10 +1,5 @@
-{ self, pkgs, system, ... }:
-{
-  imports = [
-    ./dock.nix
-    ./nix.nix
-    ./system.nix
-  ];
+{ self, pkgs, system, ... }: {
+  imports = [ ./dock.nix ./nix.nix ./system.nix ];
 
   security.pam.enableSudoTouchIdAuth = true;
 
@@ -14,10 +9,7 @@
   };
 
   environment = {
-    shells = with pkgs; [
-      bashInteractive
-      zsh
-    ];
+    shells = with pkgs; [ bashInteractive zsh ];
 
     systemPackages = with pkgs; [
       binutils
@@ -43,12 +35,7 @@
   homebrew = {
     enable = true;
 
-    casks = [
-      "firefox"
-      "mullvadvpn"
-      "rectangle"
-      "vlc"
-    ];
+    casks = [ "firefox" "mullvadvpn" "rectangle" "vlc" ];
 
     masApps = {
       NextDns = 1464122853;

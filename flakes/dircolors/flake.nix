@@ -27,6 +27,5 @@
             install -Dm644 settings.nix $out/share/nix/settings.nix
           '';
         };
-      }
-    );
+      });
 }

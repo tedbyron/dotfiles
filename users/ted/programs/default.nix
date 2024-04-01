@@ -1,8 +1,8 @@
-{ self, config, inputs, pkgs, unstable, lib, system, isDarwin, user }:
-{
+{ self, config, inputs, pkgs, unstable, lib, system, isDarwin, user }: {
   alacritty = {
     enable = true;
-    settings = fromTOML (builtins.readFile ../../../.config/alacritty/alacritty.toml);
+    settings =
+      fromTOML (builtins.readFile ../../../.config/alacritty/alacritty.toml);
   };
 
   bat = {
@@ -16,7 +16,8 @@
 
   dircolors = {
     enable = true;
-    settings = import ("${self.outputs.packages.${system}.dircolors}/share/nix/settings.nix");
+    settings = import
+      ("${self.outputs.packages.${system}.dircolors}/share/nix/settings.nix");
   };
 
   direnv = {
@@ -55,7 +56,8 @@
     enable = true;
     # delta configured in .gitconfig and installed as a user package
     extraConfig = fromTOML (builtins.readFile ../../../.config/git/config);
-    ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
+    ignores =
+      lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
   };
 
@@ -82,21 +84,16 @@
   ripgrep = {
     enable = true;
 
-    arguments = [
-      "-."
-      "-S"
-      "-g=!.git"
-    ];
+    arguments = [ "-." "-S" "-g=!.git" ];
   };
 
-  spicetify =
-    let spicePkgs = inputs.spicetify-nix.packages.${system}.default;
-    in {
-      enable = true;
-      colorScheme = "Dracula";
-      spotifyPackage = unstable.spotify;
-      theme = spicePkgs.themes.Sleek;
-    };
+  spicetify = let spicePkgs = inputs.spicetify-nix.packages.${system}.default;
+  in {
+    enable = true;
+    colorScheme = "Dracula";
+    spotifyPackage = unstable.spotify;
+    theme = spicePkgs.themes.Sleek;
+  };
 
   # sqls
   ssh.enable = true;

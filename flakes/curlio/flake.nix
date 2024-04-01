@@ -70,16 +70,9 @@
           ligations = {
             inherits = "javascript";
 
-            enables = [
-              "center-op-influence-colon"
-              "arrow-l"
-              "hash-hash"
-            ];
+            enables = [ "center-op-influence-colon" "arrow-l" "hash-hash" ];
 
-            disables = [
-              "ltgt-slash-tag"
-              "slash-asterisk"
-            ];
+            disables = [ "ltgt-slash-tag" "slash-asterisk" ];
           };
 
           widths = {
@@ -102,9 +95,10 @@
           privateBuildPlan = buildPlan;
         };
 
-        buildPlanSingleWidth = width: buildPlan // {
-          widths = lib.filterAttrs (name: _: name == width) buildPlan.widths;
-        };
+        buildPlanSingleWidth = width:
+          buildPlan // {
+            widths = lib.filterAttrs (name: _: name == width) buildPlan.widths;
+          };
 
         curlio = pkgs.iosevka.override {
           set = "curlio";
@@ -121,41 +115,36 @@
             name = font.name;
             dontUnpack = true;
 
-            nativeBuildInputs = with pkgs; [
-              fd
-            ] ++ (if web then [
-              python311Packages.brotli
-              python311Packages.fonttools
-            ] else [
-              nerd-font-patcher
-            ]);
+            nativeBuildInputs = with pkgs;
+              [ fd ] ++ (if web then [
+                python311Packages.brotli
+                python311Packages.fonttools
+              ] else
+                [ nerd-font-patcher ]);
 
-            buildPhase =
-              if web then ''
-                # pyftsubset calls open with 'wb'
-                cp ${font}/share/fonts/truetype/*.ttf .
+            buildPhase = if web then ''
+              # pyftsubset calls open with 'wb'
+              cp ${font}/share/fonts/truetype/*.ttf .
 
-                fd -j$NIX_BUILD_CORES -ettf . -x pyftsubset {} \
-                  --output-file={.}.woff2 \
-                  --flavor=woff2 \
-                  --layout-features=* \
-                  --desubroutinize \
-                  --unicodes="U+0000-017F,U+2000-20CF,U+2100-22FF,U+FFFD"
-              '' else ''
-                fd -j$NIX_BUILD_CORES -ettf . ${font}/share/fonts/truetype -x nerd-font-patcher {} \
-                  --mono --careful --complete --adjust-line-height --makegroup -1
-              '';
+              fd -j$NIX_BUILD_CORES -ettf . -x pyftsubset {} \
+                --output-file={.}.woff2 \
+                --flavor=woff2 \
+                --layout-features=* \
+                --desubroutinize \
+                --unicodes="U+0000-017F,U+2000-20CF,U+2100-22FF,U+FFFD"
+            '' else ''
+              fd -j$NIX_BUILD_CORES -ettf . ${font}/share/fonts/truetype -x nerd-font-patcher {} \
+                --mono --careful --complete --adjust-line-height --makegroup -1
+            '';
 
-            installPhase =
-              if web then ''
-                install -Dm444 ${font}/share/fonts/truetype/*.ttf -t $out/share/fonts/truetype
-                install -Dm444 *.woff2 -t $out/share/fonts/woff2
-              '' else ''
-                install -Dm444 *.ttf -t $out/share/fonts/truetype
-              '';
+            installPhase = if web then ''
+              install -Dm444 ${font}/share/fonts/truetype/*.ttf -t $out/share/fonts/truetype
+              install -Dm444 *.woff2 -t $out/share/fonts/woff2
+            '' else ''
+              install -Dm444 *.ttf -t $out/share/fonts/truetype
+            '';
           };
-      in
-      {
+      in {
         packages = {
           all-ttf = mkFont all false;
           all-web = mkFont all true;
@@ -164,6 +153,5 @@
           curlio-condensed-ttf = mkFont curlioCondensed false;
           curlio-condensed-web = mkFont curlioCondensed true;
         };
-      }
-    );
+      });
 }
