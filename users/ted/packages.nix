@@ -7,7 +7,7 @@ with pkgs; [
   hexyl
   hyperfine
   nil
-  nixpkgs-fmt
+  nixfmt
   obsidian
   imagemagick
   lychee
