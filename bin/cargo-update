@@ -16,7 +16,7 @@ typeset -r nt='\033[0m'       # normal text
 # Store currently installed binary names and versions in `current_map`.
 current_versions() {
     local -a arr
-    mapfile -t arr < <(cargo install --list \
+    readarray -t arr < <(cargo install --list \
         | awk '/^[[:alnum:]]/{print $1 "\n" $2}')
     for (( i=0; i < ${#arr[@]}; i+=2 )); do
         name=${arr[$i]}
