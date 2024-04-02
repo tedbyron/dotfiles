@@ -7,11 +7,11 @@ with pkgs;
   ffmpeg
   hexyl
   hyperfine
+  imagemagick
+  lychee
   nil
   nixfmt
   obsidian
-  imagemagick
-  lychee
   tokei
   unstable.elixir
   unstable.nodejs
