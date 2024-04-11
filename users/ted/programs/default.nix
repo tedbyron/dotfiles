@@ -59,6 +59,7 @@
     ignores =
       lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
+    package = unstable.git; # FIX 24-05
   };
 
   # git-cliff

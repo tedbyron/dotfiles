@@ -12,6 +12,7 @@ with pkgs;
   nil
   nixfmt
   obsidian
+  ouch
   tokei
   unstable.elixir
   unstable.nodejs

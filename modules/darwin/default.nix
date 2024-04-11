@@ -18,11 +18,9 @@
       diffutils
       findutils
       gawk
-      git
       gnugrep
       gnused
       less
-      ouch
       python3
     ];
 
