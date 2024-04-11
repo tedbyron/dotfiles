@@ -11,7 +11,6 @@
       alf.globalstate = 1;
       loginwindow.GuestEnabled = false;
       magicmouse.MouseButtonMode = "TwoButton";
-      universalaccess.reduceTransparency = false;
 
       dock = {
         appswitcher-all-displays = true;
