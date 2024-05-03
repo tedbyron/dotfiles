@@ -4,7 +4,7 @@
   keyMode = "vi";
   mouse = true;
   newSession = true;
-  shortcut = "a";
+  prefix = "C-a";
   terminal = "tmux-256color";
 
   extraConfig = ''
