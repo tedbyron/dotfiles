@@ -66,8 +66,8 @@
       });
     in {
       darwinConfigurations = {
-        gamma = mkSystem "gamma" { system = aarch64-darwin; };
-        delta = mkSystem "delta" { system = aarch64-darwin; };
+        teds-laptop = mkSystem "teds-laptop" { system = aarch64-darwin; };
+        teds-work-laptop = mkSystem "teds-work-laptop" { system = aarch64-darwin; };
       };
     } // flake-utils.lib.eachDefaultSystem (system: {
       packages = inputs.curlio.outputs.packages.${system} // {
