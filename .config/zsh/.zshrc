@@ -95,7 +95,6 @@ alias gba='git branch -avv'
 alias gbl='git blame -wCCC'
 alias gbr='git branch -rv'
 alias gdc='git diff --cached'
-alias grhh=
 alias grep='grep -Ei --color=auto'
 alias gmv='git mv'
 if (( $+__DARWIN )) {
@@ -116,6 +115,8 @@ alias sudo='sudo '
 
 alias -g -- -h='-h 2>&1 | bat -p -l help'
 alias -g -- --help='--help 2>&1 | bat -p -l help'
+
+unalias grhh
 
 hash -d dot=$HOME/git/dotfiles
 hash -d git=$HOME/git

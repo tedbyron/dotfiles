@@ -74,6 +74,8 @@
     # FIX 24-05
     alias -g -- -h='-h 2>&1 | bat -p -l help'
     alias -g -- --help='--help 2>&1 | bat -p -l help'
+
+    unalias grhh
   '';
 
   shellAliases = {
@@ -87,7 +89,6 @@
     gdc = "git diff --cached";
     gmv = "git mv";
     grep = "grep -Ei --color=auto";
-    grhh = "";
     ls = if isDarwin then
       "ls -FHh -I '.DS_Store' --color=auto --group-directories-first"
     else
