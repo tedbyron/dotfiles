@@ -25,6 +25,15 @@
       };
     };
 
+    curlio = {
+      url = "path:./flakes/curlio";
+
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
     dircolors = {
       url = "path:./flakes/dircolors";
 
@@ -34,8 +43,8 @@
       };
     };
 
-    curlio = {
-      url = "path:./flakes/curlio";
+    rust = {
+      url = "github:oxalica/rust-overlay";
 
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
@@ -53,10 +62,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, rust, ... }@inputs:
     let
       inherit (lib.ted) mkSystem;
       inherit (flake-utils.lib.system) aarch64-darwin;
+
+      overlays = [ rust.overlays.default ];
 
       lib = nixpkgs.lib.extend (final: _: {
         ted = import ./lib {
@@ -66,8 +77,14 @@
       });
     in {
       darwinConfigurations = {
-        teds-laptop = mkSystem "teds-laptop" { system = aarch64-darwin; };
-        teds-work-laptop = mkSystem "teds-work-laptop" { system = aarch64-darwin; };
+        teds-laptop = mkSystem "teds-laptop" {
+          inherit overlays;
+          system = aarch64-darwin;
+        };
+        teds-work-laptop = mkSystem "teds-work-laptop" {
+          inherit overlays;
+          system = aarch64-darwin;
+        };
       };
     } // flake-utils.lib.eachDefaultSystem (system: {
       packages = inputs.curlio.outputs.packages.${system} // {
