@@ -1,8 +1,20 @@
-{ self, config, inputs, pkgs, unstable, lib, system, isDarwin, isWsl, ... }:
+{
+  self,
+  config,
+  inputs,
+  pkgs,
+  unstable,
+  lib,
+  system,
+  isDarwin,
+  isWsl,
+  ...
+}:
 let
   name = baseNameOf (toString ./.);
   home = if isDarwin then "/Users/${name}" else "/home/${name}";
-in {
+in
+{
   users.users.${name} = {
     inherit home;
     description = "Teddy Byron";
@@ -17,7 +29,14 @@ in {
     home = {
       stateVersion = "23.11";
       homeDirectory = home;
-      packages = import ./packages.nix { inherit pkgs unstable lib isDarwin; };
+      packages = import ./packages.nix {
+        inherit
+          pkgs
+          unstable
+          lib
+          isDarwin
+          ;
+      };
       username = name;
 
       file = {
@@ -35,9 +54,7 @@ in {
           text = "";
         };
 
-        "${
-          config.home-manager.users.${name}.programs.gpg.homedir
-        }/gpg-agent.conf" = {
+        "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
           enable = isDarwin;
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
@@ -49,14 +66,22 @@ in {
     };
 
     programs = import ./programs {
-      inherit self config inputs pkgs unstable lib system isDarwin;
+      inherit
+        self
+        config
+        inputs
+        pkgs
+        unstable
+        lib
+        system
+        isDarwin
+        ;
 
       user = name;
     };
 
     targets.darwin = lib.optionalAttrs isDarwin {
-      currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage =
-        false;
+      currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
       search = "DuckDuckGo";
 
       defaults = {

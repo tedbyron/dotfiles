@@ -1,4 +1,5 @@
-{ pkgs }: {
+{ pkgs }:
+{
   enable = true;
   clock24 = true;
   keyMode = "vi";

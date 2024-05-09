@@ -1,4 +1,9 @@
-{ pkgs, lib, isDarwin }: {
+{
+  pkgs,
+  lib,
+  isDarwin,
+}:
+{
   enable = true;
   autocd = true;
   defaultKeymap = "emacs";
@@ -7,13 +12,15 @@
   localVariables.HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
   syntaxHighlighting.enable = true;
 
-  dirHashes = {
-    dot = "$HOME/git/dotfiles";
-    git = "$HOME/git";
-  } // lib.optionalAttrs isDarwin {
-    dls = "$HOME/Downloads";
-    pub = "$HOME/Public";
-  };
+  dirHashes =
+    {
+      dot = "$HOME/git/dotfiles";
+      git = "$HOME/git";
+    }
+    // lib.optionalAttrs isDarwin {
+      dls = "$HOME/Downloads";
+      pub = "$HOME/Public";
+    };
 
   history = {
     path = "$ZDOTDIR/.zsh_history";
@@ -34,9 +41,15 @@
   historySubstringSearch = {
     enable = true;
 
-    searchUpKey = [ "^[[A" "^P" ];
+    searchUpKey = [
+      "^[[A"
+      "^P"
+    ];
 
-    searchDownKey = [ "^[[B" "^N" ];
+    searchDownKey = [
+      "^[[B"
+      "^N"
+    ];
   };
 
   initExtraBeforeCompInit = ''
@@ -89,10 +102,11 @@
     gdc = "git diff --cached";
     gmv = "git mv";
     grep = "grep -Ei --color=auto";
-    ls = if isDarwin then
-      "ls -FHh -I '.DS_Store' --color=auto --group-directories-first"
-    else
-      "ls -FHh --color=auto --group-directories-first";
+    ls =
+      if isDarwin then
+        "ls -FHh -I '.DS_Store' --color=auto --group-directories-first"
+      else
+        "ls -FHh --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";
     mv = "mv -i";

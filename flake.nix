@@ -62,20 +62,30 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, rust, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      rust,
+      ...
+    }@inputs:
     let
       inherit (lib.ted) mkSystem;
       inherit (flake-utils.lib.system) aarch64-darwin;
 
       overlays = [ rust.overlays.default ];
 
-      lib = nixpkgs.lib.extend (final: _: {
-        ted = import ./lib {
-          inherit self inputs;
-          lib = final;
-        };
-      });
-    in {
+      lib = nixpkgs.lib.extend (
+        final: _: {
+          ted = import ./lib {
+            inherit self inputs;
+            lib = final;
+          };
+        }
+      );
+    in
+    {
       darwinConfigurations = {
         teds-laptop = mkSystem "teds-laptop" {
           inherit overlays;
@@ -86,7 +96,8 @@
           system = aarch64-darwin;
         };
       };
-    } // flake-utils.lib.eachDefaultSystem (system: {
+    }
+    // flake-utils.lib.eachDefaultSystem (system: {
       packages = inputs.curlio.outputs.packages.${system} // {
         dircolors = inputs.dircolors.outputs.packages.${system}.default;
       };

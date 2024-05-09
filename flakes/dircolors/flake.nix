@@ -6,10 +6,19 @@
     flake = false;
   };
 
-  outputs = { self, nixpkgs, flake-utils, dracula-dircolors }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = import nixpkgs { inherit system; };
-      in {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      dracula-dircolors,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
         packages.default = pkgs.stdenvNoCC.mkDerivation {
           pname = "dracula-dircolors";
           version = dracula-dircolors.rev;
@@ -27,5 +36,6 @@
             install -Dm644 settings.nix $out/share/nix/settings.nix
           '';
         };
-      });
+      }
+    );
 }

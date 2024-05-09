@@ -1,4 +1,9 @@
-{ pkgs, unstable, lib, isDarwin }:
+{
+  pkgs,
+  unstable,
+  lib,
+  isDarwin,
+}:
 with pkgs;
 [
   b3sum
@@ -16,11 +21,15 @@ with pkgs;
   imagemagick
   lychee
   nil
-  nixfmt
+  unstable.nixfmt-rfc-style
   unstable.nodejs
   obsidian
   openssl
   ouch
   tokei
   wasm-pack
-] ++ lib.optionals isDarwin [ mas pinentry_mac ]
+]
+++ lib.optionals isDarwin [
+  mas
+  pinentry_mac
+]
