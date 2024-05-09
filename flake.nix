@@ -43,15 +43,6 @@
       };
     };
 
-    rust = {
-      url = "github:oxalica/rust-overlay";
-
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        flake-utils.follows = "flake-utils";
-      };
-    };
-
     spicetify-nix = {
       url = "github:tedbyron/spicetify-nix";
 
@@ -67,14 +58,13 @@
       self,
       nixpkgs,
       flake-utils,
-      rust,
       ...
     }@inputs:
     let
       inherit (lib.ted) mkSystem;
       inherit (flake-utils.lib.system) aarch64-darwin;
 
-      overlays = [ rust.overlays.default ];
+      overlays = [ ];
 
       lib = nixpkgs.lib.extend (
         final: _: {
