@@ -8,6 +8,7 @@ with pkgs;
   cargo-generate
   cargo-watch
   delta
+  unstable.elixir
   fd
   ffmpeg
   hexyl
@@ -16,11 +17,10 @@ with pkgs;
   lychee
   nil
   nixfmt
-  rust-bin.nightly.latest.default
+  unstable.nodejs
   obsidian
+  openssl
   ouch
   tokei
   wasm-pack
-  unstable.elixir
-  unstable.nodejs
 ] ++ lib.optionals isDarwin [ mas pinentry_mac ]
