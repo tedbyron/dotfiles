@@ -102,11 +102,7 @@
     gdc = "git diff --cached";
     gmv = "git mv";
     grep = "grep -Ei --color=auto";
-    ls =
-      if isDarwin then
-        "ls -FHh -I '.DS_Store' --color=auto --group-directories-first"
-      else
-        "ls -FHh --color=auto --group-directories-first";
+    ls = "ls -FHh -I '.DS_Store' --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";
     mv = "mv -i";

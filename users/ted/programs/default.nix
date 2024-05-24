@@ -43,7 +43,7 @@
     # TODO firefox: config
   };
 
-  fzf = import ./fzf.nix { inherit config isDarwin user; };
+  fzf = import ./fzf.nix { inherit config user; };
 
   gh = {
     enable = true;
@@ -59,8 +59,6 @@
     };
   };
 
-  # gh-dash
-
   git = {
     enable = true;
     # delta configured in .gitconfig and installed as a user package
@@ -70,7 +68,6 @@
     package = unstable.git; # FIX 24-05
   };
 
-  # git-cliff
   # go
   gpg.enable = true; # TODO gpg: signing keys
   # home-manager.enable = true; #FIX necessary?

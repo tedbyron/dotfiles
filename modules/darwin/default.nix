@@ -33,6 +33,7 @@
       gawk
       gnugrep
       gnused
+      groff
       less
       python3
     ];

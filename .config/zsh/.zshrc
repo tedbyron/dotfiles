@@ -97,14 +97,10 @@ alias gbr='git branch -rv'
 alias gdc='git diff --cached'
 alias grep='grep -Ei --color=auto'
 alias gmv='git mv'
-if (( $+__DARWIN )) {
-    if (( $+commands[gls] )) {
-        alias ls='gls -FHh -I ".DS_Store" --color=auto --group-directories-first'
-    } else {
-        alias ls='ls -FHh -I ".DS_Store" --color=auto --group-directories-first'
-    }
+if (( $+commands[gls] )) {
+    alias ls='gls -FHh -I ".DS_Store" --color=auto --group-directories-first'
 } else {
-    alias ls='ls -FHh --color=auto --group-directories-first'
+    alias ls='ls -FHh -I ".DS_Store" --color=auto --group-directories-first'
 }
 alias la='ls -A'
 alias l='ls -Al'
