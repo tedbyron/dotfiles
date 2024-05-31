@@ -36,7 +36,6 @@ in
           "/Applications/Microsoft Teams (work or school).app/"
           "/Applications/Figma.app/"
           "/Applications/VMware Fusion.app/"
-          "/Applications/pgAdmin 4.app/"
           "${userPrograms "alacritty"}/Applications/Alacritty.app/"
           "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
         ]
@@ -57,21 +56,11 @@ in
     "lunar"
     "meetingbar"
     "microsoft-teams"
-    "pgadmin4"
     "vmware-fusion"
   ];
 
   networking = {
     computerName = name;
     hostName = name;
-  };
-
-  services.postgresql = {
-    enable = true;
-    authentication = lib.mkForce ''
-      #type   database    user    address    auth-method
-      local   all         all                trust
-    '';
-    package = unstable.postgresql;
   };
 }
