@@ -84,10 +84,6 @@
   initExtra = ''
     bindkey -M menuselect '^[[Z' reverse-menu-complete
 
-    # FIX 24-05
-    alias -g -- -h='-h 2>&1 | bat -p -l help'
-    alias -g -- --help='--help 2>&1 | bat -p -l help'
-
     unalias grhh
   '';
 
@@ -111,10 +107,9 @@
     sudo = "sudo ";
   };
 
-  # FIX 24-05
   shellGlobalAliases = {
-    # "-h" = "-h 2>&1 | bat -pl help";
-    # "--help" = "--help 2>&1 | bat -pl help";
+    "-h" = "-h 2>&1 | bat -pl help";
+    "--help" = "--help 2>&1 | bat -pl help";
   };
 
   sessionVariables = {
