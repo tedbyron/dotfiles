@@ -67,8 +67,5 @@
     };
   };
 
-  fonts = {
-    fontDir.enable = true;
-    fonts = [ self.outputs.packages.${system}.curlio-ttf ];
-  };
+  fonts.packages = [ self.outputs.packages.${system}.curlio-ttf ];
 }
