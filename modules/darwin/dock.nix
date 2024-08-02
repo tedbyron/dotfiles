@@ -62,7 +62,11 @@ in
         ${entryURI entry.path}
       '') cfg.entries;
       createEntries = lib.concatMapStrings (entry: ''
-        ${pkgs.dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}
+        ${pkgs.dockutil}/bin/dockutil \
+          --no-restart \
+          --add '${entry.path}' \
+          --section ${entry.section} \
+          ${entry.options}
       '') cfg.entries;
     in
     {
