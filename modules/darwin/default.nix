@@ -11,6 +11,7 @@
     ./system.nix
   ];
 
+  fonts.packages = [ self.outputs.packages.${system}.curlio-ttf ];
   security.pam.enableSudoTouchIdAuth = true;
 
   programs = {
@@ -66,6 +67,4 @@
       upgrade = true;
     };
   };
-
-  fonts.packages = [ self.outputs.packages.${system}.curlio-ttf ];
 }
