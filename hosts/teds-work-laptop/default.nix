@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  unstable,
-  ...
-}:
+{ config, lib, ... }:
 let
   name = baseNameOf (toString ./.);
   user = "ted";
@@ -47,8 +42,6 @@ in
           }
         ];
     };
-
-  home-manager.users.${user}.home.packages = [ unstable.awscli2 ];
 
   homebrew.casks = [
     "eloston-chromium"
