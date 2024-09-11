@@ -6,7 +6,7 @@ in
 {
   imports = [ ../../users/${user} ];
 
-  system.stateVersion = 4;
+  system.stateVersion = 5;
 
   custom.dock =
     let

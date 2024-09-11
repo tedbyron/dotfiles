@@ -5,6 +5,7 @@
   defaultCommand = "fd -H -E .git -E .DS_Store -c always -t f --strip-cwd-prefix";
   enableZshIntegration = true;
   fileWidgetCommand = config.home-manager.users.${user}.programs.fzf.defaultCommand;
+  historyWidgetOptions = [ "--layout reverse" ];
 
   colors = {
     fg = "-1";
@@ -31,6 +32,4 @@
     "--preview 'bat --color always --style changes,numbers {}'"
     "--bind 'ctrl-/:change-preview-window(down|hidden|)'"
   ];
-
-  historyWidgetOptions = [ "--layout reverse" ];
 }
