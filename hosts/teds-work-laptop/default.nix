@@ -44,7 +44,6 @@ in
     };
 
   homebrew.casks = [
-    "eloston-chromium"
     "figma"
     "lunar"
     "meetingbar"
