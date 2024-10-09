@@ -65,6 +65,7 @@
     extraConfig = fromTOML (builtins.readFile ../../../.config/git/config);
     ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
+    package = unstable.gitMinimal;
   };
 
   # go
