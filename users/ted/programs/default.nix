@@ -60,12 +60,11 @@
   };
 
   git = {
-    enable = true;
+    enable = false;
     # delta configured in .gitconfig and installed as a user package
     extraConfig = fromTOML (builtins.readFile ../../../.config/git/config);
     ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
-    package = unstable.git;
   };
 
   # go
