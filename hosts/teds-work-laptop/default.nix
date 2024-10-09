@@ -28,7 +28,7 @@ in
           "/Applications/Bitwarden.app/"
           "${userPackages "obsidian"}/Applications/Obsidian.app/"
           "${spicedSpotify}/Applications/Spotify.app/"
-          "/Applications/Microsoft Teams (work or school).app/"
+          # "/Applications/Microsoft Teams (work or school).app/"
           "/Applications/Figma.app/"
           "/Applications/VMware Fusion.app/"
           "${userPrograms "alacritty"}/Applications/Alacritty.app/"
@@ -47,7 +47,7 @@ in
     "figma"
     "lunar"
     "meetingbar"
-    "microsoft-teams"
+    # "microsoft-teams"
     "vmware-fusion"
   ];
 
