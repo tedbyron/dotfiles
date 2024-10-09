@@ -65,6 +65,7 @@
     extraConfig = fromTOML (builtins.readFile ../../../.config/git/config);
     ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
+    package = unstable.git;
   };
 
   # go
@@ -76,6 +77,7 @@
 
   neovim = {
     enable = true;
+    package = unstable.neovim-unwrapped;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
