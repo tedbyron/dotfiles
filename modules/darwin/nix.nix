@@ -2,6 +2,7 @@
 {
   nix = {
     configureBuildUsers = true;
+    optimise.automatic = true;
     package = unstable.nixVersions.nix_2_20;
     useDaemon = true;
 
@@ -11,7 +12,6 @@
     };
 
     settings = {
-      auto-optimise-store = true;
       trusted-users = [ "@admin" ];
 
       experimental-features = builtins.concatStringsSep " " [
