@@ -22,7 +22,7 @@ in
   };
 
   home-manager.users.${name} = {
-    imports = [ inputs.spicetify-nix.homeManagerModule ];
+    imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
     targets.genericLinux.enable = isWsl;
 

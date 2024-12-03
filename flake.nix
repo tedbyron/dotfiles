@@ -44,12 +44,8 @@
     };
 
     spicetify-nix = {
-      url = "github:tedbyron/spicetify-nix";
-
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        flake-utils.follows = "flake-utils";
-      };
+      url = "github:gerg-l/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 

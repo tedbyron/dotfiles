@@ -100,13 +100,13 @@
 
   spicetify =
     let
-      spicePkgs = inputs.spicetify-nix.packages.${system}.default;
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
     in
     {
       enable = true;
-      colorScheme = "Dracula";
+      colorScheme = "dracula";
       spotifyPackage = unstable.spotify;
-      theme = spicePkgs.themes.Sleek;
+      theme = spicePkgs.themes.sleek;
     };
 
   # sqls
