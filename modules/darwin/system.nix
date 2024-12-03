@@ -17,7 +17,7 @@
       dock = {
         appswitcher-all-displays = true;
         autohide = true;
-        expose-group-by-app = false;
+        expose-group-apps = false;
         minimize-to-application = true;
         mru-spaces = false;
         tilesize = 56;

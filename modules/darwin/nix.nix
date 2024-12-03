@@ -3,7 +3,7 @@
   nix = {
     configureBuildUsers = true;
     optimise.automatic = true;
-    package = unstable.nixVersions.nix_2_20;
+    package = unstable.nixVersions.nix_2_24;
     useDaemon = true;
 
     gc = {
