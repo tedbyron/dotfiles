@@ -15,10 +15,15 @@ let
   home = if isDarwin then "/Users/${name}" else "/home/${name}";
 in
 {
-  users.users.${name} = {
-    inherit home;
-    description = "Teddy Byron";
-    shell = pkgs.zsh;
+  users = {
+    knownUsers = [ name ];
+
+    users.${name} = {
+      inherit home;
+      description = "Teddy Byron";
+      shell = pkgs.zsh;
+      uid = 501;
+    };
   };
 
   home-manager.users.${name} = {
