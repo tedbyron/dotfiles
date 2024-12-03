@@ -1,6 +1,7 @@
 { unstable, ... }:
 {
   nix = {
+    channel.enable = false;
     configureBuildUsers = true;
     optimise.automatic = true;
     package = unstable.nixVersions.nix_2_24;
