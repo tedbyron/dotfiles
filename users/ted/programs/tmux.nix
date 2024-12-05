@@ -6,6 +6,7 @@
   mouse = true;
   newSession = true;
   prefix = "C-a";
+  sensibleOnTop = true;
   terminal = "tmux-256color";
 
   extraConfig = ''
@@ -20,8 +21,6 @@
   '';
 
   plugins = with pkgs.tmuxPlugins; [
-    sensible
-
     {
       plugin = dracula;
       extraConfig = ''
