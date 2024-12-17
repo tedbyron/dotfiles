@@ -65,6 +65,8 @@ in
 
           text = ''
             pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+            default-cache-ttl 34560000
+            max-cache-ttl 34560000
           '';
         };
       };
