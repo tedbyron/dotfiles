@@ -1,119 +1,9 @@
-@-moz-document url(chrome://browser/content/browser.xhtml)
-{
-  :root {
-    --bookmarks-toolbar-overlapping-browser-height: unset !important;
-  }
-
-  #titlebar {
-    -moz-appearance: none !important;
-  }
-
-  #navigator-toolbox > div {
-    display: contents;
-  }
-
-  .global-notificationbox,
-  #mainPopupSet,
-  #browser,
-  #customization-container,
-  #tab-notification-deck {
-    order: -1;
-  }
-
-  /* tabs last */
-  #titlebar {
-    order: 2;
-  }
-
-  #toolbar-menubar {
-    position: fixed;
-    display: flex;
-    width: 100vw;
-    top: 0;
-    -moz-window-dragging: drag;
-  }
-
-  #navigator-toolbox {
-    border-bottom: none !important;
-  }
-
-  #toolbar-menubar > spacer {
-    flex-grow: 1;
-  }
-
-  #urlbar[breakout][breakout-extend] {
-    display: flex !important;
-    flex-direction: column-reverse;
-    bottom: 0 !important;
-    top: auto !important;
-  }
-
-  .urlbarView-body-inner {
-    border-top-style: none !important;
-  }
-
-  /* window controls */
-  #TabsToolbar > .titlebar-buttonbox-container {
-    display: none;
-  }
-  #toolbar-menubar > .titlebar-buttonbox-container {
-    order: 1000;
-  }
-
-  /* panel sizing */
-  .panel-viewstack {
-    max-height: unset !important;
-  }
-
-  /* fullscreen */
-  #navigator-toolbox[inFullscreen] {
-    margin-top: 0 !important;
-  }
-  #navigator-toolbox[inFullscreen][style*='margin-top'] {
-    visibility: collapse;
-  }
-  #fullscr-toggler {
-    bottom: 0;
-    top: unset !important;
-  }
-
-  /* autohide_toolbox.css */
-  #navigator-toolbox {
-    bottom: 0;
-    transform-origin: bottom;
-  }
-  #main-window > body > box {
-    margin-top: 0 !important;
-  }
-  #toolbar-menubar {
-    z-index: 1;
-    background-color: var(--lwt-accent-color, black);
-  }
-
-  /* static menubar on top of the window (make menubar enabled)
-  * Use when menubar is enabled to always show it */
-
-  /*
-  #browser,#customization-container{ padding-top: var(--uc-menubar-spacer,28px) }
-  */
-
-  /* menubar appear below content, above tabs toolbar */
-
-  /*
-  #toolbar-menubar{ position: static; display: flex; margin-top: 0px !important; background-color: transparent }
-  */
-
-  /* set to "column-reverse" (without quotes) if you want tabs above menubar with the above option */
-  #titlebar {
-    flex-direction: column;
-  }
-}
-
-/* bookmark margin */
+/* Bookmark margin */
 #personal-bookmarks {
   margin: 0 6px;
 }
 
+/* Tab spacing */
 .titlebar-spacer[type='pre-tabs'],
 .titlebar-spacer[type='post-tabs'] {
   width: 4px !important;
@@ -125,14 +15,20 @@
   min-width: 105px !important;
 }
 
-/* Hide tab close button */
-#TabsToolbar .close-icon {
+/* Tab close show on hover only */
+:is(#TabsToolbar, #vertical-tabs)
+  #tabbrowser-tabs
+  .tabbrowser-tab:not([pinned]):not(:hover)
+  .tab-close-button {
+  visibility: collapse !important;
   display: none !important;
 }
-
-/* Unhide close button when it is selected tab and not pinned */
-#TabsToolbar .tabbrowser-tab:not([pinned]):hover .close-icon {
-  display: unset !important;
+:is(#TabsToolbar, #vertical-tabs)
+  #tabbrowser-tabs
+  .tabbrowser-tab:not([pinned]):hover
+  .tab-close-button {
+  visibility: visible !important;
+  display: block !important;
 }
 
 /* Reduce spacing between pinned and regular tabs */
@@ -147,6 +43,42 @@
   background-color: #282a36 !important;
 }
 
-#private-browsing-indicator-with-label > label {
-  display: none;
+/* Private mode indicator hidden */
+#main-window[privatebrowsingmode='temporary']:not([inDOMFullscreen='true'])
+  #navigator-toolbox
+  #TabsToolbar
+  .private-browsing-indicator,
+* #private-browsing-indicator-titlebar,
+* #private-browsing-indicator,
+* .private-browsing-indicator {
+  visibility: collapse !important;
+}
+#TabsToolbar
+  :is(
+    #private-browsing-indicator-with-label,
+    .private-browsing-indicator-with-label,
+    .private-browsing-indicator-icon,
+    .private-browsing-indicator-label
+  ) {
+  display: none !important;
+}
+
+/* All tabs button always hidden */
+#alltabs-button{
+  visibility: collapse !important;
+  display: none !important;
+}
+
+/* New tab button always hidden */
+#new-tab-button {
+  visibility: collapse !important;
+  display: none !important;
+}
+:is(.tabs-newtab-button,#tabs-newtab-button) {
+  visibility: collapse !important;
+}
+
+/* Navigator toolbox border always hidden */
+#navigator-toolbox {
+  border-bottom: none !important;
 }
