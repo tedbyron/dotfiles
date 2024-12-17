@@ -44,6 +44,7 @@ in
     };
 
   homebrew.casks = [
+    "ba-connected"
     "figma"
     "lunar"
     "meetingbar"
