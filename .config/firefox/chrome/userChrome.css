@@ -69,15 +69,6 @@
   display: none !important;
 }
 
-/* New tab button always hidden */
-#new-tab-button {
-  visibility: collapse !important;
-  display: none !important;
-}
-:is(.tabs-newtab-button,#tabs-newtab-button) {
-  visibility: collapse !important;
-}
-
 /* Navigator toolbox border always hidden */
 #navigator-toolbox {
   border-bottom: none !important;
