@@ -62,7 +62,9 @@
   git = {
     enable = true;
     # delta configured in .gitconfig and installed as a user package
-    extraConfig = fromTOML (builtins.readFile ../../../.config/git/config);
+    extraConfig = fromTOML (builtins.readFile ../../../.config/git/config) // {
+      credential.helper = if isDarwin then "osxkeychain" else "store";
+    };
     ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
     package = unstable.gitMinimal;
