@@ -18,11 +18,7 @@
 
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
-
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     curlio = {
