@@ -29,7 +29,7 @@ require('lazy').setup({
     lazy = true,
     version = false,
   },
-  install = { colorscheme = { 'dracula' } },
+  install = { colorscheme = { 'gruvbox' } },
   checker = { enabled = true },
   performance = {
     rtp = {

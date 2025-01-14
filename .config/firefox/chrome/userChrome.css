@@ -40,7 +40,7 @@
 
 #nav-bar,
 #PersonalToolbar {
-  background-color: #282a36 !important;
+  background-color: #282828 !important;
 }
 
 /* Private mode indicator hidden */
@@ -64,7 +64,7 @@
 }
 
 /* All tabs button always hidden */
-#alltabs-button{
+#alltabs-button {
   visibility: collapse !important;
   display: none !important;
 }

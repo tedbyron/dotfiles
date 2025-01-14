@@ -20,7 +20,7 @@
 
     config = {
       style = "changes,numbers";
-      theme = "Dracula";
+      theme = "gruvbox-dark";
     };
   };
 
@@ -106,9 +106,9 @@
     in
     {
       enable = true;
-      colorScheme = "dracula";
+      colorScheme = "gruvbox-material-dark";
       spotifyPackage = unstable.spotify;
-      theme = spicePkgs.themes.sleek;
+      theme = spicePkgs.themes.dribbblish;
     };
 
   # sqls
