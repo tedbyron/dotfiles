@@ -106,9 +106,9 @@
     in
     {
       enable = true;
-      colorScheme = "gruvbox-material-dark";
+      colorScheme = "gruvbox";
       spotifyPackage = unstable.spotify;
-      theme = spicePkgs.themes.dribbblish;
+      theme = spicePkgs.themes.text;
     };
 
   # sqls
