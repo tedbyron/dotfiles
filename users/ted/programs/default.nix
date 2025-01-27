@@ -120,7 +120,7 @@
     settings = fromTOML (builtins.readFile ../../../.config/starship.toml);
   };
 
-  tmux = import ./tmux.nix { inherit pkgs lib; };
+  tmux = import ./tmux.nix { inherit pkgs; };
   vscode.enable = true;
 
   yt-dlp = {

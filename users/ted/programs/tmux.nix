@@ -1,4 +1,4 @@
-{ pkgs, lib }:
+{ pkgs }:
 {
   enable = true;
   clock24 = true;
@@ -7,6 +7,7 @@
   mouse = true;
   newSession = true;
   prefix = "C-a";
+  sensibleOnTop = false;
   terminal = "tmux-256color";
 
   extraConfig = ''

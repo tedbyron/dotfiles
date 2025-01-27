@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.custom.dock;
-  dockutilPath = lib.getExe pkgs.dockutil;
+  dockutilExe = lib.getExe pkgs.dockutil;
 in
 {
   options = {
@@ -63,7 +63,7 @@ in
         ${entryURI entry.path}
       '') cfg.entries;
       createEntries = lib.concatMapStrings (entry: ''
-        ${dockutilPath} \
+        ${dockutilExe} \
           --no-restart \
           --add '${entry.path}' \
           --section ${entry.section} \
@@ -72,10 +72,10 @@ in
     in
     {
       system.activationScripts.postUserActivation.text = ''
-        haveURIs="$(${dockutilPath} --list | ${lib.getExe' pkgs.coreutils "cut"} -f2)"
+        haveURIs="$(${dockutilExe} --list | ${lib.getExe' pkgs.coreutils "cut"} -f2)"
         if ! diff -wu <(echo -n "$haveURIs") <(echo -n '${wantURIs}') >&2 ; then
           echo "Updating dock..." >&2
-          ${dockutilPath} --no-restart --remove all
+          ${dockutilExe} --no-restart --remove all
           ${createEntries}
           killall Dock
         fi
