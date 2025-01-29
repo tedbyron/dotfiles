@@ -42,6 +42,7 @@
       gnused
       groff
       less
+      nmap
       python3
     ];
 
