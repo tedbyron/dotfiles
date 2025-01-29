@@ -105,6 +105,7 @@ if (( $+commands[gls] )) {
 alias la='ls -A'
 alias l='ls -Al'
 alias mv='mv -i'
+alias nc='ncat'
 alias pgrep='pgrep -afil'
 alias ps='ps -Aafx'
 alias sudo='sudo '

@@ -102,6 +102,7 @@
     la = "ls -A";
     l = "ls -Al";
     mv = "mv -i";
+    nc = "ncat";
     pgrep = "pgrep -afil";
     ps = "ps -Aafx";
     sudo = "sudo ";
