@@ -10,10 +10,6 @@ local function noremap_action(mode, lhs, rhs)
   end)
 end
 
-for _, mode in pairs({ 'n', 'v', 'o' }) do
-  noremap(mode, '<Tab>', vim.api.nvim_eval(string.format('maparg("%%", "%s")', mode)))
-end
-
 noremap_action('n', '<C-h>', 'workbench.action.focusLeftGroup')
 noremap_action('n', '<C-j>', 'workbench.action.focusBelowGroup')
 noremap_action('n', '<C-k>', 'workbench.action.focusAboveGroup')
