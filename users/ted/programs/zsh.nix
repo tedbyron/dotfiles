@@ -83,6 +83,7 @@
 
   initExtra = ''
     bindkey -M menuselect '^[[Z' reverse-menu-complete
+    bindkey \^U backward-kill-line
 
     unalias grhh
   '';

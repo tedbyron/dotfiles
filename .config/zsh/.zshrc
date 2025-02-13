@@ -86,6 +86,7 @@ bindkey -e
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 bindkey -M menuselect '^[[Z' reverse-menu-complete
+bindkey \^U backward-kill-line
 
 alias df='df \-h'
 alias du='du \-h -d 1'
