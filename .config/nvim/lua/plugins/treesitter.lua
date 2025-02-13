@@ -8,7 +8,7 @@ return {
         'csv',
         'diff',
         -- 'dockerfile',
-        'elixir',
+        -- 'elixir',
         'gitattributes',
         'gitcommit',
         'gitignore',
