@@ -89,6 +89,9 @@ bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey \^U backward-kill-line
 
 alias df='df \-h'
+alias dl='yt-dlp'
+alias dls='dl --embed-subs --sub-lang "en.*"'
+alias dlx='dl -x --audio-quality 0'
 alias du='du \-h -d 1'
 alias fcir='fc -IR'
 alias fcl='fc -lr'

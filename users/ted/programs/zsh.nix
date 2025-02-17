@@ -90,6 +90,9 @@
 
   shellAliases = {
     df = "df \\-h";
+    dl = "yt-dlp";
+    dls = "dl --embed-subs --sub-lang 'en.*'";
+    dlx = "dl -x --audio-quality 0";
     du = "du \\-h -d 1";
     fcir = "fc -IR";
     fcl = "fc -lr";
