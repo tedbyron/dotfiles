@@ -40,8 +40,8 @@
     {
       plugin = dracula;
       extraConfig = ''
-        set -g @dracula-colors " white='#ebdbb2' gray='#3c3836' dark_gray='#282828' light_purple='#b16286' dark_purple='#928374' cyan='#689d6a' green='#98971a' orange='#d65d0e' red='#cc241d' pink='#d3869b' yellow='#d79921' "
         set -g @dracula-plugins "ssh-session attached-clients"
+
         set -g @dracula-ssh-session-colors "dark_purple white"
         set -g @dracula-attached-clients-colors "green dark_gray"
         set -g @dracula-show-flags false
@@ -49,6 +49,20 @@
         set -g @dracula-border-contrast false
         set -g @dracula-military-time true
         set -g @dracula-show-empty-plugins false
+
+        set -g @dracula-colors "
+        white='#ebdbb2'
+        gray='#3c3836'
+        dark_gray='#282828'
+        light_purple='#b16286'
+        dark_purple='#928374'
+        cyan='#689d6a'
+        green='#98971a'
+        orange='#d65d0e'
+        red='#cc241d'
+        pink='#d3869b'
+        yellow='#d79921'
+        "
       '';
     }
   ];
