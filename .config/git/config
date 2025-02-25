@@ -17,10 +17,13 @@
 [branch]
   sort = "-committerdate"
 [tag]
-  gpgsign = true
-  sort = "-taggerdate"
+  gpgSign = true
+  sort = "v:refname"
+[column]
+  ui = "auto"
 [commit]
-  gpgsign = true
+  gpgSign = true
+  verbose = true
 [fetch]
   prune = true
   pruneTags = true
@@ -32,12 +35,13 @@
   followTags = true
 [merge]
   tool = "vscode"
-  conflictstyle = "zdiff3"
+  conflictStyle = "zdiff3"
   prompt = false
 [mergetool.vscode]
   cmd = "code --wait \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\""
 [rerere]
   enabled = true
+  autoUpdate = true
 [rebase]
   autostash = true
   missingCommitsCheck = "warn"
@@ -65,3 +69,5 @@
   smudge = "git-lfs smudge -- %f"
   process = "git-lfs filter-process"
   required = true
+[help]
+  autoCorrect = "prompt"
