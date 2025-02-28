@@ -64,8 +64,9 @@
     ];
 
     masApps = {
-      NextDns = 1464122853;
       Bitwarden = 1352778147;
+      NextDns = 1464122853;
+      Xcode = 497799835;
     };
 
     onActivation = {
