@@ -9,7 +9,9 @@ with pkgs;
   cargo-binutils
   cargo-edit
   cargo-expand
+  cargo-features-manager
   cargo-generate
+  cargo-pgo
   cargo-watch
   delta
   fd
@@ -19,7 +21,7 @@ with pkgs;
   imagemagick
   lychee
   nil
-  unstable.nixfmt-rfc-style
+  nixfmt-rfc-style
   unstable.nodejs
   obsidian
   openssl
