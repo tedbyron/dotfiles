@@ -133,8 +133,8 @@
               ++ (
                 if web then
                   [
-                    python311Packages.brotli
-                    python311Packages.fonttools
+                    python312Packages.brotli
+                    python312Packages.fonttools
                   ]
                 else
                   [ nerd-font-patcher ]

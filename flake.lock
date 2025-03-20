@@ -11,7 +11,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-N52+mjYjBZZbH6P2DUL+POHfxsmXUsxEBRsbgOW5QfA=",
+        "narHash": "sha256-4jJ56LXK3IauKxdKvMMOFM/KC+TtuN5kUHETrCVa4Z4=",
         "path": "./flakes/curlio",
         "type": "path"
       },
@@ -141,11 +141,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742468420,
-        "narHash": "sha256-GXa+TXjBhyGjLh1NNQjPRoa0/Uh6xtipYteT+4uj4Z8=",
+        "lastModified": 1742481215,
+        "narHash": "sha256-m7I/2UaGEFOI+Cy0RoADBi10NZt1WD5N3q2jUwPprE4=",
         "owner": "nix-community",
         "repo": "nixos-wsl",
-        "rev": "79934797cad1d2983c0c886981b0faf916ea35ee",
+        "rev": "96d7df91cce0d7cd30d1958fe1aefcb5f9bfced7",
         "type": "github"
       },
       "original": {
