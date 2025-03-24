@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   name = baseNameOf (toString ./.);
   user = "ted";
@@ -40,11 +40,6 @@ in
         ];
     };
 
-  environment.systemPackages = with pkgs; [
-    discord
-    qbittorrent
-  ];
-
   homebrew.casks = [
     "lunar"
     "microsoft-teams"
@@ -54,4 +49,9 @@ in
     computerName = name;
     hostName = name;
   };
+
+  users.users.${user}.packages = with pkgs; [
+    discord
+    qbittorrent
+  ];
 }
