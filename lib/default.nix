@@ -10,7 +10,12 @@ let
     _:
     builtins.listToAttrs (
       map (
-        path: lib.nameValuePair (baseNameOf (toString path)) (import path { inherit self inputs lib; })
+        path:
+        lib.nameValuePair (baseNameOf (toString path)) (
+          import path {
+            inherit self inputs lib;
+          }
+        )
       ) modules
     )
   );

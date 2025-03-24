@@ -6,6 +6,7 @@
 }:
 with pkgs;
 [
+  wabt
   cargo-binutils
   cargo-edit
   cargo-expand
@@ -28,6 +29,7 @@ with pkgs;
   ouch
   tokei
   wasm-pack
+  unstable.zig
 ]
 ++ lib.optionals isDarwin [
   mas

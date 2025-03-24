@@ -46,6 +46,11 @@ in
         ];
     };
 
+  home-manager.users.${user}.home.packages = with pkgs; [
+    discord
+    qbittorrent
+  ];
+
   homebrew.casks = [
     "microsoft-teams"
   ];
@@ -54,9 +59,4 @@ in
     computerName = name;
     hostName = name;
   };
-
-  home-manager.users.${user}.home.packages = with pkgs; [
-    discord
-    qbittorrent
-  ];
 }
