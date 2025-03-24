@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   name = baseNameOf (toString ./.);
   user = "ted";
@@ -27,6 +32,7 @@ in
           "/Applications/Firefox.app/"
           "/Applications/Bitwarden.app/"
           "${spicedSpotify}/Applications/Spotify.app/"
+          "${userPackages "discord"}/Applications/Discord.app/"
           "${userPackages "obsidian"}/Applications/Obsidian.app/"
           "${userPrograms "alacritty"}/Applications/Alacritty.app/"
           "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
@@ -41,7 +47,6 @@ in
     };
 
   homebrew.casks = [
-    "lunar"
     "microsoft-teams"
   ];
 
@@ -50,7 +55,7 @@ in
     hostName = name;
   };
 
-  users.users.${user}.packages = with pkgs; [
+  home-manager.users.${user}.home.packages = with pkgs; [
     discord
     qbittorrent
   ];

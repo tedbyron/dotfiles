@@ -43,14 +43,19 @@ in
         ];
     };
 
-  homebrew.casks = [
-    "ba-connected"
-    "figma"
-    "lunar"
-    "meetingbar"
-    "microsoft-teams"
-    "vmware-fusion"
-  ];
+  homebrew = {
+    casks = [
+      "ba-connected"
+      "figma"
+      "meetingbar"
+      "microsoft-teams"
+      "vmware-fusion"
+    ];
+
+    masApps = {
+      Xcode = 497799835;
+    };
+  };
 
   networking = {
     computerName = name;
