@@ -16,5 +16,4 @@
   git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
   # give terminal full disk access and restart
   nix run nix-darwin -- switch --flake ~/git/dotfiles#<host>
-  chsh -s /run/current-system/sw/bin/zsh # https://github.com/LnL7/nix-darwin/issues/328
   ```
