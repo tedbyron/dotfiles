@@ -82,7 +82,7 @@
       };
     }
     // flake-utils.lib.eachDefaultSystem (system: {
-      formatter = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+      formatter = (import nixpkgs { inherit system; }).nixfmt-rfc-style;
 
       packages = curlio.outputs.packages.${system} // {
         dircolors = dircolors.outputs.packages.${system}.default;
