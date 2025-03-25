@@ -44,32 +44,41 @@ in
       };
       username = name;
 
-      file = {
-        ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
-        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
-        ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
+      file =
+        let
+          ffReleaseProfile = lib.findFirst (name: lib.hasSuffix ".default-release" name) null (
+            builtins.attrNames (builtins.readDir "${home}/Library/Caches/Firefox/Profiles")
+          );
+        in
+        {
+          ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
+          ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
+          ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
 
-        ".config/nvim/lua" = {
-          source = ../../.config/nvim/lua;
-          recursive = true;
+          ".config/nvim/lua" = {
+            source = ../../.config/nvim/lua;
+            recursive = true;
+          };
+
+          ".hushlogin" = {
+            enable = isDarwin;
+            text = "";
+          };
+
+          "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
+            enable = isDarwin;
+            onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
+
+            text = ''
+              pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+              default-cache-ttl 34560000
+              max-cache-ttl 34560000
+            '';
+          };
+        }
+        // lib.optionalAttrs (isDarwin && ffReleaseProfile != null) {
+          "Library/Caches/Firefox/Profiles/${ffReleaseProfile}/chrome".source = ../../.config/firefox/chrome;
         };
-
-        ".hushlogin" = {
-          enable = isDarwin;
-          text = "";
-        };
-
-        "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
-          enable = isDarwin;
-          onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
-
-          text = ''
-            pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
-            default-cache-ttl 34560000
-            max-cache-ttl 34560000
-          '';
-        };
-      };
     };
 
     programs = import ./programs {
