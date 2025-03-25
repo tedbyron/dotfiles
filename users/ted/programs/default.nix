@@ -69,7 +69,7 @@
 
   go = {
     enable = true;
-    telemetry.mode = "off";
+    # telemetry.mode = "off"; # TODO: 25.05
   };
 
   gpg.enable = true; # TODO: gpg signing keys
