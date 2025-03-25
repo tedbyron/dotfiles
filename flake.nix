@@ -50,6 +50,8 @@
       self,
       nixpkgs,
       flake-utils,
+      curlio,
+      dircolors,
       ...
     }@inputs:
     let
@@ -80,8 +82,10 @@
       };
     }
     // flake-utils.lib.eachDefaultSystem (system: {
-      packages = inputs.curlio.outputs.packages.${system} // {
-        dircolors = inputs.dircolors.outputs.packages.${system}.default;
+      formatter = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+
+      packages = curlio.outputs.packages.${system} // {
+        dircolors = dircolors.outputs.packages.${system}.default;
       };
     });
 }
