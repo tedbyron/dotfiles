@@ -48,7 +48,7 @@ in
         let
           ffReleaseProfile = lib.findFirst (name: lib.hasSuffix ".default-release" name) null (
             # Dir read is impure.
-            builtins.attrNames (builtins.readDir "${home}/Library/Caches/Firefox/Profiles")
+            lib.attrNames (lib.readDir "${home}/Library/Caches/Firefox/Profiles")
           );
         in
         {

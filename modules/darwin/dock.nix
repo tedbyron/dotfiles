@@ -48,7 +48,7 @@ in
         "file://"
         + (lib.concatMapStringsSep "/" (
           path:
-          builtins.replaceStrings
+          lib.replaceStrings
             [
               "%28"
               "%29"

@@ -1,4 +1,4 @@
-{ unstable, ... }:
+{ unstable, lib, ... }:
 {
   nix = {
     channel.enable = false;
@@ -15,7 +15,7 @@
     settings = {
       trusted-users = [ "@admin" ];
 
-      experimental-features = builtins.concatStringsSep " " [
+      experimental-features = lib.concatStringsSep " " [
         "auto-allocate-uids"
         "flakes"
         "nix-command"

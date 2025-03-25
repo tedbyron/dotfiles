@@ -20,9 +20,9 @@ in
       userPackages =
         name:
         lib.findFirst (
-          pkg: (builtins.parseDrvName pkg.name).name == name
+          pkg: (lib.parseDrvName pkg.name).name == name
         ) null config.home-manager.users.${user}.home.packages;
-      userPrograms = name: (builtins.getAttr name config.home-manager.users.${user}.programs).package;
+      userPrograms = name: (lib.getAttr name config.home-manager.users.${user}.programs).package;
     in
     {
       enable = true;

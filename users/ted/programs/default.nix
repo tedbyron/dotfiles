@@ -12,7 +12,7 @@
 {
   alacritty = {
     enable = true;
-    settings = fromTOML (builtins.readFile ../../../.config/alacritty/alacritty.toml);
+    settings = fromTOML (lib.readFile ../../../.config/alacritty/alacritty.toml);
   };
 
   bat = {
@@ -31,7 +31,7 @@
 
   direnv = {
     enable = true;
-    config = fromTOML (builtins.readFile ../../../.config/direnv/direnv.toml);
+    config = fromTOML (lib.readFile ../../../.config/direnv/direnv.toml);
     enableZshIntegration = true;
     nix-direnv.enable = true;
   };
@@ -62,10 +62,10 @@
   git = {
     enable = true;
     # delta configured in .gitconfig and installed as a user package
-    extraConfig = fromTOML (builtins.readFile ../../../.config/git/config) // {
+    extraConfig = fromTOML (lib.readFile ../../../.config/git/config) // {
       credential.helper = if isDarwin then "osxkeychain" else "store";
     };
-    ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
+    ignores = lib.splitString "\n" (lib.readFile ../../../.config/git/ignore);
     lfs.enable = true;
   };
 
@@ -116,7 +116,7 @@
   starship = {
     enable = true;
     enableZshIntegration = true;
-    settings = fromTOML (builtins.readFile ../../../.config/starship.toml);
+    settings = fromTOML (lib.readFile ../../../.config/starship.toml);
   };
 
   tmux = import ./tmux.nix { inherit pkgs; };
