@@ -16,7 +16,7 @@
       inherit (inputs.home-manager) darwinModules nixosModules;
       inherit (inputs.nixos-wsl.nixosModules) wsl;
 
-      isDarwin = lib.elem system (
+      isDarwin = builtins.elem system (
         with inputs.flake-utils.lib.system;
         [
           aarch64-darwin

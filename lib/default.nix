@@ -8,7 +8,7 @@ let
 
   ted = lib.makeExtensible (
     _:
-    lib.listToAttrs (
+    builtins.listToAttrs (
       map (
         path:
         lib.nameValuePair (baseNameOf (toString path)) (
