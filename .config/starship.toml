@@ -1,4 +1,4 @@
-format = '$directory$character'
+format = '$directory$shlvl$direnv$nix_shell$character'
 right_format = '$status$cmd_duration$jobs$all'
 scan_timeout = 30
 command_timeout = 500
@@ -12,25 +12,25 @@ format = '[$percentage]($style) '
 format = '$symbol '
 success_symbol = "[\uf0da](green)" # nerd font nf-fa-caret-right
 error_symbol = "[\uf0da](red)"     # nerd font nf-fa-caret-right
-vimcmd_symbol = "[N](green)"
+vimcmd_symbol = '[N](green)'
 
 [cmd_duration]
 format = '[$duration]($style) '
 style = 'bright-black'
 
-[custom]
-disabled = true
+# [custom]
+# disabled = true
 
 [directory]
-fish_style_pwd_dir_length = 1
 truncation_length = 5
 truncate_to_repo = true
 format = '[$path]($style)[$read_only]($read_only_style) '
-read_only = " ro"
+read_only = ' ro'
 style = 'cyan'
+fish_style_pwd_dir_length = 1
 
-[env_var]
-disabled = true
+# [env_var]
+# disabled = true
 
 [fill]
 symbol = ' ' # ─ ━
@@ -70,7 +70,10 @@ disabled = true
 disabled = true
 
 [shlvl]
-disabled = true
+threshold = 3
+format = '[$shlvl]($style) '
+style = 'yellow'
+disabled = false
 
 [status]
 format = '[$symbol$status]($style) '
@@ -160,8 +163,13 @@ disabled = true
 [deno]
 disabled = true
 [direnv]
-format = '[$symbol$loaded/$allowed]($style)'
-symbol = "✴"
+format = '[$symbol]($style)'
+symbol = "\u2734"
+style = 'blue'
+allowed_msg = 'a'
+denied_msg = 'd'
+loaded_msg = 'l'
+unloaded_msg = 'u'
 disabled = false
 [docker_context]
 disabled = true
@@ -204,7 +212,11 @@ disabled = true
 [nim]
 disabled = true
 [nix_shell]
-symbol = "\uf313" # nerd font nf-linux-nixos
+format = '[$symbol]($style)'
+symbol = "\uf313"            # nerd font nf-linux-nixos
+style = 'cyan'
+impure_msg = 'i'
+pure_msg = 'p'
 [nodejs]
 disabled = true
 [ocaml]

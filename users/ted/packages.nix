@@ -1,10 +1,37 @@
-{ pkgs, isDarwin }:
-with pkgs; [
+{
+  pkgs,
+  unstable,
+  lib,
+  isDarwin,
+}:
+with pkgs;
+[
+  wabt
+  cargo-binutils
+  cargo-edit
+  cargo-expand
+  cargo-features-manager
+  cargo-generate
+  cargo-pgo
+  cargo-watch
   delta
-  du-dust
+  fd
+  ffmpeg
+  hexyl
+  hyperfine
+  imagemagick
   lychee
+  nil
+  nixfmt-rfc-style
+  unstable.nodejs
   obsidian
-] ++ lib.optionals isDarwin [
+  openssl
+  ouch
+  tokei
+  wasm-pack
+  unstable.zig
+]
+++ lib.optionals isDarwin [
+  mas
   pinentry_mac
-  rectangle
 ]

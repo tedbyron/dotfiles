@@ -1,12 +1,5 @@
 return {
   {
-    'nvim-notify',
-    opts = {
-      stages = 'fade',
-      render = 'default',
-    },
-  },
-  {
     'bufferline.nvim',
     opts = {
       options = {
@@ -159,18 +152,14 @@ return {
       })
     end,
   },
-  {
-    'indent-blankline.nvim',
-    enabled = false,
-  },
-  {
-    'mini.indentscope',
-    opts = function(_, opts)
-      opts.draw = {
-        animation = require('mini.indentscope').gen_animation.none(),
-      }
-    end,
-  },
+  -- {
+  --   'mini.indentscope',
+  --   opts = function(_, opts)
+  --     opts.draw = {
+  --       animation = require('mini.indentscope').gen_animation.none(),
+  --     }
+  --   end,
+  -- },
   {
     'noice.nvim',
     opts = {
@@ -180,19 +169,20 @@ return {
     },
   },
   {
-    'dashboard-nvim',
-    opts = function(_, opts)
-      local logo = [[
-                  __
- ___     ___    ___   __  __ /\_\    ___ ___
-  / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\
-  /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \
-    \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\
-    \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/
-
-      ]]
-
-      opts.config.header = vim.split(logo, '\n')
-    end,
+    'snacks.nvim',
+    opts = {
+      dashboard = {
+        preset = {
+          header = [[
+                 __
+___     ___    ___   __  __ /\_\    ___ ___
+ / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\
+ /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \
+  \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\
+   \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/
+          ]],
+        },
+      },
+    },
   },
 }

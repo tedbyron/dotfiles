@@ -2,16 +2,17 @@
   description = "tedbyron's nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     darwin = {
-      url = "github:lnl7/nix-darwin";
+      url = "github:lnl7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -20,29 +21,71 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-compat.url = "github:edolstra/flake-compat";
+    curlio = {
+      url = "path:./flakes/curlio";
+
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
+    dircolors = {
+      url = "path:./flakes/dircolors";
+
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
+    spicetify-nix = {
+      url = "github:gerg-l/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      curlio,
+      dircolors,
+      ...
+    }@inputs:
     let
       inherit (lib.ted) mkSystem;
+      inherit (flake-utils.lib.system) aarch64-darwin;
 
-      lib = nixpkgs.lib.extend (final: prev: {
-        ted = import ./lib {
-          inherit self inputs nixpkgs;
-          lib = final;
-        };
-      });
+      overlays = [ ];
+
+      lib = nixpkgs.lib.extend (
+        final: _: {
+          ted = import ./lib {
+            inherit self inputs;
+            lib = final;
+          };
+        }
+      );
     in
     {
       darwinConfigurations = {
-        gamma = mkSystem "gamma" {
-          system = "aarch64-darwin";
+        teds-laptop = mkSystem "teds-laptop" {
+          inherit overlays;
+          system = aarch64-darwin;
         };
-
-        delta = mkSystem "delta" {
-          system = "aarch64-darwin";
+        teds-work-laptop = mkSystem "teds-work-laptop" {
+          inherit overlays;
+          system = aarch64-darwin;
         };
       };
-    };
+    }
+    // flake-utils.lib.eachDefaultSystem (system: {
+      formatter = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+
+      packages = curlio.outputs.packages.${system} // {
+        dircolors = dircolors.outputs.packages.${system}.default;
+      };
+    });
 }

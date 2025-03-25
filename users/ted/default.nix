@@ -1,46 +1,100 @@
-{ pkgs, lib, isDarwin, isWsl, ... }:
+{
+  self,
+  config,
+  inputs,
+  pkgs,
+  unstable,
+  lib,
+  system,
+  isDarwin,
+  isWsl,
+  ...
+}:
 let
   name = baseNameOf (toString ./.);
   home = if isDarwin then "/Users/${name}" else "/home/${name}";
 in
 {
-  users.users.${name} = {
-    inherit home;
-    description = "Teddy Byron";
-    shell = pkgs.zsh;
+  users = {
+    knownUsers = [ name ];
+
+    users.${name} = {
+      inherit home;
+      description = "Teddy Byron";
+      shell = pkgs.zsh;
+      uid = 501;
+    };
   };
 
   home-manager.users.${name} = {
-    programs = import ./programs.nix { inherit pkgs isDarwin; };
+    imports = [ inputs.spicetify-nix.homeManagerModules.default ];
+
     targets.genericLinux.enable = isWsl;
 
     home = {
       stateVersion = "23.11";
       homeDirectory = home;
-      packages = import ./packages.nix { inherit pkgs isDarwin; };
+      packages = import ./packages.nix {
+        inherit
+          pkgs
+          unstable
+          lib
+          isDarwin
+          ;
+      };
       username = name;
 
-      file = {
-        ".iex.exs".source = ../../.iex.exs;
+      file =
+        let
+          ffReleaseProfile = lib.findFirst (name: lib.hasSuffix ".default-release" name) null (
+            # Dir read is impure.
+            builtins.attrNames (builtins.readDir "${home}/Library/Caches/Firefox/Profiles")
+          );
+        in
+        {
+          ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
+          ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
+          ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
 
-        ".config/nvim" = {
-          source = ../../.config/nvim;
-          recursive = true;
+          ".config/nvim/lua" = {
+            source = ../../.config/nvim/lua;
+            recursive = true;
+          };
+
+          ".hushlogin" = {
+            enable = isDarwin;
+            text = "";
+          };
+
+          "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
+            enable = isDarwin;
+            onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
+
+            text = ''
+              pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+              default-cache-ttl 34560000
+              max-cache-ttl 34560000
+            '';
+          };
+        }
+        // lib.optionalAttrs (isDarwin && ffReleaseProfile != null) {
+          "Library/Caches/Firefox/Profiles/${ffReleaseProfile}/chrome".source = ../../.config/firefox/chrome;
         };
+    };
 
-        ".gnupg/gpg-agent.conf" = {
-          enable = isDarwin;
-          onChange = "gpgconf --reload gpg-agent";
+    programs = import ./programs {
+      inherit
+        self
+        config
+        inputs
+        pkgs
+        unstable
+        lib
+        system
+        isDarwin
+        ;
 
-          text =
-            if isDarwin
-            then
-              ''
-                pinentry-program ${pkgs.pinentry_mac.binaryPath}
-              ''
-            else null;
-        };
-      };
+      user = name;
     };
 
     targets.darwin = lib.optionalAttrs isDarwin {

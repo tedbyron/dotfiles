@@ -2,6 +2,7 @@
 {
   system = {
     configurationRevision = self.rev or self.dirtyRev or null;
+    startup.chime = false;
 
     keyboard = {
       enableKeyMapping = true;
@@ -12,14 +13,14 @@
       alf.globalstate = 1;
       loginwindow.GuestEnabled = false;
       magicmouse.MouseButtonMode = "TwoButton";
-      universalaccess.reduceTransparency = true;
 
       dock = {
         appswitcher-all-displays = true;
         autohide = true;
-        expose-group-by-app = false;
+        expose-group-apps = false;
         minimize-to-application = true;
         mru-spaces = false;
+        tilesize = 56;
       };
 
       finder = {
@@ -34,8 +35,7 @@
 
       menuExtraClock = {
         Show24Hour = true;
-        # FIX: https://daiderd.com/nix-darwin/manual/index.html#opt-system.defaults.menuExtraClock.ShowDate
-        ShowDate = 1;
+        ShowDate = 2;
       };
 
       trackpad = {

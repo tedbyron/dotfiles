@@ -1,0 +1,73 @@
+[user]
+  name = "Teddy Byron"
+  email = "ted@ted.ooo"
+  signingkey = "0BE1310591ECE7CF"
+[core]
+  autocrlf = false
+  eol = "lf"
+  fsmonitor = true
+  editor = "nvim"
+  pager = "delta"
+[transfer]
+  fsckObjects = true
+[submodule]
+  recurse = true
+[init]
+  defaultBranch = "main"
+[branch]
+  sort = "-committerdate"
+[tag]
+  gpgSign = true
+  sort = "v:refname"
+[column]
+  ui = "auto"
+[commit]
+  gpgSign = true
+  verbose = true
+[fetch]
+  prune = true
+  pruneTags = true
+  writeCommitGraph = true
+[pull]
+  ff = "only"
+[push]
+  autoSetupRemote = true
+  followTags = true
+[merge]
+  tool = "vscode"
+  conflictStyle = "zdiff3"
+  prompt = false
+[mergetool.vscode]
+  cmd = "code --wait \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\""
+[rerere]
+  enabled = true
+  autoUpdate = true
+[rebase]
+  autostash = true
+  missingCommitsCheck = "warn"
+  updateRefs = true
+[status]
+  submoduleSummary = true
+[blame]
+  date = "iso-local"
+[log]
+  date = "iso-local"
+[diff]
+  algorithm = "histogram"
+  colorMoved = "default"
+  submodule = "log"
+[interactive]
+  diffFilter = "delta --color-only"
+[delta]
+  line-numbers = true
+  navigate = true
+  side-by-side = true
+  syntax-theme = "gruvbox-dark"
+  wrap-max-lines = "unlimited"
+[filter.lfs]
+  clean = "git-lfs clean -- %f"
+  smudge = "git-lfs smudge -- %f"
+  process = "git-lfs filter-process"
+  required = true
+[help]
+  autoCorrect = "prompt"

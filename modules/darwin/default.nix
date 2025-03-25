@@ -1,17 +1,30 @@
-{ pkgs, lib, ... }:
 {
-  imports = [ ./system.nix ];
+  self,
+  pkgs,
+  system,
+  ...
+}:
+{
+  imports = [
+    ./dock.nix
+    ./nix.nix
+    ./system.nix
+  ];
 
+  fonts.packages = [ self.outputs.packages.${system}.curlio-ttf ];
   security.pam.enableSudoTouchIdAuth = true;
 
   programs = {
     gnupg.agent.enable = true;
-    nix-index.enable = true;
     zsh.enable = true;
   };
 
   environment = {
-    loginShell = "${pkgs.zsh}/bin/zsh -l";
+    etc."pam.d/sudo_local".text = ''
+      # nix-darwin environment.etc."pam.d/sudo_local".text
+      auth        optional        ${pkgs.pam-reattach}/lib/pam/pam_reattach.so ignore_ssh
+      auth        sufficient      pam_tid.so
+    '';
 
     shells = with pkgs; [
       bashInteractive
@@ -24,75 +37,42 @@
       curl
       diffutils
       findutils
-      gawkInteractive
+      gawk
       gnugrep
-      gnutar
       gnused
+      groff
+      less
+      nmap
       python3
     ];
 
-    # TODO: vlc
-
     variables = {
       HOMEBREW_NO_ANALYTICS = "1";
+      HOMEBREW_NO_ENV_HINTS = "1";
+      LANG = "en_US.UTF-8";
     };
   };
 
   homebrew = {
     enable = true;
 
+    casks = [
+      "firefox"
+      "lunar"
+      "mullvadvpn"
+      "rectangle"
+      "vlc"
+    ];
+
     masApps = {
-      NextDns = 1464122853;
       Bitwarden = 1352778147;
+      NextDns = 1464122853;
     };
 
     onActivation = {
       autoUpdate = true;
       cleanup = "zap";
       upgrade = true;
-    };
-  };
-
-  # fonts = with pkgs; [
-  #   (iosevka.override { })
-  # ];
-
-  nix = {
-    configureBuildUsers = true;
-    useDaemon = true;
-
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 30d";
-    };
-
-    settings = {
-      auto-optimise-store = true;
-
-      experimental-features = lib.concatStrings (lib.intersperse " "
-        [
-          "auto-allocate-uids"
-          # "configurable-impure-env"
-          "flakes"
-          "nix-command"
-        ]);
-
-      substituters = [
-        "https://cache.nixos.org/"
-        "https://nixpkgs.cachix.org"
-        "https://nix-community.cachix.org"
-      ];
-
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nixpkgs.cachix.org-1:q91R6hxbwFvDqTSDKwDAV4T5PxqXGxswD8vhONFMeOE="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-
-      trusted-users = [
-        "root"
-        "@admin"
-      ];
     };
   };
 }
