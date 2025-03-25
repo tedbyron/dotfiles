@@ -36,11 +36,9 @@
     nix-direnv.enable = true;
   };
 
-  # eww
-
   firefox = {
     enable = !isDarwin;
-    # TODO firefox: config
+    # TODO: firefox config
   };
 
   fzf = import ./fzf.nix { inherit config user; };
@@ -69,12 +67,15 @@
     lfs.enable = true;
   };
 
-  # go
-  gpg.enable = true; # TODO gpg: signing keys
-  # home-manager.enable = true; #FIX necessary?
+  go = {
+    enable = true;
+    telemetry.mode = "off";
+  };
+
+  gpg.enable = true; # TODO: gpg signing keys
+  # home-manager.enable = true; # FIX: necessary?
   # jujutsu
   # keychain
-  man.generateCaches = true;
 
   neovim = {
     enable = true;
@@ -110,7 +111,6 @@
       theme = spicePkgs.themes.text;
     };
 
-  # sqls
   ssh.enable = true;
 
   starship = {
