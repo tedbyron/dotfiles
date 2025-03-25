@@ -27,6 +27,7 @@ with pkgs;
   obsidian
   openssl
   ouch
+  tealdeer
   tokei
   wasm-pack
   unstable.zig
