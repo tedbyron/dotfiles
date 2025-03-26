@@ -15,8 +15,6 @@ let
   home = if isDarwin then "/Users/${name}" else "/home/${name}";
 in
 {
-  services.sketchybar = lib.optionalAttrs isDarwin import ./sketchybar.nix { };
-
   users = {
     knownUsers = [ name ];
 
