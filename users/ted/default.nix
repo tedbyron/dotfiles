@@ -15,6 +15,8 @@ let
   home = if isDarwin then "/Users/${name}" else "/home/${name}";
 in
 {
+  services.sketchybar = lib.optionalAttrs isDarwin import ./sketchybar.nix { };
+
   users = {
     knownUsers = [ name ];
 
@@ -24,6 +26,10 @@ in
       shell = pkgs.zsh;
       uid = 501;
     };
+  };
+
+  system.defaults.screencapture = lib.optionalAttrs isDarwin {
+    location = "${home}/Pictures/Screenshots";
   };
 
   home-manager.users.${name} = {
@@ -46,8 +52,8 @@ in
 
       file =
         let
+          # Dir read is impure.
           ffReleaseProfile = lib.findFirst (name: lib.hasSuffix ".default-release" name) null (
-            # Dir read is impure.
             builtins.attrNames (builtins.readDir "${home}/Library/Caches/Firefox/Profiles")
           );
         in

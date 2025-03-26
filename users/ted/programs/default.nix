@@ -92,12 +92,7 @@
 
   ripgrep = {
     enable = true;
-
-    arguments = [
-      "-."
-      "-S"
-      "-g=!.git"
-    ];
+    arguments = lib.splitString "\n" (builtins.readFile ../../../.config/ripgrep/ripgreprc);
   };
 
   spicetify =
@@ -121,17 +116,7 @@
 
   tmux = import ./tmux.nix { inherit pkgs; };
   vscode.enable = true;
-
-  yt-dlp = {
-    enable = true;
-
-    settings = {
-      embed-chapters = true;
-      embed-thumbnail = true;
-      embed-subs = true;
-      sub-langs = "en";
-    };
-  };
+  yt-dlp.enable = true;
 
   zsh = import ./zsh.nix { inherit pkgs lib isDarwin; };
 }
