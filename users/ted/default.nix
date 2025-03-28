@@ -71,7 +71,7 @@ in
           '';
         };
 
-        "firefoxProfile" =
+        firefoxChrome =
           let
             # Dir read is impure.
             ffReleaseProfile = lib.findFirst (name: lib.hasSuffix ".default-release" name) null (
