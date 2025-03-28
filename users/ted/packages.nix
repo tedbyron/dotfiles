@@ -28,9 +28,9 @@ with pkgs;
   openssl
   ouch
   tealdeer
+  tio
   tokei
   wasm-pack
-  unstable.zig
 ]
 ++ lib.optionals isDarwin [
   mas

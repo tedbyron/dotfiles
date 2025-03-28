@@ -1,10 +1,10 @@
-{ unstable, ... }:
+{ pkgs, ... }:
 {
   nix = {
     channel.enable = false;
     configureBuildUsers = true;
     optimise.automatic = true;
-    package = unstable.nixVersions.nix_2_24;
+    package = pkgs.nixVersions.latest;
     useDaemon = true;
 
     gc = {
