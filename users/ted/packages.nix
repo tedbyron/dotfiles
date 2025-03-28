@@ -27,7 +27,6 @@ with pkgs;
   obsidian
   openssl
   ouch
-  tealdeer
   tio
   tokei
   wasm-pack

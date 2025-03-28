@@ -114,6 +114,11 @@
     settings = fromTOML (builtins.readFile ../../../.config/starship.toml);
   };
 
+  tealdeer = {
+    enable = true;
+    settings = fromTOML (builtins.readFile ../../../.config/tealdeer/config.toml);
+  };
+
   tmux = import ./tmux.nix { inherit pkgs; };
   vscode.enable = true;
   yt-dlp.enable = true;
