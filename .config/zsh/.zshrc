@@ -101,6 +101,7 @@ alias gbr='git branch -rv'
 alias gdc='git diff --cached'
 alias grep='grep -Ei --color=auto'
 alias gmv='git mv'
+alias hf='hyperfine'
 if (( $+commands[gls] )) {
     alias ls='gls -FHh -I ".DS_Store" --color=auto --group-directories-first'
 } else {

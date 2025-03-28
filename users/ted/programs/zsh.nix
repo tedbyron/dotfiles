@@ -102,6 +102,7 @@
     gdc = "git diff --cached";
     gmv = "git mv";
     grep = "grep -Ei --color=auto";
+    hf = "hyperfine";
     ls = "ls -FHh -I '.DS_Store' --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";
