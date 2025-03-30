@@ -1,10 +1,12 @@
 # curlio
 
-Iosevka extended ss20 variant + nerd font glyphs
+Iosevka extended ss20 variant + nerd font glyphs, customized to look similar to [Proggy](https://github.com/bluescan/proggyfonts).
 
 ![curlio font screenshot](../../../screenshots/screenshots/curlio.png)
 
 ## Packages
+
+<!-- TODO: packages without ligations -->
 
 | Package                | Description  | Width     | Nerd Font Glyphs |
 | ---------------------- | ------------ | --------- | ---------------- |
