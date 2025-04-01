@@ -1,11 +1,16 @@
 {
   description = "Iosevka extended ss20 variant + nerd font glyphs";
 
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "flake-utils";
+  };
+
   outputs =
     {
-      self,
       nixpkgs,
       flake-utils,
+      ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
