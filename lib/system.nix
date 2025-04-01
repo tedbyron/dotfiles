@@ -8,6 +8,7 @@
     host:
     {
       system,
+      darwin,
       overlays ? [ ],
       isWsl ? false,
     }:
@@ -16,15 +17,8 @@
       inherit (inputs.home-manager) darwinModules nixosModules;
       inherit (inputs.nixos-wsl.nixosModules) wsl;
 
-      isDarwin = builtins.elem system (
-        with inputs.flake-utils.lib.system;
-        [
-          aarch64-darwin
-          x86_64-darwin
-        ]
-      );
-      osModules = if isDarwin then darwinModules else nixosModules;
-      mkSystem = if isDarwin then darwinSystem else lib.nixosSystem;
+      osModules = if darwin then darwinModules else nixosModules;
+      mkSystem = if darwin then darwinSystem else lib.nixosSystem;
 
       unstable = import inputs.nixpkgs-unstable {
         inherit system;
@@ -42,7 +36,7 @@
           inputs
           unstable
           system
-          isDarwin
+          darwin
           isWsl
           ;
       };

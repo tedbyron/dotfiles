@@ -2,7 +2,7 @@
   pkgs,
   unstable,
   lib,
-  isDarwin,
+  darwin,
 }:
 with pkgs;
 [
@@ -31,7 +31,7 @@ with pkgs;
   tokei
   wasm-pack
 ]
-++ lib.optionals isDarwin [
+++ lib.optionals darwin [
   mas
   pinentry_mac
 ]

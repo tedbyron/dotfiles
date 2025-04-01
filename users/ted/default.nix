@@ -6,13 +6,13 @@
   unstable,
   lib,
   system,
-  isDarwin,
+  darwin,
   isWsl,
   ...
 }:
 let
   name = baseNameOf (toString ./.);
-  home = if isDarwin then "/Users/${name}" else "/home/${name}";
+  home = if darwin then "/Users/${name}" else "/home/${name}";
 in
 {
   users = {
@@ -26,7 +26,7 @@ in
     };
   };
 
-  system.defaults.screencapture = lib.optionalAttrs isDarwin {
+  system.defaults.screencapture = lib.optionalAttrs darwin {
     location = "${home}/Pictures/Screenshots";
   };
 
@@ -43,7 +43,7 @@ in
           pkgs
           unstable
           lib
-          isDarwin
+          darwin
           ;
       };
       username = name;
@@ -56,12 +56,12 @@ in
         ".config/tio/config".source = ../../.config/tio/config;
 
         ".hushlogin" = {
-          enable = isDarwin;
+          enable = darwin;
           text = "";
         };
 
         "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
-          enable = isDarwin;
+          enable = darwin;
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
           text = ''
@@ -79,7 +79,7 @@ in
             );
           in
           {
-            enable = isDarwin && ffReleaseProfile != null;
+            enable = darwin && ffReleaseProfile != null;
             source = ../../.config/firefox/chrome;
             target = "Library/Caches/Firefox/Profiles/${ffReleaseProfile}/chrome";
           };
@@ -95,13 +95,13 @@ in
         unstable
         lib
         system
-        isDarwin
+        darwin
         ;
 
       user = name;
     };
 
-    targets.darwin = lib.optionalAttrs isDarwin {
+    targets.darwin = lib.optionalAttrs darwin {
       currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
       search = "DuckDuckGo";
 

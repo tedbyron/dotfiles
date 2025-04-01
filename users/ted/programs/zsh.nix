@@ -1,7 +1,7 @@
 {
   pkgs,
   lib,
-  isDarwin,
+  darwin,
 }:
 {
   enable = true;
@@ -17,7 +17,7 @@
       dot = "$HOME/git/dotfiles";
       git = "$HOME/git";
     }
-    // lib.optionalAttrs isDarwin {
+    // lib.optionalAttrs darwin {
       dls = "$HOME/Downloads";
       pub = "$HOME/Public";
     };

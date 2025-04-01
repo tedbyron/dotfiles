@@ -6,7 +6,7 @@
   unstable,
   lib,
   system,
-  isDarwin,
+  darwin,
   user,
 }:
 {
@@ -37,7 +37,7 @@
   };
 
   firefox = {
-    enable = !isDarwin;
+    enable = !darwin;
     # TODO: firefox config
   };
 
@@ -61,7 +61,7 @@
     enable = true;
     # delta configured in .gitconfig and installed as a user package
     extraConfig = fromTOML (builtins.readFile ../../../.config/git/config) // {
-      credential.helper = if isDarwin then "osxkeychain" else "store";
+      credential.helper = if darwin then "osxkeychain" else "store";
     };
     ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
@@ -123,5 +123,7 @@
   vscode.enable = true;
   yt-dlp.enable = true;
 
-  zsh = import ./zsh.nix { inherit pkgs lib isDarwin; };
+  zsh = import ./zsh.nix {
+    inherit pkgs lib darwin;
+  };
 }

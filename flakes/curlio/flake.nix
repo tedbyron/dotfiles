@@ -172,7 +172,8 @@
           };
       in
       {
-        packages = {
+        packages = rec {
+          default = curlio-ttf;
           all-ttf = mkFont all false;
           all-web = mkFont all true;
           curlio-ttf = mkFont curlio false;
