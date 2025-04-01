@@ -20,11 +20,14 @@
       osModules = if darwin then darwinModules else nixosModules;
       mkSystem = if darwin then darwinSystem else lib.nixosSystem;
 
-      unstable = import inputs.nixpkgs-unstable {
-        inherit system;
-
+      # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
+      pkgs = import (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs) {
+        inherit system overlays;
         config.allowUnfree = true;
-        overlays = overlays;
+      };
+      unstable = import inputs.nixpkgs-unstable {
+        inherit system overlays;
+        config.allowUnfree = true;
       };
     in
     mkSystem {
@@ -38,6 +41,7 @@
           system
           darwin
           isWsl
+          overlays
           ;
       };
 
@@ -48,11 +52,7 @@
         (import ../hosts/${host})
 
         {
-          nixpkgs = {
-            config.allowUnfree = true;
-            hostPlatform = system;
-            overlays = overlays;
-          };
+          nixpkgs.pkgs = pkgs;
 
           home-manager = {
             useGlobalPkgs = true;

@@ -15,14 +15,9 @@
       url = "nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    spicetify-nix = {
-      url = "github:gerg-l/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     curlio = {
@@ -40,6 +35,11 @@
         nixpkgs.follows = "nixpkgs-unstable";
         flake-utils.follows = "flake-utils";
       };
+    };
+
+    spicetify-nix = {
+      url = "github:gerg-l/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
@@ -64,22 +64,20 @@
           aarch64-darwin
           x86_64-darwin
         ];
-      lib =
-        darwin:
-        (if darwin then nixpkgs-darwin else nixpkgs).lib.extend (
-          final: _: {
-            ted = import ./lib {
-              inherit self inputs;
-              lib = final;
-            };
-          }
-        );
       mkSystem =
         system: name:
         let
           darwin = isDarwin system;
+          lib = (if darwin then nixpkgs-darwin else nixpkgs).lib.extend (
+            final: _: {
+              ted = import ./lib {
+                inherit self inputs;
+                lib = final;
+              };
+            }
+          );
         in
-        (lib darwin).ted.mkSystem name { inherit system darwin overlays; };
+        lib.ted.mkSystem name { inherit system darwin overlays; };
     in
     {
       darwinConfigurations = {
