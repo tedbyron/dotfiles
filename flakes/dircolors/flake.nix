@@ -2,7 +2,8 @@
   description = "Dracula dircolors for home-manager";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs-darwin.url = "nixpkgs/nixpkgs-24.11-darwin";
     flake-utils.url = "flake-utils";
 
     dracula-dircolors = {
@@ -14,6 +15,7 @@
   outputs =
     {
       nixpkgs,
+      nixpkgs-darwin,
       flake-utils,
       dracula-dircolors,
       ...
@@ -21,7 +23,20 @@
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import (
+          if
+            builtins.elem system (
+              with flake-utils.lib.system;
+              [
+                aarch64-darwin
+                x86_64-darwin
+              ]
+            )
+          then
+            nixpkgs-darwin
+          else
+            nixpkgs
+        ) { inherit system; };
       in
       {
         packages.default = pkgs.stdenvNoCC.mkDerivation {

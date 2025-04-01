@@ -2,13 +2,15 @@
   description = "Iosevka extended ss20 variant + nerd font glyphs";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs-darwin.url = "nixpkgs/nixpkgs-24.11-darwin";
     flake-utils.url = "flake-utils";
   };
 
   outputs =
     {
       nixpkgs,
+      nixpkgs-darwin,
       flake-utils,
       ...
     }:
@@ -17,7 +19,20 @@
       let
         inherit (pkgs) lib;
 
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import (
+          if
+            builtins.elem system (
+              with flake-utils.lib.system;
+              [
+                aarch64-darwin
+                x86_64-darwin
+              ]
+            )
+          then
+            nixpkgs-darwin
+          else
+            nixpkgs
+        ) { inherit system; };
 
         buildPlan = {
           family = "Curlio";
