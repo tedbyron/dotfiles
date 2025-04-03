@@ -8,6 +8,8 @@
   fsmonitor = true
   editor = "nvim"
   pager = "delta"
+[clone]
+  filterSubmodules = true
 [transfer]
   fsckObjects = true
 [submodule]
