@@ -49,6 +49,7 @@
         set -g @dracula-show-left-icon session
         set -g @dracula-border-contrast false
         set -g @dracula-military-time true
+        set -g @dracula-transparent-powerline-bg true
         set -g @dracula-show-empty-plugins false
 
         # | Dracula color | Gruvbox color |
@@ -56,15 +57,15 @@
         # | white         | fg            |
         # | gray          | bg0_s         |
         # | dark_gray     | bg0           |
-        # | dark_purple   | gray          |
+        # | dark_purple   | bg1           |
         # | cyan          | aqua          |
-        # | pink          | purple h      |
+        # | pink          | purple 2      |
         set -g @dracula-colors "
         white='#ebdbb2'
         gray='#32302f'
         dark_gray='#282828'
         light_purple='#b16286'
-        dark_purple='#928374'
+        dark_purple='#3c3836'
         cyan='#689d6a'
         green='#98971a'
         orange='#d65d0e'
