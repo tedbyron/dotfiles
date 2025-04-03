@@ -66,16 +66,6 @@ unsetopt hist_expire_dups_first
 
 HISTSIZE=10000
 SAVEHIST=10000
-HISTORY_IGNORE="(\
-> *|\
-builtin *|\
-kill *|\
-mkdir *|\
-pkill *|\
-rm *|\
-rmdir *|\
-touch *|\
-unlink *)"
 HISTFILE=$ZDOTDIR/.zsh_history
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 

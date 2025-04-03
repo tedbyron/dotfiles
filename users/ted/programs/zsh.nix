@@ -9,6 +9,7 @@
   autosuggestion.enable = true;
   defaultKeymap = "emacs";
   dotDir = ".config/zsh";
+  history.path = "$ZDOTDIR/.zsh_history";
   localVariables.HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
   syntaxHighlighting.enable = true;
 
@@ -21,22 +22,6 @@
       dls = "$HOME/Downloads";
       pub = "$HOME/Public";
     };
-
-  history = {
-    path = "$ZDOTDIR/.zsh_history";
-
-    ignorePatterns = [
-      "> *"
-      "builtin *"
-      "kill *"
-      "mkdir *"
-      "pkill *"
-      "rm *"
-      "rmdir *"
-      "touch *"
-      "unlink *"
-    ];
-  };
 
   historySubstringSearch = {
     enable = true;
