@@ -22,17 +22,15 @@
 
     curlio = {
       url = "path:./flakes/curlio";
-
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
       };
     };
     dircolors = {
       url = "path:./flakes/dircolors";
-
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
       };
     };
