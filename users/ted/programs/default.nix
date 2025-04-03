@@ -102,7 +102,6 @@
     {
       enable = true;
       colorScheme = "gruvbox";
-      spotifyPackage = unstable.spotify;
       theme = spicePkgs.themes.text;
     };
 
@@ -119,11 +118,11 @@
     settings = fromTOML (builtins.readFile ../../../.config/tealdeer/config.toml);
   };
 
-  tmux = import ./tmux.nix { inherit pkgs; };
+  tmux = import ./tmux.nix { inherit unstable; };
   vscode.enable = true;
   yt-dlp.enable = true;
 
   zsh = import ./zsh.nix {
-    inherit pkgs lib darwin;
+    inherit unstable lib darwin;
   };
 }

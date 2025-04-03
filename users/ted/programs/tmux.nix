@@ -1,4 +1,4 @@
-{ pkgs }:
+{ unstable }:
 {
   enable = true;
   clock24 = true;
@@ -14,6 +14,7 @@
     set -g set-clipboard on
     set -g automatic-rename on
     set -g automatic-rename-format "#{?#{==:#{pane_current_command},zsh},#{?#{==:#{pane_current_path},#{HOME}},~,#{b:pane_current_path}},#{pane_current_command}}"
+    set -g renumber-windows on
     set -as terminal-overrides ",alacritty:RGB"
 
     #
@@ -36,7 +37,7 @@
     bind '"' split -v -c "#{pane_current_path}"
   '';
 
-  plugins = with pkgs.tmuxPlugins; [
+  plugins = with unstable.tmuxPlugins; [
     {
       plugin = dracula;
       extraConfig = ''
