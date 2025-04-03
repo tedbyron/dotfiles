@@ -84,6 +84,9 @@
     gba = "git branch -avv";
     gbl = "git blame -wCCC";
     gbr = "git branch -rv";
+    gdc = "git diff --check";
+    gds = "git diff --stat";
+    gdst = "git diff --staged";
     gmv = "git mv";
     grep = "grep -Ei --color=auto";
     hf = "hyperfine";
