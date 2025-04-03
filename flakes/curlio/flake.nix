@@ -2,15 +2,13 @@
   description = "Iosevka extended ss20 variant + nerd font glyphs";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
-    nixpkgs-darwin.url = "nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
     flake-utils.url = "flake-utils";
   };
 
   outputs =
     {
       nixpkgs,
-      nixpkgs-darwin,
       flake-utils,
       ...
     }:
@@ -19,21 +17,7 @@
       let
         inherit (pkgs) lib;
 
-        pkgs = import (
-          if
-            builtins.elem system (
-              with flake-utils.lib.system;
-              [
-                aarch64-darwin
-                x86_64-darwin
-              ]
-            )
-          then
-            nixpkgs-darwin
-          else
-            nixpkgs
-        ) { inherit system; };
-
+        pkgs = import nixpkgs { inherit system; };
         buildPlan = {
           family = "Curlio";
           spacing = "term";
@@ -122,20 +106,17 @@
             };
           };
         };
+        buildPlanSingleWidth =
+          width: buildPlan // { widths = lib.filterAttrs (name: _: name == width) buildPlan.widths; };
 
         all = pkgs.iosevka.override {
           set = "curlio";
           privateBuildPlan = buildPlan;
         };
-
-        buildPlanSingleWidth =
-          width: buildPlan // { widths = lib.filterAttrs (name: _: name == width) buildPlan.widths; };
-
         curlio = pkgs.iosevka.override {
           set = "curlio";
           privateBuildPlan = buildPlanSingleWidth "normal";
         };
-
         curlioCondensed = pkgs.iosevka.override {
           set = "curlio";
           privateBuildPlan = buildPlanSingleWidth "condensed";

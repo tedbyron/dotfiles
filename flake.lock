@@ -7,12 +7,11 @@
         ],
         "nixpkgs": [
           "nixpkgs"
-        ],
-        "nixpkgs-darwin": "nixpkgs-darwin"
+        ]
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-jRFnpbCjC51AlfIELb2kG74fav2sfWjplztFtIUyyZQ=",
+        "narHash": "sha256-uT57bkLHUfm6GbH4YFrJAgWu2Su3luo+NhJHQdSOwbM=",
         "path": "./flakes/curlio",
         "type": "path"
       },
@@ -49,12 +48,11 @@
         ],
         "nixpkgs": [
           "nixpkgs"
-        ],
-        "nixpkgs-darwin": "nixpkgs-darwin_2"
+        ]
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-CR7kduixLe/CtTIzhZW8IaMUX/kmj74E+6LTy0T9vKs=",
+        "narHash": "sha256-eUnNaD0ZzjcavDXG4KNpHkveoqNoDy943MI7I5qm3ds=",
         "path": "./flakes/dircolors",
         "type": "path"
       },
@@ -183,36 +181,6 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-darwin_2": {
-      "locked": {
-        "lastModified": 1743538134,
-        "narHash": "sha256-ZqjOyAtoOk4xI1K+56/XjCCFqeIfvECupMuKe/wiz7s=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "07bba54a1e6c02a6e88cecf4d6a8ef487956fb29",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixpkgs-24.11-darwin",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs-darwin_3": {
-      "locked": {
-        "lastModified": 1743538134,
-        "narHash": "sha256-ZqjOyAtoOk4xI1K+56/XjCCFqeIfvECupMuKe/wiz7s=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "07bba54a1e6c02a6e88cecf4d6a8ef487956fb29",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixpkgs-24.11-darwin",
-        "type": "indirect"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1743568003,
@@ -237,7 +205,7 @@
         "home-manager": "home-manager",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-darwin": "nixpkgs-darwin_3",
+        "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "spicetify-nix": "spicetify-nix"
       }
