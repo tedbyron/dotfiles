@@ -19,7 +19,7 @@ with pkgs;
   ffmpeg
   hexyl
   hyperfine
-  imagemagick
+  imagemagickBig
   lychee
   nil
   nixfmt-rfc-style
