@@ -9,7 +9,6 @@
   autosuggestion.enable = true;
   defaultKeymap = "emacs";
   dotDir = ".config/zsh";
-  history.path = "$ZDOTDIR/.zsh_history";
   localVariables.HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
   syntaxHighlighting.enable = true;
 
@@ -22,6 +21,15 @@
       dls = "$HOME/Downloads";
       pub = "$HOME/Public";
     };
+
+  history = {
+    extended = true;
+    # findNoDups = true; # TODO: 25.05
+    ignoreAllDups = true;
+    ignoreSpace = true;
+    path = "$ZDOTDIR/.zsh_history";
+    # saveNoDups = true; # TODO: 25.05
+  };
 
   historySubstringSearch = {
     enable = true;

@@ -50,6 +50,11 @@ setopt pushd_silent
 setopt pushd_to_home
 setopt multios
 setopt typeset_silent
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_save_no_dups
 
 export GPG_TTY="$(tty)"
 
@@ -60,9 +65,6 @@ znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-completions
 znap source zsh-users/zsh-syntax-highlighting
 znap source zsh-users/zsh-history-substring-search
-
-unsetopt extended_history
-unsetopt hist_expire_dups_first
 
 HISTSIZE=10000
 SAVEHIST=10000
