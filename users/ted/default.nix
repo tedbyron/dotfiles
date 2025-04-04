@@ -51,9 +51,13 @@ in
       file = {
         ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
         ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
-        ".config/nvim/lua".source = ../../.config/nvim/lua;
         ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
         ".config/tio/config".source = ../../.config/tio/config;
+
+        ".config/nvim/lua" = {
+          source = ../../.config/nvim/lua;
+          recursive = true;
+        };
 
         ".hushlogin" = {
           enable = darwin;
