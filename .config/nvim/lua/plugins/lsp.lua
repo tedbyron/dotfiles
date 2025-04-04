@@ -4,6 +4,7 @@ return {
   {
     'nvim-lspconfig',
     opts = {
+      inlay_hints = { enabled = false },
       servers = {
         bashls = {},
         emmet_ls = {},

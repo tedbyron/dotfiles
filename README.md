@@ -1,7 +1,7 @@
 # dotfiles
 
 <div float="left">
-  <img src="../screenshots/screenshots/nvim.png" alt="neovim" width="49%" />
+  <img src="../screenshots/screenshots/neovim.png" alt="neovim" width="49%" />
   <img src="../screenshots/screenshots/vscode.png" alt="vs code" width="49%" />
 </div>
 
