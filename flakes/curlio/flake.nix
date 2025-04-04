@@ -1,11 +1,16 @@
 {
   description = "Iosevka extended ss20 variant + nerd font glyphs";
 
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "flake-utils";
+  };
+
   outputs =
     {
-      self,
       nixpkgs,
       flake-utils,
+      ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -13,7 +18,6 @@
         inherit (pkgs) lib;
 
         pkgs = import nixpkgs { inherit system; };
-
         buildPlan = {
           family = "Curlio";
           spacing = "term";
@@ -102,20 +106,17 @@
             };
           };
         };
+        buildPlanSingleWidth =
+          width: buildPlan // { widths = lib.filterAttrs (name: _: name == width) buildPlan.widths; };
 
         all = pkgs.iosevka.override {
           set = "curlio";
           privateBuildPlan = buildPlan;
         };
-
-        buildPlanSingleWidth =
-          width: buildPlan // { widths = lib.filterAttrs (name: _: name == width) buildPlan.widths; };
-
         curlio = pkgs.iosevka.override {
           set = "curlio";
           privateBuildPlan = buildPlanSingleWidth "normal";
         };
-
         curlioCondensed = pkgs.iosevka.override {
           set = "curlio";
           privateBuildPlan = buildPlanSingleWidth "condensed";
@@ -172,7 +173,8 @@
           };
       in
       {
-        packages = {
+        packages = rec {
+          default = curlio-ttf;
           all-ttf = mkFont all false;
           all-web = mkFont all true;
           curlio-ttf = mkFont curlio false;

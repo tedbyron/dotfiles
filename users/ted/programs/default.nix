@@ -6,7 +6,7 @@
   unstable,
   lib,
   system,
-  isDarwin,
+  darwin,
   user,
 }:
 {
@@ -36,11 +36,9 @@
     nix-direnv.enable = true;
   };
 
-  # eww
-
   firefox = {
-    enable = !isDarwin;
-    # TODO firefox: config
+    enable = !darwin;
+    # TODO: firefox config
   };
 
   fzf = import ./fzf.nix { inherit config user; };
@@ -63,18 +61,21 @@
     enable = true;
     # delta configured in .gitconfig and installed as a user package
     extraConfig = fromTOML (builtins.readFile ../../../.config/git/config) // {
-      credential.helper = if isDarwin then "osxkeychain" else "store";
+      credential.helper = if darwin then "osxkeychain" else "store";
     };
     ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
     lfs.enable = true;
   };
 
-  # go
-  gpg.enable = true; # TODO gpg: signing keys
-  # home-manager.enable = true; #FIX necessary?
+  go = {
+    enable = true;
+    # telemetry.mode = "off"; # TODO: 25.05
+  };
+
+  gpg.enable = true; # TODO: gpg signing keys
+  # home-manager.enable = true; # FIX: necessary?
   # jujutsu
   # keychain
-  man.generateCaches = true;
 
   neovim = {
     enable = true;
@@ -91,12 +92,7 @@
 
   ripgrep = {
     enable = true;
-
-    arguments = [
-      "-."
-      "-S"
-      "-g=!.git"
-    ];
+    arguments = lib.splitString "\n" (builtins.readFile ../../../.config/ripgrep/ripgreprc);
   };
 
   spicetify =
@@ -106,11 +102,9 @@
     {
       enable = true;
       colorScheme = "gruvbox";
-      spotifyPackage = unstable.spotify;
       theme = spicePkgs.themes.text;
     };
 
-  # sqls
   ssh.enable = true;
 
   starship = {
@@ -119,19 +113,16 @@
     settings = fromTOML (builtins.readFile ../../../.config/starship.toml);
   };
 
-  tmux = import ./tmux.nix { inherit pkgs; };
-  vscode.enable = true;
-
-  yt-dlp = {
+  tealdeer = {
     enable = true;
-
-    settings = {
-      embed-chapters = true;
-      embed-thumbnail = true;
-      embed-subs = true;
-      sub-langs = "en";
-    };
+    settings = fromTOML (builtins.readFile ../../../.config/tealdeer/config.toml);
   };
 
-  zsh = import ./zsh.nix { inherit pkgs lib isDarwin; };
+  tmux = import ./tmux.nix { inherit unstable; };
+  vscode.enable = true;
+  yt-dlp.enable = true;
+
+  zsh = import ./zsh.nix {
+    inherit unstable lib darwin;
+  };
 }

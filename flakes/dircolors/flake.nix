@@ -1,17 +1,22 @@
 {
   description = "Dracula dircolors for home-manager";
 
-  inputs.dracula-dircolors = {
-    url = "github:dracula/dircolors";
-    flake = false;
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "flake-utils";
+
+    dracula-dircolors = {
+      url = "github:dracula/dircolors";
+      flake = false;
+    };
   };
 
   outputs =
     {
-      self,
       nixpkgs,
       flake-utils,
       dracula-dircolors,
+      ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:

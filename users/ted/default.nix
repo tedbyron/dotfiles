@@ -6,13 +6,13 @@
   unstable,
   lib,
   system,
-  isDarwin,
+  darwin,
   isWsl,
   ...
 }:
 let
   name = baseNameOf (toString ./.);
-  home = if isDarwin then "/Users/${name}" else "/home/${name}";
+  home = if darwin then "/Users/${name}" else "/home/${name}";
 in
 {
   users = {
@@ -24,6 +24,10 @@ in
       shell = pkgs.zsh;
       uid = 501;
     };
+  };
+
+  system.defaults.screencapture = lib.optionalAttrs darwin {
+    location = "${home}/Pictures/Screenshots";
   };
 
   home-manager.users.${name} = {
@@ -39,47 +43,51 @@ in
           pkgs
           unstable
           lib
-          isDarwin
+          darwin
           ;
       };
       username = name;
 
-      file =
-        let
-          ffReleaseProfile = lib.findFirst (name: lib.hasSuffix ".default-release" name) null (
-            # Dir read is impure.
-            builtins.attrNames (builtins.readDir "${home}/Library/Caches/Firefox/Profiles")
-          );
-        in
-        {
-          ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
-          ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
-          ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
+      file = {
+        ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
+        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
+        ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
+        ".config/tio/config".source = ../../.config/tio/config;
 
-          ".config/nvim/lua" = {
-            source = ../../.config/nvim/lua;
-            recursive = true;
-          };
-
-          ".hushlogin" = {
-            enable = isDarwin;
-            text = "";
-          };
-
-          "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
-            enable = isDarwin;
-            onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
-
-            text = ''
-              pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
-              default-cache-ttl 34560000
-              max-cache-ttl 34560000
-            '';
-          };
-        }
-        // lib.optionalAttrs (isDarwin && ffReleaseProfile != null) {
-          "Library/Caches/Firefox/Profiles/${ffReleaseProfile}/chrome".source = ../../.config/firefox/chrome;
+        ".config/nvim/lua" = {
+          source = ../../.config/nvim/lua;
+          recursive = true;
         };
+
+        ".hushlogin" = {
+          enable = darwin;
+          text = "";
+        };
+
+        "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
+          enable = darwin;
+          onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
+
+          text = ''
+            pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+            default-cache-ttl 34560000
+            max-cache-ttl 34560000
+          '';
+        };
+
+        firefoxChrome =
+          let
+            # Dir read is impure.
+            ffReleaseProfile = lib.findFirst (name: lib.hasSuffix ".default-release" name) null (
+              builtins.attrNames (builtins.readDir "${home}/Library/Caches/Firefox/Profiles")
+            );
+          in
+          {
+            enable = darwin && ffReleaseProfile != null;
+            source = ../../.config/firefox/chrome;
+            target = "Library/Caches/Firefox/Profiles/${ffReleaseProfile}/chrome";
+          };
+      };
     };
 
     programs = import ./programs {
@@ -91,13 +99,13 @@ in
         unstable
         lib
         system
-        isDarwin
+        darwin
         ;
 
       user = name;
     };
 
-    targets.darwin = lib.optionalAttrs isDarwin {
+    targets.darwin = lib.optionalAttrs darwin {
       currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
       search = "DuckDuckGo";
 

@@ -10,12 +10,15 @@ format = '[$percentage]($style) '
 
 [character]
 format = '$symbol '
-success_symbol = "[\uf0da](green)" # nerd font nf-fa-caret-right
-error_symbol = "[\uf0da](red)"     # nerd font nf-fa-caret-right
+success_symbol = "[\uf0da](green)" # nf-fa-caret-right
+error_symbol = "[\uf0da](red)"     # nf-fa-caret-right
 vimcmd_symbol = '[N](green)'
 
 [cmd_duration]
 format = '[$duration]($style) '
+min_time = 10_000
+# show_notifications = true
+# min_time_to_notify = 60_000
 style = 'bright-black'
 
 # [custom]
@@ -26,7 +29,7 @@ truncation_length = 5
 truncate_to_repo = true
 format = '[$path]($style)[$read_only]($read_only_style) '
 read_only = ' ro'
-style = 'cyan'
+style = 'white'
 fish_style_pwd_dir_length = 1
 
 # [env_var]
@@ -42,7 +45,7 @@ symbol = ' ' # ─ ━
 disabled = true
 
 [jobs]
-style = 'cyan'
+style = 'bright-black'
 
 [line_break]
 disabled = true
@@ -109,7 +112,7 @@ disabled = true
 [git_branch]
 format = '([$symbol$branch]($style) )'
 symbol = ''                            # 
-style = 'blue'
+style = 'green'
 
 [git_commit]
 commit_hash_length = 7
@@ -213,7 +216,7 @@ disabled = true
 disabled = true
 [nix_shell]
 format = '[$symbol]($style)'
-symbol = "\uf313"            # nerd font nf-linux-nixos
+symbol = "\uf313"            # nf-linux-nixos
 style = 'cyan'
 impure_msg = 'i'
 pure_msg = 'p'

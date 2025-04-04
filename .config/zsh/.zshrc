@@ -50,6 +50,11 @@ setopt pushd_silent
 setopt pushd_to_home
 setopt multios
 setopt typeset_silent
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_save_no_dups
 
 export GPG_TTY="$(tty)"
 
@@ -61,21 +66,8 @@ znap source zsh-users/zsh-completions
 znap source zsh-users/zsh-syntax-highlighting
 znap source zsh-users/zsh-history-substring-search
 
-unsetopt extended_history
-unsetopt hist_expire_dups_first
-
 HISTSIZE=10000
 SAVEHIST=10000
-HISTORY_IGNORE="(\
-> *|\
-builtin *|\
-kill *|\
-mkdir *|\
-pkill *|\
-rm *|\
-rmdir *|\
-touch *|\
-unlink *)"
 HISTFILE=$ZDOTDIR/.zsh_history
 HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
@@ -98,9 +90,12 @@ alias fcl='fc -lr'
 alias gba='git branch -avv'
 alias gbl='git blame -wCCC'
 alias gbr='git branch -rv'
-alias gdc='git diff --cached'
+alias gdc='git diff --check'
+alias gds='git diff --stat'
+alias gdst='git diff --staged'
 alias grep='grep -Ei --color=auto'
 alias gmv='git mv'
+alias hf='hyperfine'
 if (( $+commands[gls] )) {
     alias ls='gls -FHh -I ".DS_Store" --color=auto --group-directories-first'
 } else {

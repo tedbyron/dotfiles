@@ -1,7 +1,7 @@
 {
-  pkgs,
+  unstable,
   lib,
-  isDarwin,
+  darwin,
 }:
 {
   enable = true;
@@ -17,25 +17,18 @@
       dot = "$HOME/git/dotfiles";
       git = "$HOME/git";
     }
-    // lib.optionalAttrs isDarwin {
+    // lib.optionalAttrs darwin {
       dls = "$HOME/Downloads";
       pub = "$HOME/Public";
     };
 
   history = {
+    extended = true;
+    # findNoDups = true; # TODO: 25.05
+    ignoreAllDups = true;
+    ignoreSpace = true;
     path = "$ZDOTDIR/.zsh_history";
-
-    ignorePatterns = [
-      "> *"
-      "builtin *"
-      "kill *"
-      "mkdir *"
-      "pkill *"
-      "rm *"
-      "rmdir *"
-      "touch *"
-      "unlink *"
-    ];
+    # saveNoDups = true; # TODO: 25.05
   };
 
   historySubstringSearch = {
@@ -53,13 +46,13 @@
   };
 
   initExtraBeforeCompInit = ''
-    . ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/completion.zsh
-    . ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/correction.zsh
-    . ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/directories.zsh
-    . ${pkgs.oh-my-zsh}/share/oh-my-zsh/lib/history.zsh
-    . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/git-lfs/git-lfs.plugin.zsh
-    . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/git/git.plugin.zsh
-    . ${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/tmux/tmux.plugin.zsh
+    . ${unstable.oh-my-zsh}/share/oh-my-zsh/lib/completion.zsh
+    . ${unstable.oh-my-zsh}/share/oh-my-zsh/lib/correction.zsh
+    . ${unstable.oh-my-zsh}/share/oh-my-zsh/lib/directories.zsh
+    . ${unstable.oh-my-zsh}/share/oh-my-zsh/lib/history.zsh
+    . ${unstable.oh-my-zsh}/share/oh-my-zsh/plugins/git-lfs/git-lfs.plugin.zsh
+    . ${unstable.oh-my-zsh}/share/oh-my-zsh/plugins/git/git.plugin.zsh
+    . ${unstable.oh-my-zsh}/share/oh-my-zsh/plugins/tmux/tmux.plugin.zsh
 
     setopt always_to_end
     setopt no_append_create
@@ -99,9 +92,12 @@
     gba = "git branch -avv";
     gbl = "git blame -wCCC";
     gbr = "git branch -rv";
-    gdc = "git diff --cached";
+    gdc = "git diff --check";
+    gds = "git diff --stat";
+    gdst = "git diff --staged";
     gmv = "git mv";
     grep = "grep -Ei --color=auto";
+    hf = "hyperfine";
     ls = "ls -FHh -I '.DS_Store' --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";

@@ -2,20 +2,19 @@
   description = "tedbyron's nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs-darwin.url = "nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "flake-utils";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     darwin = {
-      url = "github:lnl7/nix-darwin/nix-darwin-24.11";
+      url = "nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,18 +22,15 @@
 
     curlio = {
       url = "path:./flakes/curlio";
-
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
       };
     };
-
     dircolors = {
       url = "path:./flakes/dircolors";
-
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
       };
     };
@@ -49,43 +45,55 @@
     {
       self,
       nixpkgs,
+      nixpkgs-darwin,
       flake-utils,
       curlio,
       dircolors,
       ...
     }@inputs:
     let
-      inherit (lib.ted) mkSystem;
-      inherit (flake-utils.lib.system) aarch64-darwin;
+      inherit (flake-utils.lib.system) aarch64-darwin x86_64-darwin;
 
       overlays = [ ];
 
-      lib = nixpkgs.lib.extend (
-        final: _: {
-          ted = import ./lib {
-            inherit self inputs;
-            lib = final;
-          };
-        }
-      );
+      isDarwin =
+        system:
+        builtins.elem system [
+          aarch64-darwin
+          x86_64-darwin
+        ];
+      mkSystem =
+        system: name:
+        let
+          darwin = isDarwin system;
+          lib = (if darwin then nixpkgs-darwin else nixpkgs).lib.extend (
+            final: _: {
+              ted = import ./lib {
+                inherit self inputs;
+                lib = final;
+              };
+            }
+          );
+        in
+        lib.ted.mkSystem name { inherit system darwin overlays; };
     in
     {
       darwinConfigurations = {
-        teds-laptop = mkSystem "teds-laptop" {
-          inherit overlays;
-          system = aarch64-darwin;
-        };
-        teds-work-laptop = mkSystem "teds-work-laptop" {
-          inherit overlays;
-          system = aarch64-darwin;
-        };
+        teds-laptop = mkSystem aarch64-darwin "teds-laptop";
+        teds-work-laptop = mkSystem aarch64-darwin "teds-work-laptop";
       };
     }
-    // flake-utils.lib.eachDefaultSystem (system: {
-      formatter = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+    // flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = if isDarwin system then nixpkgs-darwin else nixpkgs;
+      in
+      {
+        formatter = pkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
-      packages = curlio.outputs.packages.${system} // {
-        dircolors = dircolors.outputs.packages.${system}.default;
-      };
-    });
+        packages = curlio.outputs.packages.${system} // {
+          dircolors = dircolors.outputs.packages.${system}.default;
+        };
+      }
+    );
 }

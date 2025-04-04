@@ -36,6 +36,7 @@
       menuExtraClock = {
         Show24Hour = true;
         ShowDate = 2;
+        ShowDayOfWeek = false;
       };
 
       trackpad = {
@@ -51,6 +52,7 @@
         "com.apple.trackpad.enableSecondaryClick" = true;
         "com.apple.trackpad.scaling" = 1.5;
         "com.apple.trackpad.trackpadCornerClickBehavior" = 1;
+        _HIHideMenuBar = false;
         AppleICUForce24HourTime = true;
         AppleInterfaceStyle = "Dark";
         AppleKeyboardUIMode = 3;

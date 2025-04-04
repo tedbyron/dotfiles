@@ -1,10 +1,16 @@
-{ unstable, ... }:
+{
+  inputs,
+  pkgs,
+  system,
+  overlays,
+  ...
+}:
 {
   nix = {
     channel.enable = false;
     configureBuildUsers = true;
     optimise.automatic = true;
-    package = unstable.nixVersions.nix_2_24;
+    package = pkgs.nixVersions.latest;
     useDaemon = true;
 
     gc = {
@@ -33,5 +39,11 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
+  };
+
+  nixpkgs = {
+    inherit system overlays;
+    config.allowUnfree = true;
+    source = inputs.nixpkgs-darwin;
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs }:
+{ unstable }:
 {
   enable = true;
   clock24 = true;
@@ -14,6 +14,7 @@
     set -g set-clipboard on
     set -g automatic-rename on
     set -g automatic-rename-format "#{?#{==:#{pane_current_command},zsh},#{?#{==:#{pane_current_path},#{HOME}},~,#{b:pane_current_path}},#{pane_current_command}}"
+    set -g renumber-windows on
     set -as terminal-overrides ",alacritty:RGB"
 
     #
@@ -36,7 +37,7 @@
     bind '"' split -v -c "#{pane_current_path}"
   '';
 
-  plugins = with pkgs.tmuxPlugins; [
+  plugins = with unstable.tmuxPlugins; [
     {
       plugin = dracula;
       extraConfig = ''
@@ -50,12 +51,20 @@
         set -g @dracula-military-time true
         set -g @dracula-show-empty-plugins false
 
+        # | Dracula color | Gruvbox color |
+        # | ------------- | ------------- |
+        # | white         | fg            |
+        # | gray          | bg0_s         |
+        # | dark_gray     | bg0           |
+        # | dark_purple   | bg2           |
+        # | cyan          | aqua          |
+        # | pink          | purple 2      |
         set -g @dracula-colors "
         white='#ebdbb2'
-        gray='#3c3836'
+        gray='#32302f'
         dark_gray='#282828'
         light_purple='#b16286'
-        dark_purple='#928374'
+        dark_purple='#504945'
         cyan='#689d6a'
         green='#98971a'
         orange='#d65d0e'

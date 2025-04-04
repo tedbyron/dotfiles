@@ -2,7 +2,7 @@
   pkgs,
   unstable,
   lib,
-  isDarwin,
+  darwin,
 }:
 with pkgs;
 [
@@ -19,7 +19,7 @@ with pkgs;
   ffmpeg
   hexyl
   hyperfine
-  imagemagick
+  imagemagickBig
   lychee
   nil
   nixfmt-rfc-style
@@ -27,11 +27,11 @@ with pkgs;
   obsidian
   openssl
   ouch
+  tio
   tokei
   wasm-pack
-  unstable.zig
 ]
-++ lib.optionals isDarwin [
+++ lib.optionals darwin [
   mas
   pinentry_mac
 ]
