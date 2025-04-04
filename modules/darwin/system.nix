@@ -63,6 +63,7 @@
         KeyRepeat = 2;
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
         NSNavPanelExpandedStateForSaveMode = true;
         NSNavPanelExpandedStateForSaveMode2 = true;
         NSTableViewDefaultSizeMode = 2;
