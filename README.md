@@ -15,7 +15,7 @@
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
   git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
   # Give terminal full disk access and restart
-  nix run nix-darwin -- switch --impure --flake ~/git/dotfiles#<host>
+  nix run nix-darwin -- --flake ~/git/dotfiles#<host> --impure switch
   ```
 
 <!-- TODO: <https://wiki.nixos.org/wiki/NixOS_virtual_machines_on_macOS#linux-builder> -->

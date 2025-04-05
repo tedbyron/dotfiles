@@ -58,8 +58,8 @@ in
 
   launchd.daemons.linux-builder = {
     serviceConfig = {
-      StandardOutPath = "/var/log/darwin-builder.log";
-      StandardErrorPath = "/var/log/darwin-builder.log";
+      StandardOutPath = "/var/log/linux-builder.log";
+      StandardErrorPath = "/var/log/linux-builder.log";
     };
   };
 
@@ -68,11 +68,12 @@ in
     hostName = name;
   };
 
-  nix.linux-builder = {
+  nix.linux-builder = with inputs.flake-utils.lib.system; {
     enable = true;
     maxJobs = 2;
 
     config = {
+      boot.binfmt.emulatedSystems = [ x86_64-linux ];
       nix.settings.sandbox = false;
 
       virtualisation = {
@@ -90,7 +91,7 @@ in
       "nixos-test"
     ];
 
-    systems = with inputs.flake-utils.lib.system; [
+    systems = [
       aarch64-linux
       x86_64-linux
     ];
