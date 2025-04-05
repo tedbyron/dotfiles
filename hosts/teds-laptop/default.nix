@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -58,5 +59,22 @@ in
   networking = {
     computerName = name;
     hostName = name;
+  };
+
+  nix.linux-builder = {
+    enable = true;
+    maxJobs = 2;
+
+    config.virtualisation = {
+      darwin-builder = {
+        diskSize = 50 * 1024;
+        memorySize = 14 * 1024;
+      };
+    };
+
+    systems = with inputs.flake-utils.lib.system; [
+      aarch64-linux
+      x86_64-linux
+    ];
   };
 }

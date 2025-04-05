@@ -13,7 +13,7 @@
     };
     darwin = {
       url = "nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     nixos-wsl = {
       url = "github:nix-community/nixos-wsl";

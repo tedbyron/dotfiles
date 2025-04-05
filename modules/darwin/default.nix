@@ -58,7 +58,6 @@
 
     casks = [
       "firefox"
-      "linearmouse"
       "lunar"
       "mullvadvpn"
       "rectangle"
