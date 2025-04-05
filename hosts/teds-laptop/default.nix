@@ -56,6 +56,13 @@ in
     "microsoft-teams"
   ];
 
+  launchd.daemons.linux-builder = {
+    serviceConfig = {
+      StandardOutPath = "/var/log/darwin-builder.log";
+      StandardErrorPath = "/var/log/darwin-builder.log";
+    };
+  };
+
   networking = {
     computerName = name;
     hostName = name;
@@ -65,12 +72,23 @@ in
     enable = true;
     maxJobs = 2;
 
-    config.virtualisation = {
-      darwin-builder = {
-        diskSize = 50 * 1024;
-        memorySize = 14 * 1024;
+    config = {
+      nix.settings.sandbox = false;
+
+      virtualisation = {
+        darwin-builder = {
+          diskSize = 50 * 1024;
+          memorySize = 14 * 1024;
+        };
       };
     };
+
+    supportedFeatures = [
+      "kvm"
+      "benchmark"
+      "big-parallel"
+      "nixos-test"
+    ];
 
     systems = with inputs.flake-utils.lib.system; [
       aarch64-linux
