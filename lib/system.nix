@@ -14,7 +14,10 @@
     }:
     let
       inherit (inputs.darwin.lib) darwinSystem;
-      inherit (inputs.home-manager) darwinModules nixosModules;
+      inherit (if darwin then inputs.home-manager-darwin else inputs.home-manager)
+        darwinModules
+        nixosModules
+        ;
       inherit (inputs.nixos-wsl.nixosModules) wsl;
 
       osModules = if darwin then darwinModules else nixosModules;

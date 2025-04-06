@@ -11,6 +11,10 @@
       url = "home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager-darwin = {
+      url = "home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
     darwin = {
       url = "nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -27,10 +31,24 @@
         flake-utils.follows = "flake-utils";
       };
     };
+    curlio-darwin = {
+      url = "path:./flakes/curlio";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-darwin";
+        flake-utils.follows = "flake-utils";
+      };
+    };
     dircolors = {
       url = "path:./flakes/dircolors";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+    dircolors-darwin = {
+      url = "path:./flakes/dircolors";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-darwin";
         flake-utils.follows = "flake-utils";
       };
     };
@@ -47,8 +65,6 @@
       nixpkgs,
       nixpkgs-darwin,
       flake-utils,
-      curlio,
-      dircolors,
       ...
     }@inputs:
     let
@@ -86,7 +102,10 @@
     // flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = if isDarwin system then nixpkgs-darwin else nixpkgs;
+        darwin = isDarwin system;
+        pkgs = if darwin then nixpkgs-darwin else nixpkgs;
+        curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
+        dircolors = if darwin then inputs.dircolors-darwin else inputs.dircolors;
       in
       {
         formatter = pkgs.legacyPackages.${system}.nixfmt-rfc-style;
