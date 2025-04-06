@@ -72,6 +72,8 @@ in
     enable = true;
     maxJobs = 2;
 
+    # NOTE: linux-builder should be run once before using `config`.
+    # nix build --impure --expr '(with import <nixpkgs> { system = "aarch64-linux"; }; runCommand "uname" {} "uname -a > $out")'
     config = {
       boot.binfmt.emulatedSystems = [ x86_64-linux ];
       nix.settings.sandbox = false;
