@@ -70,6 +70,7 @@ in
 
   nix.linux-builder = with inputs.flake-utils.lib.system; {
     enable = true;
+    ephemeral = true;
     maxJobs = 4;
 
     # NOTE: linux-builder should be run once before using `config`.
