@@ -70,7 +70,7 @@ in
 
   nix.linux-builder = with inputs.flake-utils.lib.system; {
     enable = true;
-    maxJobs = 2;
+    maxJobs = 4;
 
     # NOTE: linux-builder should be run once before using `config`.
     # nix build --impure --expr '(with import <nixpkgs> { system = "aarch64-linux"; }; runCommand "uname" {} "uname -a > $out")'
