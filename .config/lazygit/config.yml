@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
+
+gui:
+  scrollHeight: 1
+  scrollPastBottom: false
+  scrollOffMargin: 3
+
+  timeFormat: 2006-01-02
+  shortTimeFormat: 15:04
+
+  showNumstatInFilesView: true
+  showRandomTip: false
+  nerdFontsVersion: "3"
+
+git:
+  paging:
+    pager: "delta --dark --paging never"
+  commit:
+    signOff: true
+  parseEmoji: true
+
+update:
+  method: never
+
+notARepository: quit

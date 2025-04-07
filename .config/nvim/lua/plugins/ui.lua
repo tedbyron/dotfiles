@@ -4,16 +4,6 @@ return {
     opts = {
       options = {
         indicator = { style = 'none' },
-        offsets = {
-          {
-            filetype = 'neo-tree',
-            text = 'tree',
-          },
-          {
-            filetype = 'Outline',
-            text = 'outline',
-          },
-        },
         separator_style = 'thin',
         show_buffer_close_icons = false,
         tab_size = 12,
@@ -23,11 +13,11 @@ return {
   {
     'lualine.nvim',
     opts = function(_, opts)
-      local icons = require('lazyvim.config').icons
+      local icons = LazyVim.config.icons
 
       local function lsp_servers(msg)
         msg = msg or 'Inactive'
-        local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+        local clients = vim.lsp.get_clients({ bufnr = 0 })
 
         if next(clients) == nil then
           if type(msg) == 'boolean' or #msg == 0 then
@@ -48,11 +38,9 @@ return {
         return table.concat(client_names, ',')
       end
 
-      local function fg(name)
+      local function fg(hl_group)
         return function()
-          ---@type { foreground?: number }?
-          local hl = vim.api.nvim_get_hl_by_name(name, true)
-          return hl and hl.foreground and { fg = string.format('#%06x', hl.foreground) }
+          return { fg = Snacks.util.color(hl_group) }
         end
       end
 
@@ -60,6 +48,7 @@ return {
         component_separators = { '', '' },
         section_separators = { '', '' },
       })
+
       opts.sections = vim.tbl_deep_extend('force', opts.sections, {
         lualine_a = {
           {
@@ -76,35 +65,32 @@ return {
           },
         },
         lualine_c = {
+          LazyVim.lualine.root_dir(),
           {
-            'diff',
-            padding = { left = 1, right = 0 },
+            'diagnostics',
             symbols = {
-              added = icons.git.added,
-              modified = icons.git.modified,
-              removed = icons.git.removed,
+              error = icons.diagnostics.Error,
+              warn = icons.diagnostics.Warn,
+              info = icons.diagnostics.Info,
+              hint = icons.diagnostics.Hint,
             },
           },
           {
             'filetype',
             icon_only = true,
+            separator = '',
             padding = { left = 1, right = 0 },
           },
-          {
-            'filename',
-            path = 1,
-            symbols = { modified = '', readonly = '', unnamed = '' },
-          },
-          {
-            'diagnostics',
-            padding = { left = 0, right = 1 },
-            symbols = {
-              info = icons.diagnostics.Info,
-              error = icons.diagnostics.Error,
-              hint = icons.diagnostics.Hint,
-              warn = icons.diagnostics.Warn,
-            },
-          },
+          { LazyVim.lualine.pretty_path() },
+          -- {
+          --   'diff',
+          --   padding = { left = 1, right = 0 },
+          --   symbols = {
+          --     added = icons.git.added,
+          --     modified = icons.git.modified,
+          --     removed = icons.git.removed,
+          --   },
+          -- },
           {
             function()
               return require('nvim-navic').get_location()
@@ -115,23 +101,33 @@ return {
           },
         },
         lualine_x = {
+          Snacks.profiler.status(),
           {
             function()
               return require('noice').api.status.command.get()
             end,
-            color = fg('Statement'),
             cond = function()
               return package.loaded['noice'] and require('noice').api.status.command.has()
             end,
+            color = fg('Statement'),
           },
           {
             function()
               return require('noice').api.status.mode.get()
             end,
-            color = fg('Constant'),
             cond = function()
               return package.loaded['noice'] and require('noice').api.status.mode.has()
             end,
+            color = fg('Constant'),
+          },
+          {
+            function()
+              return require('dap').status()
+            end,
+            cond = function()
+              return package.loaded['dap'] and require('dap').status() ~= ''
+            end,
+            color = fg('Debug'),
           },
           {
             require('lazy.status').updates,
@@ -152,14 +148,6 @@ return {
       })
     end,
   },
-  -- {
-  --   'mini.indentscope',
-  --   opts = function(_, opts)
-  --     opts.draw = {
-  --       animation = require('mini.indentscope').gen_animation.none(),
-  --     }
-  --   end,
-  -- },
   {
     'noice.nvim',
     opts = {

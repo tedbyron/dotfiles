@@ -79,7 +79,7 @@
           x86_64-darwin
         ];
       mkSystem =
-        system: name:
+        system: host:
         let
           darwin = isDarwin system;
           lib = (if darwin then nixpkgs-darwin else nixpkgs).lib.extend (
@@ -91,7 +91,14 @@
             }
           );
         in
-        lib.ted.mkSystem name { inherit system darwin overlays; };
+        lib.ted.mkSystem {
+          inherit
+            system
+            darwin
+            host
+            overlays
+            ;
+        };
     in
     {
       darwinConfigurations = {

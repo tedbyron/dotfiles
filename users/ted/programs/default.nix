@@ -9,10 +9,20 @@
   darwin,
   user,
 }:
+let
+  fromYAML =
+    e:
+    let
+      jsonOutputDrv = pkgs.runCommand "from-yaml" {
+        nativeBuildInputs = with pkgs; [ yq-go ];
+      } "yq -o json - <<<'${e}' > \"$out\"";
+    in
+    builtins.fromJSON (builtins.readFile jsonOutputDrv);
+in
 {
   alacritty = {
     enable = true;
-    settings = fromTOML (builtins.readFile ../../../.config/alacritty/alacritty.toml);
+    settings = builtins.fromTOML (builtins.readFile ../../../.config/alacritty/alacritty.toml);
   };
 
   bat = {
@@ -31,7 +41,7 @@
 
   direnv = {
     enable = true;
-    config = fromTOML (builtins.readFile ../../../.config/direnv/direnv.toml);
+    config = builtins.fromTOML (builtins.readFile ../../../.config/direnv/direnv.toml);
     enableZshIntegration = true;
     nix-direnv.enable = true;
   };
@@ -60,7 +70,7 @@
   git = {
     enable = true;
     # delta configured in .gitconfig and installed as a user package
-    extraConfig = fromTOML (builtins.readFile ../../../.config/git/config) // {
+    extraConfig = builtins.fromTOML (builtins.readFile ../../../.config/git/config) // {
       credential.helper = if darwin then "osxkeychain" else "store";
     };
     ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
@@ -76,6 +86,11 @@
   # home-manager.enable = true; # FIX: necessary?
   # jujutsu
   # keychain
+
+  lazygit = {
+    enable = true;
+    settings = fromYAML (builtins.readFile ../../../.config/lazygit/config.yml);
+  };
 
   neovim = {
     enable = true;
@@ -110,12 +125,12 @@
   starship = {
     enable = true;
     enableZshIntegration = true;
-    settings = fromTOML (builtins.readFile ../../../.config/starship.toml);
+    settings = builtins.fromTOML (builtins.readFile ../../../.config/starship.toml);
   };
 
   tealdeer = {
     enable = true;
-    settings = fromTOML (builtins.readFile ../../../.config/tealdeer/config.toml);
+    settings = builtins.fromTOML (builtins.readFile ../../../.config/tealdeer/config.toml);
   };
 
   tmux = import ./tmux.nix { inherit unstable; };

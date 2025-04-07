@@ -19,7 +19,6 @@ noremap_action('n', '<Leader> ', 'workbench.action.quickOpen')
 noremap_action('n', '<Leader>;', 'workbench.action.showCommands')
 vim.keymap.set('n', '<Leader>w', '<C-w>')
 
-noremap_action({ 'n', 'x' }, 'gf', 'editor.action.openLink')
 vim.keymap.set({ 'n', 'x', 'o' }, 'gc', '<Plug>VSCodeCommentary')
 vim.keymap.set('n', 'gcc', '<Plug>VSCodeCommentaryLine')
 

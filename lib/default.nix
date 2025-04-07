@@ -4,7 +4,7 @@
   lib,
 }:
 let
-  modules = [ ./system.nix ];
+  modules = [ ./mkSystem.nix ];
 
   ted = lib.makeExtensible (
     _:

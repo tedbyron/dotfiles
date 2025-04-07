@@ -5,23 +5,21 @@
 }:
 {
   mkSystem =
-    host:
     {
       system,
       darwin,
+      host,
       overlays ? [ ],
       isWsl ? false,
     }:
     let
+      inherit (homeManager) darwinModules nixosModules;
       inherit (inputs.darwin.lib) darwinSystem;
-      inherit (if darwin then inputs.home-manager-darwin else inputs.home-manager)
-        darwinModules
-        nixosModules
-        ;
       inherit (inputs.nixos-wsl.nixosModules) wsl;
 
+      homeManager = if darwin then inputs.home-manager-darwin else inputs.home-manager;
       osModules = if darwin then darwinModules else nixosModules;
-      mkSystem = if darwin then darwinSystem else lib.nixosSystem;
+      system = if darwin then darwinSystem else lib.nixosSystem;
 
       # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
       pkgs = import (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs) {
@@ -33,7 +31,7 @@
         config.allowUnfree = true;
       };
     in
-    mkSystem {
+    system {
       inherit system;
 
       specialArgs = {
