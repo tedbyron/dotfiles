@@ -1,10 +1,15 @@
 {
   self,
   inputs,
+  pkgs,
+  unstable,
   lib,
 }:
 let
-  modules = [ ./mkSystem.nix ];
+  modules = [
+    ./fromYAML.nix
+    ./mkSystem.nix
+  ];
 
   ted = lib.makeExtensible (
     _:
@@ -13,7 +18,13 @@ let
         path:
         lib.nameValuePair (baseNameOf (toString path)) (
           import path {
-            inherit self inputs lib;
+            inherit
+              self
+              inputs
+              pkgs
+              unstable
+              lib
+              ;
           }
         )
       ) modules

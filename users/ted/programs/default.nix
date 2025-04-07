@@ -9,16 +9,6 @@
   darwin,
   user,
 }:
-let
-  fromYAML =
-    e:
-    let
-      jsonOutputDrv = pkgs.runCommand "from-yaml" {
-        nativeBuildInputs = with pkgs; [ yq-go ];
-      } "yq -o json - <<<'${e}' > \"$out\"";
-    in
-    builtins.fromJSON (builtins.readFile jsonOutputDrv);
-in
 {
   alacritty = {
     enable = true;
@@ -89,7 +79,7 @@ in
 
   lazygit = {
     enable = true;
-    settings = fromYAML (builtins.readFile ../../../.config/lazygit/config.yml);
+    settings = lib.ted.fromYAML (builtins.readFile ../../../.config/lazygit/config.yml);
   };
 
   neovim = {

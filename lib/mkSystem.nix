@@ -1,6 +1,8 @@
 {
   self,
   inputs,
+  pkgs,
+  unstable,
   lib,
 }:
 {
@@ -19,19 +21,9 @@
 
       homeManager = if darwin then inputs.home-manager-darwin else inputs.home-manager;
       osModules = if darwin then darwinModules else nixosModules;
-      system = if darwin then darwinSystem else lib.nixosSystem;
-
-      # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
-      pkgs = import (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs) {
-        inherit system overlays;
-        config.allowUnfree = true;
-      };
-      unstable = import inputs.nixpkgs-unstable {
-        inherit system overlays;
-        config.allowUnfree = true;
-      };
+      system' = if darwin then darwinSystem else lib.nixosSystem;
     in
-    system {
+    system' {
       inherit system;
 
       specialArgs = {
@@ -44,6 +36,8 @@
           isWsl
           overlays
           ;
+
+        lib = lib.extend (_: _: homeManager.lib);
       };
 
       modules = [

@@ -87,6 +87,17 @@
               ted = import ./lib {
                 inherit self inputs;
                 lib = final;
+
+                # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
+                pkgs = import (if darwin then nixpkgs-darwin else nixpkgs) {
+                  inherit system overlays;
+                  config.allowUnfree = true;
+                };
+
+                unstable = import inputs.nixpkgs-unstable {
+                  inherit system overlays;
+                  config.allowUnfree = true;
+                };
               };
             }
           );
