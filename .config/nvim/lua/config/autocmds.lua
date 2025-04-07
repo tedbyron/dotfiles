@@ -3,9 +3,9 @@
 if vim.g.vscode then
   vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 else
-  vim.api.nvim_create_autocmd({ 'VimResized' }, {
+  vim.api.nvim_create_autocmd({ "VimResized" }, {
     callback = function()
-      vim.cmd('tabdo wincmd =')
+      vim.cmd("tabdo wincmd =")
     end,
   })
 end

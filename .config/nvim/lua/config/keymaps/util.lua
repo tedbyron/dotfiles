@@ -5,7 +5,7 @@ local M = {}
 ---@param rhs string | function
 ---@param opts table?
 function M.noremap(mode, lhs, rhs, opts)
-  vim.keymap.set(mode, lhs, rhs, vim.tbl_deep_extend('force', { noremap = true }, opts or {}))
+  vim.keymap.set(mode, lhs, rhs, vim.tbl_deep_extend("force", opts or {}, { noremap = true }))
 end
 
 return M
