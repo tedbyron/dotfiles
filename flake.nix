@@ -68,18 +68,23 @@
       ...
     }@inputs:
     let
-      inherit (flake-utils.lib.system) aarch64-darwin x86_64-darwin;
-
       overlays = [ ];
 
       isDarwin =
         system:
-        builtins.elem system [
-          aarch64-darwin
-          x86_64-darwin
-        ];
+        builtins.elem system (
+          with flake-utils.lib.system;
+          [
+            aarch64-darwin
+            x86_64-darwin
+          ]
+        );
       mkSystem =
-        system: host:
+        {
+          system,
+          host,
+          wsl ? false,
+        }:
         let
           darwin = isDarwin system;
           lib = (if darwin then nixpkgs-darwin else nixpkgs).lib.extend (
@@ -106,15 +111,22 @@
           inherit
             system
             darwin
+            wsl
             host
             overlays
             ;
         };
     in
     {
-      darwinConfigurations = {
-        teds-laptop = mkSystem aarch64-darwin "teds-laptop";
-        teds-work-laptop = mkSystem aarch64-darwin "teds-work-laptop";
+      darwinConfigurations = with flake-utils.lib.system; {
+        teds-laptop = mkSystem {
+          system = aarch64-darwin;
+          host = "teds-laptop";
+        };
+        teds-work-laptop = mkSystem {
+          system = aarch64-darwin;
+          host = "teds-work-laptop";
+        };
       };
     }
     // flake-utils.lib.eachDefaultSystem (

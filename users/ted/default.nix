@@ -7,7 +7,7 @@
   lib,
   system,
   darwin,
-  isWsl,
+  wsl,
   ...
 }:
 let
@@ -33,7 +33,7 @@ in
   home-manager.users.${name} = {
     imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
-    targets.genericLinux.enable = isWsl;
+    targets.genericLinux.enable = wsl;
 
     home = {
       stateVersion = "23.11";

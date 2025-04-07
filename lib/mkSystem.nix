@@ -9,19 +9,17 @@
   mkSystem =
     {
       system,
-      darwin,
+      darwin ? false,
+      wsl ? false,
       host,
       overlays ? [ ],
-      isWsl ? false,
     }:
     let
       inherit (homeManager) darwinModules nixosModules;
-      inherit (inputs.darwin.lib) darwinSystem;
-      inherit (inputs.nixos-wsl.nixosModules) wsl;
 
       homeManager = if darwin then inputs.home-manager-darwin else inputs.home-manager;
       osModules = if darwin then darwinModules else nixosModules;
-      system' = if darwin then darwinSystem else lib.nixosSystem;
+      system' = if darwin then inputs.darwin.lib.darwinSystem else lib.nixosSystem;
     in
     system' {
       inherit system;
@@ -33,7 +31,7 @@
           unstable
           system
           darwin
-          isWsl
+          wsl
           overlays
           ;
 
@@ -42,7 +40,7 @@
 
       modules = [
         osModules.home-manager
-        (lib.optionalAttrs isWsl wsl)
+        (lib.optionalAttrs wsl inputs.nixos-wsl.nixosModules.wsl)
         ../modules
         (import ../hosts/${host})
 
