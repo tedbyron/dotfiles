@@ -57,6 +57,14 @@
     };
   };
 
+  # TODO: once the darwin build is fixed
+  # ghostty = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   installBatSyntax = true;
+  #   settings = builtins.fromTOML (builtins.readFile ../../../.config/ghostty/config);
+  # };
+
   git = {
     enable = true;
     # delta configured in .gitconfig and installed as a user package

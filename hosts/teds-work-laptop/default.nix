@@ -32,6 +32,7 @@ in
           "/Applications/Figma.app/"
           "/Applications/VMware Fusion.app/"
           "${userPrograms "alacritty"}/Applications/Alacritty.app/"
+          # "${userPrograms "ghostty"}/Applications/Ghostty.app/"
           "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
         ]
         ++ [
