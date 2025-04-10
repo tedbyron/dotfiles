@@ -9,13 +9,30 @@
   nix = {
     channel.enable = false;
     configureBuildUsers = true;
-    optimise.automatic = true;
     package = pkgs.nixVersions.latest;
     useDaemon = true;
 
     gc = {
       automatic = true;
       options = "--delete-older-than 30d";
+
+      interval = [
+        {
+          Hour = 3;
+          Minute = 30;
+        }
+      ];
+    };
+
+    optimise = {
+      automatic = true;
+
+      interval = [
+        {
+          Hour = 4;
+          Minute = 30;
+        }
+      ];
     };
 
     settings = {
