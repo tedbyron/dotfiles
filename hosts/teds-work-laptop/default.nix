@@ -27,7 +27,6 @@ in
           "/Applications/Firefox.app/"
           "/Applications/Bitwarden.app/"
           "${spicedSpotify}/Applications/Spotify.app/"
-          "${userPackages "obsidian"}/Applications/Obsidian.app/"
           "/Applications/Microsoft Teams.app/"
           "/Applications/Figma.app/"
           "/Applications/VMware Fusion.app/"

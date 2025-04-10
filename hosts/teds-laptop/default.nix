@@ -34,7 +34,6 @@ in
           "/Applications/Bitwarden.app/"
           "${spicedSpotify}/Applications/Spotify.app/"
           "${userPackages "discord"}/Applications/Discord.app/"
-          "${userPackages "obsidian"}/Applications/Obsidian.app/"
           "${userPrograms "alacritty"}/Applications/Alacritty.app/"
           # "${userPrograms "ghostty"}/Applications/Ghostty.app/"
           "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
