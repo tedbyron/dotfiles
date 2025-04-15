@@ -114,7 +114,7 @@
     in
     {
       enable = true;
-      colorScheme = "gruvbox";
+      colorScheme = "Gruvbox";
       theme = spicePkgs.themes.text;
     };
 
