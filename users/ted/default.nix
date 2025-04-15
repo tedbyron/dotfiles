@@ -27,7 +27,7 @@ in
   };
 
   system.defaults.screencapture = lib.optionalAttrs darwin {
-    location = "${home}/Pictures/Screenshots";
+    location = "${home}/Pictures/screenshots";
   };
 
   home-manager.users.${name} = {
@@ -77,9 +77,12 @@ in
 
         firefoxChrome =
           let
+            dir = "${home}/Library/Caches/Firefox/Profiles";
             # Dir read is impure.
-            ffReleaseProfile = lib.findFirst (name: lib.hasSuffix ".default-release" name) null (
-              builtins.attrNames (builtins.readDir "${home}/Library/Caches/Firefox/Profiles")
+            ffReleaseProfile = lib.optionalString (builtins.pathExists dir) (
+              lib.findFirst (name: lib.hasSuffix ".default-release" name) "" (
+                builtins.attrNames (builtins.readDir dir)
+              )
             );
           in
           {

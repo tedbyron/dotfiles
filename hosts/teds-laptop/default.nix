@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -13,6 +12,18 @@ in
   imports = [ ../../users/${user} ];
 
   system.stateVersion = 5;
+
+  networking = {
+    computerName = name;
+    hostName = name;
+  };
+
+  homebrew.casks = [ ];
+
+  home-manager.users.${user}.home.packages = with pkgs; [
+    discord
+    qbittorrent
+  ];
 
   custom.dock =
     let
@@ -47,56 +58,42 @@ in
         ];
     };
 
-  home-manager.users.${user}.home.packages = with pkgs; [
-    discord
-    qbittorrent
-  ];
+  # launchd.daemons.linux-builder = {
+  #   serviceConfig = {
+  #     StandardOutPath = "/var/log/linux-builder.log";
+  #     StandardErrorPath = "/var/log/linux-builder.log";
+  #   };
+  # };
 
-  homebrew.casks = [
-    "microsoft-teams"
-  ];
+  # nix.linux-builder = with inputs.flake-utils.lib.system; {
+  #   enable = true;
+  #   ephemeral = true;
+  #   maxJobs = 4;
 
-  launchd.daemons.linux-builder = {
-    serviceConfig = {
-      StandardOutPath = "/var/log/linux-builder.log";
-      StandardErrorPath = "/var/log/linux-builder.log";
-    };
-  };
+  #   # NOTE: linux-builder should be run once before using `config`.
+  #   # nix build --impure --expr '(with import <nixpkgs> { system = "aarch64-linux"; }; runCommand "uname" {} "uname -a > $out")'
+  #   config = {
+  #     boot.binfmt.emulatedSystems = [ x86_64-linux ];
+  #     nix.settings.sandbox = false;
 
-  networking = {
-    computerName = name;
-    hostName = name;
-  };
+  #     virtualisation = {
+  #       darwin-builder = {
+  #         diskSize = 50 * 1024;
+  #         memorySize = 14 * 1024;
+  #       };
+  #     };
+  #   };
 
-  nix.linux-builder = with inputs.flake-utils.lib.system; {
-    enable = true;
-    ephemeral = true;
-    maxJobs = 4;
+  #   supportedFeatures = [
+  #     "kvm"
+  #     "benchmark"
+  #     "big-parallel"
+  #     "nixos-test"
+  #   ];
 
-    # NOTE: linux-builder should be run once before using `config`.
-    # nix build --impure --expr '(with import <nixpkgs> { system = "aarch64-linux"; }; runCommand "uname" {} "uname -a > $out")'
-    config = {
-      boot.binfmt.emulatedSystems = [ x86_64-linux ];
-      nix.settings.sandbox = false;
-
-      virtualisation = {
-        darwin-builder = {
-          diskSize = 50 * 1024;
-          memorySize = 14 * 1024;
-        };
-      };
-    };
-
-    supportedFeatures = [
-      "kvm"
-      "benchmark"
-      "big-parallel"
-      "nixos-test"
-    ];
-
-    systems = [
-      aarch64-linux
-      x86_64-linux
-    ];
-  };
+  #   systems = [
+  #     aarch64-linux
+  #     x86_64-linux
+  #   ];
+  # };
 }

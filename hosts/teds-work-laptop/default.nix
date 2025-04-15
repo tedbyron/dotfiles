@@ -8,6 +8,25 @@ in
 
   system.stateVersion = 5;
 
+  networking = {
+    computerName = name;
+    hostName = name;
+  };
+
+  homebrew = {
+    casks = [
+      "ba-connected"
+      "figma"
+      "meetingbar"
+      "microsoft-teams"
+      "vmware-fusion"
+    ];
+
+    masApps = {
+      Xcode = 497799835;
+    };
+  };
+
   custom.dock =
     let
       inherit (config.home-manager.users.${user}.programs.spicetify) spicedSpotify;
@@ -42,23 +61,4 @@ in
           }
         ];
     };
-
-  homebrew = {
-    casks = [
-      "ba-connected"
-      "figma"
-      "meetingbar"
-      "microsoft-teams"
-      "vmware-fusion"
-    ];
-
-    masApps = {
-      Xcode = 497799835;
-    };
-  };
-
-  networking = {
-    computerName = name;
-    hostName = name;
-  };
 }

@@ -17,5 +17,3 @@
   # Give terminal full disk access and restart
   nix run nix-darwin -- --flake ~/git/dotfiles#<host> --impure switch
   ```
-
-<!-- TODO: <https://wiki.nixos.org/wiki/NixOS_virtual_machines_on_macOS#linux-builder> -->
