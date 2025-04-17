@@ -76,3 +76,8 @@
   required = true
 [help]
   autoCorrect = "prompt"
+# Windows
+# [credential]
+#   helper = "wincred"
+# [gpg]
+# 	program = "C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe"
