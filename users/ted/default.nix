@@ -15,16 +15,28 @@ let
   home = if darwin then "/Users/${name}" else "/home/${name}";
 in
 {
-  users = {
-    knownUsers = [ name ];
+  users =
+    {
+      users.${name} = {
+        inherit home;
+        description = "Teddy Byron";
+        shell = pkgs.zsh;
+        uid = if darwin then 501 else 1000;
+      };
+    }
+    // lib.optionalAttrs darwin {
+      knownUsers = [ name ];
+    }
+    // lib.optionalAttrs (!darwin) {
+      users.${name} = {
+        isNormalUser = true;
 
-    users.${name} = {
-      inherit home;
-      description = "Teddy Byron";
-      shell = pkgs.zsh;
-      uid = 501;
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+        ];
+      };
     };
-  };
 
   system.defaults.screencapture = lib.optionalAttrs darwin {
     location = "${home}/Pictures/screenshots";
@@ -49,10 +61,10 @@ in
       username = name;
 
       file = {
-        ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
+        # ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
         ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
-        ".config/tio/config".source = ../../.config/tio/config;
+        # ".config/tio/config".source = ../../.config/tio/config;
 
         ".config/nvim/lua" = {
           source = ../../.config/nvim/lua;
@@ -77,18 +89,18 @@ in
 
         firefoxChrome =
           let
-            dir = "${home}/Library/Caches/Firefox/Profiles";
+            profilesDir = "${home}/Library/Caches/Firefox/Profiles";
             # Dir read is impure.
-            ffReleaseProfile = lib.optionalString (builtins.pathExists dir) (
+            releaseProfile = lib.optionalString (builtins.pathExists profilesDir) (
               lib.findFirst (name: lib.hasSuffix ".default-release" name) "" (
-                builtins.attrNames (builtins.readDir dir)
+                builtins.attrNames (builtins.readDir profilesDir)
               )
             );
           in
           {
-            enable = darwin && ffReleaseProfile != null;
+            enable = darwin && releaseProfile != "";
             source = ../../.config/firefox/chrome;
-            target = "Library/Caches/Firefox/Profiles/${ffReleaseProfile}/chrome";
+            target = "Library/Caches/Firefox/Profiles/${releaseProfile}/chrome";
           };
       };
     };

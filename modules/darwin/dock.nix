@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  darwin,
   ...
 }:
 let
@@ -40,7 +41,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (
+  config = lib.mkIf (darwin && cfg.enable) (
     let
       normalize = path: if lib.hasSuffix ".app" path then path + "/" else path;
       entryURI =

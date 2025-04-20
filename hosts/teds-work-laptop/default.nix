@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, ... }:
 let
   name = baseNameOf (toString ./.);
   user = "ted";
@@ -15,15 +15,12 @@ in
 
   homebrew = {
     casks = [
-      "ba-connected"
       "figma"
       "meetingbar"
-      "microsoft-teams"
-      "vmware-fusion"
     ];
 
     masApps = {
-      Xcode = 497799835;
+      # Xcode = 497799835;
     };
   };
 
@@ -31,11 +28,6 @@ in
     let
       inherit (config.home-manager.users.${user}.programs.spicetify) spicedSpotify;
 
-      userPackages =
-        name:
-        lib.findFirst (
-          pkg: (builtins.parseDrvName pkg.name).name == name
-        ) null config.home-manager.users.${user}.home.packages;
       userPrograms = name: (builtins.getAttr name config.home-manager.users.${user}.programs).package;
     in
     {
@@ -46,9 +38,7 @@ in
           "/Applications/Firefox.app/"
           "/Applications/Bitwarden.app/"
           "${spicedSpotify}/Applications/Spotify.app/"
-          "/Applications/Microsoft Teams.app/"
           "/Applications/Figma.app/"
-          "/Applications/VMware Fusion.app/"
           "${userPrograms "alacritty"}/Applications/Alacritty.app/"
           # "${userPrograms "ghostty"}/Applications/Ghostty.app/"
           "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"

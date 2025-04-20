@@ -24,6 +24,18 @@
       ];
     };
 
+    registry = {
+      nixpkgs.to = {
+        type = "path";
+        path = pkgs.path;
+        narHash = builtins.readFile (
+          pkgs.runCommandLocal "nixpkgs-hash" {
+            nativeBuildInputs = [ pkgs.nix ];
+          } "nix hash path ${pkgs.path} > $out"
+        );
+      };
+    };
+
     optimise = {
       automatic = true;
 

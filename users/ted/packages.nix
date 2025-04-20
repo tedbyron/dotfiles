@@ -26,7 +26,7 @@ with pkgs;
   unstable.nodejs
   openssl
   ouch
-  tio
+  # tio
   tokei
   wasm-pack
 ]

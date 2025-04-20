@@ -117,8 +117,9 @@
             ;
         };
     in
+    with flake-utils.lib.system;
     {
-      darwinConfigurations = with flake-utils.lib.system; {
+      darwinConfigurations = {
         teds-laptop = mkSystem {
           system = aarch64-darwin;
           host = "teds-laptop";
@@ -126,6 +127,13 @@
         teds-work-laptop = mkSystem {
           system = aarch64-darwin;
           host = "teds-work-laptop";
+        };
+      };
+
+      nixosConfigurations = {
+        teds-desktop = mkSystem {
+          system = x86_64-linux;
+          host = "teds-desktop";
         };
       };
     }
