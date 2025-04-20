@@ -18,12 +18,12 @@
   nix run nix-darwin -- --flake ~/git/dotfiles#host --impure switch
   ```
 
-- NixOS
+- NixOS (btrfs)
 
   ```sh
   sudo -i
 
-  # add wifi if necessary; nmcli requires graphical installer
+  # connect to wifi if no ethernet; nmcli requires graphical installer
   nmcli device wifi list
   nmcli device wifi connect BSSID password PASSWORD
 
@@ -37,7 +37,7 @@
   mkfs.btrfs -L swap /dev/sdX2
   mkfs.fat -F 32 -n boot /dev/sdX3
 
-  mkdir -p /mnt/{home,nix,swap}
+  mkdir -p /mnt/{nix,home,swap,boot}
   mount /dev/sdX1 /mnt
   btrfs subvolume create /mnt/root
   btrfs subvolume create /mnt/nix
