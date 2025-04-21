@@ -84,6 +84,10 @@
     unalias grhh
   '';
 
+  profileExtra = lib.optionalString (!darwin) ''
+
+  '';
+
   shellAliases = {
     df = "df \\-h";
     dl = "yt-dlp";
@@ -129,6 +133,6 @@
     PAGER = "less";
     READNULLCMD = "bat";
     STARSHIP_LOG = "error";
-    ZSH_TMUX_AUTOSTART = "true";
+    # ZSH_TMUX_AUTOSTART = "true";
   };
 }

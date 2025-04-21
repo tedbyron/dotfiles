@@ -148,7 +148,7 @@ in
       };
 
       wayland.windowManager.hyprland = import ./hyprland.nix {
-        inherit pkgs unstable darwin;
+        inherit pkgs darwin;
       };
     }
     // lib.optionalAttrs (!darwin) {

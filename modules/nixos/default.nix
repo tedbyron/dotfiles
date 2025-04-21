@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  unstable,
   ...
 }:
 {
@@ -56,8 +57,23 @@
   programs = {
     dconf.enable = true;
     firefox = import ./firefox.nix { inherit pkgs; };
-    hyprland.enable = true;
     zsh.enable = true;
+
+    hyprland = {
+      enable = true;
+      package = unstable.hyprland;
+      portalPackage = unstable.xdg-desktop-portal-hyprland;
+      withUWSM = true;
+    };
+
+    uwsm = {
+      enable = true;
+      waylandCompositors.hyprland = {
+        prettyName = "Hyprland";
+        comment = "Hyprland compositor managed by UWSM";
+        binPath = "/run/current-system/sw/bin/Hyprland";
+      };
+    };
   };
 
   # TODO: https://wiki.nixos.org/wiki/NextDNS
@@ -68,6 +84,7 @@
     playerctld.enable = true;
     redshift.enable = true;
     resolved.enable = true;
+    upower.enable = true;
 
     pipewire = {
       enable = true;
@@ -88,6 +105,7 @@
 
   xdg.portal = {
     enable = true;
+    extraPortals = [ unstable.xdg-desktop-portal-hyprland ];
     wlr.enable = true;
     xdgOpenUsePortal = true;
   };

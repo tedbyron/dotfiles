@@ -83,7 +83,7 @@ in
       fileSystems = [ "/" ];
     };
 
-    pipewire.wireplumber.extraConfig."bluetooth-enhancements" = {
+    pipewire.wireplumber.extraConfig.bluetooth-enhancements = {
       "monitor.bluez.properties" = {
         "bluez5.enable-sbc-xq" = true;
         "bluez5.enable-msbc" = true;
