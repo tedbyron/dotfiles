@@ -99,21 +99,36 @@
   - <details><summary>Edit config</summary>
 
     ```nix
-    { pgks, ... }: {
-      # ...
-      system.copySystemConfiguration = true;
-      users.defaultUserShell = pkgs.zsh;
+    # btrfs setup; check hardware-configuration.nix
+    { config, lib, pgks, ... }: {
+      swapDevices = [ { device = "/swap/swapfile"; } ];
+
+      boot.loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
 
       networking = {
         hostname = "teds-desktop";
         networkmanager.enable = true;
       };
 
-      users.users.ted = {
-        description = "Teddy Byron";
-        extraGroups = [ "networkmanager" "wheel" ];
-        isNormalUser = true;
-        uid = 1000;
+      nix.settings.experimental-features = [
+        "auto-allocate-uids"
+        "flakes"
+        "nix-command"
+        "pipe-operators"
+      ];
+
+      users = {
+        defaultUserShell = pkgs.zsh;
+
+        users.ted = {
+          description = "Teddy Byron";
+          extraGroups = [ "networkmanager" "wheel" ];
+          isNormalUser = true;
+          uid = 1000;
+        };
       };
 
       fileSystems =
@@ -122,7 +137,12 @@
           "/".options = defaultOpts;
           "/nix".options = defaultOpts ++ [ "compress=zstd" ];
           "/home".options = defaultOpts;
-          "/swap".options = defaultOpts;
+          "/boot".neededForBoot = true;
+
+          "/swap" = {
+            neededForBoot = true;
+            options = defaultOpts;
+          };
         };
     }
     ```
@@ -144,6 +164,6 @@
     # Reconnect to wifi if necessary
     nix-shell -p git
     git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
-    sudo nixos-rebuild --experimental-features 'flakes' --flake ~/git/dotfiles#host switch
-    systemctl kexec
+    sudo nixos-rebuild --flake ~/git/dotfiles#host switch
+    reboot
     ```

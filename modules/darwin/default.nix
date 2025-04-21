@@ -1,11 +1,10 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./dock.nix
     ./system.nix
   ];
 
-  nixpkgs.source = inputs.nixpkgs-darwin;
   security.pam.enableSudoTouchIdAuth = true;
 
   environment = {
