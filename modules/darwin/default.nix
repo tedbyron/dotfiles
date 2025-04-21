@@ -1,23 +1,12 @@
-{
-  self,
-  pkgs,
-  system,
-  ...
-}:
+{ inputs, pkgs, ... }:
 {
   imports = [
     ./dock.nix
-    ./nix.nix
     ./system.nix
   ];
 
-  fonts.packages = [ self.outputs.packages.${system}.curlio-ttf ];
+  nixpkgs.source = inputs.nixpkgs-darwin;
   security.pam.enableSudoTouchIdAuth = true;
-
-  programs = {
-    gnupg.agent.enable = true;
-    zsh.enable = true;
-  };
 
   environment = {
     etc."pam.d/sudo_local".text = ''
@@ -26,30 +15,9 @@
       auth        sufficient      pam_tid.so
     '';
 
-    shells = with pkgs; [
-      bashInteractive
-      zsh
-    ];
-
-    systemPackages = with pkgs; [
-      binutils
-      coreutils
-      curl
-      diffutils
-      findutils
-      gawk
-      gnugrep
-      gnused
-      groff
-      less
-      nmap
-      python3
-    ];
-
     variables = {
       HOMEBREW_NO_ANALYTICS = "1";
       HOMEBREW_NO_ENV_HINTS = "1";
-      LANG = "en_US.UTF-8";
     };
   };
 
@@ -74,5 +42,43 @@
       cleanup = "zap";
       upgrade = true;
     };
+  };
+
+  networking = {
+    wakeOnLan.enable = false;
+
+    dns = [
+      "1.1.1.1"
+      "1.0.0.1"
+      "2606:4700:4700::1111"
+      "2606:4700:4700::1001"
+    ];
+
+    # networksetup -listallnetworkservices
+    knownNetworkServices = [
+      "Thunderbolt Bridge"
+      "Wi-Fi"
+      "NextDNS"
+    ];
+  };
+
+  nix = {
+    configureBuildUsers = true;
+    settings.trusted-users = [ "@admin" ];
+    useDaemon = true;
+
+    gc.interval = [
+      {
+        Hour = 3;
+        Minute = 15;
+      }
+    ];
+
+    optimise.interval = [
+      {
+        Hour = 3;
+        Minute = 45;
+      }
+    ];
   };
 }

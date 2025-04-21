@@ -1,7 +1,5 @@
-{ self, ... }:
-{
+_: {
   system = {
-    configurationRevision = self.rev or self.dirtyRev or null;
     startup.chime = false;
 
     keyboard = {

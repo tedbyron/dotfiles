@@ -38,14 +38,8 @@ in
       };
     };
 
-  system.defaults.screencapture = lib.optionalAttrs darwin {
-    location = "${home}/Pictures/screenshots";
-  };
-
   home-manager.users.${name} = {
     imports = [ inputs.spicetify-nix.homeManagerModules.default ];
-
-    targets.genericLinux.enable = wsl;
 
     home = {
       stateVersion = "23.11";
@@ -77,14 +71,17 @@ in
         };
 
         "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
-          enable = darwin;
+          enable = true;
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
-          text = ''
-            pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
-            default-cache-ttl 34560000
-            max-cache-ttl 34560000
-          '';
+          text =
+            ''
+              default-cache-ttl 34560000
+              max-cache-ttl 34560000
+            ''
+            + lib.optionalString darwin ''
+              pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+            '';
         };
 
         firefoxChrome =
@@ -115,29 +112,41 @@ in
         lib
         system
         darwin
+        name
         ;
-
-      user = name;
     };
 
-    targets.darwin = lib.optionalAttrs darwin {
-      currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
-      search = "DuckDuckGo";
+    targets = {
+      genericLinux.enable = wsl;
 
-      defaults = {
-        "com.apple.dock".size-immutable = true;
+      darwin = lib.optionalAttrs darwin {
+        currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
+        search = "DuckDuckGo";
 
-        "com.apple.desktopservices" = {
-          DSDontWriteNetworkStores = true;
-          DSDontWriteUSBStores = true;
-        };
+        defaults = {
+          "com.apple.dock".size-immutable = true;
 
-        "com.apple.Safari" = {
-          AutoFillCreditCardData = false;
-          AutoFillPasswords = false;
-          IncludeDevelopMenu = true;
+          "com.apple.desktopservices" = {
+            DSDontWriteNetworkStores = true;
+            DSDontWriteUSBStores = true;
+          };
+
+          "com.apple.Safari" = {
+            AutoFillCreditCardData = false;
+            AutoFillPasswords = false;
+            IncludeDevelopMenu = true;
+          };
         };
       };
     };
+
+    wayland.windowManager.hyprland = import ./hyprland.nix {
+      inherit pkgs darwin;
+    };
+  };
+}
+// lib.optionalAttrs darwin {
+  system.defaults.screencapture = lib.optionalAttrs darwin {
+    location = "${home}/Pictures/screenshots";
   };
 }

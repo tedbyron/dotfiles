@@ -24,9 +24,7 @@ with pkgs;
   nil
   nixfmt-rfc-style
   unstable.nodejs
-  openssl
   ouch
-  # tio
   tokei
   wasm-pack
 ]

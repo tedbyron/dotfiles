@@ -1,27 +1,23 @@
 {
-  inputs,
   pkgs,
   system,
   overlays,
   ...
 }:
 {
+  nixpkgs = {
+    inherit system overlays;
+    config.allowUnfree = true;
+  };
+
   nix = {
     channel.enable = false;
-    configureBuildUsers = true;
+    optimise.automatic = true;
     package = pkgs.nixVersions.latest;
-    useDaemon = true;
 
     gc = {
       automatic = true;
       options = "--delete-older-than 30d";
-
-      interval = [
-        {
-          Hour = 3;
-          Minute = 30;
-        }
-      ];
     };
 
     registry = {
@@ -36,24 +32,12 @@
       };
     };
 
-    optimise = {
-      automatic = true;
-
-      interval = [
-        {
-          Hour = 4;
-          Minute = 30;
-        }
-      ];
-    };
-
     settings = {
-      trusted-users = [ "@admin" ];
-
       experimental-features = builtins.concatStringsSep " " [
         "auto-allocate-uids"
         "flakes"
         "nix-command"
+        "pipe-operators" # TODO: change config to use pipe operators
       ];
 
       substituters = [
@@ -68,11 +52,5 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
-  };
-
-  nixpkgs = {
-    inherit system overlays;
-    config.allowUnfree = true;
-    source = inputs.nixpkgs-darwin;
   };
 }

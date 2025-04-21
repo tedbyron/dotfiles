@@ -7,7 +7,7 @@
   lib,
   system,
   darwin,
-  user,
+  name,
 }:
 {
   alacritty = {
@@ -24,6 +24,8 @@
     };
   };
 
+  command-not-found.enable = true;
+
   dircolors = {
     enable = true;
     settings = import ("${self.outputs.packages.${system}.dircolors}/share/nix/settings.nix");
@@ -36,12 +38,10 @@
     nix-direnv.enable = true;
   };
 
-  firefox = {
-    enable = !darwin;
-    # TODO: firefox config
+  fzf = import ./fzf.nix {
+    inherit config;
+    user = name;
   };
-
-  fzf = import ./fzf.nix { inherit config user; };
 
   gh = {
     enable = true;
@@ -57,7 +57,8 @@
     };
   };
 
-  # TODO: once the darwin build is fixed
+  # TODO: ghostty darwin build broken
+  # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/gh/ghostty/package.nix
   # ghostty = {
   #   enable = true;
   #   enableZshIntegration = true;
@@ -76,7 +77,7 @@
   };
 
   go = {
-    enable = true;
+    enable = false;
     # telemetry.mode = "off"; # TODO: 25.05
   };
 
@@ -133,6 +134,7 @@
 
   tmux = import ./tmux.nix { inherit unstable; };
   vscode.enable = true;
+
   yt-dlp.enable = true;
 
   zsh = import ./zsh.nix {

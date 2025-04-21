@@ -20,6 +20,9 @@
     // lib.optionalAttrs darwin {
       dls = "$HOME/Downloads";
       pub = "$HOME/Public";
+    }
+    // lib.optionalAttrs (!darwin) {
+      dls = "$HOME/dls";
     };
 
   history = {
@@ -93,6 +96,7 @@
     gbl = "git blame -wCCC";
     gbr = "git branch -rv";
     gdc = "git diff --check";
+    gdcas = "gd diff --cached --stat";
     gds = "git diff --stat";
     gdst = "git diff --staged";
     gmv = "git mv";

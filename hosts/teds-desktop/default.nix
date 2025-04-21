@@ -8,12 +8,13 @@ let
   user = "ted";
 in
 {
-  imports = [ ../../users/${user} ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../users/${user}
+  ];
 
-  security.rtkit.enable = true;
-  swapDevices = [ "/swap/swapfile" ];
   system.stateVersion = "24.11";
-  time.timeZone = "America/New_York";
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   networking = {
     hostName = name;
@@ -45,6 +46,7 @@ in
     };
 
   hardware = {
+    bluetooth.enable = true;
     graphics.enable = true;
 
     display = {
@@ -69,26 +71,11 @@ in
     };
   };
 
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-
-    extraLocaleSettings = {
-      LC_ADDRESS = "en_US.UTF-8";
-      LC_IDENTIFICATION = "en_US.UTF-8";
-      LC_MEASUREMENT = "en_US.UTF-8";
-      LC_MONETARY = "en_US.UTF-8";
-      LC_NAME = "en_US.UTF-8";
-      LC_NUMERIC = "en_US.UTF-8";
-      LC_PAPER = "en_US.UTF-8";
-      LC_TELEPHONE = "en_US.UTF-8";
-      LC_TIME = "en_US.UTF-8";
-    };
-  };
-
   services = {
+    xserver.videoDrivers = [ "nvidia" ];
+
     btrfs.autoScrub = {
       enable = true;
-      interval = "daily";
       fileSystems = [ "/" ];
     };
 
@@ -115,11 +102,6 @@ in
           ];
         };
       };
-    };
-
-    xserver.xkb = {
-      layout = "us";
-      variant = "";
     };
   };
 }
