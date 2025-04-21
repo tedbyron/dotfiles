@@ -38,7 +38,7 @@
     "browser.newtabpage.activity-stream.showSponsored" = false;
     "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
     "browser.newtabpage.activity-stream.system.showSponsored" = false;
-    "browser.newtabpage.pinned" = [ ];
+    "browser.newtabpage.pinned" = "[]";
     "browser.search.suggest.enabled" = false;
     "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
     "browser.tabs.crashReporting.sendReport" = false;

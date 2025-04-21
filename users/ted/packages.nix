@@ -32,3 +32,6 @@ with pkgs;
   mas
   pinentry_mac
 ]
+++ lib.optionals (!darwin) [
+  zig
+]

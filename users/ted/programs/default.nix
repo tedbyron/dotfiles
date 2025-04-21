@@ -24,8 +24,6 @@
     };
   };
 
-  command-not-found.enable = true;
-
   dircolors = {
     enable = true;
     settings = import ("${self.outputs.packages.${system}.dircolors}/share/nix/settings.nix");
@@ -86,6 +84,10 @@
   # jujutsu
   # keychain
 
+  hyprlock = {
+    enable = false; # TODO
+  };
+
   lazygit = {
     enable = true;
     settings = lib.ted.fromYAML (builtins.readFile ../../../.config/lazygit/config.yml);
@@ -100,6 +102,11 @@
     withNodeJs = false;
     withPython3 = false;
     withRuby = false;
+  };
+
+  nix-index = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   pandoc.enable = true;

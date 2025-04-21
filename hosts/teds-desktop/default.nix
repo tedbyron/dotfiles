@@ -42,7 +42,12 @@ in
       "/".options = defaultOpts;
       "/nix".options = defaultOpts ++ [ "compress=zstd" ];
       "/home".options = defaultOpts;
-      "/swap".options = defaultOpts;
+      "/boot".neededForBoot = true;
+
+      "/swap" = {
+        neededForBoot = true;
+        options = defaultOpts;
+      };
     };
 
   hardware = {
@@ -64,7 +69,6 @@ in
 
     nvidia = {
       modesetting.enable = true;
-      # powerManagement.enable = false;
       open = true;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -79,28 +83,18 @@ in
       fileSystems = [ "/" ];
     };
 
-    pipewire = {
-      enable = true;
-      pulse.enable = true;
+    pipewire.wireplumber.extraConfig."bluetooth-enhancements" = {
+      "monitor.bluez.properties" = {
+        "bluez5.enable-sbc-xq" = true;
+        "bluez5.enable-msbc" = true;
+        "bluez5.enable-hw-volume" = true;
 
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-
-      wireplumber.extraConfig.bluetoothEnhancements = {
-        "monitor.bluez.properties" = {
-          "bluez5.enable-sbc-xq" = true;
-          "bluez5.enable-msbc" = true;
-          "bluez5.enable-hw-volume" = true;
-
-          "bluez5.roles" = [
-            "hsp_hs"
-            "hsp_ag"
-            "hfp_hf"
-            "hfp_ag"
-          ];
-        };
+        "bluez5.roles" = [
+          "hsp_hs"
+          "hsp_ag"
+          "hfp_hf"
+          "hfp_ag"
+        ];
       };
     };
   };

@@ -17,133 +17,153 @@ in
 {
   users =
     {
-      users.${name} = {
-        inherit home;
-        description = "Teddy Byron";
-        shell = pkgs.zsh;
-        uid = if darwin then 501 else 1000;
-      };
+      users.${name} =
+        {
+          inherit home;
+          description = "Teddy Byron";
+          shell = pkgs.zsh;
+          uid = if darwin then 501 else 1000;
+        }
+        // lib.optionalAttrs (!darwin) {
+          isNormalUser = true;
+
+          extraGroups = [
+            "networkmanager"
+            "wheel"
+          ];
+        };
     }
     // lib.optionalAttrs darwin {
       knownUsers = [ name ];
-    }
-    // lib.optionalAttrs (!darwin) {
-      users.${name} = {
-        isNormalUser = true;
-
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-        ];
-      };
     };
 
-  home-manager.users.${name} = {
-    imports = [ inputs.spicetify-nix.homeManagerModules.default ];
+  home-manager.users.${name} =
+    {
+      imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
-    home = {
-      stateVersion = "23.11";
-      homeDirectory = home;
-      packages = import ./packages.nix {
+      home = {
+        stateVersion = "23.11";
+        homeDirectory = home;
+        username = name;
+
+        file = {
+          # ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
+          ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
+          ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
+          # ".config/tio/config".source = ../../.config/tio/config;
+
+          ".config/nvim/lua" = {
+            source = ../../.config/nvim/lua;
+            recursive = true;
+          };
+
+          ".hushlogin" = {
+            enable = darwin;
+            text = "";
+          };
+
+          "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
+            enable = true;
+            onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
+
+            text =
+              ''
+                default-cache-ttl 34560000
+                max-cache-ttl 34560000
+              ''
+              + lib.optionalString darwin ''
+                pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+              '';
+          };
+
+          firefoxChrome =
+            let
+              profilesDir = "${home}/Library/Caches/Firefox/Profiles";
+              # Dir read is impure.
+              releaseProfile = lib.optionalString (builtins.pathExists profilesDir) (
+                lib.findFirst (name: lib.hasSuffix ".default-release" name) "" (
+                  builtins.attrNames (builtins.readDir profilesDir)
+                )
+              );
+            in
+            {
+              enable = darwin && releaseProfile != "";
+              source = ../../.config/firefox/chrome;
+              target = "Library/Caches/Firefox/Profiles/${releaseProfile}/chrome";
+            };
+        };
+
+        packages = import ./packages.nix {
+          inherit
+            pkgs
+            unstable
+            lib
+            darwin
+            ;
+        };
+
+        # TODO: 25.05
+        # pointerCursor = {
+        #   enable = !darwin;
+        #   hyprcursor.enable = true;
+        # };
+      };
+
+      programs = import ./programs {
         inherit
+          self
+          config
+          inputs
           pkgs
           unstable
           lib
+          system
           darwin
+          name
           ;
       };
-      username = name;
 
-      file = {
-        # ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
-        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
-        ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
-        # ".config/tio/config".source = ../../.config/tio/config;
+      targets = {
+        genericLinux.enable = wsl;
 
-        ".config/nvim/lua" = {
-          source = ../../.config/nvim/lua;
-          recursive = true;
+        darwin = lib.optionalAttrs darwin {
+          currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
+          search = "DuckDuckGo";
+
+          defaults = {
+            "com.apple.dock".size-immutable = true;
+
+            "com.apple.desktopservices" = {
+              DSDontWriteNetworkStores = true;
+              DSDontWriteUSBStores = true;
+            };
+
+            "com.apple.Safari" = {
+              AutoFillCreditCardData = false;
+              AutoFillPasswords = false;
+              IncludeDevelopMenu = true;
+            };
+          };
         };
+      };
 
-        ".hushlogin" = {
-          enable = darwin;
-          text = "";
-        };
+      wayland.windowManager.hyprland = import ./hyprland.nix {
+        inherit pkgs unstable darwin;
+      };
+    }
+    // lib.optionalAttrs (!darwin) {
+      services = {
+        hypridle.enable = false; # TODO
+        hyprpaper.enable = false; # TODO
+        # hyprpolkitagent.enable = true; # TODO 25.05
 
-        "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
+        dunst = {
           enable = true;
-          onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
-
-          text =
-            ''
-              default-cache-ttl 34560000
-              max-cache-ttl 34560000
-            ''
-            + lib.optionalString darwin ''
-              pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
-            '';
-        };
-
-        firefoxChrome =
-          let
-            profilesDir = "${home}/Library/Caches/Firefox/Profiles";
-            # Dir read is impure.
-            releaseProfile = lib.optionalString (builtins.pathExists profilesDir) (
-              lib.findFirst (name: lib.hasSuffix ".default-release" name) "" (
-                builtins.attrNames (builtins.readDir profilesDir)
-              )
-            );
-          in
-          {
-            enable = darwin && releaseProfile != "";
-            source = ../../.config/firefox/chrome;
-            target = "Library/Caches/Firefox/Profiles/${releaseProfile}/chrome";
-          };
-      };
-    };
-
-    programs = import ./programs {
-      inherit
-        self
-        config
-        inputs
-        pkgs
-        unstable
-        lib
-        system
-        darwin
-        name
-        ;
-    };
-
-    targets = {
-      genericLinux.enable = wsl;
-
-      darwin = lib.optionalAttrs darwin {
-        currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
-        search = "DuckDuckGo";
-
-        defaults = {
-          "com.apple.dock".size-immutable = true;
-
-          "com.apple.desktopservices" = {
-            DSDontWriteNetworkStores = true;
-            DSDontWriteUSBStores = true;
-          };
-
-          "com.apple.Safari" = {
-            AutoFillCreditCardData = false;
-            AutoFillPasswords = false;
-            IncludeDevelopMenu = true;
-          };
+          # TODO: icon theme
+          waylandDisplay = "wayland-1";
         };
       };
     };
-
-    wayland.windowManager.hyprland = import ./hyprland.nix {
-      inherit pkgs darwin;
-    };
-  };
 }
 // lib.optionalAttrs darwin {
   system.defaults.screencapture = lib.optionalAttrs darwin {

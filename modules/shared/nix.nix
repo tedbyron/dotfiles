@@ -5,11 +5,6 @@
   ...
 }:
 {
-  nixpkgs = {
-    inherit system overlays;
-    config.allowUnfree = true;
-  };
-
   nix = {
     channel.enable = false;
     optimise.automatic = true;
@@ -27,13 +22,15 @@
         narHash = builtins.readFile (
           pkgs.runCommandLocal "nixpkgs-hash" {
             nativeBuildInputs = [ pkgs.nix ];
-          } "nix hash path ${pkgs.path} > $out"
+          } "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
         );
       };
     };
 
     settings = {
-      experimental-features = builtins.concatStringsSep " " [
+      download-buffer-size = 536870912; # 512MiB
+
+      experimental-features = [
         "auto-allocate-uids"
         "flakes"
         "nix-command"

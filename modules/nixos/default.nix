@@ -7,9 +7,7 @@
   console.useXkbConfig = true; # TODO: console colors
   gtk.iconCache.enable = true;
   location.provider = "geoclue2";
-  nixpgks.source = inputs.nixpkgs;
   security.rtkit.enable = true;
-  system.copySystemConfiguration = true;
   # BUG: https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.Network-Manager-wait-online.enable = false;
   time.timeZone = "America/New_York";
@@ -20,6 +18,10 @@
 
     systemPackages = with pkgs; [
       pciutils
+      qt5.qtwayland
+      qt6.qtwayland
+      unzip
+      wget
     ];
   };
 
@@ -46,6 +48,11 @@
     "2606:4700:4700::1001"
   ];
 
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
+
   programs = {
     dconf.enable = true;
     firefox = import ./firefox.nix { inherit pkgs; };
@@ -53,18 +60,25 @@
     zsh.enable = true;
   };
 
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-  ];
-
   # TODO: https://wiki.nixos.org/wiki/NextDNS
   services = {
     auto-cpufreq.enable = true;
     fwupd.enable = true;
     geoclue2.enable = true;
+    playerctld.enable = true;
     redshift.enable = true;
     resolved.enable = true;
+
+    pipewire = {
+      enable = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+    };
 
     xserver.xkb = {
       layout = "us";

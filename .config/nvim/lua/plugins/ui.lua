@@ -78,7 +78,7 @@ return {
           {
             "filetype",
             icon_only = true,
-            separator = "",
+            separator = nil,
             padding = { left = 1, right = 0 },
           },
           { LazyVim.lualine.pretty_path() },
