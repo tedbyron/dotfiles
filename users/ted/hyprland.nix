@@ -1,11 +1,12 @@
 {
   pkgs,
+  unstable,
   darwin,
 }:
 {
   enable = !darwin;
   extraConfig = builtins.readFile ./hyprland.conf;
-  # package = null; # TODO: 25.05; conflicts with programs.hyprland.package
+  package = unstable.hyprland; # TODO: 25.05; conflicts with programs.hyprland.package
   # portalPackage = null; # TODO: 25.05; conflicts with programs.hyprland.portalPackage
   systemd.enable = false; # Conflicts with UWSM
 

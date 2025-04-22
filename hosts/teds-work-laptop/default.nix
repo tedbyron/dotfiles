@@ -34,7 +34,7 @@ in
       enable = true;
 
       entries =
-        map (path: { path = path; }) [
+        map (path: { inherit path; }) [
           "/Applications/Firefox.app/"
           "/Applications/Bitwarden.app/"
           "${spicedSpotify}/Applications/Spotify.app/"

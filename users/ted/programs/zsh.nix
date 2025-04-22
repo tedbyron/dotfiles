@@ -14,15 +14,12 @@
 
   dirHashes =
     {
+      dls = "$HOME/Downloads";
       dot = "$HOME/git/dotfiles";
       git = "$HOME/git";
     }
     // lib.optionalAttrs darwin {
-      dls = "$HOME/Downloads";
       pub = "$HOME/Public";
-    }
-    // lib.optionalAttrs (!darwin) {
-      dls = "$HOME/dls";
     };
 
   history = {

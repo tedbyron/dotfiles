@@ -33,5 +33,7 @@ with pkgs;
   pinentry_mac
 ]
 ++ lib.optionals (!darwin) [
+  gcr_4
+  seahorse
   zig
 ]

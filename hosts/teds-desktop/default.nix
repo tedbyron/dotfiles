@@ -13,6 +13,8 @@ in
     ../../users/${user}
   ];
 
+  environment.sessionVariables.LD_LIBRARY_PATH = "/run/opengl-driver/lib";
+  home-manager.users.${user}.home.packages = [ pkgs.qbittorrent ];
   system.stateVersion = "24.11";
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
@@ -21,14 +23,13 @@ in
     networkmanager.enable = true;
   };
 
-  home-manager.users.${user}.home.packages = with pkgs; [
-    discord
-    qbittorrent
-  ];
+  boot = {
+    blacklistedKernelModules = [ "nouveau" ];
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
   };
 
   fileSystems =
@@ -54,24 +55,12 @@ in
     bluetooth.enable = true;
     graphics.enable = true;
 
-    display = {
-      # TODO: https://nixos.org/manual/nixos/stable/#module-hardware-display
-      # edid.modelines = {
-      #   "XG27AQ_60" = "";
-      #   "XG27AQ_120" = "";
-      # };
-
-      # outputs = {
-      #   "DP-1".edid = "XG27AQ_120.bin";
-      #   "DP-2".edid = "XG27AQ_60.bin";
-      # };
-    };
-
     nvidia = {
       modesetting.enable = true;
       open = true;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
+      powerManagement.enable = true;
     };
   };
 

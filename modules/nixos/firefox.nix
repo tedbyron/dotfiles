@@ -6,7 +6,6 @@
   policies = {
     AutofillAddressEnabled = false;
     AutofillCreditCardEnabled = false;
-    DefaultDownloadDirectory = "~/dls";
     DisablePocket = true;
     DisableProfileImport = true;
     DisableProfileRefresh = true;
@@ -54,7 +53,9 @@
     "extensions.htmlaboutaddons.recommendations.enabled" = false;
     "extensions.pocket.enabled" = false;
     "font.name.monospace.x-western" = "Curlio";
+    "gfx.x11-egl.force-enabled" = true;
     "layout.css.visited_links_enabled" = false;
+    "media.hardware-video-decoding.force-enabled" = true;
     "reader.parse-on-load.enabled" = false;
     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
     "toolkit.telemetry.archive.enabled" = false;

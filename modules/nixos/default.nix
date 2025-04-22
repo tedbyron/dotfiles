@@ -8,23 +8,17 @@
   console.useXkbConfig = true; # TODO: console colors
   gtk.iconCache.enable = true;
   location.provider = "geoclue2";
-  security.rtkit.enable = true;
   # BUG: https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.Network-Manager-wait-online.enable = false;
   time.timeZone = "America/New_York";
   users.defaultUserShell = pkgs.zsh;
 
-  environment = {
-    sessionVariables.NIXOS_OZONE_WL = "1";
-
-    systemPackages = with pkgs; [
-      pciutils
-      qt5.qtwayland
-      qt6.qtwayland
-      unzip
-      wget
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    pciutils
+    qt5.qtwayland
+    qt6.qtwayland
+    unzip
+  ];
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
@@ -76,13 +70,22 @@
     };
   };
 
+  security = {
+    rtkit.enable = true;
+
+    pam.services.login = {
+      enableGnomeKeyring = true;
+      gnupg.enable = true;
+    };
+  };
+
   # TODO: https://wiki.nixos.org/wiki/NextDNS
   services = {
     auto-cpufreq.enable = true;
     fwupd.enable = true;
     geoclue2.enable = true;
     playerctld.enable = true;
-    redshift.enable = true;
+    redshift.enable = true; # TODO: cfg
     resolved.enable = true;
     upower.enable = true;
 

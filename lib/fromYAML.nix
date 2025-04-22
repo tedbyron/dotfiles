@@ -1,11 +1,11 @@
 { pkgs, ... }:
 {
   fromYAML =
-    e:
+    s:
     let
       jsonOutputDrv = pkgs.runCommandLocal "from-yaml" {
         nativeBuildInputs = with pkgs; [ yq-go ];
-      } "yq -o json - <<<'${e}' > $out";
+      } "yq -o json - <<<'${s}' > $out";
     in
     builtins.fromJSON (builtins.readFile jsonOutputDrv);
 }

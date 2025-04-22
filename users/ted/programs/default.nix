@@ -79,7 +79,18 @@
     # telemetry.mode = "off"; # TODO: 25.05
   };
 
-  gpg.enable = true; # TODO: gpg signing keys
+  gpg = {
+    enable = true; # TODO: gpg signing keys
+
+    settings = {
+      default-key = "0BE1310591ECE7CF";
+      no-greeting = true;
+      keyid-format = "long";
+      with-fingerprint = true;
+      with-keygrip = true;
+    };
+  };
+
   # home-manager.enable = true; # FIX: necessary?
   # jujutsu
   # keychain

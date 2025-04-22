@@ -62,33 +62,35 @@
       mount -o noatime,discard,subvol=swap /dev/disk/by-label/swap /mnt/swap
       mount -o umask=077 /dev/disk/by-label/boot /mnt/boot
 
-      dd if=/dev/zero of=/mnt/swap/swapfile bs=500MB
+      dd if=/dev/zero of=/mnt/swap/swapfile bs=1MB
       mkswap -L swap -U clear /mnt/swap/swapfile
       swapon /mnt/swap/swapfile
       ```
 
       </details>
 
-  - Connect to wifi if necessary
+  - <details><summary>Connect to wifi if necessary</summary>
 
     - `nmcli` (requires graphical installer)
 
       ```sh
       nmcli device wifi list
-      nmcli device wifi connect BSSID password PASSWORD
+      nmcli device wifi connect SSID password PASSWORD
       ```
 
     - `wpa_cli`
 
       ```sh
       systemctl stop NetworkManager
-      sudo systemctl start wpa_supplicant
+      systemctl start wpa_supplicant
       wpa_cli
       add_network
       set_network 0 ssid SSID
       set_network 0 psk PASSWORD
       enable_network 0
       ```
+
+    </details>
 
   - Generate config
 
@@ -99,7 +101,6 @@
   - <details><summary>Edit config</summary>
 
     ```nix
-    # btrfs setup; check hardware-configuration.nix
     { config, lib, pgks, ... }: {
       swapDevices = [ { device = "/swap/swapfile"; } ];
 
@@ -167,3 +168,29 @@
     sudo nixos-rebuild --flake ~/git/dotfiles#host switch
     reboot
     ```
+
+## NixOS
+
+- VS Code
+
+  - Preferences: configure runtime arguments
+
+    ```json
+    "password-store": "gnome-libsecret"
+    ```
+
+## Commands I'm going to forget about
+
+- Get all PCI display controllers and show kernel drivers
+
+  ```sh
+  lspci -kd ::03xx
+  ```
+
+- Get display EDID and parse
+
+  ```sh
+  hyprctl monitors all
+  fd edid /sys/devices/pci0000:00
+  nix shell nixpkgs#read-edid -c parse-edid /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/drm/card2/card2-DP-5/edid
+  ```
