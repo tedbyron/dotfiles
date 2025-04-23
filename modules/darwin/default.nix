@@ -57,7 +57,6 @@
     knownNetworkServices = [
       "Thunderbolt Bridge"
       "Wi-Fi"
-      "NextDNS"
     ];
   };
 

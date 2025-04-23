@@ -37,9 +37,9 @@
     bind '"' split -v -c "#{pane_current_path}"
   '';
 
-  plugins = with unstable.tmuxPlugins; [
+  plugins = [
     {
-      plugin = dracula;
+      plugin = unstable.tmuxPlugins.dracula;
       extraConfig = ''
         set -g @dracula-plugins "ssh-session attached-clients"
 

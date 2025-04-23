@@ -34,6 +34,6 @@ with pkgs;
 ]
 ++ lib.optionals (!darwin) [
   gcr_4
-  seahorse
+  wl-clipboard
   zig
 ]

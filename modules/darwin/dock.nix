@@ -11,11 +11,7 @@ let
 in
 {
   options = {
-    custom.dock.enable = lib.mkOption {
-      description = "Enable dock";
-      default = false;
-      example = false;
-    };
+    custom.dock.enable = lib.mkEnableOption "dock";
 
     custom.dock.entries = lib.mkOption {
       description = "Dock applications";

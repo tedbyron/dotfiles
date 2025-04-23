@@ -27,8 +27,28 @@ in
     blacklistedKernelModules = [ "nouveau" ];
 
     loader = {
-      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
+      timeout = null;
+
+      systemd-boot = {
+        enable = true;
+        editor = false;
+        consoleMode = "auto";
+
+        edk2-uefi-shell = {
+          enable = true;
+          sortKey = "z_edk2";
+        };
+
+        memtest86 = {
+          enable = true;
+          sortKey = "o_memtest86";
+        };
+
+        # windows.windows = {
+
+        # };
+      };
     };
   };
 
@@ -47,7 +67,7 @@ in
 
       "/swap" = {
         neededForBoot = true;
-        options = defaultOpts;
+        options = defaultOpts ++ [ "nodatacow" ];
       };
     };
 

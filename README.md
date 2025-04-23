@@ -44,7 +44,7 @@
       mkfs.btrfs -L swap /dev/nvmeXn1p2
       mkfs.fat -F 32 -n boot /dev/nvmeXn1p3
 
-      mkdir -p /mnt
+      mkdir /mnt
       mount /dev/nvmeXn1p1 /mnt
       btrfs subvolume create /mnt/root
       btrfs subvolume create /mnt/nix
@@ -59,10 +59,11 @@
       mkdir /mnt/{nix,home,swap,boot}
       mount -o compress=zstd,noatime,discard,subvol=nix /dev/disk/by-label/nixos /mnt/nix
       mount -o noatime,discard,subvol=home /dev/disk/by-label/nixos /mnt/home
-      mount -o noatime,discard,subvol=swap /dev/disk/by-label/swap /mnt/swap
+      mount -o nodatacow,noatime,discard,subvol=swap /dev/disk/by-label/swap /mnt/swap
       mount -o umask=077 /dev/disk/by-label/boot /mnt/boot
 
       dd if=/dev/zero of=/mnt/swap/swapfile bs=1MB
+      chmod 0600 /mnt/swap/swapfile
       mkswap -L swap -U clear /mnt/swap/swapfile
       swapon /mnt/swap/swapfile
       ```
@@ -142,7 +143,7 @@
 
           "/swap" = {
             neededForBoot = true;
-            options = defaultOpts;
+            options = defaultOpts ++ [ "nodatacow" ];
           };
         };
     }
@@ -171,13 +172,30 @@
 
 ## NixOS
 
-- VS Code
+- <details><summary>VS Code</summary>
 
   - Preferences: configure runtime arguments
 
     ```json
     "password-store": "gnome-libsecret"
     ```
+
+  </details>
+
+- <details><summary>Windows dual boot</summary>
+
+  - Change hardware clock to UTC in registry
+    `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation`
+
+    |          key          |   value    |  type   |
+    | :-------------------: | :--------: | :-----: |
+    | `RealTimeIsUniversal` | `00000001` | `dword` |
+
+    ```cmd
+    reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f
+    ```
+
+  </details>
 
 ## Commands I'm going to forget about
 
@@ -192,5 +210,5 @@
   ```sh
   hyprctl monitors all
   fd edid /sys/devices/pci0000:00
-  nix shell nixpkgs#read-edid -c parse-edid /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/drm/card2/card2-DP-5/edid
+  nix shell nixpkgs#read-edid -c parse-edid /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/drm/card2/card2-DP-4/edid
   ```

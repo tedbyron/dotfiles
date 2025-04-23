@@ -1,9 +1,4 @@
-{
-  pkgs,
-  system,
-  overlays,
-  ...
-}:
+{ pkgs, ... }:
 {
   nix = {
     channel.enable = false;

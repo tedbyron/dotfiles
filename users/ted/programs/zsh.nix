@@ -45,14 +45,14 @@
     ];
   };
 
-  initExtraBeforeCompInit = ''
-    . ${unstable.oh-my-zsh}/share/oh-my-zsh/lib/completion.zsh
-    . ${unstable.oh-my-zsh}/share/oh-my-zsh/lib/correction.zsh
-    . ${unstable.oh-my-zsh}/share/oh-my-zsh/lib/directories.zsh
-    . ${unstable.oh-my-zsh}/share/oh-my-zsh/lib/history.zsh
-    . ${unstable.oh-my-zsh}/share/oh-my-zsh/plugins/git-lfs/git-lfs.plugin.zsh
-    . ${unstable.oh-my-zsh}/share/oh-my-zsh/plugins/git/git.plugin.zsh
-    . ${unstable.oh-my-zsh}/share/oh-my-zsh/plugins/tmux/tmux.plugin.zsh
+  initExtraBeforeCompInit = with unstable; ''
+    . ${oh-my-zsh}/share/oh-my-zsh/lib/completion.zsh
+    . ${oh-my-zsh}/share/oh-my-zsh/lib/correction.zsh
+    . ${oh-my-zsh}/share/oh-my-zsh/lib/directories.zsh
+    . ${oh-my-zsh}/share/oh-my-zsh/lib/history.zsh
+    . ${oh-my-zsh}/share/oh-my-zsh/plugins/git-lfs/git-lfs.plugin.zsh
+    . ${oh-my-zsh}/share/oh-my-zsh/plugins/git/git.plugin.zsh
+    . ${oh-my-zsh}/share/oh-my-zsh/plugins/tmux/tmux.plugin.zsh
 
     setopt always_to_end
     setopt no_append_create
@@ -130,6 +130,6 @@
     PAGER = "less";
     READNULLCMD = "bat";
     STARSHIP_LOG = "error";
-    # ZSH_TMUX_AUTOSTART = "true";
+    ZSH_TMUX_AUTOSTART = if darwin then "true" else "false";
   };
 }

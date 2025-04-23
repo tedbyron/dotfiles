@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   unstable,
   ...
@@ -12,11 +11,10 @@
   systemd.services.Network-Manager-wait-online.enable = false;
   time.timeZone = "America/New_York";
   users.defaultUserShell = pkgs.zsh;
+  xdg.portal.xdgOpenUsePortal = true;
 
   environment.systemPackages = with pkgs; [
     pciutils
-    qt5.qtwayland
-    qt6.qtwayland
     unzip
   ];
 
@@ -51,6 +49,7 @@
   programs = {
     dconf.enable = true;
     firefox = import ./firefox.nix { inherit pkgs; };
+    seahorse.enable = true;
     zsh.enable = true;
 
     hyprland = {
@@ -58,6 +57,7 @@
       package = unstable.hyprland;
       portalPackage = unstable.xdg-desktop-portal-hyprland;
       withUWSM = true;
+      xwayland.enable = true;
     };
 
     uwsm = {
@@ -104,12 +104,5 @@
       layout = "us";
       variant = "";
     };
-  };
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ unstable.xdg-desktop-portal-hyprland ];
-    wlr.enable = true;
-    xdgOpenUsePortal = true;
   };
 }

@@ -151,7 +151,11 @@
   };
 
   tmux = import ./tmux.nix { inherit unstable; };
-  vscode.enable = true;
+
+  vscode = {
+    enable = true;
+    package = unstable.vscode;
+  };
 
   yt-dlp.enable = true;
 

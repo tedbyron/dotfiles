@@ -115,9 +115,9 @@ alias -g -- --help='--help 2>&1 | bat -p -l help'
 
 unalias grhh
 
+hash -d dls=$HOME/Downloads
 hash -d dot=$HOME/git/dotfiles
 hash -d git=$HOME/git
 if (( $+__DARWIN )) {
-    hash -d dls=$HOME/Downloads
     hash -d pub=$HOME/Public
 }

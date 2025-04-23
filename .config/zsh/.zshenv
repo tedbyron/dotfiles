@@ -22,10 +22,10 @@ export PAGER=less
 export READNULLCMD=bat
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/ripgreprc
 export STARSHIP_LOG=error
-# export ZSH_TMUX_AUTOSTART=true
 export ZSH_TMUX_CONFIG=$HOME/.config/tmux/tmux.conf
 
 if [[ "$(uname)" == 'Darwin'* ]] {
     export __DARWIN=1
     export HOMEBREW_NO_ANALYTICS=1
+    export ZSH_TMUX_AUTOSTART=true
 }
