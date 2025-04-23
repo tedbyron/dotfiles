@@ -6,7 +6,7 @@
 ;; (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
 (+global-word-wrap-mode)
-(display-time-mode -1) ; TODO: display time in fullscreen
+(display-time-mode -1) ; display time in fullscreen
 (global-subword-mode)
 
 (when (and IS-MAC (display-graphic-p))
@@ -16,7 +16,7 @@
         mouse-wheel-scroll-amount '(1 ((shift) . hscroll) ((meta) . 6))
         scroll-conservatively 101))
 (unless IS-MAC (menu-bar-mode -1))
-;; TODO: display battery in fullscreen
+;; display battery in fullscreen
 ;; (unless (string-match-p "^Power N/A" (battery))
 ;;   (display-battery-mode t))
 
@@ -86,7 +86,7 @@
               emacs-lisp-mode-hook
               sh-mode-hook)
   fill-column 80)
-(setq-hook! 'prog-mode-hook comment-column 0) ; TODO: setq-default no work
+(setq-hook! 'prog-mode-hook comment-column 0) ; setq-default no work
 (setq-hook! 'text-mode-hook comment-auto-fill-only-comments nil)
 
 (add-hook! '(conf-toml-mode-hook prog-mode-hook)

@@ -28,26 +28,29 @@ in
 
     loader = {
       efi.canTouchEfiVariables = true;
-      timeout = null;
+      timeout = 5;
 
       systemd-boot = {
         enable = true;
+        configurationLimit = 64;
         editor = false;
-        consoleMode = "auto";
 
+        # map -c; ls HD1b:\EFI
         edk2-uefi-shell = {
-          enable = true;
+          enable = false;
           sortKey = "z_edk2";
         };
 
         memtest86 = {
           enable = true;
-          sortKey = "o_memtest86";
+          sortKey = "y_memtest86";
         };
 
-        # windows.windows = {
-
-        # };
+        windows.windows = {
+          title = "Windows";
+          efiDeviceHandle = "HD1b";
+          sortKey = "m_windows";
+        };
       };
     };
   };
