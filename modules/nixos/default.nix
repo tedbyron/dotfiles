@@ -13,10 +13,14 @@
   users.defaultUserShell = pkgs.zsh;
   xdg.portal.xdgOpenUsePortal = true;
 
-  environment.systemPackages = with pkgs; [
-    pciutils
-    unzip
-  ];
+  environment = {
+    sessionVariables.LD_LIBRARY_PATH = "/run/opengl-driver/lib";
+
+    systemPackages = with pkgs; [
+      pciutils
+      unzip
+    ];
+  };
 
   i18n = {
     defaultLocale = "en_US.UTF-8";

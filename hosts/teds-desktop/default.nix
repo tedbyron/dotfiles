@@ -13,8 +13,7 @@ in
     ../../users/${user}
   ];
 
-  environment.sessionVariables.LD_LIBRARY_PATH = "/run/opengl-driver/lib";
-  home-manager.users.${user}.home.packages = [ pkgs.qbittorrent ];
+  environment.systemPackages = [ pkgs.qbittorrent ];
   system.stateVersion = "24.11";
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
@@ -84,6 +83,11 @@ in
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       powerManagement.enable = true;
+
+      prime = {
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
     };
   };
 

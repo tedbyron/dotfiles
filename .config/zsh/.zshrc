@@ -109,6 +109,8 @@ alias nc='ncat'
 alias pgrep='pgrep -afil'
 alias ps='ps -Aafx'
 alias sudo='sudo '
+alias wlcopy='wl-copy'
+alias wlpaste='wl-paste'
 
 alias -g -- -h='-h 2>&1 | bat -p -l help'
 alias -g -- --help='--help 2>&1 | bat -p -l help'

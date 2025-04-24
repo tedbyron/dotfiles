@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+
+import subprocess
+import re
+
+dp = None
+width = height = clock = sync = opts = current = hpart = vpart = refresh = None
+preferred = ""
+
+def flush():
+    global preferred, dp
+    if preferred:
+        print(f'    Option "PreferredMode" "{preferred}"')
+    if dp:
+        print("EndSection")
+    preferred = ""
+    dp = None
+
+proc = subprocess.Popen(["xrandr", "--verbose"], stdout=subprocess.PIPE, text=True)
+
+for line in proc.stdout:
+    line = line.strip()
+
+    m = re.match(r"^(\S+) (\S+)", line)
+    if m:
+        flush()
+        if m.group(2) == "connected":
+            dp = m.group(1)
+            print('Section "Monitor"')
+            print(f'    Identifier "{dp}"')
+        else:
+            dp = None
+        continue
+
+    if not dp:
+        continue
+
+    m = re.match(
+        r"^\s+(\d+)x(\d+)\s+\S*\s+(\d+\.?\d*)\S+\s+([-+]HSync\s+[-+]VSync)\s*(.*)",
+        line,
+        re.IGNORECASE,
+    )
+    if m:
+        width, height, clock, sync, opts = m.groups()
+        current = "current" in opts
+        if "preferred" not in opts:
+            flush()
+            continue
+        continue
+
+    m = re.match(
+        r"^\s+h: width\s+(\d+)\s+start\s+(\d+)\s+end\s+(\d+)\s+total\s+(\d+)", line
+    )
+    if m:
+        hpart = " ".join(m.groups())
+        continue
+
+    m = re.match(
+        r"^\s+v: height\s+(\d+)\s+start\s+(\d+)\s+end\s+(\d+)\s+total\s+(\d+).*?\bclock\s+(\d+)",
+        line,
+    )
+    if m:
+        v1, v2, v3, v4, refresh = m.groups()
+        vpart = f"{v1} {v2} {v3} {v4}"
+        mode = f"{width}x{height}_{refresh}"
+        print(
+            f'    Modeline    "{mode}" {clock} {hpart} {vpart} {sync}   ({width} x {height} @ {refresh})'
+        )
+        if current:
+            preferred = mode
+        continue
+
+flush()
+proc.stdout.close()
+proc.wait()

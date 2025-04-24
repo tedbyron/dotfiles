@@ -81,10 +81,6 @@
     unalias grhh
   '';
 
-  profileExtra = lib.optionalString (!darwin) ''
-
-  '';
-
   shellAliases = {
     df = "df \\-h";
     dl = "yt-dlp";
@@ -111,6 +107,8 @@
     pgrep = "pgrep -afil";
     ps = "ps -Aafx";
     sudo = "sudo ";
+    wlcopy = "wl-copy";
+    wlpaste = "wl-paste";
   };
 
   shellGlobalAliases = {
