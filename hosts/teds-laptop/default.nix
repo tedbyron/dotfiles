@@ -4,37 +4,37 @@
   pkgs,
   ...
 }:
-let
-  name = baseNameOf (toString ./.);
-  user = "ted";
-in
 {
-  imports = [ ../../users/${user} ];
+  imports = [ ../../users/ted ];
 
   system.stateVersion = 5;
 
-  networking = {
-    computerName = name;
-    hostName = name;
-  };
+  networking =
+    let
+      hostName = baseNameOf (toString ./.);
+    in
+    {
+      inherit hostName;
+      computerName = hostName;
+    };
 
   homebrew.casks = [ ];
 
-  home-manager.users.${user}.home.packages = with pkgs; [
+  home-manager.users.ted.home.packages = with pkgs; [
     discord
     qbittorrent
   ];
 
   custom.dock =
     let
-      inherit (config.home-manager.users.${user}.programs.spicetify) spicedSpotify;
+      inherit (config.home-manager.users.ted.programs.spicetify) spicedSpotify;
 
       userPackages =
         name:
         lib.findFirst (
           pkg: (builtins.parseDrvName pkg.name).name == name
-        ) null config.home-manager.users.${user}.home.packages;
-      userPrograms = name: (builtins.getAttr name config.home-manager.users.${user}.programs).package;
+        ) null config.home-manager.users.ted.home.packages;
+      userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
     {
       enable = true;
@@ -51,7 +51,7 @@ in
         ]
         ++ [
           {
-            path = "${config.users.users.${user}.home}/Downloads/";
+            path = "${config.users.users.ted.home}/Downloads/";
             section = "others";
             options = "--display stack --view auto --sort dateadded";
           }

@@ -1,16 +1,8 @@
-{
-  config,
-  pkgs,
-  ...
-}:
-let
-  name = baseNameOf (toString ./.);
-  user = "ted";
-in
+{ config, pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
-    ../../users/${user}
+    ../../users/ted
   ];
 
   environment.systemPackages = [ pkgs.qbittorrent ];
@@ -18,16 +10,17 @@ in
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
   networking = {
-    hostName = name;
+    hostName = baseNameOf (toString ./.);
     networkmanager.enable = true;
   };
 
   boot = {
     blacklistedKernelModules = [ "nouveau" ];
+    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+    initrd.kernelModules = [ "nvidia" ];
 
     loader = {
       efi.canTouchEfiVariables = true;
-      timeout = 5;
 
       systemd-boot = {
         enable = true;
@@ -78,16 +71,8 @@ in
     graphics.enable = true;
 
     nvidia = {
-      modesetting.enable = true;
       open = true;
-      nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
       powerManagement.enable = true;
-
-      prime = {
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
     };
   };
 

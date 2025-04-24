@@ -1,17 +1,17 @@
 { config, ... }:
-let
-  name = baseNameOf (toString ./.);
-  user = "ted";
-in
 {
-  imports = [ ../../users/${user} ];
+  imports = [ ../../users/ted ];
 
   system.stateVersion = 5;
 
-  networking = {
-    computerName = name;
-    hostName = name;
-  };
+  networking =
+    let
+      hostName = baseNameOf (toString ./.);
+    in
+    {
+      inherit hostName;
+      computerName = hostName;
+    };
 
   homebrew = {
     casks = [
@@ -26,9 +26,9 @@ in
 
   custom.dock =
     let
-      inherit (config.home-manager.users.${user}.programs.spicetify) spicedSpotify;
+      inherit (config.home-manager.users.ted.programs.spicetify) spicedSpotify;
 
-      userPrograms = name: (builtins.getAttr name config.home-manager.users.${user}.programs).package;
+      userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
     {
       enable = true;
@@ -45,7 +45,7 @@ in
         ]
         ++ [
           {
-            path = "${config.users.users.${user}.home}/Downloads/";
+            path = "${config.users.users.ted.home}/Downloads/";
             section = "others";
             options = "--display stack --view auto --sort dateadded";
           }

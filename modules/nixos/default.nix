@@ -17,7 +17,6 @@
     sessionVariables.LD_LIBRARY_PATH = "/run/opengl-driver/lib";
 
     systemPackages = with pkgs; [
-      pciutils
       unzip
     ];
   };
