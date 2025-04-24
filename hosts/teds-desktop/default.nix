@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -16,8 +16,6 @@
 
   boot = {
     blacklistedKernelModules = [ "nouveau" ];
-    extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
-    initrd.kernelModules = [ "nvidia" ];
     kernelModules = [ "nvidia_uvm" ]; # TODO 25.05; remove
 
     loader = {
