@@ -28,7 +28,6 @@
       "lunar"
       "mullvadvpn"
       "rectangle"
-      "vlc"
     ];
 
     masApps = {

@@ -11,13 +11,12 @@
   ...
 }:
 let
-  name = baseNameOf (toString ./.);
-  home = if darwin then "/Users/${name}" else "/home/${name}";
+  home = if darwin then "/Users/ted" else "/home/ted";
 in
 {
   users =
     {
-      users.${name} =
+      users.ted =
         {
           inherit home;
           description = "Teddy Byron";
@@ -34,16 +33,16 @@ in
         };
     }
     // lib.optionalAttrs darwin {
-      knownUsers = [ name ];
+      knownUsers = [ "ted" ];
     };
 
-  home-manager.users.${name} = {
+  home-manager.users.ted = {
     imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
     home = {
       stateVersion = "23.11";
       homeDirectory = home;
-      username = name;
+      username = "ted";
 
       file = {
         # ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
@@ -66,7 +65,7 @@ in
           text = "";
         };
 
-        "${config.home-manager.users.${name}.programs.gpg.homedir}/gpg-agent.conf" = {
+        "${config.home-manager.users.ted.programs.gpg.homedir}/gpg-agent.conf" = {
           enable = true;
           onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
@@ -124,7 +123,6 @@ in
         lib
         system
         darwin
-        name
         ;
     };
 

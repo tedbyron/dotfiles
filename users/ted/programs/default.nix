@@ -7,11 +7,10 @@
   lib,
   system,
   darwin,
-  name,
 }:
 {
   alacritty = {
-    enable = true;
+    enable = darwin;
     settings = builtins.fromTOML (builtins.readFile ../../../.config/alacritty/alacritty.toml);
   };
 
@@ -36,10 +35,7 @@
     nix-direnv.enable = true;
   };
 
-  fzf = import ./fzf.nix {
-    inherit config;
-    user = name;
-  };
+  fzf = import ./fzf.nix { inherit config; };
 
   gh = {
     enable = true;
@@ -57,12 +53,12 @@
 
   # TODO: ghostty darwin build broken
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/gh/ghostty/package.nix
-  # ghostty = {
-  #   enable = true;
-  #   enableZshIntegration = true;
-  #   installBatSyntax = true;
-  #   settings = builtins.fromTOML (builtins.readFile ../../../.config/ghostty/config);
-  # };
+  ghostty = {
+    enable = !darwin;
+    enableZshIntegration = true;
+    installBatSyntax = true;
+    settings = builtins.fromTOML (builtins.readFile ../../../.config/ghostty/config);
+  };
 
   git = {
     enable = true;

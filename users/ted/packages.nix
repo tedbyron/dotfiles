@@ -31,9 +31,11 @@ with pkgs;
 ++ lib.optionals darwin [
   mas
   pinentry_mac
+  vlc-bin
 ]
 ++ lib.optionals (!darwin) [
   gcr_4
+  vlc
   wl-clipboard
   zig
 ]

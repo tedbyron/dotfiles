@@ -57,9 +57,12 @@
 
       mount -o noatime,discard,subvol=root /dev/disk/by-label/nixos /mnt
       mkdir /mnt/{nix,home,swap,boot}
-      mount -o compress=zstd,noatime,discard,subvol=nix /dev/disk/by-label/nixos /mnt/nix
-      mount -o noatime,discard,subvol=home /dev/disk/by-label/nixos /mnt/home
-      mount -o nodatacow,noatime,discard,subvol=swap /dev/disk/by-label/swap /mnt/swap
+      mount -o compress=zstd,noatime,discard,subvol=nix \
+        /dev/disk/by-label/nixos /mnt/nix
+      mount -o noatime,discard,subvol=home \
+        /dev/disk/by-label/nixos /mnt/home
+      mount -o nodatacow,noatime,discard,subvol=swap \
+        /dev/disk/by-label/swap /mnt/swap
       mount -o umask=077 /dev/disk/by-label/boot /mnt/boot
 
       dd if=/dev/zero of=/mnt/swap/swapfile bs=1MB
@@ -155,7 +158,8 @@
 
     ```sh
     nixos-install
-    mkdir /mnt/snapshots && btrfs subvolume snapshot -r /mnt /mnt/snapshots/root-after-install
+    mkdir /mnt/snapshots
+    btrfs subvolume snapshot -r /mnt /mnt/snapshots/root-after-install
     nixos-enter --root /mnt -c 'passwd ted'
     reboot
     ```
@@ -164,8 +168,9 @@
 
     ```sh
     # Reconnect to wifi if necessary
-    nix-shell -p git
-    git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
+    nix run nixpkgs#git -- \
+      clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles \
+      --filter tree:0
     sudo nixos-rebuild --flake ~/git/dotfiles#host switch
     reboot
     ```

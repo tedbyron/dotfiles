@@ -60,6 +60,7 @@ TERM = "alacritty"
 
 [font]
 size = 14.0
+
 [font.bold]
 family = "Curlio"
 style = "Bold"

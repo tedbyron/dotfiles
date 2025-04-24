@@ -1,10 +1,10 @@
-{ config, user }:
+{ config }:
 {
   enable = true;
   changeDirWidgetCommand = "fd -HL -E .git -c always -t d --strip-cwd-prefix";
   defaultCommand = "fd -H -E .git -E .DS_Store -c always -t f --strip-cwd-prefix";
   enableZshIntegration = true;
-  fileWidgetCommand = config.home-manager.users.${user}.programs.fzf.defaultCommand;
+  fileWidgetCommand = config.home-manager.users.ted.programs.fzf.defaultCommand;
   historyWidgetOptions = [ "--layout reverse" ];
 
   colors = {
