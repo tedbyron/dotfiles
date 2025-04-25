@@ -27,6 +27,7 @@
     "app.normandy.enabled" = false;
     "beacon.enabled" = false;
     "breakpad.reportURL" = "";
+    "browser.aboutConfig.showWarning" = false;
     "browser.backspace_action" = 0;
     "browser.compactmode.show" = true;
     "browser.display.background_color.dark" = "#282828";
@@ -46,6 +47,7 @@
     "browser.toolbars.bookmarks.visibility" = "always";
     "browser.urlbar.suggest.recentsearches" = false;
     "browser.urlbar.trimURLs" = false;
+    "browser.warnOnQuitShortcut" = false;
     "datareporting.healthreport.uploadEnabled" = false;
     "datareporting.policy.dataSubmissionEnabled" = false;
     "dom.gamepad.enabled" = false;
@@ -53,6 +55,9 @@
     "extensions.htmlaboutaddons.recommendations.enabled" = false;
     "extensions.pocket.enabled" = false;
     "font.name.monospace.x-western" = "Curlio";
+    "font.name.sans-serif.x-western" = "Inter";
+    "font.name.serif.x-western" = "Libre Baskerville";
+    "full-screen-api.warning.timeout" = 0;
     "gfx.x11-egl.force-enabled" = true;
     "layout.css.visited_links_enabled" = false;
     "media.hardware-video-decoding.force-enabled" = true;

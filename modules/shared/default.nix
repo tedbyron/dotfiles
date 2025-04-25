@@ -7,8 +7,13 @@
 {
   imports = [ ./nix.nix ];
 
-  fonts.packages = [ self.outputs.packages.${system}.curlio-ttf ];
   system.configurationRevision = self.rev or self.dirtyRev or null;
+
+  fonts.packages = with pkgs; [
+    self.outputs.packages.${system}.curlio-ttf
+    inter
+    libre-baskerville
+  ];
 
   programs = {
     gnupg.agent.enable = true;

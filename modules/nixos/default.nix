@@ -1,12 +1,16 @@
 {
+  inputs,
+  config,
   pkgs,
   unstable,
+  system,
   ...
 }:
 {
   console.useXkbConfig = true; # TODO: console colors
   gtk.iconCache.enable = true;
   location.provider = "geoclue2";
+  system.fsPackages = [ pkgs.bindfs ];
   # BUG: https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.Network-Manager-wait-online.enable = false;
   time.timeZone = "America/New_York";
@@ -19,6 +23,53 @@
     systemPackages = with pkgs; [
       unzip
     ];
+  };
+
+  fileSystems =
+    let
+      mkRoBindfs = path: {
+        device = path;
+        fsType = "fuse.bindfs";
+
+        options = [
+          "ro"
+          "resolve-symlinks"
+          "x-gvfs-hide"
+        ];
+      };
+
+      aggregated = pkgs.buildEnv {
+        name = "system-fonts-and-icons";
+
+        paths =
+          config.fonts.packages
+          ++ (with pkgs; [
+            capitaine-cursors-themed
+            gruvbox-plus-icons
+          ]);
+
+        pathsToLink = [
+          "/share/fonts"
+          "/share/icons"
+        ];
+      };
+    in
+    {
+      "/usr/share/fonts" = mkRoBindfs "${aggregated}/share/fonts";
+      "/usr/share/icons" = mkRoBindfs "${aggregated}/share/icons";
+    };
+
+  fonts = {
+    enableDefaultPackages = true;
+    fontDir.enable = true;
+    packages = [ inputs.apple-emoji-linux.outputs.packages.${system}.default ];
+
+    fontconfig.defaultFonts = {
+      monospace = [ "Curlio" ];
+      sansSerif = [ "Inter" ];
+      serif = [ "Libre Baskerville" ];
+      emoji = [ "Apple Color Emoji" ];
+    };
   };
 
   i18n = {

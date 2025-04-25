@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "apple-emoji-linux": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1744657116,
+        "narHash": "sha256-R4lNrzknytHplXxP6uhzaLEPrqrEuvcruPe+reAdtac=",
+        "owner": "samuelngs",
+        "repo": "apple-emoji-linux",
+        "rev": "0bb40018cde0f17d711f3fe3b18d1da8d0cf6f82",
+        "type": "github"
+      },
+      "original": {
+        "owner": "samuelngs",
+        "repo": "apple-emoji-linux",
+        "type": "github"
+      }
+    },
     "curlio": {
       "inputs": {
         "flake-utils": [
@@ -241,6 +262,7 @@
     },
     "root": {
       "inputs": {
+        "apple-emoji-linux": "apple-emoji-linux",
         "curlio": "curlio",
         "curlio-darwin": "curlio-darwin",
         "darwin": "darwin",
@@ -304,6 +326,27 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "apple-emoji-linux",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1739829690,
+        "narHash": "sha256-mL1szCeIsjh6Khn3nH2cYtwO5YXG6gBiTw1A30iGeDU=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "3d0579f5cc93436052d94b73925b48973a104204",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
         "type": "github"
       }
     }

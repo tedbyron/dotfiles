@@ -204,7 +204,7 @@
 
 ## Commands I'm going to forget about
 
-- <details><summary>Get all PCI display controllers and show kernel drivers</summary>
+- <details><summary>PCI display controllers</summary>
 
   ```sh
   nix shell nixpkgs#pciutils -c lspci -kd ::03xx
@@ -212,7 +212,7 @@
 
   </details>
 
-- <details><summary>Get display EDID and parse</summary>
+- <details><summary>EDID info</summary>
 
   ```sh
   fd edid /sys/devices/pci0000:00

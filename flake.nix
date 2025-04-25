@@ -53,6 +53,10 @@
       };
     };
 
+    apple-emoji-linux = {
+      url = "github:samuelngs/apple-emoji-linux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     spicetify-nix = {
       url = "github:gerg-l/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -148,7 +152,7 @@
       {
         formatter = pkgs.legacyPackages.${system}.nixfmt-rfc-style;
 
-        packages = curlio.outputs.packages.${system} // {
+        packages = (builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ]) // {
           dircolors = dircolors.outputs.packages.${system}.default;
         };
       }
