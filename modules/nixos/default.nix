@@ -1,13 +1,14 @@
 {
-  inputs,
+  self,
   config,
   pkgs,
   unstable,
   lib,
-  system,
   ...
 }:
 {
+  imports = [ ./firefox.nix ];
+
   console.useXkbConfig = true; # TODO: console colors
   environment.systemPackages = [ pkgs.unzip ];
   gtk.iconCache.enable = true;
@@ -61,7 +62,7 @@
   fonts = {
     enableDefaultPackages = true;
     fontDir.enable = true;
-    packages = [ inputs.apple-emoji-linux.outputs.packages.${system}.default ];
+    packages = [ self.inputs.apple-emoji-linux.outputs.packages.${pkgs.system}.default ];
 
     fontconfig.defaultFonts = {
       monospace = [ "Curlio" ];
@@ -101,7 +102,6 @@
 
   programs = {
     dconf.enable = true;
-    firefox = import ./firefox.nix { inherit pkgs; };
     seahorse.enable = true;
     zsh.enable = true;
 

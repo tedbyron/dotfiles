@@ -1,161 +1,159 @@
 {
   self,
-  config,
-  inputs,
   pkgs,
   unstable,
   lib,
-  system,
   darwin,
+  ...
 }:
 {
-  alacritty = {
-    enable = darwin;
-    settings = builtins.fromTOML (builtins.readFile ../../../.config/alacritty/alacritty.toml);
-  };
+  imports = [
+    ./fzf.nix
+    ./tmux.nix
+    ./zsh.nix
+  ];
 
-  bat = {
-    enable = true;
-
-    config = {
-      style = "changes,numbers";
-      theme = "gruvbox-dark";
+  programs = {
+    alacritty = {
+      enable = darwin;
+      settings = builtins.fromTOML (lib.ted.readConfig "alacritty/alacritty.toml");
     };
-  };
 
-  dircolors = {
-    enable = true;
-    settings = import ("${self.outputs.packages.${system}.dircolors}/share/nix/settings.nix");
-  };
+    bat = {
+      enable = true;
 
-  direnv = {
-    enable = true;
-    config = builtins.fromTOML (builtins.readFile ../../../.config/direnv/direnv.toml);
-    enableZshIntegration = true;
-    nix-direnv.enable = true;
-  };
-
-  fzf = import ./fzf.nix { inherit config; };
-
-  gh = {
-    enable = true;
-    gitCredentialHelper.enable = true;
-
-    settings = {
-      git_protocol = "https";
-      editor = "nvim";
-      aliases = {
-        prco = "pr checkout";
-        open = "repo view --web";
+      config = {
+        style = "changes,numbers";
+        theme = "gruvbox-dark";
       };
     };
-  };
 
-  # TODO: ghostty darwin build broken
-  # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/gh/ghostty/package.nix
-  ghostty = {
-    enable = !darwin;
-    enableZshIntegration = true;
-    installBatSyntax = true;
-    settings = builtins.fromTOML (builtins.readFile ../../../.config/ghostty/config);
-  };
-
-  git = {
-    enable = true;
-    # delta configured in .gitconfig and installed as a user package
-    extraConfig = builtins.fromTOML (builtins.readFile ../../../.config/git/config) // {
-      credential.helper = if darwin then "osxkeychain" else "store";
-    };
-    ignores = lib.splitString "\n" (builtins.readFile ../../../.config/git/ignore);
-    lfs.enable = true;
-  };
-
-  go = {
-    enable = false;
-    # telemetry.mode = "off"; # TODO: 25.05
-  };
-
-  gpg = {
-    enable = true; # TODO: gpg signing keys
-
-    settings = {
-      default-key = "0BE1310591ECE7CF";
-      no-greeting = true;
-      keyid-format = "long";
-      with-fingerprint = true;
-      with-keygrip = true;
-    };
-  };
-
-  # home-manager.enable = true; # FIX: necessary?
-  # jujutsu
-  # keychain
-
-  hyprlock = {
-    enable = false; # TODO
-  };
-
-  lazygit = {
-    enable = true;
-    settings = lib.ted.fromYAML (builtins.readFile ../../../.config/lazygit/config.yml);
-  };
-
-  neovim = {
-    enable = true;
-    package = unstable.neovim-unwrapped;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-    withNodeJs = false;
-    withPython3 = false;
-    withRuby = false;
-  };
-
-  nix-index = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  pandoc.enable = true;
-
-  ripgrep = {
-    enable = true;
-    arguments = lib.splitString "\n" (builtins.readFile ../../../.config/ripgrep/ripgreprc);
-  };
-
-  spicetify =
-    let
-      spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
-    in
-    {
+    dircolors = {
       enable = true;
-      colorScheme = "Gruvbox";
-      theme = spicePkgs.themes.text;
+      settings = import ("${self.outputs.packages.${pkgs.system}.dircolors}/share/nix/settings.nix");
     };
 
-  ssh.enable = true;
+    direnv = {
+      enable = true;
+      config = builtins.fromTOML (lib.ted.readConfig "direnv/direnv.toml");
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
 
-  starship = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = builtins.fromTOML (builtins.readFile ../../../.config/starship.toml);
-  };
+    gh = {
+      enable = true;
+      gitCredentialHelper.enable = true;
 
-  tealdeer = {
-    enable = true;
-    settings = builtins.fromTOML (builtins.readFile ../../../.config/tealdeer/config.toml);
-  };
+      settings = {
+        git_protocol = "https";
+        editor = "nvim";
+        aliases = {
+          prco = "pr checkout";
+          open = "repo view --web";
+        };
+      };
+    };
 
-  tmux = import ./tmux.nix { inherit unstable; };
+    # TODO: ghostty darwin build broken
+    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/gh/ghostty/package.nix
+    ghostty = {
+      enable = !darwin;
+      enableZshIntegration = true;
+      installBatSyntax = true;
+      settings = builtins.fromTOML (lib.ted.readConfig "ghostty/config");
+    };
 
-  vscode = {
-    enable = true;
-    package = unstable.vscode;
-  };
+    git = {
+      enable = true;
+      # delta configured in .gitconfig and installed as a user package
+      extraConfig = builtins.fromTOML (lib.ted.readConfig "git/config") // {
+        credential.helper = if darwin then "osxkeychain" else "store";
+      };
+      ignores = lib.splitString "\n" (lib.ted.readConfig "git/ignore");
+      lfs.enable = true;
+    };
 
-  yt-dlp.enable = true;
+    go = {
+      enable = false;
+      # telemetry.mode = "off"; # TODO: 25.05
+    };
 
-  zsh = import ./zsh.nix {
-    inherit unstable lib darwin;
+    gpg = {
+      enable = true; # TODO: gpg signing keys
+
+      settings = {
+        default-key = "0BE1310591ECE7CF";
+        no-greeting = true;
+        keyid-format = "long";
+        with-fingerprint = true;
+        with-keygrip = true;
+      };
+    };
+
+    # home-manager.enable = true; # FIX: necessary?
+    # jujutsu
+    # keychain
+
+    hyprlock = {
+      enable = false; # TODO
+    };
+
+    lazygit = {
+      enable = true;
+      settings = lib.ted.fromYAML (lib.ted.readConfig "lazygit/config.yml");
+    };
+
+    neovim = {
+      enable = true;
+      package = unstable.neovim-unwrapped;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
+      withNodeJs = false;
+      withPython3 = false;
+      withRuby = false;
+    };
+
+    nix-index = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    pandoc.enable = true;
+
+    ripgrep = {
+      enable = true;
+      arguments = lib.splitString "\n" (lib.ted.readConfig "ripgrep/ripgreprc");
+    };
+
+    spicetify =
+      let
+        spicePkgs = self.inputs.spicetify-nix.legacyPackages.${pkgs.system};
+      in
+      {
+        enable = true;
+        colorScheme = "Gruvbox";
+        theme = spicePkgs.themes.text;
+      };
+
+    ssh.enable = true;
+
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = builtins.fromTOML (lib.ted.readConfig "starship.toml");
+    };
+
+    tealdeer = {
+      enable = true;
+      settings = builtins.fromTOML (lib.ted.readConfig "tealdeer/config.toml");
+    };
+
+    vscode = {
+      enable = true;
+      package = unstable.vscode;
+    };
+
+    yt-dlp.enable = true;
   };
 }

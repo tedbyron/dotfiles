@@ -1,14 +1,13 @@
 {
   self,
-  inputs,
   pkgs,
   unstable,
   lib,
 }:
 let
   modules = [
-    ./fromYAML.nix
     ./mkSystem.nix
+    ./util.nix
   ];
 
   ted = lib.makeExtensible (
@@ -16,11 +15,10 @@ let
     builtins.listToAttrs (
       map (
         path:
-        lib.nameValuePair (baseNameOf (toString path)) (
+        lib.nameValuePair (builtins.baseNameOf (builtins.toString path)) (
           import path {
             inherit
               self
-              inputs
               pkgs
               unstable
               lib
@@ -30,5 +28,6 @@ let
       ) modules
     )
   );
+
 in
 ted.extend (_: prev: lib.foldr (a: b: a // b) { } (lib.attrValues prev))

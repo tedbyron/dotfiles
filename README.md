@@ -9,27 +9,27 @@
 
 ```
 [rebuild]
-switch flake *opts # Build and activate the specified flake
-boot flake *opts   # Build the specified flake and make it the boot default
-test flake *opts   # Build and activate the specified flake, and revert on boot
-build flake *opts  # Build the specified flake
+switch flake=host *opts='' # Build and activate a specified flake or the host flake
+boot flake=host *opts=''   # Build a specified flake or the host flake, and make it the boot default
+test flake=host *opts=''   # Build and activate a specified flake or the host flake, and revert on boot
+build flake=host *opts=''  # Build a specified flake or the host flake
 
 [history]
-history limit='10' # List available generations
-h limit='10'       # alias for `history`
-wipe-history days  # Delete generations older than input days
+history limit='10'         # List available generations
+h limit='10'               # alias for `history`
+wipe-history days          # Delete generations older than input days
 
 [util]
-check *opts        # Run all flake checks
-c *opts            # alias for `check`
-fmt *opts          # Format all files
-f *opts            # alias for `fmt`
-repl *opts         # Start a nix REPL with nixpkgs loaded
-index *opts        # Update the nixpkgs index
-search +args       # Search for packages and package outputs
-s +args            # alias for `search`
-update *args       # Update flake lockfile for all or specified inputs
-up *args           # alias for `update`
+check                      # Run all flake checks
+c                          # alias for `check`
+fmt                        # Format all files
+f                          # alias for `fmt`
+repl                       # Start a nix REPL with nixpkgs loaded
+index                      # Update the nixpkgs index
+search +args               # Search for packages and package outputs
+s +args                    # alias for `search`
+update *args               # Update flake lockfile for all or specified inputs
+up *args                   # alias for `update`
 ```
 
 ## Bootstrap

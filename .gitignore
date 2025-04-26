@@ -1,6 +1,5 @@
 .DS_Store
 .direnv
-.ruff_cache
 lazy-lock.json
 lazyvim.json
 result

@@ -2,8 +2,11 @@ set shell := ['zsh', '-cu']
 
 os := os()
 rebuild := if os == 'linux' { 'nixos-rebuild ' } else { if os == 'macos' { 'darwin-rebuild ' } else { error('Unsupported OS: ' + os) } }
-rebuild-opts := if os == 'linux' { '' } else { '--impure ' }
+rebuild_opts := if os == 'linux' { '' } else { '--impure ' }
 sudo := if os == 'linux' { 'sudo ' } else { '' }
+hostname := shell('hostname')
+host_dir := shell('fd', quote(hostname), '~/git/dotfiles/hosts --type d --max-depth 1 -1')
+host := if host_dir == '' { error("Couldn't find a flake matching hostname") } else { hostname }
 profile := '/nix/var/nix/profiles/system'
 
 alias c := check
@@ -19,25 +22,26 @@ alias up := update
 #
 
 [group('rebuild')]
-_rebuild arg flake *opts:
-    {{ sudo }}{{ rebuild }}{{ rebuild-opts }}{{ arg }} \
+[private]
+rebuild prefix arg flake *opts:
+    {{ if prefix == 'sudo' { sudo } else { '' } }}{{ rebuild }}{{ rebuild_opts }}{{ arg }} \
         --flake ~/git/dotfiles#'{{ flake }}' {{ opts }}
 
-# Build and activate the specified flake
+# Build and activate a specified flake or the host flake
 [group('rebuild')]
-switch flake *opts: (_rebuild 'switch' flake opts)
+switch flake=host *opts='': (rebuild 'sudo' 'switch' flake opts)
 
-# Build the specified flake and make it the boot default
+# Build a specified flake or the host flake, and make it the boot default
 [group('rebuild')]
-boot flake *opts: (_rebuild 'boot' flake opts)
+boot flake=host *opts='': (rebuild 'sudo' 'boot' flake opts)
 
-# Build and activate the specified flake, and revert on boot
+# Build and activate a specified flake or the host flake, and revert on boot
 [group('rebuild')]
-test flake *opts: (_rebuild 'test' flake opts)
+test flake=host *opts='': (rebuild 'sudo' 'test' flake opts)
 
-# Build the specified flake
+# Build a specified flake or the host flake
 [group('rebuild')]
-build flake *opts: (_rebuild 'build' flake opts)
+build flake=host *opts='': (rebuild '' 'build' flake opts)
 
 #
 
@@ -60,23 +64,23 @@ wipe-history days:
 
 # Run all flake checks
 [group('util')]
-check *opts:
-    nix flake check --log-lines 1000 {{ opts }}
+check:
+    nix flake check --log-lines 1000
 
 # Format all files
 [group('util')]
-fmt *opts:
-    nix fmt {{ opts }}
+fmt:
+    nix fmt
 
 # Start a nix REPL with nixpkgs loaded
 [group('util')]
-repl *opts:
-    nix repl --file flake:nixpkgs {{ opts }}
+repl:
+    nix repl --file flake:nixpkgs
 
 # Update the nixpkgs index
 [group('util')]
-index *opts:
-    nix-index {{ opts }}
+index:
+    nix-index
 
 # Search for packages and package outputs
 [group('util')]

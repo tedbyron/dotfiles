@@ -67,7 +67,7 @@
       nixpkgs-darwin,
       flake-utils,
       ...
-    }@inputs:
+    }:
     let
       overlays = [ ];
 
@@ -91,7 +91,7 @@
           lib = (if darwin then nixpkgs-darwin else nixpkgs).lib.extend (
             final: _: {
               ted = import ./lib {
-                inherit self inputs;
+                inherit self;
                 lib = final;
 
                 # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
@@ -100,7 +100,7 @@
                   config.allowUnfree = true;
                 };
 
-                unstable = import inputs.nixpkgs-unstable {
+                unstable = import self.inputs.nixpkgs-unstable {
                   inherit system overlays;
                   config.allowUnfree = true;
                 };
@@ -110,7 +110,6 @@
         in
         lib.ted.mkSystem {
           inherit
-            system
             darwin
             wsl
             host
@@ -143,8 +142,8 @@
       let
         darwin = isDarwin system;
         pkgs = (if darwin then nixpkgs-darwin else nixpkgs).legacyPackages.${system};
-        curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
-        treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix).config.build;
+        curlio = if darwin then self.inputs.curlio-darwin else self.inputs.curlio;
+        treefmt = (self.inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix).config.build;
       in
       {
         checks.formatting = treefmt.check self;
@@ -158,7 +157,7 @@
         };
 
         packages = (builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ]) // {
-          dircolors = inputs.dircolors.outputs.packages.${system}.default;
+          dircolors = self.inputs.dircolors.outputs.packages.${system}.default;
         };
       }
     );

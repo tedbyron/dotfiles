@@ -1,6 +1,5 @@
 {
   self,
-  inputs,
   pkgs,
   unstable,
   lib,
@@ -8,7 +7,6 @@
 {
   mkSystem =
     {
-      system,
       darwin ? false,
       wsl ? false,
       host,
@@ -17,19 +15,14 @@
     let
       inherit (homeManager) darwinModules nixosModules;
 
-      homeManager = if darwin then inputs.home-manager-darwin else inputs.home-manager;
+      homeManager = if darwin then self.inputs.home-manager-darwin else self.inputs.home-manager;
       osModules = if darwin then darwinModules else nixosModules;
-      system' = if darwin then inputs.darwin.lib.darwinSystem else lib.nixosSystem;
-    in
-    system' {
-      inherit system;
+      system = if darwin then self.inputs.darwin.lib.darwinSystem else lib.nixosSystem;
 
-      specialArgs = {
+      args = {
         inherit
           self
-          inputs
           unstable
-          system
           darwin
           wsl
           overlays
@@ -37,10 +30,13 @@
 
         lib = lib.extend (_: _: homeManager.lib);
       };
+    in
+    system {
+      specialArgs = args;
 
       modules = [
         osModules.home-manager
-        (lib.optionalAttrs wsl inputs.nixos-wsl.nixosModules.wsl)
+        (lib.optionalAttrs wsl self.inputs.nixos-wsl.nixosModules.wsl)
         ../modules
         (import ../hosts/${host})
 
@@ -50,6 +46,8 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
+
+            extraSpecialArgs = args;
           };
         }
       ];

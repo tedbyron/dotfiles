@@ -1,11 +1,9 @@
 {
   self,
   config,
-  inputs,
   pkgs,
   unstable,
   lib,
-  system,
   darwin,
   wsl,
   ...
@@ -37,7 +35,12 @@ in
     };
 
   home-manager.users.ted = {
-    imports = [ inputs.spicetify-nix.homeManagerModules.default ];
+    imports = [
+      self.inputs.spicetify-nix.homeManagerModules.default
+      ./modules
+      ./programs
+      ./packages.nix
+    ];
 
     home = {
       stateVersion = "23.11";
@@ -45,21 +48,21 @@ in
       username = "ted";
 
       file = {
-        # ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
+        # ".config/iex/.iex.exs".source = lib.ted.configPath "iex/.iex.exs";
         ".config/just/justfile".source = ../../justfile;
-        ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
-        ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
-        ".config/stylua.toml".source = ../../.config/stylua.toml;
-        # ".config/tio/config".source = ../../.config/tio/config;
+        ".config/nvim/init.lua".source = lib.ted.configPath "nvim/init.lua";
+        ".config/rustfmt.toml".source = lib.ted.configPath "rustfmt.toml";
+        ".config/stylua.toml".source = lib.ted.configPath "stylua.toml";
+        # ".config/tio/config".source = lib.ted.configPath "tio/config";
 
         ".config/nvim/lua" = {
-          source = ../../.config/nvim/lua;
+          source = lib.ted.configPath "nvim/lua";
           recursive = true;
         };
 
         ".config/pam-gnupg" = {
           enable = !darwin;
-          source = ../../.config/pam-gnupg;
+          source = lib.ted.configPath "pam-gnupg";
         };
 
         ".hushlogin" = {
@@ -99,33 +102,11 @@ in
           };
       };
 
-      packages = import ./packages.nix {
-        inherit
-          pkgs
-          unstable
-          lib
-          darwin
-          ;
-      };
-
       # TODO: 25.05
       # pointerCursor = {
       #   enable = !darwin;
       #   hyprcursor.enable = true;
       # };
-    };
-
-    programs = import ./programs {
-      inherit
-        self
-        config
-        inputs
-        pkgs
-        unstable
-        lib
-        system
-        darwin
-        ;
     };
 
     services =
@@ -165,10 +146,6 @@ in
           };
         };
       };
-    };
-
-    wayland.windowManager.hyprland = import ./hyprland.nix {
-      inherit pkgs unstable darwin;
     };
   };
 }

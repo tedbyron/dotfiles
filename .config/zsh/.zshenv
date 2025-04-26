@@ -17,6 +17,7 @@ export LESS=-FRi
 export LESSHISTFILE=-
 export MANPAGER='zsh -c "col -bx | bat -p -l man"'
 export MANROFFOPT=-c
+export NODE_REPL_HISTORY=' '
 export NULLCMD=:
 export PAGER=less
 export READNULLCMD=bat
