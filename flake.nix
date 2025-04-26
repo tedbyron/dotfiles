@@ -146,13 +146,12 @@
         curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
         treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix).config.build;
       in
-      with pkgs;
       {
         checks.formatting = treefmt.check self;
         formatter = treefmt.wrapper;
 
-        devShells.default = mkShellNoCC {
-          packages = [
+        devShells.default = pkgs.mkShellNoCC {
+          packages = with pkgs; [
             just
             stylua
           ];

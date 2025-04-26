@@ -9,6 +9,7 @@
 }:
 {
   console.useXkbConfig = true; # TODO: console colors
+  environment.systemPackages = [ pkgs.unzip ];
   gtk.iconCache.enable = true;
   location.provider = "geoclue2";
   system.fsPackages = [ pkgs.bindfs ];
@@ -21,11 +22,6 @@
   boot.loader.systemd-boot = {
     configurationLimit = lib.mkDefault 32;
     editor = lib.mkDefault false;
-  };
-
-  environment = {
-    sessionVariables.LD_LIBRARY_PATH = "/run/opengl-driver/lib";
-    systemPackages = [ pkgs.unzip ];
   };
 
   fileSystems =
@@ -142,20 +138,21 @@
     fwupd.enable = true;
     geoclue2.enable = true;
     playerctld.enable = true;
-    redshift.enable = true; # TODO: cfg
-    resolved.enable = true;
     upower.enable = true;
-    xserver.xkb.layout = "us";
 
     pipewire = {
       enable = true;
       pulse.enable = true;
-      wireplumber.enable = true;
 
       alsa = {
         enable = true;
         support32Bit = true;
       };
+    };
+
+    resolved = {
+      enable = true;
+      fallbackDns = config.networking.nameservers;
     };
   };
 }

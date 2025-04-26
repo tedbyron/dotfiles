@@ -5,7 +5,6 @@
     ../../users/ted
   ];
 
-  environment.systemPackages = [ pkgs.qbittorrent ];
   system.stateVersion = "24.11";
   swapDevices = [ { device = "/swap/swapfile"; } ];
 
@@ -13,6 +12,11 @@
     hostName = baseNameOf (toString ./.);
     networkmanager.enable = true;
   };
+
+  home-manager.users.ted.home.packages = with pkgs; [
+    discord
+    qbittorrent
+  ];
 
   boot = {
     blacklistedKernelModules = [ "nouveau" ];

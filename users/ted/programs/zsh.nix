@@ -100,6 +100,7 @@
     grep = "grep -Ei --color=auto";
     hf = "hyperfine";
     j = "just";
+    jg = "just -g";
     ls = "ls -FHh -I '.DS_Store' --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";

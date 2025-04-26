@@ -9,12 +9,16 @@
   # portalPackage = null; # TODO: 25.05; conflicts with programs.hyprland.portalPackage
   systemd.enable = false; # Conflicts with UWSM
 
-  # plugins = with pkgs.hyprlandPlugins; [
-  #   hypr-dynamic-cursors
-  #   hyprspace
-  #   hyprsplit
-  # ];
+  # TODO
+  plugins = with unstable.hyprlandPlugins; [
+    hypr-dynamic-cursors
+    # hyprpaper
+    # hyprspace
+    hyprsplit
+    # hyprsunset
+  ];
 
+  # https://wiki.hyprland.org/Configuring/Variables
   settings = {
     env = [
       "XDG_CURRENT_DESKTOP,Hyprland"
@@ -23,8 +27,8 @@
     ];
 
     monitor = [
-      "DP-5, 2560x1440@120, 0x0,        auto"
-      "DP-4, 2560x1440@60,  auto-right, auto"
+      "DP-5, 2560x1440@120, 0x0,        auto, vrr, 1"
+      "DP-4, 2560x1440@60,  auto-right, auto, vrr, 0"
       ",     preferred,     auto,       auto"
     ];
 
@@ -35,55 +39,30 @@
     exec-once = [
       "dbus-update-activation-environment --systemd --all"
 
-      "[workspace 1 silent] $terminal"
+      "[monitor DP-5; workspace 1 silent] $terminal"
+      "[monitor DP-4; workspace 1 silent] firefox"
       # "nm-applet &"
       # "waybar & hyprpaper & firefox"
     ];
 
-    # ecosystem = {
-    #   enforce_permissions = 1;
-    # };
-
-    # permission = [
-    #   "/usr/(bin|local/bin)/grim, screencopy, allow"
-    #   "/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland, screencopy, allow"
-    # ];
+    windowrule = [
+      "suppressevent maximize, class:.*"
+      "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+    ];
 
     general = {
-      gaps_in = 5;
       gaps_out = 10;
-      border_size = 1;
       "col.active_border" = "rgb(d65d0e)";
       "col.inactive_border" = "rgb(3c3836)";
-      resize_on_border = false;
-      allow_tearing = false;
-      layout = "dwindle";
+      snap.enabled = true; # ???
     };
 
     decoration = {
       rounding = 10;
-      rounding_power = 2;
-      active_opacity = 1.0;
-      inactive_opacity = 1.0;
-
-      shadow = {
-        enabled = true;
-        range = 4;
-        render_power = 3;
-        color = "rgba(1a1a1aee)";
-      };
-
-      blur = {
-        enabled = false;
-        size = 3;
-        passes = 1;
-        vibrancy = 0.1696;
-      };
+      blur.enabled = false;
     };
 
     animations = {
-      enabled = true;
-
       bezier = [
         "easeOutQuint, 0.23, 1, 0.32, 1"
         "easeInOutCubic, 0.65, 0.05, 0.36, 1"
@@ -122,82 +101,91 @@
       orientation = "right";
     };
 
+    input = {
+      repeat_delay = 300;
+      follow_mouse = 1;
+      touchpad.tap-and-drag = false;
+    };
+
+    device = [
+      {
+        name = "razer-naga-pro";
+        sensitivity = -0.333; # Default 1200dpi
+      }
+    ];
+
+    gestures.workspace_swipe = true;
+
     misc = {
-      force_default_wallpaper = -1;
-      disable_hyprland_logo = false;
+      disable_hyprland_logo = true;
+      disable_splash_rendering = true;
+      background_color = "rgb(282828)";
       middle_click_paste = false;
     };
 
-    input = {
-      kb_layout = "us";
-      kb_variant = "";
-      kb_model = "";
-      kb_options = "";
-      kb_rules = "";
-      repeat_rate = 25;
-      repeat_delay = 300;
-      follow_mouse = 1;
-      sensitivity = 0;
-      touchpad.natural_scroll = false;
-    };
+    plugin = [
+      { hyprsplit.num_workspaces = 10; }
+      {
+        dynamic-cursors = {
+          mode = "stretch";
 
-    gestures = {
-      workspace_swipe = false;
-    };
+          shake = {
+            speed = 0;
+            timeout = 0;
+          };
+        };
+      }
+    ];
 
-    device = {
-      name = "razer-naga-pro";
-      sensitivity = -0.33; # Default 1200dpi
-    };
-
-    "$mainMod" = "SUPER";
     bind = [
-      "$mainMod, Q, exec, $terminal"
-      "$mainMod, C, killactive,"
-      "$mainMod, M, exit,"
-      "$mainMod, E, exec, $fileManager"
-      "$mainMod, V, togglefloating,"
-      "$mainMod, R, exec, $menu"
-      "$mainMod, P, pseudo, # dwindle"
-      "$mainMod, J, togglesplit, # dwindle"
+      "SUPER, `, exec, $terminal"
+      "SUPER, ;, killactive,"
+      "SUPER, M, exit,"
+      "SUPER, E, exec, $fileManager"
+      "SUPER, V, togglefloating,"
+      "SUPER, R, exec, $menu"
+      # "SUPER, P, pseudo, # dwindle"
+      "SUPER, J, togglesplit, # dwindle"
+      "SUPER, D, split:swapactiveworkspaces, current +1"
+      "SUPER, G, split:grabroguewindows"
 
-      "$mainMod, left, movefocus, l"
-      "$mainMod, right, movefocus, r"
-      "$mainMod, up, movefocus, u"
-      "$mainMod, down, movefocus, d"
+      "SUPER, left, movefocus, l"
+      "SUPER, right, movefocus, r"
+      "SUPER, up, movefocus, u"
+      "SUPER, down, movefocus, d"
 
-      "$mainMod, 1, workspace, 1"
-      "$mainMod, 2, workspace, 2"
-      "$mainMod, 3, workspace, 3"
-      "$mainMod, 4, workspace, 4"
-      "$mainMod, 5, workspace, 5"
-      "$mainMod, 6, workspace, 6"
-      "$mainMod, 7, workspace, 7"
-      "$mainMod, 8, workspace, 8"
-      "$mainMod, 9, workspace, 9"
-      "$mainMod, 0, workspace, 10"
+      "SUPER, 1, split:workspace, 1"
+      "SUPER, 2, split:workspace, 2"
+      "SUPER, 3, split:workspace, 3"
+      "SUPER, 4, split:workspace, 4"
+      "SUPER, 5, split:workspace, 5"
+      "SUPER, 6, split:workspace, 6"
+      "SUPER, 7, split:workspace, 7"
+      "SUPER, 8, split:workspace, 8"
+      "SUPER, 9, split:workspace, 9"
+      "SUPER, 0, split:workspace, 10"
 
-      "$mainMod SHIFT, 1, movetoworkspace, 1"
-      "$mainMod SHIFT, 2, movetoworkspace, 2"
-      "$mainMod SHIFT, 3, movetoworkspace, 3"
-      "$mainMod SHIFT, 4, movetoworkspace, 4"
-      "$mainMod SHIFT, 5, movetoworkspace, 5"
-      "$mainMod SHIFT, 6, movetoworkspace, 6"
-      "$mainMod SHIFT, 7, movetoworkspace, 7"
-      "$mainMod SHIFT, 8, movetoworkspace, 8"
-      "$mainMod SHIFT, 9, movetoworkspace, 9"
-      "$mainMod SHIFT, 0, movetoworkspace, 10"
+      "SUPER SHIFT, 1, split:movetoworkspacesilent, 1"
+      "SUPER SHIFT, 2, split:movetoworkspacesilent, 2"
+      "SUPER SHIFT, 3, split:movetoworkspacesilent, 3"
+      "SUPER SHIFT, 4, split:movetoworkspacesilent, 4"
+      "SUPER SHIFT, 5, split:movetoworkspacesilent, 5"
+      "SUPER SHIFT, 6, split:movetoworkspacesilent, 6"
+      "SUPER SHIFT, 7, split:movetoworkspacesilent, 7"
+      "SUPER SHIFT, 8, split:movetoworkspacesilent, 8"
+      "SUPER SHIFT, 9, split:movetoworkspacesilent, 9"
+      "SUPER SHIFT, 0, split:movetoworkspacesilent, 10"
 
-      "$mainMod, S, togglespecialworkspace, magic"
-      "$mainMod SHIFT, S, movetoworkspace, special:magic"
+      "SUPER, S, togglespecialworkspace, magic"
+      "SUPER SHIFT, S, movetoworkspace, special:magic"
 
-      "$mainMod, mouse_down, workspace, e+1"
-      "$mainMod, mouse_up, workspace, e-1"
+      "SUPER, mouse_down, workspace, e+1"
+      "SUPER, mouse_up, workspace, e-1"
     ];
 
     bindm = [
-      "$mainMod, mouse:272, movewindow"
-      "$mainMod, mouse:273, resizewindow"
+      "SUPER, mouse:272, movewindow"
+      "SUPER, mouse:273, resizewindow"
     ];
 
     bindel = [
@@ -216,9 +204,11 @@
       ", XF86AudioPrev, exec, playerctl previous"
     ];
 
-    windowrule = [
-      "suppressevent maximize, class:.*"
-      "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-    ];
+    cursor = {
+      no_hardware_cursors = 1;
+      hide_on_touch = false;
+    };
+
+    ecosystem.no_donation_nag = true;
   };
 }

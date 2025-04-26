@@ -46,6 +46,7 @@ in
 
       file = {
         # ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
+        ".config/just/justfile".source = ../../justfile;
         ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
         ".config/stylua.toml".source = ../../.config/stylua.toml;

@@ -1,4 +1,3 @@
-set quiet := true
 set shell := ['zsh', '-cu']
 
 os := os()
@@ -14,32 +13,31 @@ alias s := search
 alias up := update
 
 [private]
-default:
+@default:
     just --list --unsorted --list-heading ''
 
 #
 
 [group('rebuild')]
-[private]
-rebuild arg flake *opts:
+_rebuild arg flake *opts:
     {{ sudo }}{{ rebuild }}{{ rebuild-opts }}{{ arg }} \
         --flake ~/git/dotfiles#'{{ flake }}' {{ opts }}
 
 # Build and activate the specified flake
 [group('rebuild')]
-switch flake *opts: (rebuild 'switch' flake opts)
+switch flake *opts: (_rebuild 'switch' flake opts)
 
 # Build the specified flake and make it the boot default
 [group('rebuild')]
-boot flake *opts: (rebuild 'boot' flake opts)
+boot flake *opts: (_rebuild 'boot' flake opts)
 
 # Build and activate the specified flake, and revert on boot
 [group('rebuild')]
-test flake *opts: (rebuild 'test' flake opts)
+test flake *opts: (_rebuild 'test' flake opts)
 
 # Build the specified flake
 [group('rebuild')]
-build flake *opts: (rebuild 'build' flake opts)
+build flake *opts: (_rebuild 'build' flake opts)
 
 #
 
@@ -63,7 +61,7 @@ wipe-history days:
 # Run all flake checks
 [group('util')]
 check *opts:
-    nix flake check --all-systems --log-lines 1000 {{ opts }}
+    nix flake check --log-lines 1000 {{ opts }}
 
 # Format all files
 [group('util')]

@@ -20,6 +20,7 @@ with pkgs;
   hexyl
   hyperfine
   imagemagickBig
+  just
   lychee
   nil
   nixfmt-rfc-style
