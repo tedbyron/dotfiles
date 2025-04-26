@@ -23,8 +23,6 @@
 
       systemd-boot = {
         enable = true;
-        configurationLimit = 64;
-        editor = false;
 
         # map -c; ls HD1b:\EFI
         edk2-uefi-shell = {

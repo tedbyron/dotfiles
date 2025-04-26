@@ -16,6 +16,12 @@
   # ];
 
   settings = {
+    env = [
+      "XDG_CURRENT_DESKTOP,Hyprland"
+      "XCURSOR_SIZE,12"
+      "HYPRCURSOR_SIZE,12"
+    ];
+
     monitor = [
       "DP-5, 2560x1440@120, 0x0,        auto"
       "DP-4, 2560x1440@60,  auto-right, auto"
@@ -29,15 +35,9 @@
     exec-once = [
       "dbus-update-activation-environment --systemd --all"
 
-      "$terminal"
+      "[workspace 1 silent] $terminal"
       # "nm-applet &"
       # "waybar & hyprpaper & firefox"
-    ];
-
-    env = [
-      "XDG_CURRENT_DESKTOP,Hyprland"
-      "XCURSOR_SIZE,12"
-      "HYPRCURSOR_SIZE,12"
     ];
 
     # ecosystem = {
@@ -51,10 +51,10 @@
 
     general = {
       gaps_in = 5;
-      gaps_out = 5;
+      gaps_out = 10;
       border_size = 1;
-      "col.active_border" = "rgba(33ccffee)";
-      "col.inactive_border" = "rgba(595959aa)";
+      "col.active_border" = "rgb(d65d0e)";
+      "col.inactive_border" = "rgb(3c3836)";
       resize_on_border = false;
       allow_tearing = false;
       layout = "dwindle";

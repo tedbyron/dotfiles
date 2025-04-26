@@ -7,6 +7,7 @@ dp = None
 width = height = clock = sync = opts = current = hpart = vpart = refresh = None
 preferred = ""
 
+
 def flush():
     global preferred, dp
     if preferred:
@@ -16,8 +17,8 @@ def flush():
     preferred = ""
     dp = None
 
-proc = subprocess.Popen(["xrandr", "--verbose"], stdout=subprocess.PIPE, text=True)
 
+proc = subprocess.Popen(["xrandr", "--verbose"], stdout=subprocess.PIPE, text=True)
 for line in proc.stdout:
     line = line.strip()
 

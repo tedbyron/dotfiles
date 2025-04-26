@@ -48,6 +48,7 @@ in
         # ".config/iex/.iex.exs".source = ../../.config/iex/.iex.exs;
         ".config/nvim/init.lua".source = ../../.config/nvim/init.lua;
         ".config/rustfmt.toml".source = ../../.config/rustfmt.toml;
+        ".config/stylua.toml".source = ../../.config/stylua.toml;
         # ".config/tio/config".source = ../../.config/tio/config;
 
         ".config/nvim/lua" = {

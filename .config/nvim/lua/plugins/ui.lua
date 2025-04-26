@@ -39,9 +39,7 @@ return {
       end
 
       local function fg(hl_group)
-        return function()
-          return { fg = Snacks.util.color(hl_group) }
-        end
+        return function() return { fg = Snacks.util.color(hl_group) } end
       end
 
       opts.options = vim.tbl_deep_extend("force", opts.options or {}, {
@@ -53,9 +51,7 @@ return {
         lualine_a = {
           {
             "mode",
-            fmt = function(str)
-              return str:sub(1, 1)
-            end,
+            fmt = function(str) return str:sub(1, 1) end,
           },
         },
         lualine_b = {
@@ -92,9 +88,7 @@ return {
           --   },
           -- },
           {
-            function()
-              return require("nvim-navic").get_location()
-            end,
+            function() return require("nvim-navic").get_location() end,
             cond = function()
               return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
             end,
@@ -103,30 +97,22 @@ return {
         lualine_x = {
           Snacks.profiler.status(),
           {
-            function()
-              return require("noice").api.status.command.get()
-            end,
+            function() return require("noice").api.status.command.get() end,
             cond = function()
               return package.loaded["noice"] and require("noice").api.status.command.has()
             end,
             color = fg("Statement"),
           },
           {
-            function()
-              return require("noice").api.status.mode.get()
-            end,
+            function() return require("noice").api.status.mode.get() end,
             cond = function()
               return package.loaded["noice"] and require("noice").api.status.mode.has()
             end,
             color = fg("Constant"),
           },
           {
-            function()
-              return require("dap").status()
-            end,
-            cond = function()
-              return package.loaded["dap"] and require("dap").status() ~= ""
-            end,
+            function() return require("dap").status() end,
+            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
             color = fg("Debug"),
           },
           {
@@ -141,9 +127,7 @@ return {
         },
         lualine_y = { { "location" } },
         lualine_z = {
-          function()
-            return os.date("%R")
-          end,
+          function() return os.date("%R") end,
         },
       })
     end,

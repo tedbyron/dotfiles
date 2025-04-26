@@ -9,7 +9,7 @@ return {
   -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
   {
     "snacks.nvim",
-    opts = function (_, opts)
+    opts = function(_, opts)
       opts.explorer = vim.tbl_deep_extend("force", opts.explorer or {}, {
         -- TODO
       })
@@ -17,10 +17,10 @@ return {
       opts.files = vim.tbl_deep_extend("force", opts.buffers or {}, {
         hidden = true,
         follow = true,
-        exclude = { '.git' },
+        exclude = { ".git" },
       })
 
       return opts
-  end
+    end,
   },
 }

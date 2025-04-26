@@ -87,27 +87,7 @@
           "flake-utils"
         ],
         "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-vIZGLHKlzV16tPZWELdhcXy0Tct7WFMxyFwn5yWMjHQ=",
-        "path": "./flakes/dircolors",
-        "type": "path"
-      },
-      "original": {
-        "path": "./flakes/dircolors",
-        "type": "path"
-      }
-    },
-    "dircolors-darwin": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs-darwin"
+          "nixpkgs-unstable"
         ]
       },
       "locked": {
@@ -267,7 +247,6 @@
         "curlio-darwin": "curlio-darwin",
         "darwin": "darwin",
         "dircolors": "dircolors",
-        "dircolors-darwin": "dircolors-darwin",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "home-manager-darwin": "home-manager-darwin",
@@ -275,7 +254,8 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "spicetify-nix": "spicetify-nix"
+        "spicetify-nix": "spicetify-nix",
+        "treefmt-nix": "treefmt-nix_2"
       }
     },
     "spicetify-nix": {
@@ -342,6 +322,26 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "rev": "3d0579f5cc93436052d94b73925b48973a104204",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744961264,
+        "narHash": "sha256-aRmUh0AMwcbdjJHnytg1e5h5ECcaWtIFQa6d9gI85AI=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "8d404a69efe76146368885110f29a2ca3700bee6",
         "type": "github"
       },
       "original": {

@@ -57,10 +57,12 @@
     "font.name.monospace.x-western" = "Curlio";
     "font.name.sans-serif.x-western" = "Inter";
     "font.name.serif.x-western" = "Libre Baskerville";
+    "font.name-list.emoji" = "Apple Color Emoji";
     "full-screen-api.warning.timeout" = 0;
     "gfx.x11-egl.force-enabled" = true;
     "layout.css.visited_links_enabled" = false;
     "media.hardware-video-decoding.force-enabled" = true;
+    "middlemouse.paste" = false;
     "reader.parse-on-load.enabled" = false;
     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
     "toolkit.telemetry.archive.enabled" = false;

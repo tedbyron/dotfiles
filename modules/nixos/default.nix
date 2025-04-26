@@ -3,6 +3,7 @@
   config,
   pkgs,
   unstable,
+  lib,
   system,
   ...
 }:
@@ -17,12 +18,14 @@
   users.defaultUserShell = pkgs.zsh;
   xdg.portal.xdgOpenUsePortal = true;
 
+  boot.loader.systemd-boot = {
+    configurationLimit = lib.mkDefault 32;
+    editor = lib.mkDefault false;
+  };
+
   environment = {
     sessionVariables.LD_LIBRARY_PATH = "/run/opengl-driver/lib";
-
-    systemPackages = with pkgs; [
-      unzip
-    ];
+    systemPackages = [ pkgs.unzip ];
   };
 
   fileSystems =
@@ -142,6 +145,7 @@
     redshift.enable = true; # TODO: cfg
     resolved.enable = true;
     upower.enable = true;
+    xserver.xkb.layout = "us";
 
     pipewire = {
       enable = true;
@@ -152,11 +156,6 @@
         enable = true;
         support32Bit = true;
       };
-    };
-
-    xserver.xkb = {
-      layout = "us";
-      variant = "";
     };
   };
 }

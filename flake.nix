@@ -41,16 +41,13 @@
     dircolors = {
       url = "path:./flakes/dircolors";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs-unstable";
         flake-utils.follows = "flake-utils";
       };
     };
-    dircolors-darwin = {
-      url = "path:./flakes/dircolors";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-darwin";
-        flake-utils.follows = "flake-utils";
-      };
+    treefmt-nix = {
+      url = "github:/numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     apple-emoji-linux = {
@@ -145,15 +142,24 @@
       system:
       let
         darwin = isDarwin system;
-        pkgs = if darwin then nixpkgs-darwin else nixpkgs;
+        pkgs = (if darwin then nixpkgs-darwin else nixpkgs).legacyPackages.${system};
         curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
-        dircolors = if darwin then inputs.dircolors-darwin else inputs.dircolors;
+        treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix).config.build;
       in
+      with pkgs;
       {
-        formatter = pkgs.legacyPackages.${system}.nixfmt-rfc-style;
+        checks.formatting = treefmt.check self;
+        formatter = treefmt.wrapper;
+
+        devShells.default = mkShellNoCC {
+          packages = [
+            just
+            stylua
+          ];
+        };
 
         packages = (builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ]) // {
-          dircolors = dircolors.outputs.packages.${system}.default;
+          dircolors = inputs.dircolors.outputs.packages.${system}.default;
         };
       }
     );

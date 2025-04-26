@@ -99,13 +99,14 @@
     gmv = "git mv";
     grep = "grep -Ei --color=auto";
     hf = "hyperfine";
+    j = "just";
     ls = "ls -FHh -I '.DS_Store' --color=auto --group-directories-first";
     la = "ls -A";
     l = "ls -Al";
     mv = "mv -i";
     nc = "ncat";
     pgrep = "pgrep -afil";
-    ps = "ps -Aafx";
+    ps = "ps -Aafx"; # TODO: uses macos bsd options
     sudo = "sudo ";
     wlcopy = "wl-copy";
     wlpaste = "wl-paste";

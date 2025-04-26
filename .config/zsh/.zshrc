@@ -31,6 +31,21 @@ path+=(
     $HOME/.spicetify
 )
 
+export GPG_TTY="$(tty)"
+
+znap source ohmyzsh/ohmyzsh \
+    lib/{completion,correction,directories,history} \
+    plugins/{git,tmux}
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-completions
+znap source zsh-users/zsh-syntax-highlighting
+znap source zsh-users/zsh-history-substring-search
+
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=$ZDOTDIR/.zsh_history
+HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+
 setopt always_to_end
 setopt no_append_create
 setopt auto_cd
@@ -55,21 +70,6 @@ setopt hist_expire_dups_first
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt hist_save_no_dups
-
-export GPG_TTY="$(tty)"
-
-znap source ohmyzsh/ohmyzsh \
-    lib/{completion,correction,directories,history} \
-    plugins/{git,tmux}
-znap source zsh-users/zsh-autosuggestions
-znap source zsh-users/zsh-completions
-znap source zsh-users/zsh-syntax-highlighting
-znap source zsh-users/zsh-history-substring-search
-
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=$ZDOTDIR/.zsh_history
-HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 
 znap fpath _rustup 'rustup completions zsh'
 znap fpath _cargo 'rustup completions zsh cargo'
@@ -97,6 +97,7 @@ alias gdst='git diff --staged'
 alias grep='grep -Ei --color=auto'
 alias gmv='git mv'
 alias hf='hyperfine'
+alias j='just'
 if (( $+commands[gls] )) {
     alias ls='gls -FHh -I ".DS_Store" --color=auto --group-directories-first'
 } else {

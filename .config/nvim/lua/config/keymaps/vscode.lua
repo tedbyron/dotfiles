@@ -5,9 +5,7 @@ local vscode = require("vscode-neovim")
 ---@param lhs string
 ---@param rhs string
 local function noremap_action(mode, lhs, rhs)
-  noremap(mode, lhs, function()
-    vscode.action(rhs)
-  end)
+  noremap(mode, lhs, function() vscode.action(rhs) end)
 end
 
 noremap_action("n", "<C-h>", "workbench.action.focusLeftGroup")
