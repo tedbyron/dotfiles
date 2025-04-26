@@ -7,7 +7,7 @@
 
 ## Just
 
-```console
+```
 [rebuild]
 switch flake *opts # Build and activate the specified flake
 boot flake *opts   # Build the specified flake and make it the boot default
@@ -204,7 +204,7 @@ up *args           # alias for `update`
 
 ## NixOS
 
-- <details><summary>VS Code</summary>
+- VS Code
 
   - Preferences: configure runtime arguments
 
@@ -212,9 +212,7 @@ up *args           # alias for `update`
     "password-store": "gnome-libsecret"
     ```
 
-  </details>
-
-- <details><summary>Windows dual boot</summary>
+- Windows dual boot
 
   - Change hardware clock to UTC in registry
     `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation`
@@ -227,48 +225,36 @@ up *args           # alias for `update`
     reg add "HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TimeZoneInformation" /v RealTimeIsUniversal /d 1 /t REG_DWORD /f
     ```
 
-  </details>
-
 ## Commands I'm going to forget about
 
-- <details><summary>PCI display controllers</summary>
+- PCI display controllers
 
   ```sh
   nix shell nixpkgs#pciutils -c lspci -kd ::03xx
   ```
 
-  </details>
-
-- <details><summary>EDID info</summary>
+- EDID info
 
   ```sh
   fd edid /sys/devices/pci0000:00
   nix shell nixpkgs#read-edid -c parse-edid /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/drm/card2/card2-DP-4/edid
   ```
 
-  </details>
-
-- <details><summary>OpenGL</summary>
+- OpenGL
 
   ```sh
   nvidia-settings --glxinfo
   nix shell nixpkgs#glxinfo -c glxinfo
   ```
 
-  </details>
-
-- <details><summary>Vulkan</summary>
+- Vulkan
 
   ```sh
   nix shell nixpkgs#vulkan-tools -c vulkaninfo
   ```
 
-  </details>
-
-- <details><summary>VA-API</summary>
+- VA-API
 
   ```sh
   NVD_LOG=1 nix shell nixpkgs#libva-utils -c vainfo
   ```
-
-  </details>
