@@ -2,7 +2,6 @@
   self,
   config,
   pkgs,
-  unstable,
   lib,
   darwin,
   wsl,
@@ -147,10 +146,5 @@ in
         };
       };
     };
-  };
-}
-// lib.optionalAttrs darwin {
-  system.defaults.screencapture = lib.optionalAttrs darwin {
-    location = "${home}/Pictures/screenshots";
   };
 }

@@ -11,6 +11,7 @@ _: {
       alf.globalstate = 1;
       loginwindow.GuestEnabled = false;
       magicmouse.MouseButtonMode = "TwoButton";
+      screencapture.location = "~/Pictures/screenshots";
 
       dock = {
         appswitcher-all-displays = true;
