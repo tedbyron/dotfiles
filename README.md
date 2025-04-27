@@ -202,6 +202,15 @@ up *args                   # alias for `update`
     reboot
     ```
 
+## Darwin
+
+- Disable tips notifications
+
+  ```sh
+  launchctl bootout gui/501/com.apple.tipsd
+  launchctl disable gui/501/com.apple.tipsd
+  ```
+
 ## NixOS
 
 - VS Code
