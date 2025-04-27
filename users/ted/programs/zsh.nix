@@ -83,6 +83,14 @@
       unalias grhh
     '';
 
+    plugins = [
+      {
+        name = "zsh-nix-shell";
+        file = "nix-shell.plugin.zsh";
+        src = unstable.zsh-nix-shell;
+      }
+    ];
+
     shellAliases = {
       df = "df \\-h";
       dl = "yt-dlp";

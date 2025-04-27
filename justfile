@@ -5,7 +5,7 @@ rebuild := if os == 'linux' { 'nixos-rebuild ' } else { if os == 'macos' { 'darw
 rebuild-opts := if os == 'linux' { '' } else { '--impure ' }
 sudo := if os == 'linux' { 'sudo ' } else { '' }
 hostname := shell('hostname')
-host-dir := shell('fd', quote(hostname), '~/git/dotfiles/hosts --type d --max-depth 1 -1')
+host-dir := shell('fd', quote(hostname), '~/git/dotfiles/hosts -td -d1 -1')
 host := if host-dir == '' { error("Couldn't find a flake matching hostname") } else { hostname }
 
 alias c := check
@@ -16,7 +16,7 @@ alias up := update
 
 [private]
 @default:
-    just --list --unsorted --list-heading ''
+    just -ul --list-heading ''
 
 #
 
@@ -54,15 +54,18 @@ rollback:
 # List available generations
 [group('history')]
 history limit='10':
-    #!/usr/bin/env zsh
+    #!/usr/bin/env nix
+    #!nix shell nixpkgs#coreutils nixpkgs#gnused -c zsh
     set -euo pipefail
-    limit='{{ if limit == '0' { '+0' } else { '-' + limit } }}'
+    limit='{{ if limit == '0' { '+1' } else { limit } }}'
     if [[ {{ os }} == linux ]] {
-        {{ rebuild }}list-generations \
-            | tee >(tail +2 | tac | tail --lines $limit) \
-            | head --lines 1
+        ({{ rebuild }}list-generations \
+            | tail +2 | tac | tail -n $limit) \
+            | sed -re 's/\b([[:xdigit:]]{7})([[:xdigit:]]{33,})\b/\1/g' \
+                -e 's/[[:space:]]{2,}/\t/g' \
+            | column -ts $'\t' -N 'Gen,Date,NixOS,Kernel,Rev,Spec'
     } else {
-        {{ rebuild }}--list-generations | tail --lines $limit
+        {{ rebuild }}--list-generations | tail -n $limit
     }
 
 # Delete generations older than input days
@@ -88,7 +91,7 @@ fmt:
 # Start a nix REPL with nixpkgs loaded
 [group('util')]
 repl:
-    nix repl --file flake:nixpkgs
+    nix repl -f flake:nixpkgs
 
 # Update the nixpkgs index
 [group('util')]
@@ -98,7 +101,7 @@ index:
 # Search for packages and package outputs
 [group('util')]
 search +args:
-    nix-locate --top-level --regex {{ args }}
+    nix-locate -rw --top-level {{ args }}
 
 # Update flake lockfile for all or specified inputs
 [group('util')]

@@ -21,7 +21,7 @@
   xdg.portal.xdgOpenUsePortal = true;
 
   boot.loader.systemd-boot = {
-    configurationLimit = lib.mkDefault 32;
+    configurationLimit = lib.mkDefault 128;
     editor = lib.mkDefault false;
   };
 
@@ -103,7 +103,6 @@
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
-    zsh.enable = true;
 
     hyprland = {
       enable = true;
