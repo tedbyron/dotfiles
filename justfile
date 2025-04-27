@@ -55,7 +55,8 @@ rollback:
 [group('history')]
 history limit='10':
     #!/usr/bin/env nix
-    #!nix shell nixpkgs#coreutils nixpkgs#gnused -c zsh
+    #!nix shell nixpkgs#coreutils nixpkgs#gnused nixpkgs#unixtools.column
+    #!nix -c zsh
     set -euo pipefail
     limit='{{ if limit == '0' { '+1' } else { limit } }}'
     if [[ {{ os }} == linux ]] {
