@@ -13,6 +13,7 @@ switch flake=host *opts='' # Build and activate a specified flake or the host fl
 boot flake=host *opts=''   # Build a specified flake or the host flake, and make it the boot default
 test flake=host *opts=''   # Build and activate a specified flake or the host flake, and revert on boot
 build flake=host *opts=''  # Build a specified flake or the host flake
+rollback                   # Rollback to the previous generation
 
 [history]
 history limit='10'         # List available generations
@@ -34,7 +35,7 @@ up *args                   # alias for `update`
 
 ## Bootstrap
 
-- Darwin
+- MacOS
 
   ```sh
   xcode-select --install
@@ -202,7 +203,18 @@ up *args                   # alias for `update`
     reboot
     ```
 
-## Darwin
+## MacOS
+
+- Uninstall default apps
+
+  ```sh
+  mas uninstall \
+    409203825   \ # Numbers
+    408981434   \ # iMovie
+    6826558836  \ # GarageBand
+    409183694   \ # Keynote
+    409201541   \ # Pages
+  ```
 
 - Disable tips notifications
 
@@ -219,6 +231,12 @@ up *args                   # alias for `update`
 
     ```json
     "password-store": "gnome-libsecret"
+    ```
+
+  - Preferences
+
+    ```json
+    "window.titleBarStyle": "native"
     ```
 
 - Windows dual boot
