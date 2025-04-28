@@ -109,7 +109,7 @@ repl:
 index:
     nix-index
 
-# Search for packages and package outputs
+# Search for top-level packages and package outputs
 [group('util')]
 @search pattern *args:
     nix-locate -rw --top-level {{ pattern }} {{ args }} |\
