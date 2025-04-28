@@ -114,6 +114,7 @@ index:
 [group('util')]
 @search pattern *args:
     nix-locate -rw --top-level {{ pattern }} {{ args }} |\
+        sort |\
         rg --passthru -w ' {2,}' -r ' ' |\
         column -tc $(tput cols) -N Package,Size,Type,Path -W Path |\
         rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
