@@ -23,14 +23,14 @@ wipe-history days          # Delete generations older than input days
 [util]
 check                      # Run all flake checks
 c                          # alias for `check`
-fmt                        # Format all files
-f                          # alias for `fmt`
+format                     # Format all files
+f                          # alias for `format`
 repl                       # Start a nix REPL with nixpkgs loaded
 index                      # Update the nixpkgs index
-search +args               # Search for packages and package outputs
-s +args                    # alias for `search`
+search pattern *args       # Search for packages and package outputs
+s pattern *args            # alias for `search`
 update *args               # Update flake lockfile for all or specified inputs
-up *args                   # alias for `update`
+u *args                    # alias for `update`
 ```
 
 ## Bootstrap

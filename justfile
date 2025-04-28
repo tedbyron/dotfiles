@@ -112,12 +112,11 @@ index:
 
 # Search for packages and package outputs
 [group('util')]
-search pattern *args:
-    #!/usr/bin/env zsh
-    nix-locate -rw --top-level {{ pattern }} {{ args }} |
-        awk '{$1=$1}1' |
-        column -tdc$(tput cols) -N1,2,3,4 -W4 |
-        rg --passthru -U $(sed 's/./&\\s*/g' <<<'{{ pattern }}') # :/
+@search pattern *args:
+    nix-locate -rw --top-level {{ pattern }} {{ args }} |\
+        rg --passthru ' {2,}' -r ' ' |\
+        column -tdc$(tput cols) -N1,2,3,4 -W4 |\
+        rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
 
 # Update flake lockfile for all or specified inputs
 [group('util')]
