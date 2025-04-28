@@ -5,7 +5,7 @@ rebuild := if os == 'linux' { 'nixos-rebuild ' } else { if os == 'macos' { 'darw
 rebuild-opts := if os == 'linux' { '' } else { '--impure ' }
 sudo := if os == 'linux' { 'sudo ' } else { '' }
 hostname := shell('hostname')
-host-dir := shell('fd', quote(hostname), '~/git/dotfiles/hosts -td -d1 -1')
+host-dir := shell('fd', quote(hostname), '~/git/dotfiles/hosts -t d -d 1 -1')
 host := if host-dir == '' { error("Couldn't find a flake matching hostname") } else { hostname }
 
 alias c := check
@@ -62,7 +62,7 @@ history limit='10':
             tail +2 | tac | tail -n $limit |
             rg --passthru -w '([[:xdigit:]]{7})([[:xdigit:]]{33,})' -r '$1' |
             rg --passthru '\b {2,}' -r $'\t' |
-            column -ts$'\t' -NGen,Date,NixOS,Kernel,Rev,Spec
+            column -ts $'\t' -N Gen,Date,NixOS,Kernel,Rev,Spec
     } else {
         {{ rebuild }}--list-generations | tail -n $limit
     }
@@ -84,13 +84,13 @@ check:
     set -uo pipefail
     { err=$(
         unbuffer nix flake check --log-lines 0 >&1 >&3 1>/dev/null 3>&- |&
-            tail -1
+            tail -n 1
     ) } 3>&1
     code=$?
     if (( code != 0 )) {
-        fmt_drv=$(rg -o '/nix/store/[[:alnum:]]+-treefmt-check.drv' <<<"$err")
-        if [[ "$fmt_drv" != '' ]] {
-            nix log "$fmt_drv" | tail +2 | delta
+        err_drv=$(rg -o '/nix/store/[0-9a-z-]+.drv' <<<"$err")
+        if [[ -n $err_drv ]] {
+            nix log $err_drv | delta
         }
     }
     exit $code
@@ -114,8 +114,8 @@ index:
 [group('util')]
 @search pattern *args:
     nix-locate -rw --top-level {{ pattern }} {{ args }} |\
-        rg --passthru ' {2,}' -r ' ' |\
-        column -tdc$(tput cols) -N1,2,3,4 -W4 |\
+        rg --passthru -w ' {2,}' -r ' ' |\
+        column -tc $(tput cols) -N Package,Size,Type,Path -W Path |\
         rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
 
 # Update flake lockfile for all or specified inputs
