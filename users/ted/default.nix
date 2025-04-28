@@ -34,6 +34,10 @@ in
     };
 
   home-manager.users.ted = {
+    _module.args = {
+      osConfig = config;
+    };
+
     imports = [
       self.inputs.spicetify-nix.homeManagerModules.default
       ./modules
@@ -108,20 +112,9 @@ in
       # };
     };
 
-    services =
-      { }
-      // lib.optionalAttrs (!darwin) {
-        gnome-keyring.enable = true;
-        hypridle.enable = false; # TODO
-        hyprpaper.enable = false; # TODO
-        # hyprpolkitagent.enable = true; # TODO 25.05
-
-        dunst = {
-          enable = true;
-          # TODO: icon theme
-          waylandDisplay = "wayland-1";
-        };
-      };
+    services = lib.optionalAttrs (!darwin) {
+      gnome-keyring.enable = true;
+    };
 
     targets = {
       genericLinux.enable = wsl;

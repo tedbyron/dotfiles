@@ -5,11 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-darwin.url = "nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    systems.url = "github:nix-systems/default";
-    flake-utils = {
-      url = "flake-utils";
-      inputs.systems.follows = "systems";
-    };
+    flake-utils.url = "flake-utils";
 
     home-manager = {
       url = "home-manager/release-24.11";
@@ -51,12 +47,16 @@
     apple-emoji-linux = {
       url = "github:samuelngs/apple-emoji-linux";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.treefmt-nix.follows = "treefmt-nix";
     };
     spicetify-nix = {
       url = "github:gerg-l/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.systems.follows = "systems";
+    };
+    stylix = {
+      url = "github:danth/stylix/release-24.11";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

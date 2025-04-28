@@ -9,13 +9,11 @@
 {
   imports = [ ./firefox.nix ];
 
-  console.useXkbConfig = true; # TODO: console colors
-  environment.systemPackages = [ pkgs.unzip ];
+  console.useXkbConfig = true;
   gtk.iconCache.enable = true;
   location.provider = "geoclue2";
   system.fsPackages = [ pkgs.bindfs ];
-  # BUG: https://github.com/NixOS/nixpkgs/issues/180175
-  systemd.services.Network-Manager-wait-online.enable = false;
+  systemd.services.Network-Manager-wait-online.enable = false; # BUG: https://github.com/NixOS/nixpkgs/issues/180175
   time.timeZone = "America/New_York";
   users.defaultUserShell = pkgs.zsh;
   xdg.portal.xdgOpenUsePortal = true;
@@ -23,6 +21,15 @@
   boot.loader.systemd-boot = {
     configurationLimit = lib.mkDefault 128;
     editor = lib.mkDefault false;
+  };
+
+  environment = {
+    pathsToLink = [ "share/thumbnailers" ];
+
+    systemPackages = with pkgs; [
+      libheif
+      unzip
+    ];
   };
 
   fileSystems =
@@ -136,6 +143,7 @@
     auto-cpufreq.enable = true;
     fwupd.enable = true;
     geoclue2.enable = true;
+    gvfs.enable = true;
     playerctld.enable = true;
     upower.enable = true;
 

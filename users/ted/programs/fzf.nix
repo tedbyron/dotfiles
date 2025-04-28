@@ -8,19 +8,19 @@
     fileWidgetCommand = config.programs.fzf.defaultCommand;
     historyWidgetOptions = [ "--layout reverse" ];
 
-    colors = {
-      fg = "-1";
-      bg = "-1";
-      hl = "#50FA7B";
-      "fg+" = "-1";
-      "bg+" = "-1";
-      "hl+" = "#FFB86C";
-      info = "#BD93F9";
-      prompt = "#50FA7B";
-      pointer = "#FF79C6";
-      marker = "#FF79C6";
-      spinner = "#FF79C6";
-    };
+    # colors = {
+    #   fg = "-1";
+    #   bg = "-1";
+    #   hl = "#50FA7B";
+    #   "fg+" = "-1";
+    #   "bg+" = "-1";
+    #   "hl+" = "#FFB86C";
+    #   info = "#BD93F9";
+    #   prompt = "#50FA7B";
+    #   pointer = "#FF79C6";
+    #   marker = "#FF79C6";
+    #   spinner = "#FF79C6";
+    # };
 
     defaultOptions = [
       "--ansi"

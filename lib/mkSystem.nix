@@ -13,11 +13,11 @@
       overlays ? [ ],
     }:
     let
-      inherit (homeManager) darwinModules nixosModules;
-
-      homeManager = if darwin then self.inputs.home-manager-darwin else self.inputs.home-manager;
-      osModules = if darwin then darwinModules else nixosModules;
-      system = if darwin then self.inputs.darwin.lib.darwinSystem else lib.nixosSystem;
+      inherit (self) inputs;
+      homeManager = if darwin then inputs.home-manager-darwin else inputs.home-manager;
+      osModules = if darwin then homeManager.darwinModules else homeManager.nixosModules;
+      system = if darwin then inputs.darwin.lib.darwinSystem else lib.nixosSystem;
+      stylixModules = if darwin then inputs.stylix.darwinModules else inputs.stylix.nixosModules;
 
       args = {
         inherit
@@ -36,7 +36,8 @@
 
       modules = [
         osModules.home-manager
-        (lib.optionalAttrs wsl self.inputs.nixos-wsl.nixosModules.wsl)
+        stylixModules.stylix
+        (lib.optionalAttrs wsl inputs.nixos-wsl.nixosModules.wsl)
         ../modules
         (import ../hosts/${host})
 

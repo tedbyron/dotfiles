@@ -39,6 +39,7 @@
     ]
     ++ lib.optionals (!darwin) [
       gcr_4
+      nautilus
       vlc
       wl-clipboard
       zig

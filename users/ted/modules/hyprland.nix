@@ -1,11 +1,58 @@
 {
+  osConfig,
+  pkgs,
   unstable,
+  lib,
   darwin,
   ...
 }:
-{
+lib.optionalAttrs (!darwin) {
+  services = {
+    # hypridle.enable = false; # TODO
+    # hyprpolkitagent.enable = true; # TODO 25.05
+
+    dunst = {
+      enable = true;
+      # TODO: icon theme
+      waylandDisplay = "wayland-1";
+    };
+
+    hyprpaper = {
+      enable = true;
+
+      settings =
+        let
+          objectFit = [
+            "cover"
+            "contain"
+            "tile"
+          ];
+
+          wallpapers = [
+            osConfig.stylix.image
+            (pkgs.fetchurl {
+              url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/triangle.png";
+              hash = "sha256-AvQNl6DBTUyukzrtxFFxrAAoM6I286J0v+jkPtjf8C4=";
+            })
+            (pkgs.fetchurl {
+              url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/starry-sky.png";
+              hash = "sha256-jbff7E63oDbU8vLdbCizjpbBPMEoWV934saNgBPEUEA=";
+            })
+            (pkgs.fetchurl {
+              url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/gruvbox_grid.png";
+              hash = "sha256-b7hN7xV/0a/7NVB3jLimPsaIO+ZLXGym7Hmvu5UsPoI=";
+            })
+          ];
+        in
+        {
+          preload = builtins.tail wallpapers;
+          wallpaper = lib.mkForce ", ${builtins.head objectFit}:${builtins.head wallpapers}";
+        };
+    };
+  };
+
   wayland.windowManager.hyprland = {
-    enable = !darwin;
+    enable = true;
     package = unstable.hyprland; # TODO: 25.05; conflicts with programs.hyprland.package
     # portalPackage = null; # TODO: 25.05; conflicts with programs.hyprland.portalPackage
     systemd.enable = false; # UWSM
@@ -57,8 +104,8 @@
 
       general = {
         gaps_out = 10;
-        "col.active_border" = "rgb(d65d0e)";
-        "col.inactive_border" = "rgb(3c3836)";
+        "col.active_border" = lib.mkForce "rgb(d65d0e)";
+        "col.inactive_border" = lib.mkForce "rgb(3c3836)";
         snap.enabled = true; # ???
       };
 
@@ -140,12 +187,11 @@
       ];
 
       bind = [
-        "SUPER, `, exec, $terminal"
-        "SUPER, ;, killactive,"
+        "SUPER, grave, exec, $terminal"
+        "SUPER, Q, killactive,"
         "SUPER, M, exit,"
         "SUPER, E, exec, $fileManager"
-        "SUPER, V, togglefloating,"
-        "SUPER, R, exec, $menu"
+        "Alt_L, space, exec, $menu"
         "SUPER, J, togglesplit, # dwindle"
         "SUPER, D, split:swapactiveworkspaces, current +1"
         "SUPER, G, split:grabroguewindows"

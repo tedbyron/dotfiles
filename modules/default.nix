@@ -8,6 +8,7 @@
   imports = [
     (if darwin then ./darwin else ./nixos)
     ./nix.nix
+    ./stylix.nix
   ];
 
   system.configurationRevision = self.rev or self.dirtyRev or null;

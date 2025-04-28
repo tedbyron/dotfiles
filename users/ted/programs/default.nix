@@ -24,7 +24,7 @@
 
       config = {
         style = "changes,numbers";
-        theme = "gruvbox-dark";
+        # theme = "gruvbox-dark";
       };
     };
 
@@ -63,15 +63,20 @@
       settings = builtins.fromTOML (lib.ted.readConfig "ghostty/config");
     };
 
-    git = {
-      enable = true;
-      # delta configured in .gitconfig and installed as a user package
-      extraConfig = builtins.fromTOML (lib.ted.readConfig "git/config") // {
-        credential.helper = if darwin then "osxkeychain" else "store";
+    git =
+      let
+        package = if darwin then pkgs.git else pkgs.git.override { withLibsecret = true; };
+      in
+      {
+        inherit package;
+        enable = true;
+        # delta configured in .gitconfig and installed as a user package
+        extraConfig = builtins.fromTOML (lib.ted.readConfig "git/config") // {
+          credential.helper = if darwin then "osxkeychain" else "${package}/bin/git-credential-libsecret";
+        };
+        ignores = lib.splitString "\n" (lib.ted.readConfig "git/ignore");
+        lfs.enable = true;
       };
-      ignores = lib.splitString "\n" (lib.ted.readConfig "git/ignore");
-      lfs.enable = true;
-    };
 
     go = {
       enable = false;
@@ -90,7 +95,6 @@
       };
     };
 
-    # home-manager.enable = true; # FIX: necessary?
     # jujutsu
     # keychain
 
@@ -127,13 +131,13 @@
     };
 
     spicetify =
-      let
-        spicePkgs = self.inputs.spicetify-nix.legacyPackages.${pkgs.system};
-      in
+      # let
+      #   spicePkgs = self.inputs.spicetify-nix.legacyPackages.${pkgs.system};
+      # in
       {
         enable = true;
-        colorScheme = "Gruvbox";
-        theme = spicePkgs.themes.text;
+        # colorScheme = "Gruvbox";
+        # theme = spicePkgs.themes.text;
       };
 
     ssh.enable = true;
