@@ -30,7 +30,7 @@
 
     dircolors = {
       enable = true;
-      settings = import ("${self.outputs.packages.${pkgs.system}.dircolors}/share/nix/settings.nix");
+      settings = import "${self.outputs.packages.${pkgs.system}.dircolors}/share/nix/settings.nix";
     };
 
     direnv = {

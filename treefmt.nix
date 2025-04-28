@@ -1,11 +1,13 @@
 _: {
   programs = {
+    deadnix.enable = true;
     just.enable = true;
     mix-format.enable = true;
     nixfmt.enable = true;
     ruff-check.enable = true;
     ruff-format.enable = true;
     shellcheck.enable = true;
+    statix.enable = true;
     taplo.enable = true;
 
     prettier = {
@@ -38,6 +40,31 @@ _: {
   };
 
   settings = {
+    formatter =
+      let
+        pythonFiles = [ "bin/xrandr-to-modeline" ];
+        shellFiles = [ "bin/cargo-install-update" ];
+      in
+      {
+        ruff-check.includes = pythonFiles;
+        ruff-format.includes = pythonFiles;
+        shfmt.includes = shellFiles;
+
+        shellcheck = {
+          includes = shellFiles;
+          options = [
+            "--check-sourced"
+            "--shell=bash"
+          ];
+        };
+
+        taplo.includes = [
+          ".config/ghostty/config"
+          ".config/git/config"
+          ".config/tio/config"
+        ];
+      };
+
     excludes = [
       ".config/**/ignore"
       ".config/Microsoft.PowerShell_profile.ps1"
@@ -51,23 +78,5 @@ _: {
       "LICENSE"
       "flake.lock"
     ];
-
-    formatter =
-      let
-        pythonFiles = [ "bin/xrandr-to-modeline" ];
-        shellFiles = [ "bin/cargo-install-update" ];
-      in
-      {
-        ruff-check.includes = pythonFiles;
-        ruff-format.includes = pythonFiles;
-        shellcheck.includes = shellFiles;
-        shfmt.includes = shellFiles;
-
-        taplo.includes = [
-          ".config/ghostty/config"
-          ".config/git/config"
-          ".config/tio/config"
-        ];
-      };
   };
 }

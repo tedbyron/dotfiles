@@ -26,22 +26,19 @@
   environment = {
     variables.LANG = "en_US.UTF-8";
 
-    shells = with pkgs; [
-      bashInteractive
-      zsh
-    ];
-
     systemPackages = with pkgs; [
       binutils
       coreutils
       curl
       diffutils
+      expect
       findutils
       gawk
       gnugrep
       gnused
       groff
       less
+      moreutils
       nmap
       openssl
       python3

@@ -125,7 +125,7 @@
         mkFont =
           font: web:
           pkgs.stdenvNoCC.mkDerivation {
-            name = font.name;
+            inherit (font) name;
             dontUnpack = true;
 
             nativeBuildInputs =

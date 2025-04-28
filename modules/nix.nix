@@ -1,25 +1,20 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   nix = {
     channel.enable = false;
+    gc.automatic = true;
     optimise.automatic = true;
     package = pkgs.nixVersions.latest;
 
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 30d";
-    };
+    registry.nixpkgs.to = {
+      inherit (pkgs) path;
+      type = "path";
 
-    registry = {
-      nixpkgs.to = {
-        type = "path";
-        path = pkgs.path;
-        narHash = builtins.readFile (
-          pkgs.runCommandLocal "nixpkgs-hash" {
-            nativeBuildInputs = [ pkgs.nix ];
-          } "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
-        );
-      };
+      narHash = builtins.readFile (
+        pkgs.runCommandLocal "nixpkgs-hash" {
+          nativeBuildInputs = [ config.nix.package ];
+        } "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
+      );
     };
 
     settings = {

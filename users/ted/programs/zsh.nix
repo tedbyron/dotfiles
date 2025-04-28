@@ -99,6 +99,7 @@
       du = "du \\-h -d 1";
       fcir = "fc -IR";
       fcl = "fc -lr";
+      free = "free \\-h";
       gba = "git branch -avv";
       gbl = "git blame -wCCC";
       gbr = "git branch -rv";
@@ -119,6 +120,7 @@
       pgrep = "pgrep -afil";
       ps = "ps -Aafx"; # TODO: uses macos bsd options
       sudo = "sudo ";
+      which = "echo 'Use `where`, idiot'";
       wlcopy = "wl-copy";
       wlpaste = "wl-paste";
     };

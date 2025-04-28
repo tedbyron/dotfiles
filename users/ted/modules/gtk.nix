@@ -1,6 +1,8 @@
 { pkgs, ... }:
 {
   gtk = {
+    enable = false;
+
     cursorTheme = {
       package = pkgs.capitaine-cursors-themed;
       name = "Capitaine Cursors (Gruvbox)";

@@ -9,10 +9,10 @@ host-dir := shell('fd', quote(hostname), '~/git/dotfiles/hosts -td -d1 -1')
 host := if host-dir == '' { error("Couldn't find a flake matching hostname") } else { hostname }
 
 alias c := check
-alias f := fmt
+alias f := format
 alias h := history
 alias s := search
-alias up := update
+alias u := update
 
 [private]
 @default:
@@ -24,7 +24,7 @@ alias up := update
 [private]
 rebuild prefix arg flake *opts:
     {{ if prefix == 'sudo' { sudo } else { '' } }}{{ rebuild }}{{ arg }} \
-        --flake ~/git/dotfiles#'{{ flake }}' {{ rebuild-opts }}{{ opts }}
+        --flake ~/git/dotfiles#{{ flake }} {{ rebuild-opts }}{{ opts }}
 
 # Build and activate a specified flake or the host flake
 [group('rebuild')]
@@ -47,24 +47,22 @@ build flake=host *opts='': (rebuild '' 'build' flake opts)
 # Rollback to the previous generation
 [group('rebuild')]
 rollback:
-    {{ sudo }}{{ rebuild }} --rollback
+    {{ sudo }}{{ rebuild }}--rollback
 
 #
 
 # List available generations
 [group('history')]
 history limit='10':
-    #!/usr/bin/env nix
-    #!nix shell nixpkgs#coreutils nixpkgs#gnused nixpkgs#unixtools.column
-    #!nix -c zsh
+    #!/usr/bin/env zsh
     set -euo pipefail
-    limit='{{ if limit == '0' { '+1' } else { limit } }}'
+    limit={{ if limit == '0' { '+1' } else { limit } }}
     if [[ {{ os }} == linux ]] {
-        ({{ rebuild }}list-generations \
-            | tail +2 | tac | tail -n $limit) \
-            | sed -re 's/\b([[:xdigit:]]{7})([[:xdigit:]]{33,})\b/\1/g' \
-                -e 's/[[:space:]]{2,}/\t/g' \
-            | column -ts $'\t' -N 'Gen,Date,NixOS,Kernel,Rev,Spec'
+        {{ rebuild }}list-generations |
+            tail +2 | tac | tail -n $limit |
+            rg --passthru -w '([[:xdigit:]]{7})([[:xdigit:]]{33,})' -r '$1' |
+            rg --passthru '\b {2,}' -r $'\t' |
+            column -ts$'\t' -NGen,Date,NixOS,Kernel,Rev,Spec
     } else {
         {{ rebuild }}--list-generations | tail -n $limit
     }
@@ -75,18 +73,31 @@ history limit='10':
 wipe-history days:
     {{ sudo }}nix profile wipe-history \
         --profile /nix/var/nix/profiles/system \
-        --older-than '{{ days }}'d
+        --older-than {{ days }}d
 
 #
 
 # Run all flake checks
 [group('util')]
 check:
-    nix flake check --log-lines 1000
+    #!/usr/bin/env zsh
+    set -uo pipefail
+    { err=$(
+        unbuffer nix flake check --log-lines 0 >&1 >&3 1>/dev/null 3>&- |&
+            tail -1
+    ) } 3>&1
+    code=$?
+    if (( code != 0 )) {
+        fmt_drv=$(rg -o '/nix/store/[[:alnum:]]+-treefmt-check.drv' <<<"$err")
+        if [[ "$fmt_drv" != '' ]] {
+            nix log "$fmt_drv" | tail +2 | delta
+        }
+    }
+    exit $code
 
 # Format all files
 [group('util')]
-fmt:
+format:
     nix fmt
 
 # Start a nix REPL with nixpkgs loaded
@@ -101,8 +112,12 @@ index:
 
 # Search for packages and package outputs
 [group('util')]
-search +args:
-    nix-locate -rw --top-level {{ args }}
+search pattern *args:
+    #!/usr/bin/env zsh
+    nix-locate -rw --top-level {{ pattern }} {{ args }} |
+        awk '{$1=$1}1' |
+        column -tdc$(tput cols) -N1,2,3,4 -W4 |
+        rg --passthru -U $(sed 's/./&\\s*/g' <<<'{{ pattern }}') # :/
 
 # Update flake lockfile for all or specified inputs
 [group('util')]
