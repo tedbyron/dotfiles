@@ -5,8 +5,7 @@ rebuild := if os == 'linux' { 'nixos-rebuild ' } else { if os == 'macos' { 'darw
 rebuild-opts := if os == 'linux' { '' } else { '--impure ' }
 sudo := if os == 'linux' { 'sudo ' } else { '' }
 hostname := shell('hostname')
-host-dir := shell('fd', quote(hostname), '~/git/dotfiles/hosts -t d -d 1 -1')
-host := if host-dir == '' { error("Couldn't find a flake matching hostname") } else { hostname }
+host := if path_exists('hosts/' + hostname) == 'true' { hostname } else { error("Couldn't find a flake matching hostname") }
 
 alias c := check
 alias f := format
@@ -114,7 +113,7 @@ index:
 [group('util')]
 @search pattern *args:
     nix-locate -rw --top-level {{ pattern }} {{ args }} |\
-        sort |\
+        sort -b |\
         rg --passthru -w ' {2,}' -r ' ' |\
         column -tc $(tput cols) -N Package,Size,Type,Path -W Path |\
         rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')

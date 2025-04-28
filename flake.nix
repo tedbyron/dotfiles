@@ -5,7 +5,11 @@
     nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-darwin.url = "nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "flake-utils";
+    systems.url = "github:nix-systems/default";
+    flake-utils = {
+      url = "flake-utils";
+      inputs.systems.follows = "systems";
+    };
 
     home-manager = {
       url = "home-manager/release-24.11";
@@ -26,24 +30,18 @@
 
     curlio = {
       url = "path:./flakes/curlio";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
     curlio-darwin = {
       url = "path:./flakes/curlio";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-darwin";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+      inputs.flake-utils.follows = "flake-utils";
     };
     dircolors = {
       url = "path:./flakes/dircolors";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.flake-utils.follows = "flake-utils";
     };
     treefmt-nix = {
       url = "github:/numtide/treefmt-nix";
@@ -53,10 +51,12 @@
     apple-emoji-linux = {
       url = "github:samuelngs/apple-emoji-linux";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
     };
     spicetify-nix = {
       url = "github:gerg-l/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.systems.follows = "systems";
     };
   };
 
