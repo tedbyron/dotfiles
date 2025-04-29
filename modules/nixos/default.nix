@@ -13,7 +13,6 @@
   gtk.iconCache.enable = true;
   location.provider = "geoclue2";
   system.fsPackages = [ pkgs.bindfs ];
-  systemd.services.Network-Manager-wait-online.enable = false; # BUG: https://github.com/NixOS/nixpkgs/issues/180175
   time.timeZone = "America/New_York";
   users.defaultUserShell = pkgs.zsh;
   xdg.portal.xdgOpenUsePortal = true;

@@ -29,7 +29,6 @@
 
       bind C-p previous-window
       bind C-n next-window
-      bind r source ~/.config/tmux/tmux.conf
 
       #
 

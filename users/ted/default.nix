@@ -100,7 +100,7 @@ in
           in
           {
             enable = darwin && releaseProfile != "";
-            source = ../../.config/firefox/chrome;
+            source = ../../config/firefox/chrome;
             target = "Library/Caches/Firefox/Profiles/${releaseProfile}/chrome";
           };
       };

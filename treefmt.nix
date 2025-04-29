@@ -35,7 +35,7 @@ _: {
 
     stylua = {
       enable = true;
-      settings = builtins.fromTOML (builtins.readFile ./.config/stylua.toml);
+      settings = builtins.fromTOML (builtins.readFile ./config/stylua.toml);
     };
   };
 
@@ -59,22 +59,22 @@ _: {
         };
 
         taplo.includes = [
-          ".config/ghostty/config"
-          ".config/git/config"
-          ".config/tio/config"
+          "config/ghostty/config"
+          "config/git/config"
+          "config/tio/config"
         ];
       };
 
     excludes = [
-      ".config/**/ignore"
-      ".config/Microsoft.PowerShell_profile.ps1"
-      ".config/bat/*"
-      ".config/doom/*"
-      ".config/ripgrep/*"
-      ".config/tmux/*"
-      ".config/zsh/*"
-      ".config/pam-gnupg"
-      ".gitignore"
+      "config/**/ignore"
+      "config/Microsoft.PowerShell_profile.ps1"
+      "config/bat/*"
+      "config/doom/*"
+      "config/ripgrep/*"
+      "config/tmux/*"
+      "config/zsh/*"
+      "config/pam-gnupg"
+      "gitignore"
       "LICENSE"
       "flake.lock"
     ];

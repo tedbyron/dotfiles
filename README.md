@@ -33,9 +33,9 @@ update *args               # Update flake lockfile for all or specified inputs
 u *args                    # alias for `update`
 ```
 
-## Bootstrap
+## MacOS
 
-- MacOS
+- Bootstrap
 
   ```sh
   xcode-select --install
@@ -47,7 +47,27 @@ u *args                    # alias for `update`
   nix run nix-darwin -- --flake ~/git/dotfiles#host --impure switch
   ```
 
-- NixOS
+- Uninstall default apps
+
+  ```sh
+  mas uninstall \
+    409203825   \ # Numbers
+    408981434   \ # iMovie
+    6826558836  \ # GarageBand
+    409183694   \ # Keynote
+    409201541   \ # Pages
+  ```
+
+- Disable tips notifications
+
+  ```sh
+  launchctl bootout gui/501/com.apple.tipsd
+  launchctl disable gui/501/com.apple.tipsd
+  ```
+
+## NixOS
+
+- Bootstrap
 
   - Boot to installer
 
@@ -202,28 +222,6 @@ u *args                    # alias for `update`
     sudo nixos-rebuild --flake ~/git/dotfiles#host switch
     reboot
     ```
-
-## MacOS
-
-- Uninstall default apps
-
-  ```sh
-  mas uninstall \
-    409203825   \ # Numbers
-    408981434   \ # iMovie
-    6826558836  \ # GarageBand
-    409183694   \ # Keynote
-    409201541   \ # Pages
-  ```
-
-- Disable tips notifications
-
-  ```sh
-  launchctl bootout gui/501/com.apple.tipsd
-  launchctl disable gui/501/com.apple.tipsd
-  ```
-
-## NixOS
 
 - VS Code
 

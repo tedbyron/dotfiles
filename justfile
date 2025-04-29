@@ -111,12 +111,18 @@ index:
 
 # Search for top-level packages and package outputs
 [group('util')]
-@search pattern *args:
-    nix-locate -rw --top-level {{ pattern }} {{ args }} |\
-        sort -b |\
-        rg --passthru -w ' {2,}' -r ' ' |\
-        column -tc $(tput cols) -N Package,Size,Type,Path -W Path |\
+search pattern *args:
+    #!/usr/bin/env zsh
+    set -euo pipefail
+    out=$(nix-locate -rw --top-level {{ pattern }} {{ args }})
+    if [[ {{ os }} == linux ]] {
+        sort -b <<<"$out" |
+        rg --passthru -w ' {2,}' -r ' ' |
+        column -tc $(tput cols) -N Package,Size,Type,Path -W Path |
         rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
+    } else {
+
+    }
 
 # Update flake lockfile for all or specified inputs
 [group('util')]

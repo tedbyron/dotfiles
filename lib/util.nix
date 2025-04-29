@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
-  configPath = path: ../.config/${path};
-  readConfig = path: builtins.readFile ../.config/${path};
+  configPath = path: ../config/${path};
+  readConfig = path: builtins.readFile ../config/${path};
 
   fromYAML =
     s:
