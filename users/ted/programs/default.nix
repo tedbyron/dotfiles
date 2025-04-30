@@ -16,7 +16,7 @@
   programs = {
     alacritty = {
       enable = darwin;
-      settings = builtins.fromTOML (lib.ted.readConfig "alacritty/alacritty.toml");
+      settings = lib.mkForce (builtins.fromTOML (lib.ted.readConfig "alacritty/alacritty.toml"));
     };
 
     bat = {
@@ -131,13 +131,13 @@
     };
 
     spicetify =
-      # let
-      #   spicePkgs = self.inputs.spicetify-nix.legacyPackages.${pkgs.system};
-      # in
+      let
+        spicePkgs = self.inputs.spicetify-nix.legacyPackages.${pkgs.system};
+      in
       {
         enable = true;
-        # colorScheme = "Gruvbox";
-        # theme = spicePkgs.themes.text;
+        colorScheme = lib.mkForce "Gruvbox";
+        theme = lib.mkForce spicePkgs.themes.text;
       };
 
     ssh.enable = true;

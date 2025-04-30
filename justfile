@@ -121,7 +121,8 @@ search pattern *args:
         column -tc $(tput cols) -N Package,Size,Type,Path -W Path |
         rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
     } else {
-
+        sort -b <<<"$out" |
+        rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
     }
 
 # Update flake lockfile for all or specified inputs
