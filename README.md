@@ -9,28 +9,28 @@
 
 ```
 [rebuild]
-switch flake=host *opts='' # Build and activate a specified flake or the host flake
-boot flake=host *opts=''   # Build a specified flake or the host flake, and make it the boot default
-test flake=host *opts=''   # Build and activate a specified flake or the host flake, and revert on boot
-build flake=host *opts=''  # Build a specified flake or the host flake
-rollback                   # Rollback to the previous generation
+switch *opts         # Build and activate the host flake
+boot *opts           # Build the host flake, and make it the boot default
+test *opts           # Build and activate the host flake, and revert on boot
+build *opts          # Build the host flake
 
 [history]
-history limit='10'         # List available generations
-h limit='10'               # alias for `history`
-wipe-history days          # Delete generations older than input days
+rollback             # Rollback to the previous generation
+history limit='10'   # List available generations
+h limit='10'         # alias for `history`
+wipe-history days    # Delete generations older than input days
 
 [util]
-check                      # Run all flake checks
-c                          # alias for `check`
-format                     # Format all files
-f                          # alias for `format`
-repl                       # Start a nix REPL with nixpkgs loaded
-index                      # Update the nixpkgs index
-search pattern *args       # Search for top-level packages and package outputs
-s pattern *args            # alias for `search`
-update *args               # Update flake lockfile for all or specified inputs
-u *args                    # alias for `update`
+check                # Run all flake checks
+c                    # alias for `check`
+format               # Format all files
+f                    # alias for `format`
+repl                 # Start a nix REPL with nixpkgs loaded
+index                # Update the nixpkgs index
+search pattern *args # Search for top-level packages and package outputs
+s pattern *args      # alias for `search`
+update *args         # Update flake lockfile for all or specified inputs
+u *args              # alias for `update`
 ```
 
 ## MacOS
@@ -44,7 +44,7 @@ u *args                    # alias for `update`
   # No determinate nix
   git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
   # Give terminal full disk access and restart
-  nix run nix-darwin -- --flake ~/git/dotfiles#host --impure switch
+  nix run nix-darwin -- --flake ~/git/dotfiles#host switch
   ```
 
 - Uninstall default apps

@@ -88,21 +88,21 @@ in
             '';
         };
 
-        firefoxChrome =
-          let
-            profilesDir = "${home}/Library/Caches/Firefox/Profiles";
-            # Dir read is impure.
-            releaseProfile = lib.optionalString (builtins.pathExists profilesDir) (
-              lib.findFirst (name: lib.hasSuffix ".default-release" name) "" (
-                builtins.attrNames (builtins.readDir profilesDir)
-              )
-            );
-          in
-          {
-            enable = darwin && releaseProfile != "";
-            source = ../../config/firefox/chrome;
-            target = "Library/Caches/Firefox/Profiles/${releaseProfile}/chrome";
-          };
+        # firefoxChrome =
+        #   let
+        #     profilesDir = "${home}/Library/Caches/Firefox/Profiles";
+        #     # Dir read is impure.
+        #     releaseProfile = lib.optionalString (builtins.pathExists profilesDir) (
+        #       lib.findFirst (name: lib.hasSuffix ".default-release" name) "" (
+        #         builtins.attrNames (builtins.readDir profilesDir)
+        #       )
+        #     );
+        #   in
+        #   {
+        #     enable = darwin && releaseProfile != "";
+        #     source = ../../config/firefox/chrome;
+        #     target = "Library/Caches/Firefox/Profiles/${releaseProfile}/chrome";
+        #   };
       };
 
       # TODO: 25.05

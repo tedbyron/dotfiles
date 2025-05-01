@@ -1,11 +1,9 @@
+set quiet := true
 set shell := ['zsh', '-cu']
 
 os := os()
 rebuild := if os == 'linux' { 'nixos-rebuild ' } else { if os == 'macos' { 'darwin-rebuild ' } else { error('Unsupported OS: ' + os) } }
-rebuild-opts := if os == 'linux' { '' } else { '--impure ' }
 sudo := if os == 'linux' { 'sudo ' } else { '' }
-hostname := shell('hostname')
-host := if path_exists('hosts/' + hostname) == 'true' { hostname } else { error("Couldn't find a flake matching hostname") }
 
 alias c := check
 alias f := format
@@ -14,56 +12,65 @@ alias s := search
 alias u := update
 
 [private]
-@default:
+default:
     just -ul --list-heading ''
 
 #
 
 [group('rebuild')]
 [private]
-rebuild prefix arg flake *opts:
-    {{ if prefix == 'sudo' { sudo } else { '' } }}{{ rebuild }}{{ arg }} \
-        --flake ~/git/dotfiles#{{ flake }} {{ rebuild-opts }}{{ opts }}
+rebuild prefix arg *opts:
+    #!/usr/bin/env zsh
+    set -euo pipefail
+    h=$(hostname)
+    if { fd -gqt d -d 1 $h ~/git/dotfiles/hosts } {
+        {{ prefix }}{{ rebuild }}{{ arg }} --flake ~/git/dotfiles#$h {{ opts }}
+    } else {
+        echo "No config for host: $h"
+        exit 1
+    }
 
-# Build and activate a specified flake or the host flake
+# Build and activate the host flake
 [group('rebuild')]
-switch flake=host *opts='': (rebuild 'sudo' 'switch' flake opts)
+switch *opts: (rebuild sudo 'switch' opts)
 
-# Build a specified flake or the host flake, and make it the boot default
+# Build the host flake, and make it the boot default
 [group('rebuild')]
 [linux]
-boot flake=host *opts='': (rebuild 'sudo' 'boot' flake opts)
+boot *opts: (rebuild sudo 'boot' opts)
 
-# Build and activate a specified flake or the host flake, and revert on boot
+# Build and activate the host flake, and revert on boot
 [group('rebuild')]
 [linux]
-test flake=host *opts='': (rebuild 'sudo' 'test' flake opts)
+test *opts: (rebuild sudo 'test' opts)
 
-# Build a specified flake or the host flake
+# Build the host flake
 [group('rebuild')]
-build flake=host *opts='': (rebuild '' 'build' flake opts)
-
-# Rollback to the previous generation
-[group('rebuild')]
-rollback:
-    {{ sudo }}{{ rebuild }}--rollback
+build *opts: (rebuild '' 'build' opts)
 
 #
+
+# Rollback to the previous generation
+[group('history')]
+rollback:
+    {{ sudo }}{{ rebuild }}--rollback
 
 # List available generations
 [group('history')]
 history limit='10':
     #!/usr/bin/env zsh
     set -euo pipefail
-    limit={{ if limit == '0' { '+1' } else { limit } }}
+    l={{ if limit == '0' { '+1' } else { limit } }}
     if [[ {{ os }} == linux ]] {
         {{ rebuild }}list-generations |
-            tail +2 | tac | tail -n $limit |
+            tail +2 | tac | tail -n $l |
             rg --passthru -w '([[:xdigit:]]{7})([[:xdigit:]]{33,})' -r '$1' |
             rg --passthru '\b {2,}' -r $'\t' |
             column -ts $'\t' -N Gen,Date,NixOS,Kernel,Rev,Spec
     } else {
-        {{ rebuild }}--list-generations | tail -n $limit
+        g=$({{ rebuild }}--list-generations | tail -n $l)
+        print -aC 3 Gen Date ' ' ${=$(head -n -1 <<< $g)} \
+            '{{ CYAN }}'${(@)$(tail -1 <<< $g)[1,3]}'{{ NORMAL }}'
     }
 
 # Delete generations older than input days
@@ -81,23 +88,22 @@ wipe-history days:
 check:
     #!/usr/bin/env zsh
     set -uo pipefail
-    { err=$(
-        unbuffer nix flake check --log-lines 0 >&1 >&3 1>/dev/null 3>&- |&
-            tail -n 1
+    { e=$(
+        unbuffer nix flake check --log-lines 0 ~/git/dotfiles# \
+            >&1 >&3 1>/dev/null 3>&- |& tail -1
     ) } 3>&1
-    code=$?
-    if (( code != 0 )) {
-        err_drv=$(rg -o '/nix/store/[0-9a-z-]+.drv' <<<"$err")
-        if [[ -n $err_drv ]] {
-            nix log $err_drv | delta
-        }
+    c=$?
+    if (( ? )) {
+        d=$(rg -o '/nix/store/[0-9a-z-]+.drv' <<< $e)
+        if [[ -n $d ]] { nix log $d | delta --paging never } \
+        else { echo 'I never planned for this' }
     }
-    exit $code
+    exit $c
 
 # Format all files
 [group('util')]
 format:
-    nix fmt
+    nix fmt ~/git/dotfiles
 
 # Start a nix REPL with nixpkgs loaded
 [group('util')]
@@ -114,15 +120,15 @@ index:
 search pattern *args:
     #!/usr/bin/env zsh
     set -euo pipefail
-    out=$(nix-locate -rw --top-level {{ pattern }} {{ args }})
+    o=$(nix-locate -rw --top-level {{ pattern }} {{ args }} | sort -b)
+    r() rg --passthru -U $(rg '(.)' -r '$1\s*' <<< '{{ pattern }}')
+    if [[ -z ${=o} ]] exit 0
     if [[ {{ os }} == linux ]] {
-        sort -b <<<"$out" |
-        rg --passthru -w ' {2,}' -r ' ' |
+        rg --passthru -w ' {2,}' -r ' ' <<< $o |
         column -tc $(tput cols) -N Package,Size,Type,Path -W Path |
-        rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
+        r
     } else {
-        sort -b <<<"$out" |
-        rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
+        print -aC 4 Package Size Type Path ${=o} | r
     }
 
 # Update flake lockfile for all or specified inputs
