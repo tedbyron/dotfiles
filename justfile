@@ -94,7 +94,7 @@ check:
             >&1 >&3 1>/dev/null 3>&- |& tail -1
     ) } 3>&1
     c=$?
-    if (( ? )) {
+    if (( c )) {
         d=$(rg -o '/nix/store/[0-9a-z-]+.drv' <<< $e)
         if [[ -n $d ]] { nix log $d | delta --paging never } \
         else { echo 'I never planned for this' }
