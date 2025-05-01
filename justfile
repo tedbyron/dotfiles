@@ -5,6 +5,7 @@ os := os()
 rebuild := if os == 'linux' { 'nixos-rebuild ' } else { if os == 'macos' { 'darwin-rebuild ' } else { error('Unsupported OS: ' + os) } }
 sudo := if os == 'linux' { 'sudo ' } else { '' }
 
+alias b := build
 alias c := check
 alias f := format
 alias h := history

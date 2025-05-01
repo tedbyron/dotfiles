@@ -7,7 +7,7 @@
 
 ## Just
 
-```
+```just
 [rebuild]
 switch *opts         # Build and activate the host flake
 boot *opts           # Build the host flake, and make it the boot default
@@ -17,20 +17,15 @@ build *opts          # Build the host flake
 [history]
 rollback             # Rollback to the previous generation
 history limit='10'   # List available generations
-h limit='10'         # alias for `history`
 wipe-history days    # Delete generations older than input days
 
 [util]
 check                # Run all flake checks
-c                    # alias for `check`
 format               # Format all files
-f                    # alias for `format`
 repl                 # Start a nix REPL with nixpkgs loaded
 index                # Update the nixpkgs index
 search pattern *args # Search for top-level packages and package outputs
-s pattern *args      # alias for `search`
 update *args         # Update flake lockfile for all or specified inputs
-u *args              # alias for `update`
 ```
 
 ## MacOS
