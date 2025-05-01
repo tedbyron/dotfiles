@@ -30,9 +30,9 @@ current_versions() {
 next_versions() {
     for crate in "${!current_map[@]}"; do
         vers=$(cargo search --limit 1 "$crate")
-        name=$(awk 'NR==1{print $1}' <<< "$vers")
+        name=$(awk 'NR==1{print $1}' <<<"$vers")
         if [[ -n $vers && $crate == "$name" ]]; then
-            vers=$(awk 'NR==1{print $3}' <<< "$vers")
+            vers=$(awk 'NR==1{print $3}' <<<"$vers")
             vers=${vers//[!0-9.]/}
         else
             vers=${current_map[$crate]}
