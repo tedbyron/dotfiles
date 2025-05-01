@@ -127,6 +127,7 @@
           pkgs.stdenvNoCC.mkDerivation {
             inherit (font) name;
             dontUnpack = true;
+            enableParallelBuilding = true;
 
             nativeBuildInputs =
               with pkgs;
