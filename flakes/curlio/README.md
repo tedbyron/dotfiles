@@ -7,8 +7,6 @@ Iosevka extended ss20 variant + nerd font glyphs, customized to look similar to
 
 ## Packages
 
-<!-- TODO: packages without ligations -->
-
 | Package                | Description  | Width     | Nerd Font Glyphs |
 | ---------------------- | ------------ | --------- | ---------------- |
 | `default`              | `curlio-ttf` | normal    | ✓                |

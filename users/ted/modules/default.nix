@@ -4,9 +4,12 @@ _: {
   ];
 
   stylix.targets = {
-    hyprland.enable = true;
-    hyprpaper.enable = true;
+    alacritty.enable = false;
+    fzf.enable = false;
+    hyprland.enable = false;
     neovim.enable = false;
+    spicetify.enable = false;
     vscode.enable = false;
+    wofi.enable = false;
   };
 }

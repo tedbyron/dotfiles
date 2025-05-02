@@ -16,8 +16,7 @@
       system:
       let
         inherit (pkgs) lib;
-
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = nixpkgs.legacyPackages.${system};
         buildPlan = {
           family = "Curlio";
           spacing = "term";

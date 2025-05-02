@@ -10,11 +10,10 @@
       inherit (pkgs) path;
       type = "path";
 
-      narHash = builtins.readFile (
-        pkgs.runCommandLocal "nixpkgs-hash" {
-          nativeBuildInputs = [ config.nix.package ];
-        } "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
-      );
+      narHash =
+        "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
+        |> pkgs.runCommandLocal "nixpkgs-hash" { nativeBuildInputs = [ config.nix.package ]; }
+        |> builtins.readFile;
     };
 
     settings = {

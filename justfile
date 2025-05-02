@@ -62,12 +62,14 @@ history limit='10':
     #!/usr/bin/env zsh
     set -euo pipefail
     l={{ if limit == '0' { '+1' } else { limit } }}
+    # TODO: actually get current gen instead of the last
     if [[ {{ os }} == linux ]] {
         g=$({{ rebuild }}list-generations | tail +2 | tac | tail -n $l |
-            rg --passthru -w '([[:xdigit:]]{7})([[:xdigit:]]{33,})' -r '$1')
-        column -t -N Gen,Date,NixOS,Kernel,Rev,Spec \
+            rg -w '([[:xdigit:]]{7})([[:xdigit:]]{33,})' -r '$1' |
+            rg '\b {2,}' -r $'\t')
+        column -tc $COLUMNS -s $'\t' -N Gen,Date,NixOS,Kernel,Rev,Spec \
             <<<"$(head -n -1 <<<$g)
-                {{ CYAN }}${$(tail -1 <<<$g)/current}{{ NORMAL }}"
+    {{ CYAN }}${$(tail -1 <<<$g)/current}{{ NORMAL }}"
     } else {
         g=$({{ rebuild }}--list-generations | tail -n $l)
         print -aC 3 Gen Date ' ' ${=$(head -n -1 <<<$g)} \
@@ -89,18 +91,14 @@ wipe-history days:
 check:
     #!/usr/bin/env zsh
     set -uo pipefail
-    { e=$(
-        unbuffer nix flake check --log-lines 0 ~/git/dotfiles# \
-            >&1 >&3 1>/dev/null 3>&- |& tail -1
-    ) } 3>&1
+    { e=$(unbuffer nix flake check --log-lines 0 ~/git/dotfiles# \
+        >&1 >&3 1>/dev/null 3>&- |& tail -1)
+    } 3>&1
     c=$?
     if (( c )) {
         d=$(rg -o '/nix/store/[0-9a-z-]+.drv' <<<$e)
-        if [[ -n $d ]] {
-            nix log $d | delta --paging never
-        } else {
-            echo 'I never planned for this'
-        }
+        if [[ -n $d ]] { nix log $d | delta --paging never } \
+        else { echo 'I never planned for this' }
     }
     exit $c
 
@@ -124,13 +122,12 @@ index:
 search pattern *args:
     #!/usr/bin/env zsh
     set -euo pipefail
-    o=$(nix-locate -rw --top-level {{ pattern }} {{ args }} | sort -b)
+    o=$(nix-locate -rw --top-level '{{ pattern }}' {{ args }} | sort -b)
     r() rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
     if [[ -z ${=o} ]] exit 0
     if [[ {{ os }} == linux ]] {
         rg --passthru -w ' {2,}' -r ' ' <<<$o |
-        column -tc $(tput cols) -N Package,Size,Type,Path -W Path |
-        r
+        column -tc $COLUMNS -N Package,Size,Type,Path -W Path | r
     } else {
         print -aC 4 Package Size Type Path ${=o} | r
     }

@@ -1,4 +1,4 @@
-format = '$directory$shlvl$direnv$nix_shell$character'
+format = '$directory$shlvl$character'
 right_format = '$status$cmd_duration$jobs$all'
 scan_timeout = 30
 command_timeout = 500
@@ -167,7 +167,7 @@ disabled = true
 disabled = true
 [direnv]
 format = '[$symbol]($style)'
-symbol = "\u2734"
+symbol = "\uf07b"
 style = 'blue'
 allowed_msg = 'a'
 denied_msg = 'd'
@@ -220,6 +220,7 @@ symbol = "\uf313"            # nf-linux-nixos
 style = 'cyan'
 impure_msg = 'i'
 pure_msg = 'p'
+disabled = false
 [nodejs]
 disabled = true
 [ocaml]

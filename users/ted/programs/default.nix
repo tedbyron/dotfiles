@@ -10,13 +10,14 @@
   imports = [
     ./fzf.nix
     ./tmux.nix
+    ./wofi.nix
     ./zsh.nix
   ];
 
   programs = {
     alacritty = {
       enable = darwin;
-      settings = lib.mkForce (builtins.fromTOML (lib.ted.readConfig "alacritty/alacritty.toml"));
+      settings = builtins.fromTOML (lib.ted.readConfig "alacritty/alacritty.toml");
     };
 
     bat = {
@@ -136,8 +137,8 @@
       in
       {
         enable = true;
-        colorScheme = lib.mkForce "Gruvbox";
-        theme = lib.mkForce spicePkgs.themes.text;
+        colorScheme = "Gruvbox";
+        theme = spicePkgs.themes.text;
       };
 
     ssh.enable = true;

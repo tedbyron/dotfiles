@@ -84,11 +84,11 @@
     '';
 
     plugins = [
-      {
-        name = "zsh-nix-shell";
-        file = "nix-shell.plugin.zsh";
-        src = unstable.zsh-nix-shell;
-      }
+      # {
+      #   name = "zsh-nix-shell";
+      #   file = "nix-shell.plugin.zsh";
+      #   src = unstable.zsh-nix-shell;
+      # }
     ];
 
     shellAliases = {
