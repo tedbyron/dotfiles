@@ -80,6 +80,7 @@
             x86_64-darwin
           ]
         );
+
       mkSystem =
         {
           system,
@@ -121,19 +122,19 @@
     {
       darwinConfigurations = {
         teds-laptop = mkSystem {
-          system = aarch64-darwin;
           host = "teds-laptop";
+          system = aarch64-darwin;
         };
         teds-work-laptop = mkSystem {
-          system = aarch64-darwin;
           host = "teds-work-laptop";
+          system = aarch64-darwin;
         };
       };
 
       nixosConfigurations = {
         teds-desktop = mkSystem {
-          system = x86_64-linux;
           host = "teds-desktop";
+          system = x86_64-linux;
         };
       };
     }

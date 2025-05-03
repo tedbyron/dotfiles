@@ -99,7 +99,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-M4MscrC76VSkIghRjk3cnuayI5gvb/J8piOy0gL2cS0=",
+        "narHash": "sha256-TpJbsXYuHKkO4twCxV0Apz2rkW2HVbFUp+haxFeG1KQ=",
         "path": "./flakes/curlio",
         "type": "path"
       },

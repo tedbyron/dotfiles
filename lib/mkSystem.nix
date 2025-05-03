@@ -7,15 +7,15 @@
 {
   mkSystem =
     {
-      darwin ? false,
-      wsl ? false,
+      darwin,
+      wsl,
       host,
-      overlays ? [ ],
+      overlays,
     }:
     let
       inherit (self) inputs;
       homeManager = if darwin then inputs.home-manager-darwin else inputs.home-manager;
-      osModules = if darwin then homeManager.darwinModules else homeManager.nixosModules;
+      osHmModules = if darwin then homeManager.darwinModules else homeManager.nixosModules;
       system = if darwin then inputs.darwin.lib.darwinSystem else lib.nixosSystem;
       stylixModules = if darwin then inputs.stylix.darwinModules else inputs.stylix.nixosModules;
 
@@ -35,7 +35,7 @@
       specialArgs = args;
 
       modules = [
-        osModules.home-manager
+        osHmModules.home-manager
         stylixModules.stylix
         (lib.optionalAttrs wsl inputs.nixos-wsl.nixosModules.wsl)
         ../modules
@@ -45,10 +45,9 @@
           nixpkgs.pkgs = pkgs;
 
           home-manager = {
+            extraSpecialArgs = args;
             useGlobalPkgs = true;
             useUserPackages = true;
-
-            extraSpecialArgs = args;
           };
         }
       ];

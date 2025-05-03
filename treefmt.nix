@@ -1,6 +1,7 @@
 _: {
   programs = {
     deadnix.enable = true;
+    fnlfmt.enable = true;
     just.enable = true;
     mix-format.enable = true;
     nixfmt.enable = true;

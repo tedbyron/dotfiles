@@ -40,6 +40,8 @@ update *args         # Update flake lockfile for all or specified inputs
   git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
   # Give terminal full disk access and restart
   nix run nix-darwin -- --flake ~/git/dotfiles#host switch
+
+  fd '.*before-nix-darwin' /etc -X sudo rm
   ```
 
 - Uninstall default apps
@@ -53,11 +55,10 @@ update *args         # Update flake lockfile for all or specified inputs
     409201541   \ # Pages
   ```
 
-- Disable tips notifications
+- Disable tipsd
 
   ```sh
-  launchctl bootout gui/501/com.apple.tipsd
-  launchctl disable gui/501/com.apple.tipsd
+  sudo launchctl disable system/com.apple.tipsd
   ```
 
 ## NixOS

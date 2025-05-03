@@ -5,6 +5,7 @@ _: {
 
   stylix.targets = {
     alacritty.enable = false;
+    bat.enable = false;
     fzf.enable = false;
     hyprland.enable = false;
     neovim.enable = false;

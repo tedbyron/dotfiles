@@ -2,21 +2,25 @@
   osConfig,
   pkgs,
   unstable,
+  darwin,
   ...
 }:
+let
+  enable = !darwin;
+in
 {
   services = {
     # hypridle.enable = false; # TODO
     # hyprpolkitagent.enable = true; # TODO 25.05
 
     dunst = {
-      enable = true;
+      inherit enable;
       # TODO: icon theme
       waylandDisplay = "wayland-1";
     };
 
     hyprpaper = {
-      enable = true;
+      inherit enable;
 
       settings =
         let
@@ -49,7 +53,7 @@
       rgba = color: "rgba(${color})";
     in
     {
-      enable = true;
+      inherit enable;
       package = unstable.hyprland; # TODO: 25.05; conflicts with programs.hyprland.package
       # portalPackage = null; # TODO: 25.05; conflicts with programs.hyprland.portalPackage
       systemd.enable = false; # UWSM

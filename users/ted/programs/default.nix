@@ -25,7 +25,7 @@
 
       config = {
         style = "changes,numbers";
-        # theme = "gruvbox-dark";
+        theme = "gruvbox-dark";
       };
     };
 

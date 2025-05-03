@@ -51,17 +51,17 @@ in
       username = "ted";
 
       file = {
-        # ".config/iex/.iex.exs".source = lib.ted.configPath "iex/.iex.exs";
+        ".config/iex/.iex.exs".source = lib.ted.configPath "iex/.iex.exs";
         ".config/just/justfile".source = ../../justfile;
         ".config/nvim/init.lua".source = lib.ted.configPath "nvim/init.lua";
         ".config/rustfmt.toml".source = lib.ted.configPath "rustfmt.toml";
         ".config/stylua.toml".source = lib.ted.configPath "stylua.toml";
-        # ".config/tio/config".source = lib.ted.configPath "tio/config";
+        ".config/tio/config".source = lib.ted.configPath "tio/config";
 
-        ".config/nvim/lua" = {
-          source = lib.ted.configPath "nvim/lua";
-          recursive = true;
-        };
+        # ".config/nvim/lua" = {
+        #   source = lib.ted.configPath "nvim/lua";
+        #   recursive = true;
+        # };
 
         ".config/pam-gnupg" = {
           enable = !darwin;

@@ -1,6 +1,7 @@
-_: {
+{ darwin, ... }:
+{
   programs.wofi = {
-    enable = true;
+    enable = !darwin;
 
     settings = {
       width = "25%";
