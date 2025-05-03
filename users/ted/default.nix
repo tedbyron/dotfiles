@@ -58,10 +58,10 @@ in
         ".config/stylua.toml".source = lib.ted.configPath "stylua.toml";
         ".config/tio/config".source = lib.ted.configPath "tio/config";
 
-        # ".config/nvim/lua" = {
-        #   source = lib.ted.configPath "nvim/lua";
-        #   recursive = true;
-        # };
+        ".config/nvim/lua" = {
+          source = lib.ted.configPath "nvim/lua";
+          recursive = true;
+        };
 
         ".config/pam-gnupg" = {
           enable = !darwin;

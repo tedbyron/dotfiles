@@ -1,15 +1,15 @@
-local function ensure_installed(plugin, branch)
+local function ensure_installed(plugin, rev)
   local user, repo = string.match(plugin, "(.+)/(.+)")
   local repo_path = vim.fn.stdpath("data") .. "/lazy/" .. repo
 
   if not vim.uv.fs_stat(repo_path) then
-    vim.notify("Installing " .. plugin .. " " .. branch)
+    vim.notify("Installing " .. plugin .. " " .. rev)
     local out = vim.fn.system({
       "git",
       "clone",
       "https://github.com/" .. plugin .. ".git",
       "--filter=blob:none",
-      "--branch=" .. branch,
+      "--branch=" .. rev,
       repo_path,
     })
 
@@ -23,11 +23,13 @@ local function ensure_installed(plugin, branch)
       os.exit(1)
     end
   end
+
+  return repo_path
 end
 
 local lazy_path = ensure_installed("folke/lazy.nvim", "stable")
 
-vim.opt.rtp:prepend({ hotpot_path, lazy_path })
+vim.opt.rtp:prepend(lazy_path)
 
 require("lazy").setup({
   spec = {
