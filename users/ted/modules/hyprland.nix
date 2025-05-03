@@ -69,6 +69,7 @@ in
       # https://wiki.hyprland.org/Configuring/Variables
       settings = {
         env = [
+          "NIXOS_OZONE_WL,1"
           "XCURSOR_SIZE,12"
           "HYPRCURSOR_SIZE,12"
           "GDK_BACKEND,wayland,x11,*"
