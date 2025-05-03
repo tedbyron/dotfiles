@@ -110,14 +110,15 @@ alias l='ls -Al'
 alias mv='mv -i'
 alias nc='ncat'
 alias pgrep='pgrep -afil'
-alias ps='ps -Aafx'
+alias ps='ps -aefx'
 alias sudo='sudo '
-alias which='echo "Use `where`, idiot"'
 alias wlcopy='wl-copy'
 alias wlpaste='wl-paste'
 
 alias -g -- -h='-h 2>&1 | bat -p -l help'
 alias -g -- --help='--help 2>&1 | bat -p -l help'
+
+which() echo 'Use `where`, idiot'
 
 unalias grhh
 

@@ -81,6 +81,8 @@
       bindkey \^U backward-kill-line
 
       unalias grhh
+
+      which() echo 'Use `where`, idiot'
     '';
 
     plugins = [
@@ -118,9 +120,8 @@
       mv = "mv -i";
       nc = "ncat";
       pgrep = "pgrep -afil";
-      ps = "ps -Aafx"; # TODO: uses macos bsd options
+      ps = "ps -aefx";
       sudo = "sudo ";
-      which = "echo 'Use `where`, idiot'";
       wlcopy = "wl-copy";
       wlpaste = "wl-paste";
     };
