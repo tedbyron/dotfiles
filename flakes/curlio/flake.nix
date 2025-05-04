@@ -15,8 +15,8 @@
     utils.lib.eachDefaultSystem (
       system:
       let
-        inherit (pkgs) lib;
         pkgs = nixpkgs.legacyPackages.${system};
+        inherit (pkgs) lib;
         buildPlan = {
           family = "Curlio";
           spacing = "term";

@@ -68,8 +68,8 @@
         package = if darwin then pkgs.git else pkgs.git.override { withLibsecret = true; };
       in
       {
-        inherit package;
         enable = true;
+        inherit package;
         # delta configured in .gitconfig and installed as a user package
         extraConfig = builtins.fromTOML (lib.ted.readConfig "git/config") // {
           credential.helper = if darwin then "osxkeychain" else "${package}/bin/git-credential-libsecret";

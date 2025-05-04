@@ -118,10 +118,10 @@ alias wlpaste='wl-paste'
 alias -g -- -h='-h 2>&1 | bat -p -l help'
 alias -g -- --help='--help 2>&1 | bat -p -l help'
 
-e()     pgrep emacs && emacsclient -n $@ || emacs -nw $@
-ediff() emacs -nw --eval "(ediff-files \"$1\" \"$2\")"
-eman()  emacs -nw --eval "(switch-to-buffer (man \"$1\"))"
-ekill() emacsclient --eval '(kill-emacs)'
+# e()     { pgrep emacs && emacsclient -n $@ || emacs -nw $@ }
+# ediff() emacs -nw --eval "(ediff-files \"$1\" \"$2\")"
+# eman()  emacs -nw --eval "(switch-to-buffer (man \"$1\"))"
+# ekill() emacsclient --eval '(kill-emacs)'
 which() echo 'Use `where`, idiot'
 
 unalias grhh

@@ -27,7 +27,6 @@
   custom.dock =
     let
       inherit (config.home-manager.users.ted.programs.spicetify) spicedSpotify;
-
       userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
     {

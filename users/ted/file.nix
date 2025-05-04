@@ -47,28 +47,23 @@
   xdg = {
     enable = true;
 
-    configFile =
-      let
-        inherit (config.lib.file) mkOutOfStoreSymlink;
-        mkLinkConfigPath = path: mkOutOfStoreSymlink (lib.ted.configPath path);
-      in
-      {
-        "iex/.iex.exs".source = mkLinkConfigPath "iex/.iex.exs";
-        "just/justfile".source = config.lib.file.mkOutOfStoreSymlink ../../justfile;
-        "nvim/init.lua".source = mkLinkConfigPath "nvim/init.lua";
-        "rustfmt.toml".source = mkLinkConfigPath "rustfmt.toml";
-        "stylua.toml".source = mkLinkConfigPath "stylua.toml";
-        "tio/config".source = mkLinkConfigPath "tio/config";
+    configFile = {
+      "iex/.iex.exs".source = lib.ted.configPath "iex/.iex.exs";
+      "just/justfile".source = ../../justfile;
+      "nvim/init.lua".source = lib.ted.configPath "nvim/init.lua";
+      "rustfmt.toml".source = lib.ted.configPath "rustfmt.toml";
+      "stylua.toml".source = lib.ted.configPath "stylua.toml";
+      "tio/config".source = lib.ted.configPath "tio/config";
 
-        "nvim/lua" = {
-          source = mkLinkConfigPath "nvim/lua";
-          recursive = true;
-        };
-
-        "pam-gnupg" = {
-          enable = !darwin;
-          source = lib.ted.configPath "pam-gnupg";
-        };
+      "nvim/lua" = {
+        source = lib.ted.configPath "nvim/lua";
+        recursive = true;
       };
+
+      pam-gnupg = {
+        enable = !darwin;
+        source = lib.ted.configPath "pam-gnupg";
+      };
+    };
   };
 }
