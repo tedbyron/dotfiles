@@ -32,6 +32,8 @@
     fileWidgetOptions = [
       "--preview 'bat --color always --style changes,numbers {}'"
       "--bind 'ctrl-/:change-preview-window(down|hidden|)'"
+      "--bind 'ctrl-b:preview-page-up,ctrl-f:preview-page-down'"
+      "--bind 'ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down'"
     ];
   };
 }
