@@ -9,9 +9,9 @@ typeset -A current_map
 typeset -A next_map
 typeset -A install
 
-typeset -r green='\e[32m'  # foreground green
-typeset -r yellow='\e[33m' # foreground yellow
-typeset -r nt='\e[0m'      # normal text
+typeset -r green='\033[32m'  # foreground green
+typeset -r yellow='\033[33m' # foreground yellow
+typeset -r nt='\033[0m'      # normal text
 
 # Store currently installed binary names and versions in `current_map`.
 current_versions() {

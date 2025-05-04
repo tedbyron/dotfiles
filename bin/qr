@@ -1,0 +1,13 @@
+#!/usr/bin/env -S nix shell nixpkgs#qrencode -c zsh
+
+qr() qrencode -t ansiutf8
+
+for arg in $@
+    if [ -r $arg ] {
+        qr <$arg
+    } elif [ -n $arg ] {
+        qr <<<$arg
+    } else {
+        echo "Invalid: $arg"
+        continue
+    }

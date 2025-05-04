@@ -91,7 +91,7 @@
     "curlio": {
       "inputs": {
         "flake-utils": [
-          "flake-utils"
+          "utils"
         ],
         "nixpkgs": [
           "nixpkgs"
@@ -111,7 +111,7 @@
     "curlio-darwin": {
       "inputs": {
         "flake-utils": [
-          "flake-utils"
+          "utils"
         ],
         "nixpkgs": [
           "nixpkgs-darwin"
@@ -151,7 +151,7 @@
     "dircolors": {
       "inputs": {
         "flake-utils": [
-          "flake-utils"
+          "utils"
         ],
         "nixpkgs": [
           "nixpkgs-unstable"
@@ -214,23 +214,6 @@
         "owner": "edolstra",
         "repo": "flake-compat",
         "type": "github"
-      }
-    },
-    "flake-utils": {
-      "inputs": {
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "id": "flake-utils",
-        "type": "indirect"
       }
     },
     "fromYaml": {
@@ -427,7 +410,6 @@
         "curlio-darwin": "curlio-darwin",
         "darwin": "darwin",
         "dircolors": "dircolors",
-        "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "home-manager-darwin": "home-manager-darwin",
         "nixos-wsl": "nixos-wsl",
@@ -436,7 +418,8 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix",
-        "treefmt-nix": "treefmt-nix_2"
+        "treefmt-nix": "treefmt-nix_2",
+        "utils": "utils"
       }
     },
     "spicetify-nix": {
@@ -444,7 +427,7 @@
         "nixpkgs": [
           "nixpkgs-unstable"
         ],
-        "systems": "systems_2"
+        "systems": "systems"
       },
       "locked": {
         "lastModified": 1745983288,
@@ -469,7 +452,7 @@
         "firefox-gnome-theme": "firefox-gnome-theme",
         "flake-compat": "flake-compat_2",
         "flake-utils": [
-          "flake-utils"
+          "utils"
         ],
         "git-hooks": "git-hooks",
         "gnome-shell": "gnome-shell",
@@ -479,7 +462,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": "systems_3",
+        "systems": "systems_2",
         "tinted-foot": "tinted-foot",
         "tinted-kitty": "tinted-kitty",
         "tinted-tmux": "tinted-tmux"
@@ -633,6 +616,23 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "utils": {
+      "inputs": {
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "id": "flake-utils",
+        "type": "indirect"
       }
     }
   },

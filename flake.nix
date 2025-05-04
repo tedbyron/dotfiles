@@ -5,7 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-darwin.url = "nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "flake-utils";
+    utils.url = "flake-utils";
 
     home-manager = {
       url = "home-manager/release-24.11";
@@ -27,21 +27,17 @@
     curlio = {
       url = "path:./flakes/curlio";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-utils.follows = "utils";
     };
     curlio-darwin = {
       url = "path:./flakes/curlio";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-utils.follows = "utils";
     };
     dircolors = {
       url = "path:./flakes/dircolors";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    treefmt-nix = {
-      url = "github:/numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.flake-utils.follows = "utils";
     };
 
     apple-emoji-linux = {
@@ -54,9 +50,13 @@
     };
     stylix = {
       url = "github:danth/stylix/release-24.11";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-utils.follows = "utils";
       inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    treefmt-nix = {
+      url = "github:/numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
@@ -65,7 +65,7 @@
       self,
       nixpkgs,
       nixpkgs-darwin,
-      flake-utils,
+      utils,
       ...
     }:
     let
@@ -74,7 +74,7 @@
       isDarwin =
         system:
         builtins.elem system (
-          with flake-utils.lib.system;
+          with utils.lib.system;
           [
             aarch64-darwin
             x86_64-darwin
@@ -118,7 +118,7 @@
             ;
         };
     in
-    with flake-utils.lib.system;
+    with utils.lib.system;
     {
       darwinConfigurations = {
         teds-laptop = mkSystem {
@@ -138,7 +138,7 @@
         };
       };
     }
-    // flake-utils.lib.eachDefaultSystem (
+    // utils.lib.eachDefaultSystem (
       system:
       let
         darwin = isDarwin system;

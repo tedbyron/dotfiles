@@ -1,6 +1,5 @@
 {
   self,
-  config,
   pkgs,
   lib,
   darwin,
@@ -34,14 +33,11 @@ in
     };
 
   home-manager.users.ted = {
-    _module.args = {
-      osConfig = config;
-    };
-
     imports = [
       self.inputs.spicetify-nix.homeManagerModules.default
       ./modules
       ./programs
+      ./file.nix
       ./packages.nix
     ];
 
@@ -49,66 +45,6 @@ in
       stateVersion = "23.11";
       homeDirectory = home;
       username = "ted";
-
-      file = {
-        ".config/iex/.iex.exs".source = lib.ted.configPath "iex/.iex.exs";
-        ".config/just/justfile".source = ../../justfile;
-        ".config/nvim/init.lua".source = lib.ted.configPath "nvim/init.lua";
-        ".config/rustfmt.toml".source = lib.ted.configPath "rustfmt.toml";
-        ".config/stylua.toml".source = lib.ted.configPath "stylua.toml";
-        ".config/tio/config".source = lib.ted.configPath "tio/config";
-
-        ".config/nvim/lua" =
-          let
-            source = lib.ted.configPath "nvim/lua";
-          in
-          {
-            inherit source;
-            enable = builtins.pathExists source;
-            recursive = true;
-          };
-
-        ".config/pam-gnupg" = {
-          enable = !darwin;
-          source = lib.ted.configPath "pam-gnupg";
-        };
-
-        ".hushlogin" = {
-          enable = darwin;
-          text = "";
-        };
-
-        "${config.home-manager.users.ted.programs.gpg.homedir}/gpg-agent.conf" = {
-          enable = true;
-          onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
-
-          text =
-            ''
-              allow-preset-passphrase
-              default-cache-ttl 34560000
-              max-cache-ttl 34560000
-            ''
-            + lib.optionalString darwin ''
-              pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
-            '';
-        };
-
-        # firefoxChrome =
-        #   let
-        #     profilesDir = "${home}/Library/Caches/Firefox/Profiles";
-        #     # Dir read is impure.
-        #     releaseProfile = lib.optionalString (builtins.pathExists profilesDir) (
-        #       lib.findFirst (name: lib.hasSuffix ".default-release" name) "" (
-        #         builtins.attrNames (builtins.readDir profilesDir)
-        #       )
-        #     );
-        #   in
-        #   {
-        #     enable = darwin && releaseProfile != "";
-        #     source = ../../config/firefox/chrome;
-        #     target = "Library/Caches/Firefox/Profiles/${releaseProfile}/chrome";
-        #   };
-      };
 
       # TODO: 25.05
       # pointerCursor = {
@@ -119,6 +55,18 @@ in
 
     services = lib.optionalAttrs (!darwin) {
       gnome-keyring.enable = true;
+    };
+
+    stylix.targets = {
+      alacritty.enable = false;
+      bat.enable = false;
+      firefox.enable = false;
+      fzf.enable = false;
+      hyprland.enable = false;
+      neovim.enable = false;
+      spicetify.enable = false;
+      vscode.enable = false;
+      wofi.enable = false;
     };
 
     targets = {

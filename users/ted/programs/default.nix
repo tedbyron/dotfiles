@@ -16,7 +16,7 @@
 
   programs = {
     alacritty = {
-      enable = darwin;
+      enable = true;
       settings = builtins.fromTOML (lib.ted.readConfig "alacritty/alacritty.toml");
     };
 
@@ -55,10 +55,9 @@
       };
     };
 
-    # TODO: ghostty darwin build broken
     # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/gh/ghostty/package.nix
     ghostty = {
-      enable = !darwin;
+      enable = false;
       enableZshIntegration = true;
       installBatSyntax = true;
       settings = builtins.fromTOML (lib.ted.readConfig "ghostty/config");

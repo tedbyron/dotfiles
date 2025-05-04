@@ -68,6 +68,10 @@ in
 
       # https://wiki.hyprland.org/Configuring/Variables
       settings = {
+        "$terminal" = "alacritty -e 'zsh -c tmux new -As0'";
+        "$fileManager" = "nautilus";
+        "$menu" = "wofi --show drun";
+
         env = [
           "NIXOS_OZONE_WL,1"
           "XCURSOR_SIZE,12"
@@ -84,10 +88,6 @@ in
           "DP-4, 2560x1440@60,  auto-right, auto, vrr, 0"
           ",     preferred,     auto,       auto"
         ];
-
-        "$terminal" = "ghostty -e 'tmux new -As0'";
-        "$fileManager" = "nautilus";
-        "$menu" = "wofi --show drun";
 
         exec-once = [
           "dbus-update-activation-environment --systemd --all"

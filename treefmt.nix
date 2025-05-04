@@ -1,7 +1,6 @@
 _: {
   programs = {
     deadnix.enable = true;
-    fnlfmt.enable = true;
     just.enable = true;
     mix-format.enable = true;
     nixfmt.enable = true;
@@ -67,6 +66,8 @@ _: {
       };
 
     excludes = [
+      "bin/qr"
+      "bin/termcolors"
       "config/**/ignore"
       "config/Microsoft.PowerShell_profile.ps1"
       "config/bat/*"
@@ -75,7 +76,7 @@ _: {
       "config/tmux/*"
       "config/zsh/*"
       "config/pam-gnupg"
-      "gitignore"
+      ".gitignore"
       "LICENSE"
       "flake.lock"
     ];

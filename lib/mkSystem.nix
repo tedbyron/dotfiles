@@ -45,6 +45,7 @@
           nixpkgs.pkgs = pkgs;
 
           home-manager = {
+            backupFileExtension = "hm-backup";
             extraSpecialArgs = args;
             useGlobalPkgs = true;
             useUserPackages = true;

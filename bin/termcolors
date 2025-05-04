@@ -1,0 +1,30 @@
+#!/usr/bin/env -S awk -f
+
+BEGIN {
+    cols = ENVIRON["COLUMNS"] + 0;
+    if (cols == 0) {
+        "tput cols" | getline cols;
+        close("tput cols");
+        cols = cols + 0;
+        if (cols == 0) {
+            cols = 80;
+        }
+    }
+
+    for (i = 0; i < cols; i++) {
+        r = 255 - (i * 255 / cols);
+        g = (i * 510 / cols);
+        b = (i * 255 / cols);
+
+        if (g > 255) {
+            g = 510 - g;
+        }
+
+        printf "\033[48;2;%d;%d;%dm", r, g, b;
+        printf "\033[38;2;%d;%d;%dm", 255 - r, 255 - g, 255 - b;
+        printf " \033[0m";
+    }
+
+    printf "\n";
+    exit 0;
+}

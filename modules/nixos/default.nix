@@ -27,7 +27,7 @@
 
     systemPackages = with pkgs; [
       libheif
-      unzip
+      unzipNLS
     ];
   };
 

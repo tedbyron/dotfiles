@@ -24,8 +24,8 @@
 (put 'lsp-eslint-package-manager 'safe-local-variable #'stringp)
 
 ;; `+format-on-save-enabled-modes' is negated
-(delq! 'emacs-lisp-mode +format-on-save-enabled-modes)
-(nconc +format-on-save-enabled-modes '(so-long-mode))
+;; (delq! 'emacs-lisp-mode +format-on-save-enabled-modes)
+;; (nconc +format-on-save-enabled-modes '(so-long-mode))
 
 (setq-default comment-column 0
               fill-column 100)

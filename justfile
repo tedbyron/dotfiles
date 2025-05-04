@@ -63,7 +63,7 @@ history limit='10':
     set -euo pipefail
     l={{ if limit == '0' { '+1' } else { limit } }}
     # TODO: actually get current gen instead of the last
-    if [[ {{ os }} == linux ]] {
+    if [ {{ os }} == linux ] {
         g=$({{ rebuild }}list-generations | tail +2 | tac | tail -n $l |
             rg -w '([[:xdigit:]]{7})([[:xdigit:]]{33,})' -r '$1' |
             rg '\b {2,}' -r $'\t')
@@ -97,7 +97,7 @@ check:
     c=$?
     if (( c )) {
         d=$(rg -o '/nix/store/[0-9a-z-]+.drv' <<<$e)
-        if [[ -n $d ]] { nix log $d | delta --paging never } \
+        if [ -n $d ] { nix log $d | delta --paging never } \
         else { echo 'I never planned for this' }
     }
     exit $c
@@ -124,8 +124,8 @@ search pattern *args:
     set -euo pipefail
     o=$(nix-locate -rw --top-level '{{ pattern }}' {{ args }} | sort -b)
     r() rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
-    if [[ -z ${=o} ]] exit 0
-    if [[ {{ os }} == linux ]] {
+    if [ -z ${=o} ] exit 0
+    if [ {{ os }} == linux ] {
         rg --passthru -w ' {2,}' -r ' ' <<<$o |
         column -tc $COLUMNS -N Package,Size,Type,Path -W Path | r
     } else {

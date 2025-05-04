@@ -65,7 +65,7 @@
   #   };
   # };
 
-  # nix.linux-builder = with inputs.flake-utils.lib.system; {
+  # nix.linux-builder = with inputs.utils.lib.system; {
   #   enable = true;
   #   ephemeral = true;
   #   maxJobs = 4;

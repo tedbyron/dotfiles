@@ -60,7 +60,7 @@
        undo
        vc
 
-       ;; :term
+       :term
        ;; eshell
        ;; shell
        ;; term
@@ -200,4 +200,5 @@
        ;; literate
        (default
          +bindings
-         +smartparens))
+         +smartparens
+         +gnupg))

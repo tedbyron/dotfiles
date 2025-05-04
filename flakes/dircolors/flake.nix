@@ -3,16 +3,22 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "flake-utils";
+    utils.url = "flake-utils";
+
+    dracula-dircolors = {
+      url = "github:dracula/dircolors";
+      flake = false;
+    };
   };
 
   outputs =
     {
       nixpkgs,
-      flake-utils,
+      utils,
+      dracula-dircolors,
       ...
     }:
-    flake-utils.lib.eachDefaultSystem (
+    utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import nixpkgs { inherit system; };
@@ -21,13 +27,7 @@
         packages.default = pkgs.stdenvNoCC.mkDerivation rec {
           pname = "dracula-dircolors";
           version = src.rev;
-
-          src = pkgs.fetchFromGitHub {
-            owner = "dracula";
-            repo = "dircolors";
-            rev = "4d07e7ef1be615ccd2e91e1aa576a5b90d19a7dc";
-            hash = "sha256-PzP+KW01NrlLeo0YQc/Wl+F2rUAtEZsrxjPTNhWyKPA=";
-          };
+          src = dracula-dircolors;
 
           buildPhase = ''
             awk '

@@ -3,16 +3,16 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "flake-utils";
+    utils.url = "flake-utils";
   };
 
   outputs =
     {
       nixpkgs,
-      flake-utils,
+      utils,
       ...
     }:
-    flake-utils.lib.eachDefaultSystem (
+    utils.lib.eachDefaultSystem (
       system:
       let
         inherit (pkgs) lib;
@@ -147,7 +147,7 @@
                   # pyftsubset calls open with 'wb'
                   cp ${font}/share/fonts/truetype/*.ttf .
 
-                  fd -j$NIX_BUILD_CORES -ettf . -x pyftsubset {} \
+                  fd -j $NIX_BUILD_CORES -ettf . -x pyftsubset {} \
                     --output-file={.}.woff2 \
                     --flavor=woff2 \
                     --layout-features=* \
@@ -156,14 +156,16 @@
                 ''
               else
                 ''
-                  fd -j$NIX_BUILD_CORES -ettf . ${font}/share/fonts/truetype -x nerd-font-patcher {} \
-                    --mono --careful --complete --adjust-line-height --makegroup -1
+                  fd -j $NIX_BUILD_CORES -ettf . ${font}/share/fonts/truetype \
+                    -x nerd-font-patcher {} --mono --careful --complete \
+                    --adjust-line-height --makegroup -1
                 '';
 
             installPhase =
               if web then
                 ''
-                  install -Dm444 ${font}/share/fonts/truetype/*.ttf -t $out/share/fonts/truetype
+                  install -Dm444 ${font}/share/fonts/truetype/*.ttf \
+                    -t $out/share/fonts/truetype
                   install -Dm444 *.woff2 -t $out/share/fonts/woff2
                 ''
               else
