@@ -2,12 +2,13 @@
 {
   programs.tmux = {
     enable = true;
+    baseIndex = 1;
     clock24 = true;
     historyLimit = 50000;
     keyMode = "vi";
     mouse = true;
     newSession = true;
-    prefix = "C-a";
+    prefix = "C-Space";
     sensibleOnTop = false;
     terminal = "tmux-256color";
 
