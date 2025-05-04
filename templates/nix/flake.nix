@@ -7,18 +7,13 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      utils,
-      treefmt,
-    }:
-    utils.lib.eachDefaultSystem (
+    inputs:
+    inputs.utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
         treefmt =
-          (self.inputs.treefmt-nix.lib.evalModule pkgs ({
+          (inputs.treefmt.lib.evalModule pkgs {
             programs = {
               deadnix.enable = true;
               nixfmt.enable = true;
@@ -29,7 +24,7 @@
               "LICENSE"
               "flake.lock"
             ];
-          })).config.build;
+          }).config.build;
       in
       with pkgs;
       {

@@ -8,23 +8,17 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      utils,
-      rust-overlay,
-      treefmt,
-    }:
-    utils.lib.eachDefaultSystem (
+    inputs:
+    inputs.utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = import nixpkgs {
+        pkgs = import inputs.nixpkgs {
           inherit system;
-          overlays = [ (import rust-overlay) ];
+          overlays = [ (import inputs.rust-overlay) ];
         };
         rust = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
         treefmt =
-          (self.inputs.treefmt-nix.lib.evalModule pkgs ({
+          (inputs.treefmt.lib.evalModule pkgs {
             programs = {
               deadnix.enable = true;
               nixfmt.enable = true;
@@ -52,7 +46,7 @@
               "LICENSE"
               "flake.lock"
             ];
-          })).config.build;
+          }).config.build;
       in
       with pkgs;
       {
