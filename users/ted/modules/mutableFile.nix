@@ -24,9 +24,9 @@ let
       extraArgs = lib.escapeShellArgs v.extraArgs;
     in
     {
-      git = "[ -d ${path} ] || git clone ${extraArgs} ${url} ${path}";
-      fetch = "[ -e ${path} ] || curl ${extraArgs} ${url} --output ${path}";
-      custom = "[ -e ${path} ] || ${extraArgs}";
+      git = "[[ -d ${path} ]] || git clone ${extraArgs} ${url} ${path}";
+      fetch = "[[ -e ${path} ]] || curl ${extraArgs} ${url} --output ${path}";
+      custom = "[[ -e ${path} ]] || ${extraArgs}";
     };
 
   fileType =

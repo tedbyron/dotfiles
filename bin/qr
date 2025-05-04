@@ -3,9 +3,9 @@
 qr() qrencode -t ansiutf8
 
 for arg in $@
-    if [ -r $arg ] {
+    if [[ -r $arg ]] {
         qr <$arg
-    } elif [ -n $arg ] {
+    } elif [[ -n $arg ]] {
         qr <<<$arg
     } else {
         echo "Invalid: $arg"
