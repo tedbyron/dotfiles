@@ -211,15 +211,15 @@ in
           "ALT,   space, exec, $menu"
           "ALT,   f4,    killactive,"
 
-          "SUPER, n, movefocus, l"
-          "SUPER, e, movefocus, d"
-          "SUPER, i, movefocus, u"
-          "SUPER, o, movefocus, r"
+          "SUPER, h, movefocus, l"
+          "SUPER, j, movefocus, d"
+          "SUPER, k, movefocus, u"
+          "SUPER, l, movefocus, r"
 
-          "SUPER SHIFT, n, workspace, e-1"
-          "SUPER SHIFT, e, togglespecialworkspace, magic"
-          "SUPER SHIFT, i, movetoworkspace, special:magic"
-          "SUPER SHIFT, o, workspace, e+1"
+          "SUPER SHIFT, h, workspace, e-1"
+          "SUPER SHIFT, j, togglespecialworkspace, magic"
+          "SUPER SHIFT, k, movetoworkspace, special:magic"
+          "SUPER SHIFT, l, workspace, e+1"
 
           "SUPER, mouse_down, workspace, e+1"
           "SUPER, mouse_up, workspace, e-1"
