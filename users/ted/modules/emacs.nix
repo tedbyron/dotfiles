@@ -76,7 +76,7 @@ in
 
     xdg.configFile.doom = {
       source = lib.ted.configPath "doom";
-      recurse = true;
+      recursive = true;
     };
   };
 }

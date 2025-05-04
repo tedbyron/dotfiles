@@ -4,7 +4,6 @@ return {
   {
     "nvim-lspconfig",
     opts = {
-      inlay_hints = { enabled = false },
       servers = {
         bashls = {},
         emmet_ls = {},
@@ -14,16 +13,15 @@ return {
   },
   {
     "mason.nvim",
-    opts = {
-      ensure_installed = {
+    opts = function(_, opts) 
+      vim.list_extend(opts.ensure_installed, {
         "actionlint",
         "bash-language-server",
         "emmet-ls",
         "html-lsp",
         "lua-language-server",
         "shellcheck",
-        "stylua",
-      },
-    },
+      })
+    end,
   },
 }

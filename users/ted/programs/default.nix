@@ -9,6 +9,7 @@
 {
   imports = [
     ./fzf.nix
+    ./neovim.nix
     ./tmux.nix
     ./wofi.nix
     ./zsh.nix
@@ -79,7 +80,7 @@
       };
 
     go = {
-      enable = false;
+      enable = true;
       # telemetry.mode = "off"; # TODO: 25.05
     };
 
@@ -105,17 +106,6 @@
     lazygit = {
       enable = true;
       settings = lib.ted.fromYAML (lib.ted.readConfig "lazygit/config.yml");
-    };
-
-    neovim = {
-      enable = true;
-      package = unstable.neovim-unwrapped.overrideAttrs { inherit (pkgs.neovim-unwrapped) meta; }; # TODO: 25.05
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-      withNodeJs = false;
-      withPython3 = false;
-      withRuby = false;
     };
 
     nix-index = {
