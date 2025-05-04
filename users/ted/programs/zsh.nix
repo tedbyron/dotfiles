@@ -81,15 +81,10 @@
       bindkey \^U backward-kill-line
 
       unalias grhh
-
-      # e()     { pgrep emacs && emacsclient -n $@ || emacs -nw $@ }
-      # ediff() emacs -nw --eval "(ediff-files \"$1\" \"$2\")"
-      # eman()  emacs -nw --eval "(switch-to-buffer (man \"$1\"))"
-      # ekill() emacsclient --eval '(kill-emacs)'
-      which() echo 'Use `where`, idiot'
     '';
 
     shellAliases = {
+      b = "bat";
       df = "df \\-h";
       dl = "yt-dlp";
       dls = "dl --embed-subs --sub-lang 'en.*'";
