@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "flake-utils";
     rust-overlay.url = "github:oxalica/rust-overlay";
     treefmt.url = "github:/numtide/treefmt-nix";
     treefmt.inputs.nixpkgs.follows = "nixpkgs";

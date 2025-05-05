@@ -5,7 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-darwin.url = "nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
-    utils.url = "flake-utils";
+    flake-utils.url = "flake-utils";
 
     home-manager = {
       url = "home-manager/release-24.11";
@@ -27,17 +27,17 @@
     curlio = {
       url = "path:./flakes/curlio";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "utils";
+      inputs.flake-utils.follows = "flake-utils";
     };
     curlio-darwin = {
       url = "path:./flakes/curlio";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
-      inputs.flake-utils.follows = "utils";
+      inputs.flake-utils.follows = "flake-utils";
     };
     dircolors = {
       url = "path:./flakes/dircolors";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.flake-utils.follows = "utils";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     apple-emoji-linux = {
@@ -50,7 +50,7 @@
     };
     stylix = {
       url = "github:danth/stylix/release-24.11";
-      inputs.flake-utils.follows = "utils";
+      inputs.flake-utils.follows = "flake-utils";
       inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -61,20 +61,14 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-darwin,
-      utils,
-      ...
-    }:
+    { self, ... }@inputs:
     let
       overlays = [ ];
 
       isDarwin =
         system:
         builtins.elem system (
-          with utils.lib.system;
+          with inputs.flake-utils.lib.system;
           [
             aarch64-darwin
             x86_64-darwin
@@ -89,19 +83,19 @@
         }:
         let
           darwin = isDarwin system;
-          lib = (if darwin then nixpkgs-darwin else nixpkgs).lib.extend (
+          lib = (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs).lib.extend (
             final: _: {
               ted = import ./lib {
                 inherit self;
                 lib = final;
 
                 # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
-                pkgs = import (if darwin then nixpkgs-darwin else nixpkgs) {
+                pkgs = import (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs) {
                   inherit system overlays;
                   config.allowUnfree = true;
                 };
 
-                unstable = import self.inputs.nixpkgs-unstable {
+                unstable = import inputs.nixpkgs-unstable {
                   inherit system overlays;
                   config.allowUnfree = true;
                 };
@@ -118,7 +112,7 @@
             ;
         };
     in
-    with utils.lib.system;
+    with inputs.flake-utils.lib.system;
     {
       darwinConfigurations = {
         teds-laptop = mkSystem {
@@ -155,8 +149,8 @@
       let
         darwin = isDarwin system;
         pkgs = (if darwin then nixpkgs-darwin else nixpkgs).legacyPackages.${system};
-        curlio = if darwin then self.inputs.curlio-darwin else self.inputs.curlio;
-        treefmt = (self.inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix).config.build;
+        curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
+        treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix).config.build;
       in
       {
         checks.formatting = treefmt.check self;
@@ -170,7 +164,7 @@
         };
 
         packages = (builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ]) // {
-          dircolors = self.inputs.dircolors.outputs.packages.${system}.default;
+          dircolors = inputs.dircolors.outputs.packages.${system}.default;
         };
       }
     );

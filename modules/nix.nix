@@ -23,7 +23,7 @@
         "auto-allocate-uids"
         "flakes"
         "nix-command"
-        "pipe-operators" # TODO: change config to use pipe operators
+        "pipe-operators"
       ];
 
       substituters = [

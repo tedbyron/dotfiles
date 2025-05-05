@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "flake-utils";
     treefmt.url = "github:/numtide/treefmt-nix";
     treefmt.inputs.nixpkgs.follows = "nixpkgs";
   };
