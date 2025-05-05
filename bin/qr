@@ -1,13 +1,24 @@
-#!/usr/bin/env -S nix shell nixpkgs#qrencode -c zsh
+#!/usr/bin/env nix
+#!nix shell nixpkgs#curl nixpkgs#gawk nixpkgs#git nixpkgs#qrencode
+#!nix -c zsh
+#
+# Generates a QR if there are inputs, otherwise checks for git origin URL and
+# generates a QR for that.
 
-qr() qrencode -t ansiutf8
+set -euo pipefail
 
-for arg in $@
-    if [[ -r $arg ]] {
-        qr <$arg
-    } elif [[ -n $arg ]] {
-        qr <<<$arg
+qr() qrencode -t ansiutf8 $@
+
+if (( # )) {
+    for arg in $@
+        if [[ -f $arg && -r $arg ]] { u=$(<$arg) } else { u=$arg }
+        if { curl -Ifs $u &>/dev/null } { qr $u } else { exit 1 }
+
+} else {
+    if { git rev-parse --is-inside-work-tree &>/dev/null } {
+        # gh repo view --json url -q '.url'
+        git remote -v | awk '/origin/{sub(".git$","",$2);print$2;exit}' | qr
     } else {
-        echo "Invalid: $arg"
-        continue
+        exit 1
     }
+}
