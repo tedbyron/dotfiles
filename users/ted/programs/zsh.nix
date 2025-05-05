@@ -102,6 +102,7 @@
       gdst = "git diff --staged";
       gmv = "git mv";
       grep = "grep -Ei --color=auto";
+      h = "head";
       hf = "hyperfine";
       j = "just";
       jg = "just -g";
@@ -113,6 +114,7 @@
       pgrep = "pgrep -afil";
       ps = "ps -aefx";
       sudo = "sudo ";
+      t = "tail";
       wlcopy = "wl-copy";
       wlpaste = "wl-paste";
     };
