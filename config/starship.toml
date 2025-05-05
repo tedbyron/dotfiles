@@ -149,6 +149,8 @@ disabled = true
 disabled = true
 [c]
 disabled = true
+[cpp]
+disabled = true
 [cmake]
 disabled = true
 [cobol]
@@ -186,6 +188,8 @@ disabled = true
 disabled = true
 [fennel]
 disabled = true
+[gleam]
+disabled = true
 [gcloud]
 disabled = true
 [golang]
@@ -212,6 +216,12 @@ disabled = true
 disabled = true
 [meson]
 disabled = true
+[mise]
+disabled = true
+[mojo]
+disabled = true
+[nats]
+disabled = true
 [nim]
 disabled = true
 [nix_shell]
@@ -225,6 +235,8 @@ disabled = false
 disabled = true
 [ocaml]
 disabled = true
+[odin]
+disabled = true
 [opa]
 disabled = true
 [openstack]
@@ -233,11 +245,15 @@ disabled = true
 disabled = true
 [php]
 disabled = true
+[pixi]
+disabled = true
 [pulumi]
 disabled = true
 [purescript]
 disabled = true
 [python]
+disabled = true
+[quarto]
 disabled = true
 [raku]
 disabled = true
