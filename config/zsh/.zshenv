@@ -16,6 +16,7 @@ export GOPATH=$HOME/.go
 export IEX_HOME=$HOME/.config/iex
 export LESS=-FRi
 export LESSHISTFILE=-
+export LS_COLORS=$(vivid generate gruvbox-material-dark)
 export MANPAGER='zsh -c "col -bx | bat -p -l man"'
 export MANROFFOPT=-c
 export NODE_REPL_HISTORY=' '

@@ -148,26 +148,6 @@
         "type": "indirect"
       }
     },
-    "dircolors": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-vIZGLHKlzV16tPZWELdhcXy0Tct7WFMxyFwn5yWMjHQ=",
-        "path": "./flakes/dircolors",
-        "type": "path"
-      },
-      "original": {
-        "path": "./flakes/dircolors",
-        "type": "path"
-      }
-    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -426,7 +406,6 @@
         "curlio": "curlio",
         "curlio-darwin": "curlio-darwin",
         "darwin": "darwin",
-        "dircolors": "dircolors",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "home-manager-darwin": "home-manager-darwin",

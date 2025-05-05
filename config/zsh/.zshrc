@@ -81,6 +81,7 @@ bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey \^U backward-kill-line
 
 alias b='bat'
+alias cp='cp -i'
 alias df='df \-h'
 alias dl='yt-dlp'
 alias dls='dl --embed-subs --sub-lang "en.*"'
@@ -113,8 +114,10 @@ alias mv='mv -i'
 alias nc='ncat'
 alias pgrep='pgrep -afil'
 alias ps='ps -aefx'
+alias rm='rm -i'
 alias sudo='sudo '
 alias t='tail'
+alias tree='unbuffer tree | bat -p'
 alias wlcopy='wl-copy'
 alias wlpaste='wl-paste'
 

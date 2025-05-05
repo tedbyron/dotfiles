@@ -36,11 +36,6 @@
       };
     };
 
-    dircolors = {
-      enable = true;
-      settings = import "${self.outputs.packages.${pkgs.system}.dircolors}/share/nix/settings.nix";
-    };
-
     direnv = {
       enable = true;
       config = builtins.fromTOML (lib.ted.readConfig "direnv/direnv.toml");

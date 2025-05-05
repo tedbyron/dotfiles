@@ -34,11 +34,6 @@
       inputs.nixpkgs.follows = "nixpkgs-darwin";
       inputs.flake-utils.follows = "flake-utils";
     };
-    dircolors = {
-      url = "path:./flakes/dircolors";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.flake-utils.follows = "flake-utils";
-    };
 
     apple-emoji-linux = {
       url = "github:samuelngs/apple-emoji-linux";
@@ -163,9 +158,7 @@
           ];
         };
 
-        packages = (builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ]) // {
-          dircolors = inputs.dircolors.outputs.packages.${system}.default;
-        };
+        packages = (builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ]);
       }
     );
 }

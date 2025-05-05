@@ -68,7 +68,7 @@ in
 
       # https://wiki.hyprland.org/Configuring/Variables
       settings = {
-        "$terminal" = "alacritty -e zsh -c 'tmux new -As0'";
+        "$terminal" = "alacritty -e zsh -c 'tmux new -As0; true'";
         "$fileManager" = "nautilus";
         "$menu" = "wofi --show drun";
 

@@ -1,4 +1,5 @@
 {
+  pkgs,
   unstable,
   lib,
   darwin,
@@ -85,6 +86,7 @@
 
     shellAliases = {
       b = "bat";
+      cp = "cp -i";
       df = "df \\-h";
       dl = "yt-dlp";
       dls = "dl --embed-subs --sub-lang 'en.*'";
@@ -113,8 +115,10 @@
       nc = "ncat";
       pgrep = "pgrep -afil";
       ps = "ps -aefx";
+      rm = "rm -i";
       sudo = "sudo ";
       t = "tail";
+      tree = "unbuffer tree | bat -p";
       wlcopy = "wl-copy";
       wlpaste = "wl-paste";
     };
@@ -139,6 +143,19 @@
       READNULLCMD = "bat";
       STARSHIP_LOG = "error";
       ZSH_TMUX_AUTOSTART = if darwin then "true" else "false";
+
+      LS_COLORS =
+        let
+          configDir = if darwin then "./Library/Preferences" else "./.config";
+        in
+        ''
+          mkdir -p ${configDir}/vivid/themes
+          echo '${lib.ted.readConfig "vivid/themes/gruvbox-material-dark.yml"}' \
+            > ${configDir}/vivid/themes/gruvbox-material-dark.yml
+          HOME=. XDG_CONFIG_HOME=./.config vivid generate gruvbox-material-dark > $out
+        ''
+        |> pkgs.runCommandLocal "vivid-ls-colors" { nativeBuildInputs = [ pkgs.vivid ]; }
+        |> builtins.readFile;
     };
   };
 }

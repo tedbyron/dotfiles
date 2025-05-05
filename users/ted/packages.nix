@@ -30,6 +30,7 @@
       unstable.nodejs
       ouch
       tokei
+      tree
       wasm-pack
     ]
     ++ lib.optionals darwin [

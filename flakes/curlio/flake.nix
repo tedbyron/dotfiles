@@ -3,16 +3,12 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    utils.url = "flake-utils";
+    flake-utils.url = "flake-utils";
   };
 
   outputs =
-    {
-      nixpkgs,
-      utils,
-      ...
-    }:
-    utils.lib.eachDefaultSystem (
+    { nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
