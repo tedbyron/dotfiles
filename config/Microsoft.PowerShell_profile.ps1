@@ -7,7 +7,8 @@ function Invoke-Starship-PreCommand {
   $host.ui.Write($prompt)
 }
 
-$env:STARSHIP_CONFIG = "$HOME\git\dotfiles\config\starship.toml"
+$env:GOPATH = "$HOME\.go"
 $env:ERL_AFLAGS = "+pc unicode -kernel shell_history enabled"
+$env:STARSHIP_CONFIG = "$HOME\git\dotfiles\config\starship.toml"
 
 Invoke-Expression (&starship init powershell)

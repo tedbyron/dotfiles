@@ -125,6 +125,7 @@
     sessionVariables = {
       EDITOR = "nvim";
       ERL_AFLAGS = "+pc unicode -kernel shell_history enabled";
+      GOPATH = "$HOME/.go";
       IEX_HOME = "$HOME/.config/iex";
       LESS = "-FRi";
       LESSHISTFILE = "-";

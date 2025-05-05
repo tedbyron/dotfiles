@@ -12,6 +12,7 @@ export FZF_CTRL_T_OPTS='--preview "bat --color always --style changes,numbers {}
 export FZF_DEFAULT_COMMAND='fd -H -E .DS_Store -c always -t f --strip-cwd-prefix'
 export FZF_DEFAULT_OPTS='--ansi --info inline-right --no-scrollbar --no-separator --color bg:-1,bg+:-1,fg:-1,fg+:-1,hl:#50FA7B,hl+:#FFB86C,info:#BD93F9,marker:#FF79C6,pointer:#FF79C6,prompt:#50FA7B,spinner:#FF79C6'
 export GNUPGHOME=$HOME/.gnupg
+export GOPATH=$HOME/.go
 export IEX_HOME=$HOME/.config/iex
 export LESS=-FRi
 export LESSHISTFILE=-

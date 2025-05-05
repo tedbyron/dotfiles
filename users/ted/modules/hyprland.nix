@@ -217,12 +217,12 @@ in
           "SUPER, l, movefocus, r"
 
           "SUPER SHIFT, h, workspace, e-1"
-          "SUPER SHIFT, j, togglespecialworkspace, magic"
-          "SUPER SHIFT, k, movetoworkspace, special:magic"
+          # "SUPER SHIFT, j, togglespecialworkspace, magic"
+          # "SUPER SHIFT, k, movetoworkspace, special:magic"
           "SUPER SHIFT, l, workspace, e+1"
 
           "SUPER, mouse_down, workspace, e+1"
-          "SUPER, mouse_up, workspace, e-1"
+          "SUPER, mouse_up,   workspace, e-1"
 
           "SUPER, 1, split:workspace, 1"
           "SUPER, 2, split:workspace, 2"
