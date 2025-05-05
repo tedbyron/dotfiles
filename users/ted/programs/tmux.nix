@@ -65,7 +65,7 @@
           gray='#32302f'
           dark_gray='#282828'
           light_purple='#d3869b'
-          dark_purple='#32302f'
+          dark_purple='#504945'
           cyan='#89b482'
           green='#a9b665'
           orange='#e78a4e'

@@ -5,11 +5,11 @@
   };
 
   outputs =
-    { self, ... }@inputs:
-    inputs.flake-utils.lib.eachDefaultSystem (
+    { nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
+        pkgs = nixpkgs.legacyPackages.${system};
       in
       with pkgs;
       {

@@ -72,6 +72,7 @@ _: {
       "config/Microsoft.PowerShell_profile.ps1"
       "config/bat/*"
       "config/doom/*"
+      "config/ghostty/themes/*"
       "config/ripgrep/*"
       "config/tmux/*"
       "config/zsh/*"

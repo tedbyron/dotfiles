@@ -145,7 +145,7 @@
         darwin = isDarwin system;
         pkgs = (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs).legacyPackages.${system};
         curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
-        treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix).config.build;
+        treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./format.nix).config.build;
       in
       {
         checks.formatting = treefmt.check self;
@@ -158,7 +158,7 @@
           ];
         };
 
-        packages = (builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ]);
+        packages = builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ];
       }
     );
 }
