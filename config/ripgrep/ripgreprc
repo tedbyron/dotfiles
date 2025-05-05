@@ -7,4 +7,3 @@
 --colors=path:fg:green
 --colors=line:fg:black
 --colors=line:style:intense
---colors=match:fg:cyan

@@ -9,6 +9,7 @@
 {
   imports = [
     ./fzf.nix
+    ./ghostty.nix
     ./neovim.nix
     ./tmux.nix
     ./wofi.nix
@@ -26,7 +27,12 @@
 
       config = {
         style = "changes,numbers";
-        theme = "gruvbox-dark";
+        theme = "gruvbox-material-dark";
+      };
+
+      themes.gruvbox-material-dark = {
+        src = lib.ted.configPath "bat";
+        file = "gruvbox-material-dark.tmTheme";
       };
     };
 
@@ -54,14 +60,6 @@
           open = "repo view --web";
         };
       };
-    };
-
-    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/gh/ghostty/package.nix
-    ghostty = {
-      enable = false;
-      enableZshIntegration = true;
-      installBatSyntax = true;
-      settings = builtins.fromTOML (lib.ted.readConfig "ghostty/config");
     };
 
     git =
@@ -126,8 +124,8 @@
       in
       {
         enable = true;
-        colorScheme = "Gruvbox";
-        theme = spicePkgs.themes.text;
+        colorScheme = "gruvbox-material-dark";
+        theme = spicePkgs.themes.dribbblish;
       };
 
     ssh.enable = true;

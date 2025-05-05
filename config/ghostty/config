@@ -1,6 +1,6 @@
 font-family = "Curlio"
 font-size = 12
-theme = "GruvboxDark"
+theme = "gruvbox-material-dark"
 minimum-contrast = 1
 cursor-style = "block"
 cursor-style-blink = false
@@ -29,5 +29,5 @@ macos-secure-input-indication = false
 macos-icon = "custom-style"
 macos-icon-frame = "beige"
 macos-icon-ghost-color = "#282828"
-macos-icon-screen-color = "#ebdbb2"
+macos-icon-screen-color = "#d4be98"
 auto-update = "off"

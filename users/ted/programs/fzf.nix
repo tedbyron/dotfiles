@@ -11,15 +11,15 @@
     colors = {
       bg = "#282828";
       "bg+" = "#3c3836";
-      fg = "#bdae93";
-      "fg+" = "#ebdbb2";
-      hl = "#83a598";
-      "hl+" = "#83a598";
-      info = "#fabd2f";
-      marker = "#8ec07c";
-      pointer = "#8ec07c";
-      prompt = "#fabd2f";
-      spinner = "#8ec07c";
+      fg = "#d4be98";
+      "fg+" = "#ddc7a1";
+      hl = "#7daea3";
+      "hl+" = "#7daea3";
+      info = "#d8a657";
+      marker = "#89b482";
+      pointer = "#89b482";
+      prompt = "#a9b665";
+      spinner = "#89b482";
     };
 
     defaultOptions = [

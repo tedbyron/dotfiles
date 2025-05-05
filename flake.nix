@@ -144,11 +144,11 @@
           default = builtins.getAttr "trivial" templates;
         };
     }
-    // utils.lib.eachDefaultSystem (
+    // inputs.flake-utils.lib.eachDefaultSystem (
       system:
       let
         darwin = isDarwin system;
-        pkgs = (if darwin then nixpkgs-darwin else nixpkgs).legacyPackages.${system};
+        pkgs = (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs).legacyPackages.${system};
         curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
         treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./treefmt.nix).config.build;
       in

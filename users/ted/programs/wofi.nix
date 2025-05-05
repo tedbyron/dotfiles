@@ -19,8 +19,8 @@
       let
         bg = "#282828";
         bg1 = "#3c3836";
-        fg = "#ebdbb2";
-        orange = "#fe8019";
+        fg = "#d4be98";
+        orange = "#e78a4e";
         borderRadius = "10px";
       in
       ''

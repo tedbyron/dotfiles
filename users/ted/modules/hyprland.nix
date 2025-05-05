@@ -105,7 +105,7 @@ in
 
         general = {
           gaps_out = 10;
-          "col.active_border" = rgb "d65d0e";
+          "col.active_border" = rgb "e78a4e";
           "col.inactive_border" = rgb "3c3836";
           snap.enabled = true; # ???
         };
@@ -168,14 +168,14 @@ in
         gestures.workspace_swipe = true;
 
         group = {
-          "col.border_active" = rgb "d65d0e";
+          "col.border_active" = rgb "e78a4e";
           "col.border_inactive" = rgb "3c3836";
-          "col.border_locked_active" = rgb "689d6a";
+          "col.border_locked_active" = rgb "89b482";
           "col.border_locked_inactive" = rgb "3c3836";
 
           groupbar = {
-            text_color = rgb "ebdbb2";
-            "col.active" = rgb "d65d0e";
+            text_color = rgb "d4be98";
+            "col.active" = rgb "e78a4e";
             "col.inactive" = rgb "3c3836";
           };
         };
@@ -204,7 +204,7 @@ in
         bind = [
           "SUPER, grave, exec, $terminal"
           "SUPER, m,     exit,"
-          "SUPER, f,     exec, $fileManager"
+          "SUPER, e,     exec, $fileManager"
           "SUPER, s,     togglesplit,"
           "SUPER, d,     split:swapactiveworkspaces, current +1"
           "SUPER, g,     split:grabroguewindows"

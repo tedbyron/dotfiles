@@ -51,7 +51,6 @@ _: {
       "datareporting.healthreport.uploadEnabled" = false;
       "datareporting.policy.dataSubmissionEnabled" = false;
       "dom.gamepad.enabled" = false;
-      "extensions.activeThemeID" = "{eb8c4a94-e603-49ef-8e81-73d3c4cc04ff}";
       "extensions.htmlaboutaddons.recommendations.enabled" = false;
       "extensions.pocket.enabled" = false;
       "font.name.monospace.x-western" = "Curlio";
