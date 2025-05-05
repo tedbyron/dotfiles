@@ -7,7 +7,7 @@
   };
 
   outputs =
-    inputs:
+    { self, ... }@inputs:
     inputs.utils.lib.eachDefaultSystem (
       system:
       let
@@ -30,7 +30,10 @@
       {
         checks.formatting = treefmt.check self;
         formatter = treefmt.wrapper;
-        devShells.default = mkShellNoCC { packages = [ ]; };
+
+        devShells.default = mkShellNoCC {
+          packages = [ ];
+        };
       }
     );
 }

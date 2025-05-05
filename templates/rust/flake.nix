@@ -8,7 +8,7 @@
   };
 
   outputs =
-    inputs:
+    { self, ... }@inputs:
     inputs.utils.lib.eachDefaultSystem (
       system:
       let
@@ -52,7 +52,11 @@
       {
         checks.formatting = treefmt.check self;
         formatter = treefmt.wrapper;
-        devShells.default = mkShellNoCC { packages = [ rust ]; };
+
+        devShells.default = mkShellNoCC {
+          packages = [ rust ];
+        };
+
         packages.default = ""; # TODO
       }
     );

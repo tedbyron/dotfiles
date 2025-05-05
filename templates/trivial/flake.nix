@@ -5,7 +5,7 @@
   };
 
   outputs =
-    inputs:
+    { self, ... }@inputs:
     inputs.utils.lib.eachDefaultSystem (
       system:
       let
@@ -14,7 +14,9 @@
       with pkgs;
       {
         formatter = nixfmt-rfc-style;
-        devShells.default = mkShellNoCC { packages = [ ]; };
+        devShells.default = mkShellNoCC {
+          packages = [ ];
+        };
       }
     );
 }
