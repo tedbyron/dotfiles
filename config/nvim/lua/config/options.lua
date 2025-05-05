@@ -6,8 +6,9 @@ vim.g.loaded_python3_provider = false
 vim.g.loaded_ruby_provider = false
 vim.g.snacks_animate = false
 
-vim.opt.scrolloff = 3
+vim.o.scrolloff = 3
+vim.o.tabstop = 4
 
 if vim.g.vscode then
-  vim.opt.timeout = false
+  vim.o.timeout = false
 end
