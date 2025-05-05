@@ -30,7 +30,7 @@
       {
         checks.formatting = treefmt.check self;
         formatter = treefmt.wrapper;
-        devShells.default = mkShellNoCC { };
+        devShells.default = mkShellNoCC { packages = [ ]; };
       }
     );
 }

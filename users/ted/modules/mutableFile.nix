@@ -100,7 +100,7 @@ in
         ExecStart =
           let
             mutableFilesCmds = lib.mapAttrsToList (
-              _path: value:
+              _: value:
               let
                 url = lib.escapeShellArg value.url;
                 path = lib.escapeShellArg value.path;
@@ -125,7 +125,7 @@ in
 
         ExecStartPost =
           let
-            mutableFilesCmds = lib.mapAttrsToList (_path: value: value.postScript) cfg;
+            mutableFilesCmds = lib.mapAttrsToList (_: value: value.postScript) cfg;
 
             shellScript = pkgs.writeShellScriptBin "fetch-mutable-files-post-script" ''
               export PATH=${runtimeInputs}''${PATH:-:$PATH}

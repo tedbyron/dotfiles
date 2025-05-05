@@ -137,6 +137,18 @@
           system = x86_64-linux;
         };
       };
+
+      templates =
+        let
+          templates = builtins.mapAttrs (n: _: {
+            path = ./templates/${n};
+            description = n;
+          }) (builtins.readDir ./templates);
+        in
+        templates
+        // {
+          default = builtins.getAttr "trivial" templates;
+        };
     }
     // utils.lib.eachDefaultSystem (
       system:
