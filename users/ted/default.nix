@@ -44,6 +44,7 @@ in
     home = {
       stateVersion = "23.11";
       homeDirectory = home;
+      sessionPath = [ "$HOME/git/dotfiles/bin" ];
       username = "ted";
 
       # TODO: 25.05
