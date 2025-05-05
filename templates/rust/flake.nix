@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    utils.url = "flake-utils";
     rust-overlay.url = "github:oxalica/rust-overlay";
     treefmt.url = "github:/numtide/treefmt-nix";
     treefmt.inputs.nixpkgs.follows = "nixpkgs";
@@ -9,7 +8,7 @@
 
   outputs =
     { self, ... }@inputs:
-    inputs.utils.lib.eachDefaultSystem (
+    inputs.flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = import inputs.nixpkgs {

@@ -1,12 +1,11 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    utils.url = "flake-utils";
   };
 
   outputs =
     { self, ... }@inputs:
-    inputs.utils.lib.eachDefaultSystem (
+    inputs.flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = inputs.nixpkgs.legacyPackages.${system};

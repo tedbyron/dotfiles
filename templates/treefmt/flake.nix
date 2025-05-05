@@ -1,14 +1,13 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    utils.url = "flake-utils";
     treefmt.url = "github:/numtide/treefmt-nix";
     treefmt.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
     { self, ... }@inputs:
-    inputs.utils.lib.eachDefaultSystem (
+    inputs.flake-utils.lib.eachDefaultSystem (
       system:
       let
         pkgs = inputs.nixpkgs.legacyPackages.${system};
