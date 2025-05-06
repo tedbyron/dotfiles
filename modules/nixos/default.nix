@@ -108,7 +108,6 @@
 
   programs = {
     dconf.enable = true;
-    nix-ld.enable = true;
     seahorse.enable = true;
 
     hyprland = {
@@ -117,6 +116,11 @@
       portalPackage = unstable.xdg-desktop-portal-hyprland;
       withUWSM = true;
       xwayland.enable = true;
+    };
+
+    nix-ld = {
+      enable = true;
+      libraries = [ pkgs.icu ];
     };
 
     uwsm = {
