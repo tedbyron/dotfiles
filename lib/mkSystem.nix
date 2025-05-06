@@ -20,15 +20,14 @@
       stylixModules = if darwin then inputs.stylix.darwinModules else inputs.stylix.nixosModules;
 
       args = {
+        lib = lib.extend (_: _: homeManager.lib);
+
         inherit
           self
           unstable
           darwin
           wsl
-          overlays
           ;
-
-        lib = lib.extend (_: _: homeManager.lib);
       };
     in
     system {
@@ -42,7 +41,7 @@
         (import ../hosts/${host})
 
         {
-          nixpkgs.pkgs = pkgs;
+          nixpkgs = { inherit pkgs overlays; };
 
           home-manager = {
             backupFileExtension = "hm-backup";

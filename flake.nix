@@ -58,7 +58,9 @@
   outputs =
     { self, ... }@inputs:
     let
-      overlays = [ ];
+      overlays = builtins.map (file: import (./overlays/${file})) (
+        builtins.attrNames (builtins.readDir ./overlays)
+      );
 
       isDarwin =
         system:
@@ -78,13 +80,13 @@
         }:
         let
           darwin = isDarwin system;
+
           lib = (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs).lib.extend (
             final: _: {
               ted = import ./lib {
                 inherit self;
                 lib = final;
 
-                # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
                 pkgs = import (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs) {
                   inherit system overlays;
                   config.allowUnfree = true;
@@ -143,13 +145,15 @@
       system:
       let
         darwin = isDarwin system;
-        pkgs = (if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs).legacyPackages.${system};
+        nixpkgs = if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs;
+        pkgs = import nixpkgs { inherit system overlays; };
         curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
         treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./format.nix).config.build;
       in
       {
         checks.formatting = treefmt.check self;
         formatter = treefmt.wrapper;
+        packages = builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ];
 
         devShells.default = pkgs.mkShellNoCC {
           packages = with pkgs; [
@@ -157,8 +161,6 @@
             stylua
           ];
         };
-
-        packages = builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ];
       }
     );
 }

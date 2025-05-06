@@ -146,13 +146,13 @@
 
       LS_COLORS =
         let
-          configDir = if darwin then "./Library/Preferences" else "./.config";
+          configDir = ".config/vivid/themes";
         in
         ''
-          mkdir -p ${configDir}/vivid/themes
+          mkdir -p ${configDir}
           echo '${lib.ted.readConfig "vivid/themes/gruvbox-material-dark.yml"}' \
-            > ${configDir}/vivid/themes/gruvbox-material-dark.yml
-          HOME=. XDG_CONFIG_HOME=./.config vivid generate gruvbox-material-dark > $out
+            > ${configDir}/gruvbox-material-dark.yml
+          HOME=. vivid generate gruvbox-material-dark > $out
         ''
         |> pkgs.runCommandLocal "vivid-ls-colors" { nativeBuildInputs = [ pkgs.vivid ]; }
         |> builtins.readFile;

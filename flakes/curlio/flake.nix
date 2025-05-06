@@ -11,8 +11,16 @@
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
         inherit (pkgs) lib;
+
+        pkgs = import nixpkgs {
+          inherit system;
+
+          overlays = builtins.map (file: import (./overlays/${file})) (
+            builtins.attrNames (builtins.readDir ./overlays)
+          );
+        };
+
         buildPlan = {
           family = "Curlio";
           spacing = "term";

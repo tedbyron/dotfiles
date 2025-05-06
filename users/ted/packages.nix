@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstable,
   lib,
   darwin,
   ...
@@ -9,7 +8,7 @@
   home.packages =
     with pkgs;
     [
-      wabt
+      cargo
       cargo-binutils
       cargo-edit
       cargo-expand
@@ -27,10 +26,12 @@
       lychee
       nil
       nixfmt-rfc-style
-      unstable.nodejs
+      nodejs
       ouch
+      rustc
       tokei
       tree
+      wabt
       wasm-pack
     ]
     ++ lib.optionals darwin [

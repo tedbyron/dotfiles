@@ -1,20 +1,10 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   nix = {
     channel.enable = false;
     gc.automatic = true;
     optimise.automatic = true;
     package = pkgs.nixVersions.latest;
-
-    registry.nixpkgs.to = {
-      inherit (pkgs) path;
-      type = "path";
-
-      narHash =
-        "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
-        |> pkgs.runCommandLocal "nixpkgs-hash" { nativeBuildInputs = [ config.nix.package ]; }
-        |> builtins.readFile;
-    };
 
     settings = {
       download-buffer-size = 536870912; # 512MiB

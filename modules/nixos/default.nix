@@ -133,6 +133,16 @@
     };
   };
 
+  registry.nixpkgs.to = {
+    inherit (pkgs) path;
+    type = "path";
+
+    narHash =
+      "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
+      |> pkgs.runCommandLocal "nixpkgs-hash" { nativeBuildInputs = [ config.nix.package ]; }
+      |> builtins.readFile;
+  };
+
   security = {
     rtkit.enable = true;
 
