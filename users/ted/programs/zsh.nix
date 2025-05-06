@@ -124,8 +124,8 @@
     };
 
     shellGlobalAliases = {
-      "-h" = "-h 2>&1 | bat -pl help";
-      "--help" = "--help 2>&1 | bat -pl help";
+      "-h" = "-h |& bat -pl help";
+      "--help" = "--help |& bat -pl help";
     };
 
     sessionVariables = {

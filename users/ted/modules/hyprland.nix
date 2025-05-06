@@ -111,7 +111,7 @@ in
         };
 
         decoration = {
-          rounding = 10;
+          rounding = 5;
           blur.enabled = false;
           shadow.color = rgba "28282899";
         };

@@ -121,8 +121,8 @@ alias tree='unbuffer tree | bat -p'
 alias wlcopy='wl-copy'
 alias wlpaste='wl-paste'
 
-alias -g -- -h='-h 2>&1 | bat -p -l help'
-alias -g -- --help='--help 2>&1 | bat -p -l help'
+alias -g -- -h='-h |& bat -p -l help'
+alias -g -- --help='--help |& bat -p -l help'
 
 e()     { pgrep emacs && emacsclient -n $@ || emacs -nw $@ }
 ediff() emacs -nw --eval "(ediff-files \"$1\" \"$2\")"

@@ -24,6 +24,7 @@
 
     loader = {
       efi.canTouchEfiVariables = true;
+      timeout = null;
 
       systemd-boot = {
         enable = true;

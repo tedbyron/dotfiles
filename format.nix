@@ -2,7 +2,6 @@ _: {
   programs = {
     deadnix.enable = true;
     just.enable = true;
-    mix-format.enable = true;
     nixfmt.enable = true;
     ruff-check.enable = true;
     ruff-format.enable = true;
