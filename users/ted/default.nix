@@ -47,11 +47,15 @@ in
       sessionPath = [ "$HOME/git/dotfiles/bin" ];
       username = "ted";
 
-      # TODO: 25.05
-      # pointerCursor = {
-      #   enable = !darwin;
-      #   hyprcursor.enable = true;
-      # };
+      pointerCursor = {
+        enable = !darwin;
+        gtk.enable = true;
+        name = "phinger-cursors-dark";
+        package = pkgs.phinger-cursors;
+        size = 12;
+        # TODO: 25.05
+        # hyprcursor.enable = true;
+      };
     };
 
     services = lib.optionalAttrs (!darwin) {
