@@ -43,6 +43,7 @@
       nmap
       openssl
       python3
+      wget
     ];
   };
 }

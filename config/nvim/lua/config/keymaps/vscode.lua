@@ -49,3 +49,7 @@ noremap_action("n", "]t", "todo-tree.goToNext")
 noremap_action("n", "[t", "todo-tree.goToPrevious")
 noremap_action("n", "]b", "workbench.action.nextEditor")
 noremap_action("n", "[b", "workbench.action.previousEditor")
+
+noremap_action({ "n", "x" }, "gsdt", "editor.emmet.action.removeTag")
+noremap_action("n", "gsrtt", "editor.emmet.action.updateTag")
+noremap_action("x", "gsat", "editor.emmet.action.wrapWithAbbreviation")
