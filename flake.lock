@@ -99,7 +99,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-okkL1FGF1Jyi/ZOYAXJJ0XEnMHGa5KfHXWG+y981d18=",
+        "narHash": "sha256-CUOpNMTF8or4qbHKdkEuhEydoM3nDzDG8Qr71hW3UjU=",
         "path": "./flakes/curlio",
         "type": "path"
       },
@@ -119,7 +119,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-okkL1FGF1Jyi/ZOYAXJJ0XEnMHGa5KfHXWG+y981d18=",
+        "narHash": "sha256-DIyaNsr8LjmP4++u9BHzWeI561R8cYZy8qm9fBuKSe0=",
         "path": "./flakes/curlio",
         "type": "path"
       },

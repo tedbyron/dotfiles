@@ -1,6 +1,4 @@
 {
-  osConfig,
-  pkgs,
   unstable,
   darwin,
   ...
@@ -10,6 +8,7 @@ let
 in
 {
   services = {
+    hyprpaper.enable = true;
     # hypridle.enable = false; # TODO
     # hyprpolkitagent.enable = true; # TODO 25.05
 
@@ -17,33 +16,6 @@ in
       inherit enable;
       # TODO: icon theme
       waylandDisplay = "wayland-1";
-    };
-
-    hyprpaper = {
-      inherit enable;
-
-      settings =
-        let
-          wallpapers = [
-            osConfig.stylix.image
-            (pkgs.fetchurl {
-              url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/triangle.png";
-              hash = "sha256-AvQNl6DBTUyukzrtxFFxrAAoM6I286J0v+jkPtjf8C4=";
-            })
-            (pkgs.fetchurl {
-              url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/starry-sky.png";
-              hash = "sha256-jbff7E63oDbU8vLdbCizjpbBPMEoWV934saNgBPEUEA=";
-            })
-            (pkgs.fetchurl {
-              url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/gruvbox_grid.png";
-              hash = "sha256-b7hN7xV/0a/7NVB3jLimPsaIO+ZLXGym7Hmvu5UsPoI=";
-            })
-          ];
-        in
-        {
-          preload = builtins.tail wallpapers;
-          wallpaper = [ ", ${builtins.head wallpapers}" ];
-        };
     };
   };
 

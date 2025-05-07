@@ -50,7 +50,7 @@
         paths =
           config.fonts.packages
           ++ (with pkgs; [
-            capitaine-cursors-themed
+            phinger-cursors
             gruvbox-plus-icons
           ]);
 
@@ -101,10 +101,22 @@
     "2606:4700:4700::1001"
   ];
 
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-  ];
+  nix = {
+    registry.nixpkgs.to = {
+      inherit (pkgs) path;
+      type = "path";
+
+      narHash =
+        "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
+        |> pkgs.runCommandLocal "nixpkgs-hash" { nativeBuildInputs = [ config.nix.package ]; }
+        |> builtins.readFile;
+    };
+
+    settings.trusted-users = [
+      "root"
+      "@wheel"
+    ];
+  };
 
   programs = {
     dconf.enable = true;
@@ -131,16 +143,6 @@
         binPath = "/run/current-system/sw/bin/Hyprland";
       };
     };
-  };
-
-  registry.nixpkgs.to = {
-    inherit (pkgs) path;
-    type = "path";
-
-    narHash =
-      "nix --extra-experimental-features nix-command hash path ${pkgs.path} > $out"
-      |> pkgs.runCommandLocal "nixpkgs-hash" { nativeBuildInputs = [ config.nix.package ]; }
-      |> builtins.readFile;
   };
 
   security = {

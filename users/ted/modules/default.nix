@@ -1,7 +1,9 @@
 _: {
   imports = [
     ./emacs.nix
+    ./gtk.nix
     ./hyprland.nix
-    ./mutableFile.nix
+    ./mutable-file.nix
+    ./stylix.nix
   ];
 }

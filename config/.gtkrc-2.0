@@ -1,0 +1,2 @@
+gtk-enable-primary-paste = false
+gtk-key-theme-name = "Emacs"

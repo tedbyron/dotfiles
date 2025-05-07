@@ -58,9 +58,7 @@
   outputs =
     { self, ... }@inputs:
     let
-      overlays = builtins.map (file: import (./overlays/${file})) (
-        builtins.attrNames (builtins.readDir ./overlays)
-      );
+      overlays = [ ];
 
       isDarwin =
         system:

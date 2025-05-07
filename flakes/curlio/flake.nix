@@ -16,9 +16,8 @@
         pkgs = import nixpkgs {
           inherit system;
 
-          overlays = builtins.map (file: import (./overlays/${file})) (
-            builtins.attrNames (builtins.readDir ./overlays)
-          );
+          # BUG: 25.05 remove; https://github.com/NixOS/nixpkgs/issues/402079
+          overlays = [ (_: prev: { nodejs = prev.nodejs_22; }) ];
         };
 
         buildPlan = {

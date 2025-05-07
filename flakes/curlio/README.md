@@ -3,7 +3,7 @@
 Iosevka extended ss20 variant + nerd font glyphs, customized to look similar to
 [Proggy](https://github.com/bluescan/proggyfonts).
 
-![curlio font screenshot](../../../screenshots/screenshots/curlio.png)
+![curlio preview](../../../screenshots/screenshots/curlio.png)
 
 ## Packages
 
