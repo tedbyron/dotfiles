@@ -73,7 +73,7 @@ history limit='10':
     } else {
         g=$({{ rebuild }}--list-generations | tail -n $l)
         print -aC 3 Gen Date ' ' ${=$(head -n -1 <<<$g)} \
-            "{{ CYAN }}${(@)$(tail -1 <<<$g)[1,3]}{{ NORMAL }}"
+            '{{ CYAN }}'${(@)$(tail -1 <<<$g)[1,3]}'{{ NORMAL }}'
     }
 
 # Delete generations older than input days
