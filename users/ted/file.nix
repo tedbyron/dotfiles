@@ -48,6 +48,7 @@
     enable = true;
 
     configFile = {
+      "fastfetch/config.jsonc".source = lib.ted.configPath "fastfetch/config.jsonc";
       "iex/.iex.exs".source = lib.ted.configPath "iex/.iex.exs";
       "just/justfile".source = ../../justfile;
       "nvim/init.lua".source = lib.ted.configPath "nvim/init.lua";

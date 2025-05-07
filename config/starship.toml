@@ -227,7 +227,7 @@ disabled = true
 [nix_shell]
 format = '[$symbol]($style)'
 symbol = "\uf313"            # nf-linux-nixos
-style = 'cyan'
+style = 'blue'
 impure_msg = 'i'
 pure_msg = 'p'
 disabled = false

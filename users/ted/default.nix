@@ -48,13 +48,12 @@ in
       username = "ted";
 
       pointerCursor = {
-        enable = !darwin;
+        # TODO: 25.05
+        # enable = !darwin;
+        # hyprcursor.enable = true;
         gtk.enable = true;
         name = "phinger-cursors-dark";
-        package = pkgs.phinger-cursors;
         size = 12;
-        # TODO: 25.05
-        # hyprcursor.enable = true;
       };
     };
 

@@ -20,7 +20,7 @@ in
   stylix = {
     enable = true;
     inherit (osConfig.stylix) base16Scheme polarity;
-    image = builtins.head wallpapers;
+    image = builtins.elemAt wallpapers 2;
     imageScalingMode = "fill";
 
     cursor = {

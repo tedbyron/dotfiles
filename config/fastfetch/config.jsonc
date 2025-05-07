@@ -1,0 +1,94 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "display": {
+    "separator": "",
+    "percent": { "type": 1 },
+    "key": { "width": 14 },
+    "freq": { "ndigits": 1 }
+  },
+  "modules": [
+    {
+      "type": "title",
+      "format": "{host-name-colored}"
+    },
+
+    {
+      "type": "separator",
+      "string": " "
+    },
+
+    {
+      "type": "os",
+      "format": "{name} {#90}{version} {arch}"
+    },
+    {
+      "type": "kernel",
+      "format": "{sysname} {#90}{release}"
+    },
+    // {
+    //   "type": "uptime",
+    //   "format": "{?days}{days}d {?}{hours}h"
+    // },
+    {
+      "type": "packages",
+      "format": "{all}"
+    },
+    {
+      "type": "wm",
+      "format": "{pretty-name} {#90}{version}"
+    },
+    {
+      "type": "terminal",
+      "format": "{pretty-name} {#90}{version}"
+    },
+    {
+      "type": "shell",
+      "format": "{pretty-name} {#90}{version}"
+    },
+    {
+      "type": "editor",
+      "format": "{name} {#90}{version}"
+    },
+
+    {
+      "type": "separator",
+      "string": " "
+    },
+
+    {
+      "type": "host",
+      "format": "{name} {#90}{version}",
+      "key": "Motherboard"
+    },
+    {
+      "type": "cpu",
+      "format": "{name} {#90}({cores-online}) @ {freq-max}"
+    },
+    {
+      "type": "gpu",
+      "format": "{vendor} {name} {#90}{type}"
+    },
+    {
+      "type": "memory",
+      "format": "{total} {#90}{percentage}"
+    },
+    {
+      "type": "disk",
+      "format": "{size-total} {#90}{size-percentage} ({filesystem})"
+    },
+    {
+      "type": "sound",
+      "format": "{name} {#90}{platform-api}"
+    },
+
+    {
+      "type": "separator",
+      "string": " "
+    },
+
+    {
+      "type": "colors",
+      "symbol": "circle"
+    }
+  ]
+}
