@@ -188,10 +188,18 @@ in
           "SUPER, k, movefocus, u"
           "SUPER, l, movefocus, r"
 
+          "SUPER, left,  movefocus, l"
+          "SUPER, down,  movefocus, d"
+          "SUPER, up,    movefocus, u"
+          "SUPER, right, movefocus, r"
+
           "SUPER SHIFT, h, workspace, e-1"
           # "SUPER SHIFT, j, togglespecialworkspace, magic"
           # "SUPER SHIFT, k, movetoworkspace, special:magic"
           "SUPER SHIFT, l, workspace, e+1"
+
+          "SUPER SHIFT, left,  workspace, e-1"
+          "SUPER SHIFT, down,  workspace, e+1"
 
           "SUPER, mouse_down, workspace, e+1"
           "SUPER, mouse_up,   workspace, e-1"
