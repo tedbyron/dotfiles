@@ -36,7 +36,6 @@ update *args         # Update flake lockfile for all or specified inputs
   xcode-select --install
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-  # No determinate nix
   git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
   # Give terminal full disk access and restart
   nix run nix-darwin -- --flake ~/git/dotfiles#host switch
@@ -72,6 +71,8 @@ update *args         # Update flake lockfile for all or specified inputs
     ```
 
   - Partition and format
+
+    <!-- TODO: disko -->
 
     - <details>
       <summary>btrfs</summary>

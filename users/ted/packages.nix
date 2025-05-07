@@ -33,6 +33,7 @@
       tree
       wabt
       wasm-pack
+      zig
     ]
     ++ lib.optionals darwin [
       mas
@@ -44,6 +45,5 @@
       nautilus
       vlc
       wl-clipboard
-      zig
     ];
 }
