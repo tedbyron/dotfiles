@@ -280,3 +280,9 @@ update *args         # Update flake lockfile for all or specified inputs
   ```sh
   NVD_LOG=1 nix shell nixpkgs#libva-utils -c vainfo
   ```
+
+- Gpg test key retrieval
+
+  ```sh
+  gpg --locate-keys --auto-key-locate clear,nodefault,wkd address@example.com
+  ```

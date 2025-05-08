@@ -82,6 +82,7 @@ bindkey \^U backward-kill-line
 
 alias b='bat'
 alias cp='cp -i'
+alias date='date -u +"%Y-%m-%dT%H:%M:%SZ"'
 alias df='df \-h'
 alias dl='yt-dlp'
 alias dls='dl --embed-subs --sub-lang "en.*"'
@@ -111,6 +112,7 @@ if (( $+commands[gls] )) {
 alias la='ls -A'
 alias l='ls -Al'
 alias mv='mv -i'
+alias n='nvim'
 alias nc='ncat'
 alias pgrep='pgrep -afil'
 alias ps='ps -aefx'

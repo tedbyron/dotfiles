@@ -1,6 +1,9 @@
 _: {
   programs.firefox = {
     enable = true;
+    wrapperConfig = {
+      pipewireSupport = true;
+    };
 
     # https://mozilla.github.io/policy-templates
     policies = {
@@ -14,7 +17,6 @@ _: {
       NewTabPage = false;
       NoDefaultBookmarks = true;
       PasswordManagerEnabled = false;
-      StartDownloadsInTempDirectory = true;
       UserMessaging = {
         ExtensionRecommendations = false;
         SkipOnboarding = true;
@@ -67,10 +69,6 @@ _: {
       "toolkit.telemetry.archive.enabled" = false;
       "toolkit.telemetry.server" = "";
       "toolkit.telemetry.unified" = false;
-    };
-
-    wrapperConfig = {
-      pipewireSupport = true;
     };
   };
 }

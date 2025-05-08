@@ -87,6 +87,7 @@
     shellAliases = {
       b = "bat";
       cp = "cp -i";
+      date = "date -u +\"%Y-%m-%dT%H:%M:%SZ\"";
       df = "df \\-h";
       dl = "yt-dlp";
       dls = "dl --embed-subs --sub-lang 'en.*'";
@@ -112,6 +113,7 @@
       la = "ls -A";
       l = "ls -Al";
       mv = "mv -i";
+      n = "nvim";
       nc = "ncat";
       pgrep = "pgrep -afil";
       ps = "ps -aefx";
