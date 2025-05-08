@@ -47,11 +47,7 @@ _: {
     formatter =
       let
         shellFiles = [ "bin/cargo-install-update" ];
-
-        pythonFiles = [
-          "bin/xrandr-to-modeline"
-          "config/python/pythonrc"
-        ];
+        pythonFiles = [ "bin/xrandr-to-modeline" ];
       in
       {
         prettier.includes = [ "*.jsonc" ];

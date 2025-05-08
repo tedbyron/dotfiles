@@ -1,10 +1,15 @@
 {
+  config,
   pkgs,
   unstable,
   lib,
   darwin,
   ...
 }:
+let
+  home = config.home.homeDirectory;
+  configHome = config.xdg.configHome;
+in
 {
   programs.zsh = {
     enable = true;
@@ -17,12 +22,12 @@
 
     dirHashes =
       {
-        dls = "$HOME/Downloads";
-        dot = "$HOME/git/dotfiles";
-        git = "$HOME/git";
+        dls = "${home}/Downloads";
+        dot = "${home}/git/dotfiles";
+        git = "${home}/git";
       }
       // lib.optionalAttrs darwin {
-        pub = "$HOME/Public";
+        pub = "${home}/Public";
       };
 
     history = {
@@ -133,8 +138,8 @@
     sessionVariables = {
       EDITOR = "nvim";
       ERL_AFLAGS = "+pc unicode -kernel shell_history enabled";
-      GOPATH = "$HOME/.go";
-      IEX_HOME = "$HOME/.config/iex";
+      GOPATH = "${home}/.go";
+      IEX_HOME = "${configHome}/iex";
       LESS = "-FRi";
       LESSHISTFILE = "-";
       MANPAGER = "sh -c 'col -bx | bat -p -l man'";
@@ -142,6 +147,7 @@
       NODE_REPL_HISTORY = " ";
       NULLCMD = ":";
       PAGER = "less";
+      PYTHONSTARTUP = "${configHome}/python/pythonrc.py";
       READNULLCMD = "bat";
       STARSHIP_LOG = "error";
       ZSH_TMUX_AUTOSTART = if darwin then "true" else "false";

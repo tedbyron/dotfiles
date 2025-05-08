@@ -52,6 +52,7 @@
       "iex/.iex.exs".source = lib.ted.configPath "iex/.iex.exs";
       "just/justfile".source = ../../justfile;
       "nvim/init.lua".source = lib.ted.configPath "nvim/init.lua";
+      "python/pythonrc.py".source = lib.ted.configPath "python/pythonrc.py";
       "rustfmt.toml".source = lib.ted.configPath "rustfmt.toml";
       "stylua.toml".source = lib.ted.configPath "stylua.toml";
       "tio/config".source = lib.ted.configPath "tio/config";

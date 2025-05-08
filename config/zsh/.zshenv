@@ -22,6 +22,7 @@ export MANROFFOPT=-c
 export NODE_REPL_HISTORY=' '
 export NULLCMD=:
 export PAGER=less
+export PYTHONSTARTUP="$HOME/.config/python/pythonrc.py";
 export READNULLCMD=bat
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/ripgreprc
 export STARSHIP_LOG=error
