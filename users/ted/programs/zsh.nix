@@ -107,6 +107,7 @@ in
       gdc = "git diff --check";
       gdcas = "gd diff --cached --stat";
       gds = "git diff --stat";
+      gdss = "git diff --shortstat";
       gdst = "git diff --staged";
       gmv = "git mv";
       grep = "grep -Ei --color=auto";

@@ -7,7 +7,7 @@
 let
   modules = [
     ./mkSystem.nix
-    ./util.nix
+    ./trivial.nix
   ];
 
   ted = lib.makeExtensible (
