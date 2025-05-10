@@ -56,8 +56,8 @@ in
         ];
 
         monitor = [
-          "DP-5, 2560x1440@120, 0x0,        auto, vrr, 1"
-          "DP-4, 2560x1440@60,  auto-right, auto, vrr, 0"
+          "DP-5, 2560x1440@120, 0x0,        1.125, vrr, 1" # XG27AQ 109 DPI
+          "DP-4, 2560x1440@60,  auto-right, 1.125, vrr, 0" # XG27AQ 109 DPI
           ",     preferred,     auto,       auto"
         ];
 
