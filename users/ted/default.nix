@@ -41,21 +41,23 @@ in
       ./packages.nix
     ];
 
-    home = {
-      stateVersion = "23.11";
-      homeDirectory = home;
-      sessionPath = [ "$HOME/git/dotfiles/bin" ];
-      username = "ted";
-
-      pointerCursor = {
-        # TODO: 25.05
-        # enable = !darwin;
-        # hyprcursor.enable = true;
-        gtk.enable = true;
-        name = "phinger-cursors-dark";
-        size = 12;
+    home =
+      {
+        stateVersion = "23.11";
+        homeDirectory = home;
+        sessionPath = [ "$HOME/git/dotfiles/bin" ];
+        username = "ted";
+      }
+      // lib.optionalAttrs (!darwin) {
+        pointerCursor = {
+          # TODO: 25.05
+          # enable = !darwin;
+          # hyprcursor.enable = true;
+          gtk.enable = true;
+          name = "phinger-cursors-dark";
+          size = 12;
+        };
       };
-    };
 
     services = lib.optionalAttrs (!darwin) {
       gnome-keyring.enable = true;

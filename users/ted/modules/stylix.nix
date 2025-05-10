@@ -1,4 +1,10 @@
-{ pkgs, osConfig, ... }:
+{
+  osConfig,
+  pkgs,
+  lib,
+  darwin,
+  ...
+}:
 let
   wallpapers = [
     osConfig.stylix.image
@@ -23,13 +29,13 @@ in
     image = builtins.elemAt wallpapers 1;
     imageScalingMode = "fill";
 
-    cursor = {
+    cursor = lib.optionalAttrs (!darwin) {
       name = "phinger-cursors-dark";
       package = pkgs.phinger-cursors;
       size = 12;
     };
 
-    iconTheme = {
+    iconTheme = lib.optionalAttrs (!darwin) {
       enable = true;
       dark = "Gruvbox-Plus-Dark";
       light = "Gruvbox-Plus-Light";

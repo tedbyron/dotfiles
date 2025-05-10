@@ -58,7 +58,8 @@
   outputs =
     { self, ... }@inputs:
     let
-      overlays = [ ];
+      # BUG: 25.05 remove; https://github.com/NixOS/nixpkgs/issues/402079
+      overlays = [ (_: prev: { nodejs = prev.nodejs_22; }) ];
 
       isDarwin =
         system:
