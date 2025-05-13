@@ -76,7 +76,7 @@ in
 
         general = {
           gaps_out = 10;
-          "col.active_border" = rgb "e78a4e";
+          "col.active_border" = rgb "d4be98";
           "col.inactive_border" = rgb "3c3836";
           snap.enabled = true; # ???
         };
