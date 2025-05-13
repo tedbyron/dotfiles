@@ -22,6 +22,8 @@ vim.keymap.set("n", "gcc", "<Plug>VSCodeCommentaryLine")
 
 noremap_action("n", "<Leader>bd", "workbench.action.closeActiveEditor")
 noremap_action("n", "<Leader>bo", "workbench.action.closeOtherEditors")
+noremap_action("n", "<Leader>bp", "workbench.action.pinEditor")
+noremap_action("n", "<Leader>bP", "workbench.action.unpinEditor")
 
 noremap_action("n", "<Leader>es", "editor.action.triggerSuggest")
 noremap_action("n", "<Leader>ef", "editor.action.formatDocument")
