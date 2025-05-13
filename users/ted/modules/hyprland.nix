@@ -32,7 +32,6 @@ in
 
       # TODO
       plugins = with unstable.hyprlandPlugins; [
-        hypr-dynamic-cursors
         # hyprspace
         hyprsplit
         # hyprsunset
@@ -161,16 +160,18 @@ in
 
         plugin = [
           { hyprsplit.num_workspaces = 4; }
-          {
-            dynamic-cursors = {
-              mode = "stretch";
+          /*
+            {
+              dynamic-cursors = {
+                mode = "stretch";
 
-              shake = {
-                speed = 0;
-                timeout = 0;
+                shake = {
+                  speed = 0;
+                  timeout = 0;
+                };
               };
-            };
-          }
+            }
+          */
         ];
 
         bind = [
@@ -249,7 +250,7 @@ in
         ];
 
         cursor = {
-          no_hardware_cursors = 1;
+          # no_hardware_cursors = 1;
           hide_on_touch = false;
         };
 

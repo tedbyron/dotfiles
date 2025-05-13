@@ -9,8 +9,8 @@ let
   wallpapers = [
     osConfig.stylix.image
     (pkgs.fetchurl {
-      url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/triangle.png";
-      hash = "sha256-AvQNl6DBTUyukzrtxFFxrAAoM6I286J0v+jkPtjf8C4=";
+      url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/media/branch/master/png/gruvbox-light-blue.png";
+      hash = "";
     })
     (pkgs.fetchurl {
       url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/starry-sky.png";
@@ -26,7 +26,7 @@ in
   stylix = {
     enable = true;
     inherit (osConfig.stylix) base16Scheme polarity;
-    image = builtins.elemAt wallpapers 1;
+    image = builtins.head wallpapers;
     imageScalingMode = "fill";
 
     cursor = lib.optionalAttrs (!darwin) {

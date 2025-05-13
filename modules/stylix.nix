@@ -25,8 +25,8 @@
     };
 
     image = pkgs.fetchurl {
-      url = "https://gruvbox-wallpapers.pages.dev/wallpapers/minimalistic/gruvbox-nix.png";
-      hash = "sha256-WuLGBomGcJxDgHWIHNN2qyqCzltvo45PiT062ZwAQ6I=";
+      url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/media/branch/master/png/gruvbox-dark-blue.png";
+      hash = "sha256-+jfTuvl1VJocN+YNp04YVONR054GX+p/yxNXyyhsNcs=";
     };
   };
 }

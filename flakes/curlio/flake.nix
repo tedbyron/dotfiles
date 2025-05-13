@@ -12,13 +12,7 @@
       system:
       let
         inherit (pkgs) lib;
-
-        pkgs = import nixpkgs {
-          inherit system;
-
-          # BUG: 25.05 remove; https://github.com/NixOS/nixpkgs/issues/402079
-          overlays = [ (_: prev: { nodejs = prev.nodejs_22; }) ];
-        };
+        pkgs = nixpkgs.legacyPackages.${system};
 
         buildPlan = {
           family = "Curlio";
