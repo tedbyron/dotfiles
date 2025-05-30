@@ -24,18 +24,18 @@ let
 in
 {
   stylix = {
-    enable = true;
+    enable = !darwin;
     inherit (osConfig.stylix) base16Scheme polarity;
     image = builtins.head wallpapers;
     imageScalingMode = "fill";
 
-    cursor = lib.optionalAttrs (!darwin) {
+    cursor = {
       name = "phinger-cursors-dark";
       package = pkgs.phinger-cursors;
       size = 12;
     };
 
-    iconTheme = lib.optionalAttrs (!darwin) {
+    iconTheme = {
       enable = true;
       dark = "Gruvbox-Plus-Dark";
       light = "Gruvbox-Plus-Light";
