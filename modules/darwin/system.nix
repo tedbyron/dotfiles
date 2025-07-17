@@ -19,7 +19,7 @@ _: {
         expose-group-apps = false;
         minimize-to-application = true;
         mru-spaces = false;
-        persistent-others = [ "~/Downloads" ];
+        persistent-others = [ "/Users/ted/Downloads" ]; # TODO: https://github.com/nix-darwin/nix-darwin/issues/968
         show-recents = false;
         tilesize = 56;
       };

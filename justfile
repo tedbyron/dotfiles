@@ -2,8 +2,8 @@ set quiet := true
 set shell := ['zsh', '-cu']
 
 os := os()
-rebuild := if os == 'linux' { 'nixos-rebuild ' } else { if os == 'macos' { 'darwin-rebuild ' } else { error('Unsupported OS: ' + os) } }
-sudo := if os == 'linux' { 'sudo ' } else { '' }
+rebuild := if os == 'linux' { 'nixos-rebuild' } else if os == 'macos' { 'darwin-rebuild' } else { error('Unsupported OS: ' + os) }
+sudo := if os == 'linux' { 'sudo' } else { '' }
 
 alias b := build
 alias c := check
@@ -25,7 +25,7 @@ rebuild prefix arg *opts:
     set -euo pipefail
     h=$(hostname)
     if { fd -gqt d -d 1 $h ~/git/dotfiles/hosts } {
-        {{ prefix }}{{ rebuild }}{{ arg }} --flake ~/git/dotfiles#$h {{ opts }}
+        {{ prefix }} {{ rebuild }} {{ arg }} --flake ~/git/dotfiles#$h {{ opts }}
     } else {
         echo "No config for host: $h"
         exit 1
@@ -33,17 +33,17 @@ rebuild prefix arg *opts:
 
 # Build and activate the host flake
 [group('rebuild')]
-switch *opts: (rebuild sudo 'switch' opts)
+switch *opts: (rebuild 'sudo' 'switch' opts)
 
 # Build the host flake, and make it the boot default
 [group('rebuild')]
 [linux]
-boot *opts: (rebuild sudo 'boot' opts)
+boot *opts: (rebuild 'sudo' 'boot' opts)
 
 # Build and activate the host flake, and revert on boot
 [group('rebuild')]
 [linux]
-test *opts: (rebuild sudo 'test' opts)
+test *opts: (rebuild 'sudo' 'test' opts)
 
 # Build the host flake
 [group('rebuild')]
@@ -54,7 +54,7 @@ build *opts: (rebuild '' 'build' opts)
 # Rollback to the previous generation
 [group('history')]
 rollback:
-    {{ sudo }}{{ rebuild }}--rollback
+    {{ sudo }} {{ rebuild }}--rollback
 
 # List available generations
 [group('history')]
@@ -80,7 +80,7 @@ history limit='10':
 [confirm]
 [group('history')]
 wipe-history days:
-    {{ sudo }}nix profile wipe-history \
+    {{ sudo }} nix profile wipe-history \
         --profile /nix/var/nix/profiles/system \
         --older-than {{ days }}d
 

@@ -24,9 +24,20 @@
     };
   };
 
-  system.defaults.dock.persistent-apps = [
-
-  ];
+  system.defaults.dock.persistent-apps =
+    let
+      inherit (config.home-manager.users.ted.programs.spicetify) spicedSpotify;
+      userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
+    in
+    [
+      { app = "/Applications/Firefox.app/"; }
+      { app = "/Applications/Bitwarden.app/"; }
+      { app = "${spicedSpotify}/Applications/Spotify.app/"; }
+      { app = "/Applications/Figma.app/"; }
+      { app = "${userPrograms "alacritty"}/Applications/Alacritty.app/"; }
+      # { app = "${userPrograms "ghostty"}/Applications/Ghostty.app/"; }
+      { app = "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"; }
+    ];
 
   # custom.dock =
   #   let

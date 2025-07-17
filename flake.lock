@@ -98,15 +98,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-byYn/QI+60WQee1vuZ9AQzg9BBeyat/b7NfnpnsxD8Q=",
         "path": "./flakes/curlio",
         "type": "path"
       },
       "original": {
         "path": "./flakes/curlio",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "curlio-darwin": {
       "inputs": {
@@ -118,15 +117,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-byYn/QI+60WQee1vuZ9AQzg9BBeyat/b7NfnpnsxD8Q=",
         "path": "./flakes/curlio",
         "type": "path"
       },
       "original": {
         "path": "./flakes/curlio",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "darwin": {
       "inputs": {
