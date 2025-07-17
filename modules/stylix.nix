@@ -1,16 +1,17 @@
 {
   self,
   pkgs,
+  lib,
   darwin,
   ...
 }:
 {
   stylix = {
-    enable = !darwin;
+    enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
     polarity = "dark";
 
-    fonts = {
+    fonts = lib.optionalAttrs (!darwin) {
       monospace = {
         name = "Curlio";
         package = self.outputs.packages.${pkgs.system}.curlio-ttf;

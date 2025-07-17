@@ -1,11 +1,9 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./dock.nix
-    ./system.nix
-  ];
+  imports = [ ./system.nix ];
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
+  system.primaryUser = "ted";
 
   environment = {
     etc."pam.d/sudo_local".text = ''
@@ -60,9 +58,7 @@
   };
 
   nix = {
-    configureBuildUsers = true;
     settings.trusted-users = [ "@admin" ];
-    useDaemon = true;
 
     gc.interval = [
       {

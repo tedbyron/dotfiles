@@ -32,11 +32,11 @@ in
 
     history = {
       extended = true;
-      # findNoDups = true; # TODO: 25.05
+      findNoDups = true;
       ignoreAllDups = true;
       ignoreSpace = true;
       path = "$ZDOTDIR/.zsh_history";
-      # saveNoDups = true; # TODO: 25.05
+      saveNoDups = true;
     };
 
     historySubstringSearch = {
@@ -53,41 +53,46 @@ in
       ];
     };
 
-    initExtraBeforeCompInit = with unstable; ''
-      . ${oh-my-zsh}/share/oh-my-zsh/lib/completion.zsh
-      . ${oh-my-zsh}/share/oh-my-zsh/lib/correction.zsh
-      . ${oh-my-zsh}/share/oh-my-zsh/lib/directories.zsh
-      . ${oh-my-zsh}/share/oh-my-zsh/lib/history.zsh
-      . ${oh-my-zsh}/share/oh-my-zsh/plugins/git-lfs/git-lfs.plugin.zsh
-      . ${oh-my-zsh}/share/oh-my-zsh/plugins/git/git.plugin.zsh
-      . ${oh-my-zsh}/share/oh-my-zsh/plugins/tmux/tmux.plugin.zsh
+    initContent = lib.mkMerge [
+      (lib.mkOrder 550 (
+        with unstable;
+        ''
+          . ${oh-my-zsh}/share/oh-my-zsh/lib/completion.zsh
+          . ${oh-my-zsh}/share/oh-my-zsh/lib/correction.zsh
+          . ${oh-my-zsh}/share/oh-my-zsh/lib/directories.zsh
+          . ${oh-my-zsh}/share/oh-my-zsh/lib/history.zsh
+          . ${oh-my-zsh}/share/oh-my-zsh/plugins/git-lfs/git-lfs.plugin.zsh
+          . ${oh-my-zsh}/share/oh-my-zsh/plugins/git/git.plugin.zsh
+          . ${oh-my-zsh}/share/oh-my-zsh/plugins/tmux/tmux.plugin.zsh
 
-      setopt always_to_end
-      setopt no_append_create
-      setopt auto_pushd
-      setopt no_beep
-      setopt cd_silent
-      setopt check_jobs
-      setopt check_running_jobs
-      setopt no_clobber
-      setopt no_clobber_empty
-      setopt combining_chars
-      setopt complete_in_word
-      setopt no_flow_control
-      setopt long_list_jobs
-      setopt pushd_minus
-      setopt pushd_silent
-      setopt pushd_to_home
-      setopt multios
-      setopt typeset_silent
-    '';
+          setopt always_to_end
+          setopt no_append_create
+          setopt auto_pushd
+          setopt no_beep
+          setopt cd_silent
+          setopt check_jobs
+          setopt check_running_jobs
+          setopt no_clobber
+          setopt no_clobber_empty
+          setopt combining_chars
+          setopt complete_in_word
+          setopt no_flow_control
+          setopt long_list_jobs
+          setopt pushd_minus
+          setopt pushd_silent
+          setopt pushd_to_home
+          setopt multios
+          setopt typeset_silent
+        ''
+      ))
 
-    initExtra = ''
-      bindkey -M menuselect '^[[Z' reverse-menu-complete
-      bindkey \^U backward-kill-line
+      (lib.mkOrder 1000 ''
+        bindkey -M menuselect '^[[Z' reverse-menu-complete
+        bindkey \^U backward-kill-line
 
-      unalias grhh
-    '';
+        unalias grhh
+      '')
+    ];
 
     shellAliases = {
       b = "bat";

@@ -50,9 +50,8 @@ in
       }
       // lib.optionalAttrs (!darwin) {
         pointerCursor = {
-          # TODO: 25.05
-          # enable = !darwin;
-          # hyprcursor.enable = true;
+          enable = !darwin;
+          hyprcursor.enable = true;
           gtk.enable = true;
           name = "phinger-cursors-dark";
           size = 12;

@@ -1,5 +1,3 @@
-# TODO: 25.05 remove
-
 {
   config,
   pkgs,

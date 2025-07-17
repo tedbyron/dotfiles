@@ -74,7 +74,7 @@
 
     go = {
       enable = true;
-      # telemetry.mode = "off"; # TODO: 25.05
+      telemetry.mode = "off";
     };
 
     gpg = {

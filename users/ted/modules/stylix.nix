@@ -1,7 +1,6 @@
 {
   osConfig,
   pkgs,
-  lib,
   darwin,
   ...
 }:
@@ -25,7 +24,6 @@ in
 {
   stylix = {
     enable = !darwin;
-    inherit (osConfig.stylix) base16Scheme polarity;
     image = builtins.head wallpapers;
     imageScalingMode = "fill";
 

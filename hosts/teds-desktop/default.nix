@@ -20,7 +20,6 @@
 
   boot = {
     blacklistedKernelModules = [ "nouveau" ];
-    kernelModules = [ "nvidia_uvm" ]; # TODO 25.05; remove
 
     loader = {
       efi.canTouchEfiVariables = true;

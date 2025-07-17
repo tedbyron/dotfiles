@@ -19,6 +19,8 @@ _: {
         expose-group-apps = false;
         minimize-to-application = true;
         mru-spaces = false;
+        persistent-others = [ "~/Downloads" ];
+        show-recents = false;
         tilesize = 56;
       };
 

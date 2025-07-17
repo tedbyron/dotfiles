@@ -26,8 +26,8 @@ in
     in
     {
       inherit enable;
-      package = unstable.hyprland; # TODO: 25.05; conflicts with programs.hyprland.package
-      # portalPackage = null; # TODO: 25.05; conflicts with programs.hyprland.portalPackage
+      package = null;
+      portalPackage = null;
       systemd.enable = false; # UWSM
 
       # TODO

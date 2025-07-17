@@ -62,7 +62,7 @@ history limit='10':
     #!/usr/bin/env zsh
     set -euo pipefail
     l={{ if limit == '0' { '+1' } else { limit } }}
-    # TODO: actually get current gen instead of the last
+    # TODO: actually get current gen instead of the most recent
     if [[ {{ os }} == linux ]] {
         g=$({{ rebuild }}list-generations | tail +2 | tac | tail -n $l |
             rg -w '([[:xdigit:]]{7})([[:xdigit:]]{33,})' -r '$1' |
