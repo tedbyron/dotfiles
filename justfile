@@ -54,7 +54,7 @@ build *opts: (rebuild '' 'build' opts)
 # Rollback to the previous generation
 [group('history')]
 rollback:
-    {{ sudo }} {{ rebuild }}--rollback
+    {{ sudo }} {{ rebuild }} --rollback
 
 # List available generations
 [group('history')]
@@ -64,14 +64,14 @@ history limit='10':
     l={{ if limit == '0' { '+1' } else { limit } }}
     # TODO: actually get current gen instead of the most recent
     if [[ {{ os }} == linux ]] {
-        g=$({{ rebuild }}list-generations | tail +2 | tac | tail -n $l |
+        g=$({{ rebuild }} list-generations | tail +2 | tac | tail -n $l |
             rg -w '([[:xdigit:]]{7})([[:xdigit:]]{33,})' -r '$1' |
             rg '\b {2,}' -r $'\t')
         column -tc $COLUMNS -s $'\t' -N Gen,Date,NixOS,Kernel,Rev,Spec \
             <<<"$(head -n -1 <<<$g)
     {{ CYAN }}${$(tail -1 <<<$g)/current}{{ NORMAL }}"
     } else {
-        g=$({{ rebuild }}--list-generations | tail -n $l)
+        g=$({{ rebuild }} --list-generations | tail -n $l)
         print -aC 3 Gen Date ' ' ${=$(head -n -1 <<<$g)} \
             '{{ CYAN }}'${(@)$(tail -1 <<<$g)[1,3]}'{{ NORMAL }}'
     }
