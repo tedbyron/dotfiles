@@ -29,14 +29,14 @@
       inherit (config.home-manager.users.ted.programs.spicetify) spicedSpotify;
       userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
-    [
-      { app = "/Applications/Firefox.app/"; }
-      { app = "/Applications/Bitwarden.app/"; }
-      { app = "${spicedSpotify}/Applications/Spotify.app/"; }
-      { app = "/Applications/Figma.app/"; }
-      { app = "${userPrograms "alacritty"}/Applications/Alacritty.app/"; }
-      # { app = "${userPrograms "ghostty"}/Applications/Ghostty.app/"; }
-      { app = "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"; }
+    builtins.map (app: { inherit app; }) [
+      "/Applications/Firefox.app/"
+      "/Applications/Bitwarden.app/"
+      "${spicedSpotify}/Applications/Spotify.app/"
+      "/Applications/Figma.app/"
+      "${userPrograms "alacritty"}/Applications/Alacritty.app/"
+      # "${userPrograms "ghostty"}/Applications/Ghostty.app/"
+      "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
     ];
 
   # custom.dock =

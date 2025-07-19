@@ -36,14 +36,14 @@
         ) null config.home-manager.users.ted.home.packages;
       userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
-    [
-      { app = "/Applications/Firefox.app/"; }
-      { app = "/Applications/Bitwarden.app/"; }
-      { app = "${spicedSpotify}/Applications/Spotify.app/"; }
-      { app = "${userPackages "discord"}/Applications/Discord.app/"; }
-      { app = "${userPrograms "alacritty"}/Applications/Alacritty.app/"; }
-      # { app = "${userPrograms "ghostty"}/Applications/Ghostty.app/"; }
-      { app = "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"; }
+    builtins.map (app: { inherit app; }) [
+      "/Applications/Firefox.app/"
+      "/Applications/Bitwarden.app/"
+      "${spicedSpotify}/Applications/Spotify.app/"
+      "${userPackages "discord"}/Applications/Discord.app/"
+      "${userPrograms "alacritty"}/Applications/Alacritty.app/"
+      # "${userPrograms "ghostty"}/Applications/Ghostty.app/"
+      "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
     ];
 
   # custom.dock =
