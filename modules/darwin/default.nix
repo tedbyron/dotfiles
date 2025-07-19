@@ -24,7 +24,7 @@
     casks = [
       "firefox"
       "lunar"
-      "mullvadvpn"
+      "mullvad-vpn"
       "rectangle"
     ];
 
