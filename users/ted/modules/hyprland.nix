@@ -31,11 +31,11 @@ in
       systemd.enable = false; # UWSM
 
       # TODO
-      plugins = with unstable.hyprlandPlugins; [
-        # hyprspace
-        hyprsplit
-        # hyprsunset
-      ];
+      # plugins = with unstable.hyprlandPlugins; [
+      #   hyprspace
+      #   hyprsplit
+      #   hyprsunset
+      # ];
 
       # https://wiki.hyprland.org/Configuring/Variables
       settings = {

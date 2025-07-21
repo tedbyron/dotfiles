@@ -35,7 +35,7 @@
         };
 
         memtest86 = {
-          enable = true;
+          enable = false;
           sortKey = "y_memtest86";
         };
 
