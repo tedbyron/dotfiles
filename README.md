@@ -286,3 +286,9 @@ update *args         # Update flake lockfile for all or specified inputs
   ```sh
   gpg --locate-keys --auto-key-locate clear,nodefault,wkd address@example.com
   ```
+
+- Reinstall bootloader
+
+  ```sh
+  sudo nixos-rebuild --install-bootloader boot
+  ```
