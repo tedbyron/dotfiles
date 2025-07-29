@@ -20,15 +20,14 @@ in
     localVariables.HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
     syntaxHighlighting.enable = true;
 
-    dirHashes =
-      {
-        dls = "${home}/Downloads";
-        dot = "${home}/git/dotfiles";
-        git = "${home}/git";
-      }
-      // lib.optionalAttrs darwin {
-        pub = "${home}/Public";
-      };
+    dirHashes = {
+      dls = "${home}/Downloads";
+      dot = "${home}/git/dotfiles";
+      git = "${home}/git";
+    }
+    // lib.optionalAttrs darwin {
+      pub = "${home}/Public";
+    };
 
     history = {
       extended = true;

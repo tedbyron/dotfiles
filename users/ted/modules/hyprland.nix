@@ -1,5 +1,4 @@
 {
-  unstable,
   darwin,
   ...
 }:

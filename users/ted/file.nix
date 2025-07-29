@@ -16,15 +16,14 @@
       enable = true;
       onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
-      text =
-        ''
-          allow-preset-passphrase
-          default-cache-ttl 34560000
-          max-cache-ttl 34560000
-        ''
-        + lib.optionalString darwin ''
-          pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
-        '';
+      text = ''
+        allow-preset-passphrase
+        default-cache-ttl 34560000
+        max-cache-ttl 34560000
+      ''
+      + lib.optionalString darwin ''
+        pinentry-program ${pkgs.pinentry_mac}/${pkgs.pinentry_mac.binaryPath}
+      '';
     };
 
     # firefoxChrome =
