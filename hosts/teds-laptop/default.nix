@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  unstable,
   ...
 }:
 {
@@ -21,7 +22,7 @@
   homebrew.casks = [ ];
 
   home-manager.users.ted.home.packages = with pkgs; [
-    discord
+    unstable.discord
     qbittorrent
   ];
 

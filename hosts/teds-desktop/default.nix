@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 {
   imports = [
     ./hardware.nix
@@ -14,7 +14,7 @@
   };
 
   home-manager.users.ted.home.packages = with pkgs; [
-    discord
+    unstable.discord
     qbittorrent
   ];
 
