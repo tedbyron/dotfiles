@@ -11,6 +11,7 @@ alias f := format
 alias h := history
 alias s := search
 alias u := update
+alias up := update
 
 [private]
 default:

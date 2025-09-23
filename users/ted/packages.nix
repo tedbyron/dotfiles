@@ -31,6 +31,7 @@
       rustc
       tokei
       tree
+      tree-sitter
       wabt
       wasm-pack
       zig
