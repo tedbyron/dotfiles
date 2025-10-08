@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  unstable,
-  ...
-}:
+{ config, pkgs, ... }:
 {
   imports = [ ../../users/ted ];
 
@@ -19,10 +13,11 @@
       computerName = hostName;
     };
 
-  homebrew.casks = [ ];
+  homebrew.casks = [
+    "discord"
+  ];
 
   home-manager.users.ted.home.packages = with pkgs; [
-    unstable.discord
     qbittorrent
   ];
 
@@ -30,18 +25,18 @@
     let
       inherit (config.home-manager.users.ted.programs.spicetify) spicedSpotify;
 
-      userPackages =
-        name:
-        lib.findFirst (
-          pkg: (builtins.parseDrvName pkg.name).name == name
-        ) null config.home-manager.users.ted.home.packages;
+      # userPackages =
+      #   name:
+      #   lib.findFirst (
+      #     pkg: (builtins.parseDrvName pkg.name).name == name
+      #   ) null config.home-manager.users.ted.home.packages;
       userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
     builtins.map (app: { inherit app; }) [
       "/Applications/Firefox.app/"
       "/Applications/Bitwarden.app/"
       "${spicedSpotify}/Applications/Spotify.app/"
-      "${userPackages "discord"}/Applications/Discord.app/"
+      "/Applications/Discord.app/"
       "${userPrograms "alacritty"}/Applications/Alacritty.app/"
       # "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
