@@ -117,12 +117,12 @@ repl:
 index:
     nix-index
 
-# Search for top-level packages and package outputs
+# Search for packages and package outputs
 [group('util')]
 search pattern *args:
     #!/usr/bin/env zsh
     set -euo pipefail
-    o=$(nix-locate -rw --top-level '{{ pattern }}' {{ args }} | sort -b)
+    o=$(nix-locate -rw '{{ pattern }}' {{ args }} | sort -b)
     r() rg --passthru -U $(rg '(.)' -r '$1\s*' <<<'{{ pattern }}')
     if [[ -z ${=o} ]] exit 0
     if [[ {{ os }} == linux ]] {
