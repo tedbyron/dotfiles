@@ -2,21 +2,21 @@
   description = "tedbyron's nix config";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
-    nixpkgs-darwin.url = "nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
+    nixpkgs-darwin.url = "nixpkgs/nixpkgs-25.11-darwin";
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
     flake-utils.url = "flake-utils";
 
     home-manager = {
-      url = "home-manager/release-25.05";
+      url = "home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-darwin = {
-      url = "home-manager/release-25.05";
+      url = "home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     darwin = {
-      url = "nix-darwin/nix-darwin-25.05";
+      url = "nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
     nixos-wsl = {
@@ -44,7 +44,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     stylix = {
-      url = "github:nix-community/stylix/release-25.05";
+      url = "github:nix-community/stylix/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     treefmt-nix = {
