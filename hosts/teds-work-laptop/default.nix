@@ -34,8 +34,8 @@
       "/Applications/Bitwarden.app/"
       "${spicedSpotify}/Applications/Spotify.app/"
       "/Applications/Figma.app/"
-      "${userPrograms "alacritty"}/Applications/Alacritty.app/"
-      # "${userPrograms "ghostty"}/Applications/Ghostty.app/"
+      # "${userPrograms "alacritty"}/Applications/Alacritty.app/"
+      "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
     ];
 

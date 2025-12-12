@@ -18,7 +18,7 @@
 
   programs = {
     alacritty = {
-      enable = true;
+      enable = false;
       settings = builtins.fromTOML (lib.ted.readConfig "alacritty/alacritty.toml");
     };
 

@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   programs.ghostty = {
-    enable = false;
+    enable = true;
     enableZshIntegration = true;
     installBatSyntax = true;
     settings = builtins.fromTOML (lib.ted.readConfig "ghostty/config");
