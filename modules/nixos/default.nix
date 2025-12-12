@@ -68,7 +68,9 @@
   fonts = {
     enableDefaultPackages = true;
     fontDir.enable = true;
-    packages = [ self.inputs.apple-emoji-linux.outputs.packages.${pkgs.system}.default ];
+    packages = [
+      self.inputs.apple-emoji-linux.outputs.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ];
 
     fontconfig.defaultFonts = {
       monospace = [ "Curlio" ];

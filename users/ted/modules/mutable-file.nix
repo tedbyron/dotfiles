@@ -33,7 +33,6 @@ let
     baseDir:
     {
       name,
-      options,
       ...
     }:
     {

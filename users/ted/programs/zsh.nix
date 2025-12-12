@@ -16,7 +16,7 @@ in
     autocd = true;
     autosuggestion.enable = true;
     defaultKeymap = "emacs";
-    dotDir = ".config/zsh";
+    dotDir = "${home}/.config/zsh";
     localVariables.HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE = "1";
     syntaxHighlighting.enable = true;
 

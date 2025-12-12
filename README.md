@@ -63,7 +63,6 @@ update *args         # Update flake lockfile for all or specified inputs
 ## NixOS
 
 - Bootstrap
-
   - Boot to installer
 
     ```sh
@@ -73,7 +72,6 @@ update *args         # Update flake lockfile for all or specified inputs
   - Partition and format
 
     <!-- TODO: disko -->
-
     - <details>
       <summary>btrfs</summary>
 
@@ -119,7 +117,6 @@ update *args         # Update flake lockfile for all or specified inputs
       </details>
 
   - <details><summary>Connect to wifi if necessary</summary>
-
     - `nmcli` (requires graphical installer)
 
       ```sh
@@ -221,7 +218,6 @@ update *args         # Update flake lockfile for all or specified inputs
     ```
 
 - VS Code
-
   - Preferences: configure runtime arguments
 
     ```json
@@ -235,7 +231,6 @@ update *args         # Update flake lockfile for all or specified inputs
     ```
 
 - Windows dual boot
-
   - Change hardware clock to UTC in registry
     `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation`
 

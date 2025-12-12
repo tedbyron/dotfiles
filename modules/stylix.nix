@@ -14,7 +14,7 @@
     fonts = lib.optionalAttrs (!darwin) {
       monospace = {
         name = "Curlio";
-        package = self.outputs.packages.${pkgs.system}.curlio-ttf;
+        package = self.outputs.packages.${pkgs.stdenv.hostPlatform.system}.curlio-ttf;
       };
       sansSerif = {
         name = "Inter";
@@ -26,7 +26,7 @@
       };
       emoji = {
         name = "Apple Color Emoji";
-        package = self.inputs.apple-emoji-linux.outputs.packages.${pkgs.system}.default;
+        package = self.inputs.apple-emoji-linux.outputs.packages.${pkgs.stdenv.hostPlatform.system}.default;
       };
     };
 

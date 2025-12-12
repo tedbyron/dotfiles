@@ -14,7 +14,7 @@
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
   fonts.packages = with pkgs; [
-    self.outputs.packages.${pkgs.system}.curlio-ttf
+    self.outputs.packages.${pkgs.stdenv.hostPlatform.system}.curlio-ttf
     inter
     libre-baskerville
   ];

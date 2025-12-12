@@ -65,11 +65,12 @@
         enable = true;
         inherit package;
         # delta configured in .gitconfig and installed as a user package
-        extraConfig = builtins.fromTOML (lib.ted.readConfig "git/config") // {
-          credential.helper = if darwin then "osxkeychain" else "${package}/bin/git-credential-libsecret";
-        };
         ignores = lib.splitString "\n" (lib.ted.readConfig "git/ignore");
         lfs.enable = true;
+
+        settings = builtins.fromTOML (lib.ted.readConfig "git/config") // {
+          credential.helper = if darwin then "osxkeychain" else "${package}/bin/git-credential-libsecret";
+        };
       };
 
     go = {
@@ -115,7 +116,7 @@
 
     spicetify =
       let
-        spicePkgs = self.inputs.spicetify-nix.legacyPackages.${pkgs.system};
+        spicePkgs = self.inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
       in
       {
         enable = true;
@@ -123,7 +124,9 @@
         theme = spicePkgs.themes.dribbblish;
       };
 
-    ssh.enable = true;
+    ssh = {
+      enable = false;
+    };
 
     starship = {
       enable = true;
