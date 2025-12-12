@@ -32,7 +32,6 @@ in
 
   home-manager.users.ted = {
     imports = [
-      self.inputs.spicetify-nix.homeManagerModules.default
       ./modules
       ./programs
       ./file.nix

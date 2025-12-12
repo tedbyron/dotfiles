@@ -26,6 +26,7 @@
       "lunar"
       "mullvad-vpn"
       "rectangle"
+      "spotify"
     ];
 
     masApps = {

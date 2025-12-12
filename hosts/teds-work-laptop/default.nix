@@ -26,13 +26,12 @@
 
   system.defaults.dock.persistent-apps =
     let
-      inherit (config.home-manager.users.ted.programs.spicetify) spicedSpotify;
       userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
     builtins.map (app: { inherit app; }) [
       "/Applications/Firefox.app/"
       "/Applications/Bitwarden.app/"
-      "${spicedSpotify}/Applications/Spotify.app/"
+      "/Applications/Spotify.app/"
       "/Applications/Figma.app/"
       # "${userPrograms "alacritty"}/Applications/Alacritty.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
@@ -41,7 +40,6 @@
 
   # custom.dock =
   #   let
-  #     inherit (config.home-manager.users.ted.programs.spicetify) spicedSpotify;
   #     userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
   #   in
   #   {
@@ -51,10 +49,10 @@
   #       map (path: { inherit path; }) [
   #         "/Applications/Firefox.app/"
   #         "/Applications/Bitwarden.app/"
-  #         "${spicedSpotify}/Applications/Spotify.app/"
+  #         "/Applications/Spotify.app/"
   #         "/Applications/Figma.app/"
-  #         "${userPrograms "alacritty"}/Applications/Alacritty.app/"
-  #         # "${userPrograms "ghostty"}/Applications/Ghostty.app/"
+  #         # "${userPrograms "alacritty"}/Applications/Alacritty.app/"
+  #         "${userPrograms "ghostty"}/Applications/Ghostty.app/"
   #         "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
   #       ]
   #       ++ [

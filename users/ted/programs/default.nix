@@ -114,16 +114,6 @@
       arguments = lib.splitString "\n" (lib.ted.readConfig "ripgrep/ripgreprc");
     };
 
-    spicetify =
-      let
-        spicePkgs = self.inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-      in
-      {
-        enable = true;
-        colorScheme = "gruvbox-material-dark";
-        theme = spicePkgs.themes.dribbblish;
-      };
-
     ssh = {
       enable = false;
     };

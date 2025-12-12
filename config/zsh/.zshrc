@@ -28,7 +28,6 @@ path+=(
     $HOME/.local/bin
     $HOME/.cargo/bin
     $HOME/.fly/bin
-    $HOME/.spicetify
 )
 
 export GPG_TTY="$(tty)"
