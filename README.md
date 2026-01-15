@@ -119,10 +119,10 @@ update *args         # Update flake lockfile for all or specified inputs
   - <details><summary>Connect to wifi if necessary</summary>
     - `nmcli` (requires graphical installer)
 
-      ```sh
-      nmcli device wifi list
-      nmcli device wifi connect SSID password PASSWORD
-      ```
+    ```sh
+    nmcli device wifi list
+    nmcli device wifi connect SSID password PASSWORD
+    ```
 
     - `wpa_cli`
 
