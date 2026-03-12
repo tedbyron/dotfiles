@@ -30,7 +30,7 @@
       };
 
       themes.gruvbox-material-dark = {
-        src = lib.ted.configPath "bat";
+        src = lib.ted.configPath "bat/themes";
         file = "gruvbox-material-dark.tmTheme";
       };
     };
