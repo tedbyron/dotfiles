@@ -128,11 +128,7 @@
       settings = builtins.fromTOML (lib.ted.readConfig "tealdeer/config.toml");
     };
 
-    vscode = {
-      enable = true;
-      package = unstable.vscode;
-    };
-
+    vscode.enable = true;
     yt-dlp.enable = true;
   };
 }
