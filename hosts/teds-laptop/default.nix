@@ -15,6 +15,7 @@
 
   homebrew.casks = [
     "discord"
+    "steam"
   ];
 
   home-manager.users.ted.home.packages = with pkgs; [
@@ -38,6 +39,7 @@
       # "${userPrograms "alacritty"}/Applications/Alacritty.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
+      "/Applications/Steam.app/"
     ];
 
   # custom.dock =
