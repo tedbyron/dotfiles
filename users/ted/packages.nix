@@ -1,5 +1,6 @@
 {
   pkgs,
+  unstable,
   lib,
   darwin,
   ...
@@ -37,7 +38,7 @@
       zig
     ]
     ++ lib.optionals darwin [
-      mas
+      unstable.mas
       pinentry_mac
       vlc-bin
     ]
