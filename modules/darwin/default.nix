@@ -38,6 +38,8 @@
       autoUpdate = true;
       cleanup = "zap";
       upgrade = true;
+
+      extraFlags = [ "--force-cleanup" ]; # TODO: https://github.com/nix-darwin/nix-darwin/issues/1787
     };
   };
 
