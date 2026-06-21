@@ -24,8 +24,10 @@
       hyperfine
       imagemagickBig
       just
+      just-lsp
       lychee
       nil
+      nixd
       nixfmt-rfc-style
       nodejs
       ouch
