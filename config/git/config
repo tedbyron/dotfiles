@@ -70,9 +70,9 @@
   syntax-theme = "gruvbox-material-dark"
   wrap-max-lines = "unlimited"
 [filter.lfs]
-  clean = "git-lfs clean -- %f"
-  smudge = "git-lfs smudge -- %f"
-  process = "git-lfs filter-process"
+  # clean = "git-lfs clean -- %f"
+  # smudge = "git-lfs smudge -- %f"
+  # process = "git-lfs filter-process"
   required = true
 [help]
   autoCorrect = "prompt"

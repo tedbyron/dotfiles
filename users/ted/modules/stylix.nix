@@ -33,7 +33,7 @@ in
       size = 12;
     };
 
-    iconTheme = {
+    icons = {
       enable = true;
       dark = "Gruvbox-Plus-Dark";
       light = "Gruvbox-Plus-Light";

@@ -28,7 +28,7 @@
       lychee
       nil
       nixd
-      nixfmt-rfc-style
+      nixfmt
       nodejs
       ouch
       rustc
