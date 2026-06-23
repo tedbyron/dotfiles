@@ -23,10 +23,12 @@ _: {
 
         persistent-others = [
           {
-            folder = "~/Downloads";
-            showas = "fan";
-            displayas = "stack";
-            arrangement = "date-added";
+            folder = {
+              path = "~/Downloads";
+              showas = "fan";
+              displayas = "stack";
+              arrangement = "date-added";
+            };
           }
         ];
       };
