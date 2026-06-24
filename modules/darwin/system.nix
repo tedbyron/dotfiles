@@ -24,7 +24,7 @@ _: {
         persistent-others = [
           {
             folder = {
-              path = "~/Downloads";
+              path = "/Users/ted/Downloads"; # TODO: https://github.com/nix-darwin/nix-darwin/issues/968
               showas = "fan";
               displayas = "stack";
               arrangement = "date-added";
