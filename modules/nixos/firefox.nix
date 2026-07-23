@@ -59,6 +59,7 @@ _: {
       "font.name.sans-serif.x-western" = "Inter";
       "font.name.serif.x-western" = "Libre Baskerville";
       "font.name-list.emoji" = "Apple Color Emoji";
+      "screen-api.macos-native-full-screen" = false;
       "full-screen-api.warning.timeout" = 0;
       "gfx.x11-egl.force-enabled" = true;
       "layout.css.visited_links_enabled" = false;
