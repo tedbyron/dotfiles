@@ -28,7 +28,7 @@
     let
       userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
-    builtins.map (app: { inherit app; }) [
+    map (app: { inherit app; }) [
       "/Applications/Firefox.app/"
       "/Applications/Bitwarden.app/"
       "/Applications/Spotify.app/"

@@ -1,7 +1,7 @@
 { lib, ... }:
 let
   inherit (lib.ted) readConfig;
-  fromGtkSettings = p: readConfig p |> builtins.fromTOML |> builtins.getAttr "Settings";
+  fromGtkSettings = p: readConfig p |> fromTOML |> builtins.getAttr "Settings";
 in
 {
   gtk = {

@@ -15,7 +15,7 @@ let
     builtins.listToAttrs (
       map (
         path:
-        lib.nameValuePair (builtins.baseNameOf (builtins.toString path)) (
+        lib.nameValuePair (baseNameOf (toString path)) (
           import path {
             inherit
               self

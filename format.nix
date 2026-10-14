@@ -39,7 +39,7 @@ _: {
 
     stylua = {
       enable = true;
-      settings = builtins.fromTOML (builtins.readFile ./config/stylua.toml);
+      settings = fromTOML (builtins.readFile ./config/stylua.toml);
     };
   };
 

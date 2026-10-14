@@ -145,7 +145,7 @@
       {
         checks.formatting = treefmt.check self;
         formatter = treefmt.wrapper;
-        packages = builtins.removeAttrs curlio.outputs.packages.${system} [ "default" ];
+        packages = removeAttrs curlio.outputs.packages.${system} [ "default" ];
 
         devShells.default = pkgs.mkShellNoCC {
           packages = with pkgs; [

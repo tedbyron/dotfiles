@@ -10,7 +10,7 @@
     enableZshIntegration = true;
     installBatSyntax = true;
     package = if darwin then pkgs.ghostty-bin else pkgs.ghostty;
-    settings = builtins.fromTOML (lib.ted.readConfig "ghostty/config");
+    settings = fromTOML (lib.ted.readConfig "ghostty/config");
 
     themes = {
       gruvbox-material-dark = {

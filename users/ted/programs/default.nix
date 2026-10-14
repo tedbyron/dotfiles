@@ -17,7 +17,7 @@
   programs = {
     alacritty = {
       enable = false;
-      settings = builtins.fromTOML (lib.ted.readConfig "alacritty/alacritty.toml");
+      settings = fromTOML (lib.ted.readConfig "alacritty/alacritty.toml");
     };
 
     bat = {
@@ -36,7 +36,7 @@
 
     direnv = {
       enable = true;
-      config = builtins.fromTOML (lib.ted.readConfig "direnv/direnv.toml");
+      config = fromTOML (lib.ted.readConfig "direnv/direnv.toml");
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
@@ -66,7 +66,7 @@
         ignores = lib.splitString "\n" (lib.ted.readConfig "git/ignore");
         lfs.enable = true;
 
-        settings = builtins.fromTOML (lib.ted.readConfig "git/config") // {
+        settings = fromTOML (lib.ted.readConfig "git/config") // {
           credential.helper = if darwin then "osxkeychain" else "${package}/bin/git-credential-libsecret";
         };
       };
@@ -119,12 +119,12 @@
     starship = {
       enable = true;
       enableZshIntegration = true;
-      settings = builtins.fromTOML (lib.ted.readConfig "starship.toml");
+      settings = fromTOML (lib.ted.readConfig "starship.toml");
     };
 
     tealdeer = {
       enable = true;
-      settings = builtins.fromTOML (lib.ted.readConfig "tealdeer/config.toml");
+      settings = fromTOML (lib.ted.readConfig "tealdeer/config.toml");
     };
 
     vscode.enable = true;

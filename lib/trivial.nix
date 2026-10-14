@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  numeric = f: n: (builtins.fromTOML "parsed = ${f}${n}").parsed;
+  numeric = f: n: (fromTOML "parsed = ${f}${n}").parsed;
 in
 {
   configPath = path: ../config/${path};
