@@ -6,13 +6,15 @@
   ...
 }:
 let
-  home = if darwin then "/Users/ted" else "/home/ted";
+  username = "ted";
+  name = "Teddy Byron";
+  home = if darwin then "/Users/${username}" else "/home/${username}";
 in
 {
   users = {
     users.ted = {
       inherit home;
-      description = "Teddy Byron";
+      description = name;
       shell = pkgs.zsh;
       uid = if darwin then 501 else 1000;
     }
@@ -26,7 +28,7 @@ in
     };
   }
   // lib.optionalAttrs darwin {
-    knownUsers = [ "ted" ];
+    knownUsers = [ username ];
   };
 
   home-manager.users.ted = {
@@ -38,10 +40,10 @@ in
     ];
 
     home = {
+      inherit username;
       stateVersion = "23.11";
       homeDirectory = home;
       sessionPath = [ "$HOME/git/dotfiles/bin" ];
-      username = "ted";
     }
     // lib.optionalAttrs (!darwin) {
       pointerCursor = {
@@ -81,4 +83,16 @@ in
       };
     };
   };
+}
+// lib.optionalAttrs darwin {
+  system.defaults.dock.persistent-others = [
+    {
+      folder = {
+        path = "${home}/Downloads";
+        showas = "fan";
+        displayas = "stack";
+        arrangement = "date-added";
+      };
+    }
+  ];
 }
