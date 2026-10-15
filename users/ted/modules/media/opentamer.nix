@@ -2,8 +2,6 @@
 let
   log = "/Users/ted/Library/Logs/opentamer.log";
 
-  # Upstream's signed and notarized build; rules live in
-  # ~/Library/Application Support/OpenTamer/config.json and are managed in the app
   opentamer = pkgs.stdenvNoCC.mkDerivation rec {
     pname = "opentamer";
     version = "1.4.1";
