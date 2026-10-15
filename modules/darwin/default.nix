@@ -26,13 +26,13 @@
       "firefox"
       "lunar"
       "mullvad-vpn"
+      "nextdns-app"
       "rectangle"
       "spotify"
     ];
 
     masApps = {
       Bitwarden = 1352778147;
-      NextDns = 1464122853;
     };
 
     onActivation = {
