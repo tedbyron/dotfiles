@@ -10,5 +10,6 @@ _: {
     ./node-exporter.nix
     ./opentamer.nix
     ./prometheus.nix
+    ./seerr.nix
   ];
 }

@@ -3,10 +3,14 @@ let
   log = "/Users/ted/Library/Logs/caddy.log";
 
   caddyfile = pkgs.writeText "Caddyfile" ''
-    j.tedbyron.com {
+    stream.ted.ooo {
       @metrics path /metrics*
       respond @metrics 403
       reverse_proxy 127.0.0.1:8096
+    }
+
+    request.ted.ooo {
+      reverse_proxy 127.0.0.1:5055
     }
   '';
 in
