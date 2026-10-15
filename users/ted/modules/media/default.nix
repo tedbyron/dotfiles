@@ -3,6 +3,7 @@ _: {
     ./caddy.nix
     ./ersatztv-schedules.nix
     ./ersatztv.nix
+    ./flaresolverr.nix
     ./grafana.nix
     ./jelly-metrics.nix
     ./jellyfin.nix
@@ -11,5 +12,6 @@ _: {
     ./opentamer.nix
     ./prometheus.nix
     ./seerr.nix
+    ./servarr.nix
   ];
 }
