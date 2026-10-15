@@ -3,14 +3,11 @@ let
   home = "/Users/ted/.local/share/flaresolverr";
   log = "/Users/ted/Library/Logs/flaresolverr.log";
 
-  # Chrome can't resolve its user data dir under the real ~/Library ("Failed to get the path for
-  # 1001"), so give it a private home; this also keeps its throwaway profiles out of ~/Library
   chrome = pkgs.writeShellScriptBin "chrome" ''
     export CFFIXED_USER_HOME=${home}
     exec "${pkgs.google-chrome}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" "$@"
   '';
 
-  # Patching invalidates Google's code signature, and Apple Silicon kills unsigned binaries
   undetected-chromedriver = pkgs.undetected-chromedriver.overrideAttrs (old: {
     buildCommand = old.buildCommand + ''
       chmod u+w $out/bin/undetected-chromedriver
