@@ -8,7 +8,12 @@
   imports = [
     ../../users/ted
     ../../users/ted/modules/caddy.nix
+    ../../users/ted/modules/grafana.nix
+    ../../users/ted/modules/jelly-metrics.nix
     ../../users/ted/modules/jellyfin.nix
+    ../../users/ted/modules/macos-process-exporter.nix
+    ../../users/ted/modules/node-exporter.nix
+    ../../users/ted/modules/prometheus.nix
   ];
 
   system.stateVersion = 7;
