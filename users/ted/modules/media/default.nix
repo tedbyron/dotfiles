@@ -1,6 +1,7 @@
 _: {
   imports = [
     ./caddy.nix
+    ./ersatztv-schedules.nix
     ./ersatztv.nix
     ./grafana.nix
     ./jelly-metrics.nix
