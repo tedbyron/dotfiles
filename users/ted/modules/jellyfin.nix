@@ -22,7 +22,8 @@ let
   '';
 in
 {
-  home.file.".config/jellyfin/network.xml".text = lib.ted.readConfig "jellyfin/network.xml";
+  home-manager.users.ted.home.file.".config/jellyfin/network.xml".text =
+    lib.ted.readConfig "jellyfin/network.xml";
 
   launchd.user.agents.jellyfin.serviceConfig = {
     KeepAlive = true;
