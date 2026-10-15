@@ -33,12 +33,13 @@ update *args         # Update flake lockfile for all or specified inputs
 - Bootstrap
 
   ```sh
+  # Give /Applications/Utilities/Terminal.app full disk access
   xcode-select --install
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
   git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
-  # Give terminal full disk access and restart
-  nix run nix-darwin -- --flake ~/git/dotfiles#host switch
+  sudo echo 'experimental-features = nix-command flakes pipe-perators' >> /etc/nix/nix.custom.conf
+  sudo nix run nix-darwin -- --flake ~/git/dotfiles#host switch
 
   fd '.*before-nix-darwin' /etc -X sudo rm
   ```
