@@ -40,19 +40,7 @@ update *args         # Update flake lockfile for all or specified inputs
   git clone https://github.com/tedbyron/dotfiles.git ~/git/dotfiles --filter tree:0
   sudo echo 'experimental-features = nix-command flakes pipe-perators' >> /etc/nix/nix.custom.conf
   sudo nix run nix-darwin -- --flake ~/git/dotfiles#host switch
-
   fd '.*before-nix-darwin' /etc -X sudo rm
-  ```
-
-- Uninstall default apps
-
-  ```sh
-  mas uninstall \
-    409203825   \ # Numbers
-    408981434   \ # iMovie
-    6826558836  \ # GarageBand
-    409183694   \ # Keynote
-    409201541   \ # Pages
   ```
 
 - Disable tipsd

@@ -60,7 +60,6 @@
   };
 
   nix = {
-    enable = false;
     settings.trusted-users = [ "@admin" ];
 
     gc.interval = [
