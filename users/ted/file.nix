@@ -13,7 +13,6 @@
     };
 
     "${config.programs.gpg.homedir}/gpg-agent.conf" = {
-      enable = true;
       onChange = "${lib.getBin pkgs.gnupg}/bin/gpgconf --kill gpg-agent";
 
       text = ''

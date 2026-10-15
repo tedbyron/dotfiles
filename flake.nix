@@ -103,16 +103,21 @@
     in
     with inputs.flake-utils.lib.system;
     {
-      darwinConfigurations = {
-        teds-laptop = mkSystem {
-          host = "teds-laptop";
-          system = aarch64-darwin;
-        };
-        teds-work-laptop = mkSystem {
-          host = "teds-work-laptop";
-          system = aarch64-darwin;
-        };
-      };
+      darwinConfigurations = builtins.listToAttrs (
+        map
+          (host: {
+            name = host;
+            value = mkSystem {
+              inherit host;
+              system = aarch64-darwin;
+            };
+          })
+          [
+            "teds-laptop"
+            "teds-mac-mini"
+            "teds-work-laptop"
+          ]
+      );
 
       nixosConfigurations = {
         teds-desktop = mkSystem {

@@ -21,12 +21,22 @@ default:
 
 [group('rebuild')]
 [private]
-rebuild prefix arg *opts:
+rebuild prefix arg target='' *opts:
     #!/usr/bin/env zsh
     set -euo pipefail
-    h=$(hostname)
+    t='{{ target }}'
+    if [[ -z $t ]] {
+        h=$(hostname)
+        f=~/git/dotfiles#$h
+    } elif [[ $t == *'#'* ]] {
+        h=${t##*#}
+        f=$t
+    } else {
+        h=$t
+        f=~/git/dotfiles#$h
+    }
     if { fd -gqt d -d 1 $h ~/git/dotfiles/hosts } {
-        {{ prefix }} {{ rebuild }} {{ arg }} --flake ~/git/dotfiles#$h {{ opts }}
+        {{ prefix }} {{ rebuild }} {{ arg }} --flake $f {{ opts }}
     } else {
         echo "No config for host: $h"
         exit 1
@@ -34,21 +44,21 @@ rebuild prefix arg *opts:
 
 # Build and activate the host flake
 [group('rebuild')]
-switch *opts: (rebuild 'sudo' 'switch' opts)
+switch target='' *opts: (rebuild 'sudo' 'switch' target opts)
 
 # Build the host flake, and make it the boot default
 [group('rebuild')]
 [linux]
-boot *opts: (rebuild 'sudo' 'boot' opts)
+boot target='' *opts: (rebuild 'sudo' 'boot' target opts)
 
 # Build and activate the host flake, and revert on boot
 [group('rebuild')]
 [linux]
-test *opts: (rebuild 'sudo' 'test' opts)
+test target='' *opts: (rebuild 'sudo' 'test' target opts)
 
 # Build the host flake
 [group('rebuild')]
-build *opts: (rebuild '' 'build' opts)
+build target='' *opts: (rebuild '' 'build' target opts)
 
 #
 

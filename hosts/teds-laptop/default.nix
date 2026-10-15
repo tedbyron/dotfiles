@@ -13,10 +13,17 @@
       computerName = hostName;
     };
 
-  homebrew.casks = [
-    "discord"
-    "steam"
-  ];
+  homebrew = {
+    casks = [
+      "affinity"
+      "discord"
+      "steam"
+    ];
+
+    masApps = {
+      "DaVinci Resolve" = 571213070;
+    };
+  };
 
   home-manager.users.ted.home.packages = with pkgs; [
     qbittorrent
@@ -36,42 +43,12 @@
       "/Applications/Bitwarden.app/"
       "/Applications/Spotify.app/"
       "/Applications/Discord.app/"
-      # "${userPrograms "alacritty"}/Applications/Alacritty.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
+      "/Applications/Affinity.app/"
+      "/Applications/DaVinci Resolve.app/"
       "/Applications/Steam.app/"
     ];
-
-  # custom.dock =
-  #   let
-  #     userPackages =
-  #       name:
-  #       lib.findFirst (
-  #         pkg: (builtins.parseDrvName pkg.name).name == name
-  #       ) null config.home-manager.users.ted.home.packages;
-  #     userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
-  #   in
-  #   {
-  #     enable = true;
-
-  #     entries =
-  #       map (path: { inherit path; }) [
-  #         "/Applications/Firefox.app/"
-  #         "/Applications/Bitwarden.app/"
-  #         "/Applications/Spotify.app/"
-  #         "${userPackages "discord"}/Applications/Discord.app/"
-  #         # "${userPrograms "alacritty"}/Applications/Alacritty.app/"
-  #         "${userPrograms "ghostty"}/Applications/Ghostty.app/"
-  #         "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
-  #       ]
-  #       ++ [
-  #         {
-  #           path = "${config.users.users.ted.home}/Downloads/";
-  #           section = "others";
-  #           options = "--display stack --view auto --sort dateadded";
-  #         }
-  #       ];
-  #   };
 
   # launchd.daemons.linux-builder = {
   #   serviceConfig = {

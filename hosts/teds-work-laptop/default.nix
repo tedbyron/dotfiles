@@ -33,34 +33,7 @@
       "/Applications/Bitwarden.app/"
       "/Applications/Spotify.app/"
       "/Applications/Figma.app/"
-      # "${userPrograms "alacritty"}/Applications/Alacritty.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
     ];
-
-  # custom.dock =
-  #   let
-  #     userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
-  #   in
-  #   {
-  #     enable = true;
-
-  #     entries =
-  #       map (path: { inherit path; }) [
-  #         "/Applications/Firefox.app/"
-  #         "/Applications/Bitwarden.app/"
-  #         "/Applications/Spotify.app/"
-  #         "/Applications/Figma.app/"
-  #         # "${userPrograms "alacritty"}/Applications/Alacritty.app/"
-  #         "${userPrograms "ghostty"}/Applications/Ghostty.app/"
-  #         "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
-  #       ]
-  #       ++ [
-  #         {
-  #           path = "${config.users.users.ted.home}/Downloads/";
-  #           section = "others";
-  #           options = "--display stack --view auto --sort dateadded";
-  #         }
-  #       ];
-  #   };
 }
