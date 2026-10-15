@@ -11,6 +11,7 @@ _: {
     ./node-exporter.nix
     ./opentamer.nix
     ./prometheus.nix
+    ./qbittorrent.nix
     ./seerr.nix
     ./servarr.nix
   ];
