@@ -25,7 +25,6 @@
     casks = [
       "firefox"
       "lunar"
-      "mullvad-vpn"
       "nextdns-app"
       "rectangle"
       "spotify"
