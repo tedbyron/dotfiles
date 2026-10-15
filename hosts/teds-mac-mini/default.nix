@@ -13,6 +13,7 @@
     ../../users/ted/modules/jellyfin.nix
     ../../users/ted/modules/macos-process-exporter.nix
     ../../users/ted/modules/node-exporter.nix
+    ../../users/ted/modules/opentamer.nix
     ../../users/ted/modules/prometheus.nix
   ];
 
