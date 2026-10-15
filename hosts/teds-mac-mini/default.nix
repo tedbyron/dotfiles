@@ -8,6 +8,7 @@
   imports = [
     ../../users/ted
     ../../users/ted/modules/caddy.nix
+    ../../users/ted/modules/ersatztv.nix
     ../../users/ted/modules/grafana.nix
     ../../users/ted/modules/jelly-metrics.nix
     ../../users/ted/modules/jellyfin.nix
