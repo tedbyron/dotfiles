@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, darwin, ... }:
 {
   nix = {
     channel.enable = false;
-    gc.automatic = true;
-    optimise.automatic = true;
+    gc.automatic = !darwin;
+    optimise.automatic = !darwin;
     package = pkgs.nixVersions.latest;
 
     settings = {
