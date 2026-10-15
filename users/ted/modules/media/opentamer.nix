@@ -24,11 +24,9 @@ in
 {
   home-manager.users.ted.home.packages = [ opentamer ];
 
-  # Started here instead of the app's "Launch at Login", which would register a store path
   launchd.user.agents.opentamer.serviceConfig = {
     KeepAlive = true;
     ProcessType = "Interactive";
-    # Refuses to run unless launched through LaunchServices; -W blocks until it quits
     ProgramArguments = [
       "/usr/bin/open"
       "-W"
