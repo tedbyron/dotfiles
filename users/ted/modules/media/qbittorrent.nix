@@ -87,6 +87,31 @@ in
       iface=$(cat ${nameFile})
       /sbin/route -q -n add -inet default -interface "$iface" -ifscope "$iface"
     '';
+
+    # The module's daemon never retries a failed `up` or restarts a dead tunnel
+    autostart = false;
+  };
+
+  launchd.daemons."wg-quick-${tunnel}".serviceConfig = {
+    EnvironmentVariables.PATH = lib.makeBinPath [
+      pkgs.wireguard-go
+      pkgs.wireguard-tools
+    ] + ":/usr/bin:/bin:/usr/sbin:/sbin";
+
+    ProgramArguments = [
+      "/bin/sh"
+      "-c"
+      ''
+        /sbin/ifconfig | grep -q "inet ${tunnelAddress} " && exit 0
+        wg-quick down ${tunnel} 2>/dev/null
+        wg-quick up ${tunnel}
+      ''
+    ];
+
+    RunAtLoad = true;
+    StandardErrorPath = "/var/log/wg-quick-${tunnel}.log";
+    StandardOutPath = "/var/log/wg-quick-${tunnel}.log";
+    StartInterval = 30;
   };
 
   launchd.user.agents.qbittorrent.serviceConfig = {
