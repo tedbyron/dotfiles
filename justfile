@@ -132,6 +132,14 @@ search pattern *args:
         print -aC 4 Package Size Type Path ${=o} | r
     }
 
+# Copy the current system to the mac mini's store
+[group('util')]
+[macos]
+push host='teds-mac-mini.local':
+    sudo "$(command -v nix)" copy -s \
+        --to 'ssh-ng://ted@{{ host }}?ssh-key=/etc/nix/mini-cache_ed25519' \
+        /run/current-system
+
 # Update flake lockfile for all or specified inputs
 [group('util')]
 update *args:

@@ -16,7 +16,11 @@
       computerName = hostName;
     };
 
-  home-manager.users.ted.home.packages = [ unstable.jellyfin-desktop ];
+  services.openssh.enable = true;
+
+  home-manager.users.ted.home.packages = [
+    unstable.jellyfin-desktop # TODO: 26.11 old hydra build failed
+  ];
 
   power = {
     restartAfterFreeze = true;
@@ -25,7 +29,7 @@
     sleep = {
       allowSleepByPowerButton = false;
       computer = "never";
-      display = 5;
+      display = 10;
       harddisk = "never";
     };
   };
@@ -40,4 +44,8 @@
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
     ];
+
+  users.users.ted.openssh.authorizedKeys.keys = [
+    ''restrict,command="/nix/var/nix/profiles/default/bin/nix-daemon --stdio" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ03cN9i+T95Ohp9DXgDDL38xDKfUQ/T/y+6TdwOaR62 root@teds-laptop''
+  ];
 }

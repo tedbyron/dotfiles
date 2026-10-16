@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   unstable,
   ...
@@ -31,31 +32,49 @@
     };
   };
 
+  environment.etc."nix/nix.conf".text = lib.mkAfter ''
+    extra-substituters = ssh-ng://ted@teds-mac-mini.local?ssh-key=/etc/nix/mini-cache_ed25519&trusted=true&priority=50
+    fallback = true
+  '';
+
   home-manager.users.ted.home.packages = with pkgs; [
-    unstable.jellyfin-desktop
+    unstable.jellyfin-desktop # TODO: 26.11 old hydra build failed
     qbittorrent
   ];
 
-  system.defaults.dock.persistent-apps =
-    let
-      # userPackages =
-      #   name:
-      #   lib.findFirst (
-      #     pkg: (builtins.parseDrvName pkg.name).name == name
-      #   ) null config.home-manager.users.ted.home.packages;
-      userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
-    in
-    map (app: { inherit app; }) [
-      "/Applications/Firefox.app/"
-      "/Applications/Bitwarden.app/"
-      "/Applications/Spotify.app/"
-      "/Applications/Discord.app/"
-      "${userPrograms "ghostty"}/Applications/Ghostty.app/"
-      "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
-      "/Applications/Affinity.app/"
-      "/Applications/DaVinci Resolve.app/"
-      "/Applications/Steam.app/"
-    ];
+  programs.ssh.extraConfig = ''
+    Host teds-mac-mini.local
+      ConnectTimeout 3
+  '';
+
+  system = {
+    activationScripts.postActivation.text = ''
+      if [[ ! -f /etc/nix/mini-cache_ed25519 ]]; then
+        /usr/bin/ssh-keygen -q -t ed25519 -N "" -C root@teds-laptop -f /etc/nix/mini-cache_ed25519
+      fi
+    '';
+
+    defaults.dock.persistent-apps =
+      let
+        # userPackages =
+        #   name:
+        #   lib.findFirst (
+        #     pkg: (builtins.parseDrvName pkg.name).name == name
+        #   ) null config.home-manager.users.ted.home.packages;
+        userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
+      in
+      map (app: { inherit app; }) [
+        "/Applications/Firefox.app/"
+        "/Applications/Bitwarden.app/"
+        "/Applications/Spotify.app/"
+        "/Applications/Discord.app/"
+        "${userPrograms "ghostty"}/Applications/Ghostty.app/"
+        "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
+        "/Applications/Affinity.app/"
+        "/Applications/DaVinci Resolve.app/"
+        "/Applications/Steam.app/"
+      ];
+  };
 
   # launchd.daemons.linux-builder = {
   #   serviceConfig = {

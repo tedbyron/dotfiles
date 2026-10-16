@@ -59,8 +59,6 @@
   };
 
   nix = {
-    settings.trusted-users = [ "@admin" ];
-
     gc.interval = [
       {
         Hour = 3;
