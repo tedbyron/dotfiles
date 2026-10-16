@@ -2,6 +2,7 @@
 let
   tunnel = "mullvad";
   tunnelAddress = "10.75.150.82";
+  proxy = "10.64.0.1";
   nameFile = "/var/run/wireguard/${tunnel}.name";
   log = "/Users/ted/Library/Logs/qbittorrent.log";
   ini = "/Users/ted/.config/qBittorrent/qBittorrent.ini";
@@ -86,6 +87,7 @@ in
     postUp = ''
       iface=$(cat ${nameFile})
       /sbin/route -q -n add -inet default -interface "$iface" -ifscope "$iface"
+      /sbin/route -q -n add -inet -host ${proxy} -interface "$iface"
     '';
 
     # The module's daemon never retries a failed `up` or restarts a dead tunnel
