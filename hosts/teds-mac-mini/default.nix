@@ -36,5 +36,6 @@
       "/Applications/Firefox.app/"
       "/Applications/Bitwarden.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
+      "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
     ];
 }
