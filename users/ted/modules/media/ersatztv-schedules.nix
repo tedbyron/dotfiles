@@ -39,8 +39,6 @@ let
   yaml = pkgs.formats.yaml { };
   schema = "${pkgs.ersatztv}/lib/ersatztv/Resources/sequential-schedule.schema.json";
 
-  # Validates the way ErsatzTV parses YAML: every scalar is a string unless it's empty (null),
-  # true/false, or a number, so a literal `null` is the string "null"
   validate = pkgs.writeText "validate-schedule.py" ''
     import json, sys, jsonschema, yaml
 
