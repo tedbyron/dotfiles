@@ -20,7 +20,12 @@
 
   environment.etc = {
     "nix/nix.conf".enable = false;
+
     "nix/nix.custom.conf".text = ''
+      download-buffer-size = 536870912
+      extra-experimental-features = auto-allocate-uids pipe-operators
+      extra-substituters = https://cachix.cachix.org https://nix-community.cachix.org
+      extra-trusted-public-keys = cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
       trusted-users = root @admin
     '';
   };
