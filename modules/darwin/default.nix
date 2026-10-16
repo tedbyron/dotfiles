@@ -58,19 +58,31 @@
     ];
   };
 
-  nix = {
-    gc.interval = [
-      {
-        Hour = 3;
-        Minute = 15;
-      }
-    ];
-
-    optimise.interval = [
-      {
-        Hour = 3;
-        Minute = 45;
-      }
-    ];
-  };
+  launchd.daemons =
+    let
+      nix = "/nix/var/nix/profiles/default/bin/nix";
+      nixJob = name: script: Hour: Minute: {
+        command = pkgs.writeShellScript name ''
+          set -eu
+          ${script}
+        '';
+        serviceConfig = {
+          StartCalendarInterval = [
+            {
+              Weekday = 0; # Sunday
+              inherit Hour Minute;
+            }
+          ];
+          StandardOutPath = "/var/log/${name}.log";
+          StandardErrorPath = "/var/log/${name}.log";
+        };
+      };
+    in
+    {
+      nix-gc = nixJob "nix-gc" ''
+        ${nix} profile wipe-history --profile /nix/var/nix/profiles/system --older-than 30d
+        ${nix} store gc
+      '' 3 15;
+      nix-optimise = nixJob "nix-optimise" "${nix} store optimise" 3 45;
+    };
 }
