@@ -33,7 +33,7 @@
   };
 
   environment.etc."nix/nix.conf".text = lib.mkAfter ''
-    extra-substituters = ssh-ng://ted@teds-mac-mini.local?ssh-key=/etc/nix/mini-cache_ed25519&trusted=true&priority=50
+    extra-substituters = ssh-ng://ted@teds-mac-mini?ssh-key=/etc/nix/mini-cache_ed25519&trusted=true
     fallback = true
   '';
 
@@ -42,10 +42,19 @@
     qbittorrent
   ];
 
-  programs.ssh.extraConfig = ''
-    Host teds-mac-mini.local
-      ConnectTimeout 3
-  '';
+  programs.ssh = {
+    extraConfig = ''
+      Host teds-mac-mini
+        HostName 192.168.2.2
+        HostKeyAlias teds-mac-mini
+        ConnectTimeout 3
+    '';
+
+    knownHosts.teds-mac-mini = {
+      hostNames = [ "teds-mac-mini" ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDoLoThmAw9bdLGUhv7iQcg0/XLS90dUZmHGqypaNoDk";
+    };
+  };
 
   system = {
     activationScripts.postActivation.text = ''

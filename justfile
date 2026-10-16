@@ -135,8 +135,8 @@ search pattern *args:
 # Copy the current system to the mac mini's store
 [group('util')]
 [macos]
-push host='teds-mac-mini.local':
-    sudo "$(command -v nix)" copy -s \
+push host='teds-mac-mini':
+    sudo "$(command -v nix)" copy -s --no-check-sigs \
         --to 'ssh-ng://ted@{{ host }}?ssh-key=/etc/nix/mini-cache_ed25519' \
         /run/current-system
 

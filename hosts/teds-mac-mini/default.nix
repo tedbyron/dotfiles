@@ -18,6 +18,13 @@
 
   services.openssh.enable = true;
 
+  environment.etc = {
+    "nix/nix.conf".enable = false;
+    "nix/nix.custom.conf".text = ''
+      trusted-users = root @admin
+    '';
+  };
+
   home-manager.users.ted.home.packages = [
     unstable.jellyfin-desktop # TODO: 26.11 old hydra build failed
   ];
