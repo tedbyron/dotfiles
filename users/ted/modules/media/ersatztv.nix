@@ -19,7 +19,6 @@ let
     exec ${pkgs.ersatztv}/bin/ErsatzTV
   '';
 
-  # ErsatzTV can't bind to localhost only
   pfRules = pkgs.writeText "ersatztv.pf" ''
     block drop in quick on ! lo0 proto { tcp udp } to any port 8409
   '';
@@ -42,9 +41,13 @@ in
     ProgramArguments = [
       "/bin/sh"
       "-c"
-      "/sbin/pfctl -a com.apple/ersatztv -f ${pfRules} && /sbin/pfctl -E"
+      ''
+        /sbin/pfctl -a com.apple/ersatztv -s rules 2>/dev/null | grep -q 8409 || /sbin/pfctl -a com.apple/ersatztv -f ${pfRules}
+        /sbin/pfctl -s info 2>/dev/null | grep -q 'Status: Enabled' || /sbin/pfctl -E
+      ''
     ];
     RunAtLoad = true;
+    StartInterval = 60;
     StandardErrorPath = "/var/log/ersatztv-pf.log";
     StandardOutPath = "/var/log/ersatztv-pf.log";
   };
