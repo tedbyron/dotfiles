@@ -12,6 +12,7 @@ _: {
     ./opentamer.nix
     ./prometheus.nix
     ./qbittorrent.nix
+    ./recyclarr.nix
     ./seerr.nix
     ./servarr.nix
   ];
