@@ -39,11 +39,47 @@ let
   yaml = pkgs.formats.yaml { };
   schema = "${pkgs.ersatztv}/lib/ersatztv/Resources/sequential-schedule.schema.json";
 
+  # Validates the way ErsatzTV parses YAML: every scalar is a string unless it's empty (null),
+  # true/false, or a number, so a literal `null` is the string "null"
+  validate = pkgs.writeText "validate-schedule.py" ''
+    import json, sys, jsonschema, yaml
+
+    class Loader(yaml.SafeLoader):
+        pass
+
+    def scalar(loader, node):
+        v = node.value
+        if v == "":
+            return None
+        if v.lower() in ("true", "false"):
+            return v.lower() == "true"
+        for cast in (int, float):
+            try:
+                return cast(v)
+            except ValueError:
+                pass
+        return v
+
+    for tag in ("null", "bool", "int", "float", "str", "timestamp"):
+        Loader.add_constructor("tag:yaml.org,2002:" + tag, scalar)
+
+    schema = json.load(open(sys.argv[1]))
+    doc = yaml.load(open(sys.argv[2]), Loader=Loader)
+    errors = [e.message for e in jsonschema.Draft202012Validator(schema).iter_errors(doc)]
+    if errors:
+        sys.exit("\n".join(errors))
+  '';
+
+  python = pkgs.python3.withPackages (p: [
+    p.jsonschema
+    p.pyyaml
+  ]);
+
   checked =
     name: value:
     pkgs.runCommand "${name}.yml" { } ''
-      ${pkgs.check-jsonschema}/bin/check-jsonschema --schemafile ${schema} ${yaml.generate "${name}.yml" value}
-      cp ${yaml.generate "${name}.yml" value} $out
+      sed 's/: null$/:/' ${yaml.generate "${name}.yml" value} > $out
+      ${python}/bin/python3 ${validate} ${schema} $out
     '';
 in
 {
