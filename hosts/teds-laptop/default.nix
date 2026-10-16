@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  unstable,
+  ...
+}:
 {
   imports = [ ../../users/ted ];
 
@@ -27,6 +32,7 @@
   };
 
   home-manager.users.ted.home.packages = with pkgs; [
+    unstable.jellyfin-desktop
     qbittorrent
   ];
 
