@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, unstable, ... }:
 {
   imports = [
     ../../users/ted
@@ -15,6 +15,8 @@
       inherit hostName;
       computerName = hostName;
     };
+
+  home-manager.users.ted.home.packages = [ unstable.jellyfin-desktop ];
 
   power = {
     restartAfterFreeze = true;

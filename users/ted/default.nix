@@ -63,7 +63,9 @@ in
       genericLinux.enable = wsl;
 
       darwin = lib.optionalAttrs darwin {
+        copyApps.enable = true;
         currentHostDefaults."com.apple.controlcenter".BatteryShowPercentage = false;
+        linkApps.enable = false;
         search = "DuckDuckGo";
 
         defaults = {
