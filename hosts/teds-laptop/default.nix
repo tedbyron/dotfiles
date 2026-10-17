@@ -82,7 +82,7 @@
         "/Applications/Affinity.app/"
         "/Applications/DaVinci Resolve.app/"
         "/Applications/Steam.app/"
-        "${userPrograms "jellyfin-desktop"}/Applications/Jellyfin Desktop.app/"
+        "${unstable.jellyfin-desktop}/Applications/Jellyfin Desktop.app/"
       ];
   };
 
