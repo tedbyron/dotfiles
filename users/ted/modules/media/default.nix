@@ -1,11 +1,15 @@
 _: {
   imports = [
+    ./alertmanager.nix
+    ./backup.nix
     ./bazarr.nix
+    ./blackbox-exporter.nix
     ./caddy.nix
     ./ersatztv-schedules.nix
     ./ersatztv.nix
     ./flaresolverr.nix
     ./grafana.nix
+    ./healthchecks.nix
     ./jelly-metrics.nix
     ./jellyfin.nix
     ./macos-process-exporter.nix
