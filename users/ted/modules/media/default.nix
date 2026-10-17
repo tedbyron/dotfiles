@@ -1,5 +1,6 @@
 _: {
   imports = [
+    ./bazarr.nix
     ./caddy.nix
     ./ersatztv-schedules.nix
     ./ersatztv.nix
@@ -15,5 +16,6 @@ _: {
     ./recyclarr.nix
     ./seerr.nix
     ./servarr.nix
+    ./speedrr.nix
   ];
 }

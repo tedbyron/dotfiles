@@ -47,6 +47,19 @@
       url = "github:/numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    jelly-metrics = {
+      url = "github:digital-shane/jelly-metrics";
+      flake = false;
+    };
+    macos-process-exporter = {
+      url = "github:digital-shane/macos-process-exporter";
+      flake = false;
+    };
+    speedrr = {
+      url = "github:itschasa/speedrr";
+      flake = false;
+    };
   };
 
   outputs =

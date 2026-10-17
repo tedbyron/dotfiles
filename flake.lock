@@ -309,6 +309,38 @@
         "type": "indirect"
       }
     },
+    "jelly-metrics": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754226060,
+        "narHash": "sha256-S32JreMOgJB3UnHld3/c64dVy41gwB4SxQRCagJYiXA=",
+        "owner": "digital-shane",
+        "repo": "jelly-metrics",
+        "rev": "3e8cc740c2f804892f860e4e3951af39361977ed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "digital-shane",
+        "repo": "jelly-metrics",
+        "type": "github"
+      }
+    },
+    "macos-process-exporter": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773888456,
+        "narHash": "sha256-9uE4RQagII8hcXZGonJ7JAlkvU2+SJFHN1Mh7kcZNCw=",
+        "owner": "digital-shane",
+        "repo": "macos-process-exporter",
+        "rev": "ff1ba3e8aad8a11486d8a26455f2cc839b26c403",
+        "type": "github"
+      },
+      "original": {
+        "owner": "digital-shane",
+        "repo": "macos-process-exporter",
+        "type": "github"
+      }
+    },
     "nixos-wsl": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -409,12 +441,31 @@
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
         "home-manager-darwin": "home-manager-darwin",
+        "jelly-metrics": "jelly-metrics",
+        "macos-process-exporter": "macos-process-exporter",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "speedrr": "speedrr",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "speedrr": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1752663243,
+        "narHash": "sha256-lpeiZ/Gs+wo1W7a7Nw7Ws5/kkxKrpFESIjCOjAguH+I=",
+        "owner": "itschasa",
+        "repo": "speedrr",
+        "rev": "f1a8deb8e92ff115855f74be599e53635feb1a37",
+        "type": "github"
+      },
+      "original": {
+        "owner": "itschasa",
+        "repo": "speedrr",
+        "type": "github"
       }
     },
     "stylix": {

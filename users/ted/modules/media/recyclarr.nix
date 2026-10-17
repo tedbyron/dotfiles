@@ -23,9 +23,17 @@ let
           - trash_id: d1d67249d3890e49bc12e275d989a7e9 # HD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
+            upgrade:
+              allowed: true
+              until_quality: WEB 1080p
+              until_score: 2000
           - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
+            upgrade:
+              allowed: true
+              until_quality: WEB 2160p
+              until_score: 2000
 
         custom_format_groups:
           add:
@@ -42,6 +50,17 @@ let
             assign_scores_to:
               - trash_id: d1d67249d3890e49bc12e275d989a7e9
               - trash_id: 64fb5f9858489bdac2af690e27c8f42f
+          - trash_ids:
+              - 496f355514737f7d83bf7aa4d24f8169 # TrueHD ATMOS
+              - 2f22d89048b01681dde8afe203bf2e95 # DTS X
+              - 3cafb66171b47f226146a0770576870f # TrueHD
+              - dcf3ec6938fa32445f590a4da84256cd # DTS-HD MA
+              - a570d4a0e56a2874b64e5bfa55202a1b # FLAC
+              - e7c2fcae07cbada050a0af3357491d7b # PCM
+              - 8e109e50e0a0b83a5098b056e13bf6db # DTS-HD HRA
+            score: -1000
+            assign_scores_to:
+              - trash_id: 64fb5f9858489bdac2af690e27c8f42f
 
     sonarr:
       series:
@@ -56,9 +75,15 @@ let
           - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
             reset_unmatched_scores:
               enabled: true
+            upgrade:
+              allowed: true
+              until_score: 2000
           - trash_id: d1498e7d189fbe6c7110ceaabb7473e6 # WEB-2160p
             reset_unmatched_scores:
               enabled: true
+            upgrade:
+              allowed: true
+              until_score: 2000
 
         custom_format_groups:
           add:

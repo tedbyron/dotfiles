@@ -1,17 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, self, ... }:
 let
   log = "/Users/ted/Library/Logs/macos-process-exporter.log";
+  src = self.inputs.macos-process-exporter;
 
-  macos-process-exporter = pkgs.buildGoModule rec {
+  macos-process-exporter = pkgs.buildGoModule {
     pname = "macos-process-exporter";
-    version = "1.0.0";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "Digital-Shane";
-      repo = "macos-process-exporter";
-      rev = "v${version}";
-      hash = "sha256-9uE4RQagII8hcXZGonJ7JAlkvU2+SJFHN1Mh7kcZNCw=";
-    };
+    version = src.shortRev;
+    inherit src;
 
     vendorHash = "sha256-qzOezDBoeGvaZdUbGV52QksEb5cZ0JtSgERec64WVmg=";
 
