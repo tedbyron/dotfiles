@@ -1,18 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, self, ... }:
 let
   tokenFile = "/Users/ted/.config/jelly-metrics/token";
   log = "/Users/ted/Library/Logs/jelly-metrics.log";
+  src = self.inputs.jelly-metrics;
 
-  jelly-metrics = pkgs.buildGoModule rec {
+  jelly-metrics = pkgs.buildGoModule {
     pname = "jelly-metrics";
-    version = "1.2.0";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "Digital-Shane";
-      repo = "jelly-metrics";
-      rev = "v${version}";
-      hash = "sha256-S32JreMOgJB3UnHld3/c64dVy41gwB4SxQRCagJYiXA=";
-    };
+    version = src.shortRev;
+    inherit src;
 
     vendorHash = "sha256-mQ3sRIIsFXuoUZOZ42Mw2CM0wwJjt08cHPtOzbvOats=";
 
