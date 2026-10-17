@@ -65,7 +65,23 @@
   outputs =
     { self, ... }@inputs:
     let
-      overlays = [ ];
+      overlays = [
+        (_final: prev: {
+          # On macOS, jellyfin-desktop hands Qt an empty TLS config, and with
+          # Qt's OpenSSL backend that trusts no roots, so every https server
+          # fails verification. Start from Qt's default config instead.
+          jellyfin-desktop = prev.jellyfin-desktop.overrideAttrs (
+            old:
+            prev.lib.optionalAttrs prev.stdenv.hostPlatform.isDarwin {
+              postPatch = (old.postPatch or "") + ''
+                substituteInPlace src/system/SystemComponent.cpp \
+                  --replace-fail 'QSslConfiguration sslConfig;' \
+                    'QSslConfiguration sslConfig = QSslConfiguration::defaultConfiguration();'
+              '';
+            }
+          );
+        })
+      ];
 
       isDarwin =
         system:
