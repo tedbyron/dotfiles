@@ -95,10 +95,12 @@ in
   };
 
   launchd.daemons."wg-quick-${tunnel}".serviceConfig = {
-    EnvironmentVariables.PATH = lib.makeBinPath [
-      pkgs.wireguard-go
-      pkgs.wireguard-tools
-    ] + ":/usr/bin:/bin:/usr/sbin:/sbin";
+    EnvironmentVariables.PATH =
+      lib.makeBinPath [
+        pkgs.wireguard-go
+        pkgs.wireguard-tools
+      ]
+      + ":/usr/bin:/bin:/usr/sbin:/sbin";
 
     ProgramArguments = [
       "/bin/sh"

@@ -100,7 +100,7 @@ let
     let
       excludes = lib.concatMapStringsSep " " (e: "--exclude ${lib.escapeShellArg e}") source.exclude;
     in
-    ''copy ${lib.escapeShellArg source.name} ${lib.escapeShellArg source.path} ${excludes}'';
+    "copy ${lib.escapeShellArg source.name} ${lib.escapeShellArg source.path} ${excludes}";
 
   backup = pkgs.writeShellScript "media-backup" ''
     set -euo pipefail

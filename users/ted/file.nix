@@ -7,6 +7,11 @@
 }:
 {
   home.file = {
+    ".claude/CLAUDE.md" = {
+      source = lib.ted.configPath "claude/CLAUDE.md";
+      force = true;
+    };
+
     ".hushlogin" = {
       enable = darwin;
       text = "";

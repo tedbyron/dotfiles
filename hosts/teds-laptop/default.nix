@@ -65,31 +65,24 @@
 
     defaults.dock.persistent-apps =
       let
-        # userPackages =
-        #   name:
-        #   lib.findFirst (
-        #     pkg: (builtins.parseDrvName pkg.name).name == name
-        #   ) null config.home-manager.users.ted.home.packages;
-        # The copies made by home-manager's copyApps, which is what Spotlight and
-        # Finder open; pointing at the store path gives a second dock icon.
-        hmApp =
+        userPackages =
           name:
-          let
-            hm = config.home-manager.users.ted;
-          in
-          "${hm.home.homeDirectory}/${hm.targets.darwin.copyApps.directory}/${name}.app/";
+          lib.findFirst (
+            pkg: (builtins.parseDrvName pkg.name).name == name
+          ) null config.home-manager.users.ted.home.packages;
+        userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
       in
       map (app: { inherit app; }) [
         "/Applications/Firefox.app/"
         "/Applications/Bitwarden.app/"
         "/Applications/Spotify.app/"
         "/Applications/Discord.app/"
-        (hmApp "Ghostty")
-        (hmApp "Visual Studio Code")
+        "${userPrograms "ghostty"}/Applications/Ghostty.app/"
+        "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
         "/Applications/Affinity.app/"
         "/Applications/DaVinci Resolve.app/"
         "/Applications/Steam.app/"
-        (hmApp "Jellyfin Desktop")
+        "${userPackages "jellyfin-desktop"}/Applications/Jellyfin Desktop.app/"
       ];
   };
 
