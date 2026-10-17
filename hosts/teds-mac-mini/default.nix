@@ -55,6 +55,7 @@
       "/Applications/Bitwarden.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
+      "${unstable.jellyfin-desktop}/Applications/Jellyfin Desktop.app/"
     ];
 
   users.users.ted.openssh.authorizedKeys.keys = [
