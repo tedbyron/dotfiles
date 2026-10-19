@@ -5,6 +5,7 @@ _: {
     ./bazarr.nix
     ./blackbox-exporter.nix
     ./caddy.nix
+    ./cleanuparr.nix
     ./ersatztv-schedules.nix
     ./ersatztv.nix
     ./flaresolverr.nix
@@ -13,6 +14,7 @@ _: {
     ./jelly-metrics.nix
     ./jellyfin.nix
     ./macos-process-exporter.nix
+    ./nas.nix
     ./node-exporter.nix
     ./opentamer.nix
     ./prometheus.nix

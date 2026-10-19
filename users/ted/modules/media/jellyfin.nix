@@ -1,6 +1,6 @@
 { pkgs, unstable, ... }:
 let
-  mediaDir = "/Users/ted/media-test";
+  mediaDir = "/Volumes/media";
   dataDir = "/Users/ted/.local/share/jellyfin";
   cfgDir = "/Users/ted/.config/jellyfin";
   log = "/Users/ted/Library/Logs/jellyfin.log";
@@ -17,9 +17,9 @@ let
   '';
 
   start = pkgs.writeShellScript "start-jellyfin" ''
-    mkdir -p ${mediaDir} ${dataDir} ${cfgDir}
+    mkdir -p ${dataDir} ${cfgDir}
 
-    until [ -d ${mediaDir} ]; do
+    until [ -d ${mediaDir}/movies ]; do
       echo "waiting for ${mediaDir}"
       sleep 2
     done

@@ -46,6 +46,11 @@ let
       exclude = arrExcludes;
     }
     {
+      name = "cleanuparr";
+      path = "${share}/cleanuparr";
+      exclude = [ "logs/" ];
+    }
+    {
       name = "seerr";
       path = "${share}/seerr";
       exclude = [

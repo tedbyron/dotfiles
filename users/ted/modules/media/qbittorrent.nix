@@ -39,6 +39,11 @@ let
   '';
 
   start = pkgs.writeShellScript "start-qbittorrent" ''
+    until [ -d /Volumes/media/downloads ]; do
+      echo "waiting for /Volumes/media"
+      sleep 5
+    done
+
     # wg-quick's name file is root-only, so find the interface by its address instead
     tunnel_iface() {
       /sbin/ifconfig | ${pkgs.gawk}/bin/awk '/^[a-z]/ { sub(":", "", $1); i = $1 } /inet ${tunnelAddress} / { print i }'
