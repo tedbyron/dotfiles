@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 let
   dataDir = "/Users/ted/Library/Application Support/ersatztv";
   ffmpegDir = "${dataDir}/ffmpeg";
@@ -16,7 +16,7 @@ let
     fi
 
     export PATH="${ffmpegDir}:$PATH"
-    exec ${pkgs.ersatztv}/bin/ErsatzTV
+    exec ${unstable.ersatztv}/bin/ErsatzTV
   '';
 
   pfRules = pkgs.writeText "ersatztv.pf" ''

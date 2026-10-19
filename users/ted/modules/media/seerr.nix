@@ -1,9 +1,9 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, unstable, ... }:
 let
   dataDir = "/Users/ted/.local/share/seerr";
   log = "/Users/ted/Library/Logs/seerr.log";
 
-  seerr = pkgs.seerr.overrideAttrs (old: {
+  seerr = unstable.seerr.overrideAttrs (old: {
     nativeBuildInputs = old.nativeBuildInputs ++ [
       pkgs.cctools
       pkgs.xcbuild

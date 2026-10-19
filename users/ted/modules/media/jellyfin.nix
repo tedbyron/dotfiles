@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 let
   mediaDir = "/Users/ted/media-test";
   dataDir = "/Users/ted/.local/share/jellyfin";
@@ -35,7 +35,7 @@ let
         ${cfgDir}/system.xml
     fi
 
-    exec ${pkgs.jellyfin}/bin/jellyfin \
+    exec ${unstable.jellyfin}/bin/jellyfin \
       --datadir ${dataDir} \
       --configdir ${cfgDir} \
       --cachedir ${dataDir}/cache \

@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, unstable, ... }:
 let
   search = key: query: {
     search = null;
@@ -39,7 +39,7 @@ let
   };
 
   yaml = pkgs.formats.yaml { };
-  schema = "${pkgs.ersatztv}/lib/ersatztv/Resources/sequential-schedule.schema.json";
+  schema = "${unstable.ersatztv}/lib/ersatztv/Resources/sequential-schedule.schema.json";
 
   validate = pkgs.writeText "validate-schedule.py" ''
     import json, sys, jsonschema, yaml
