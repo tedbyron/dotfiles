@@ -1,4 +1,9 @@
-{ pkgs, lib, unstable, ... }:
+{
+  pkgs,
+  lib,
+  unstable,
+  ...
+}:
 let
   dataDir = "/Users/ted/.local/share/seerr";
   log = "/Users/ted/Library/Logs/seerr.log";

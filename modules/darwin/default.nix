@@ -53,6 +53,7 @@
 
     # networksetup -listallnetworkservices
     knownNetworkServices = [
+      "Ethernet"
       "Thunderbolt Bridge"
       "Wi-Fi"
     ];

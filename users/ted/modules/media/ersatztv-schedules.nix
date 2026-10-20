@@ -1,4 +1,9 @@
-{ pkgs, lib, unstable, ... }:
+{
+  pkgs,
+  lib,
+  unstable,
+  ...
+}:
 let
   search = key: query: {
     search = null;
