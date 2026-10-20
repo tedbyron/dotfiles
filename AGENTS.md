@@ -55,6 +55,10 @@ must be `git add`ed before flake evaluation can see them.
   media wait for the mount before starting.
 - qBittorrent is bound to the Mullvad WireGuard tunnel; `qbittorrent.nix`
   rebuilds the tunnel when DNS through it fails.
+- Never torrent outside the VPN. qBittorrent must only run through its start
+  script, which waits for the tunnel, binds to it, and stops if it changes.
+  Don't remove the interface binding, start qBittorrent any other way, or add
+  another torrent client without the same protection.
 - Prebuilt binaries (Cleanuparr, ErsatzTV's ffmpeg) are packaged from release
   archives with `dontFixup = true`.
 - Grafana dashboards in `modules/grafana/` are provisioned v2 JSON, exported
@@ -79,8 +83,10 @@ backups. Redo by hand after a rebuild without backups:
   profiles and naming come from Recyclarr.
 - Cleanuparr: queue cleaner every 15 min; failed import 3 strikes, downloading
   metadata 6, errored 3; stall rules 0-80% (4 strikes) and 80-100% (15 strikes),
-  reset after 10MB progress; seeker replacement searches only, every 10 min;
-  download cleaner off.
+  reset after 10MB progress; seeker runs replacement and proactive searches
+  every 10 min (round robin, each item at most weekly, monitored only, up to
+  cutoff, paused at 3 active downloads, 6h post-release grace); download cleaner
+  off.
 - Seerr: Radarr/Sonarr default profiles HD Bluray + WEB and WEB-1080p (specials,
   libraries and root folders are set in `seerr.nix`).
 - Jellyfin: Movies and Shows libraries on `/Volumes/media`; plugins Intro

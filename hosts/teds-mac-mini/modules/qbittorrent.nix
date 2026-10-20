@@ -13,47 +13,57 @@ let
   log = "/Users/ted/Library/Logs/qbittorrent.log";
   ini = "/Users/ted/.config/qBittorrent/qBittorrent.ini";
 
-  # Applied to [BitTorrent] on every start, overriding changes made in the web UI
+  # Applied on every start, overriding changes made in the web UI
   settings = {
-    "Session\\DefaultSavePath" = "/Volumes/media/downloads";
-    "Session\\TempPath" = "/Volumes/media/downloads/temp";
-    "Session\\GlobalMaxRatio" = "2";
-    "Session\\GlobalMaxSeedingMinutes" = "20160";
-    "Session\\ShareLimitAction" = "RemoveWithContent";
-    "Session\\AddTrackersFromURLEnabled" = "true";
-    "Session\\AdditionalTrackersURL" =
-      "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt";
-    "Session\\AnnounceToAllTrackers" = "true";
+    BitTorrent = {
+      "Session\\DefaultSavePath" = "/Volumes/media/downloads";
+      "Session\\TempPath" = "/Volumes/media/downloads/temp";
+      "Session\\GlobalMaxRatio" = "2";
+      "Session\\GlobalMaxSeedingMinutes" = "20160";
+      "Session\\ShareLimitAction" = "RemoveWithContent";
+      "Session\\AddTrackersFromURLEnabled" = "true";
+      "Session\\AdditionalTrackersURL" =
+        "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt";
+      "Session\\AnnounceToAllTrackers" = "true";
+    };
+    # Mullvad's SOCKS5 proxy doesn't relay UDP on every server, which kills DHT and UDP trackers
+    Network."Proxy\\Profiles\\BitTorrent" = "false";
   };
 
   setSettings = pkgs.writeText "qbittorrent-settings.py" ''
     import json, sys
 
     path, iface, address, settings = sys.argv[1:]
-    wanted = {
+    wanted = json.loads(settings)
+    wanted.setdefault("BitTorrent", {}).update({
         "Session\\Interface": iface,
         "Session\\InterfaceName": iface,
         "Session\\InterfaceAddress": address,
-        **json.loads(settings),
-    }
+    })
 
-    lines = open(path).read().splitlines()
     out, section, seen = [], None, set()
-    for line in lines:
+
+    def add_missing():
+        for key, value in wanted.get(section, {}).items():
+            if (section, key) not in seen:
+                out.append(f"{key}={value}")
+                seen.add((section, key))
+
+    for line in open(path).read().splitlines():
         if line.startswith("["):
-            if section == "[BitTorrent]":
-                out += [f"{k}={v}" for k, v in wanted.items() if k not in seen]
-                seen.update(wanted)
-            section = line.strip()
-        elif section == "[BitTorrent]" and line.split("=", 1)[0] in wanted:
+            add_missing()
+            section = line.strip()[1:-1]
+        elif line.split("=", 1)[0] in wanted.get(section, {}):
             key = line.split("=", 1)[0]
-            line = f"{key}={wanted[key]}"
-            seen.add(key)
+            line = f"{key}={wanted[section][key]}"
+            seen.add((section, key))
         out.append(line)
-    if section == "[BitTorrent]":
-        out += [f"{k}={v}" for k, v in wanted.items() if k not in seen]
-    elif "[BitTorrent]" not in lines:
-        out += ["", "[BitTorrent]"] + [f"{k}={v}" for k, v in wanted.items()]
+    add_missing()
+
+    for name, values in wanted.items():
+        missing = [f"{k}={v}" for k, v in values.items() if (name, k) not in seen]
+        if missing:
+            out += ["", f"[{name}]"] + missing
 
     open(path, "w").write("\n".join(out) + "\n")
   '';
@@ -74,9 +84,15 @@ let
       sleep 5
     done
 
+    # A rebuilt tunnel can reuse the interface name, but qbittorrent's UDP socket stays on the old one
+    tunnel_pid() {
+      /usr/bin/pgrep -x wireguard-go
+    }
+
     iface=$(tunnel_iface)
+    wgpid=$(tunnel_pid)
     echo "binding to $iface"
-    ${pkgs.python3}/bin/python3 -I ${setSettings} ${ini} "$iface" ${tunnelAddress} \\
+    ${pkgs.python3}/bin/python3 -I ${setSettings} ${ini} "$iface" ${tunnelAddress} \
       ${lib.escapeShellArg (builtins.toJSON settings)}
 
     ${lib.getExe pkgs.qbittorrent-nox} --confirm-legal-notice &
@@ -85,7 +101,7 @@ let
 
     while kill -0 $pid 2>/dev/null; do
       sleep 15
-      if [ "$(tunnel_iface)" != "$iface" ]; then
+      if [ "$(tunnel_iface)" != "$iface" ] || [ "$(tunnel_pid)" != "$wgpid" ]; then
         echo "${tunnel} tunnel changed or went down; stopping"
         kill $pid
         wait $pid
@@ -140,6 +156,8 @@ in
       ''
     ];
 
+    # wireguard-go keeps running after this check exits
+    AbandonProcessGroup = true;
     RunAtLoad = true;
     StandardErrorPath = "/var/log/wg-quick-${tunnel}.log";
     StandardOutPath = "/var/log/wg-quick-${tunnel}.log";

@@ -1681,7 +1681,7 @@
                       "spec": {
                         "disableTextWrap": false,
                         "editorMode": "code",
-                        "expr": "count by(username) (rate(jellyfin_stream_count[1m]))",
+                        "expr": "count by(username) (rate(jellyfin_stream_count[1m])) or on() vector(0)",
                         "fullMetaSearch": false,
                         "includeNullMetadata": true,
                         "legendFormat": "__auto",
@@ -1803,7 +1803,7 @@
                       "spec": {
                         "disableTextWrap": false,
                         "editorMode": "code",
-                        "expr": "max by(username) (jellyfin_connected_clients_count)",
+                        "expr": "max by(username) (jellyfin_connected_clients_count) or on() vector(0)",
                         "fullMetaSearch": false,
                         "includeNullMetadata": true,
                         "legendFormat": "__auto",
