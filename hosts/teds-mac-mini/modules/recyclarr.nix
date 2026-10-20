@@ -9,6 +9,13 @@ let
         api_key: !env_var RADARR_API_KEY
 
         # MB/minute. TRaSH has no max, and its 1080p Bluray min (50.8) rejects most x265 encodes
+        # IDs in folder names let Jellyfin match exactly instead of guessing
+        media_naming:
+          folder: jellyfin-tmdb
+          movie:
+            rename: true
+            standard: jellyfin-tmdb
+
         quality_definition:
           type: movie
           qualities: &sizes
@@ -71,6 +78,15 @@ let
       series:
         base_url: http://127.0.0.1:8989
         api_key: !env_var SONARR_API_KEY
+
+        media_naming:
+          series: jellyfin-tvdb
+          season: default
+          episodes:
+            rename: true
+            standard: default
+            daily: default
+            anime: default
 
         quality_definition:
           type: series

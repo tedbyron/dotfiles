@@ -77,7 +77,7 @@ let
           }
           {
             alert = "JobMetricsStale";
-            expr = ''time() - node_textfile_mtime_seconds{file=~".*/launchd-.*"} > 600 or node_textfile_scrape_error == 1'';
+            expr = ''time() - node_textfile_mtime_seconds{file=~".*/launchd-.*"} > 600 or node_textfile_scrape_error == 1 or absent(launchd_job_running)'';
             "for" = "10m";
             annotations.summary = "launchd job status metrics have stopped updating";
           }
@@ -121,6 +121,8 @@ let
         job_name = "node_exporter";
         static_configs = [ { targets = [ "127.0.0.1:9100" ]; } ];
         metric_relabel_configs = keep [
+          "launchd_job_last_exit_status"
+          "launchd_job_running"
           "node_boot_time_seconds"
           "node_cpu_seconds_total"
           "node_disk_read_bytes_total"
@@ -147,6 +149,8 @@ let
           "node_network_transmit_errs_total"
           "node_network_transmit_packets_total"
           "node_scrape_collector_duration_seconds"
+          "node_textfile_mtime_seconds"
+          "node_textfile_scrape_error"
           "node_time_seconds"
         ];
       }
