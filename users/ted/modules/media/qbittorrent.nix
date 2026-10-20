@@ -111,7 +111,9 @@ in
       "/bin/sh"
       "-c"
       ''
-        /sbin/ifconfig | grep -q "inet ${tunnelAddress} " && exit 0
+        /sbin/ifconfig | grep -q "inet ${tunnelAddress} " \
+          && /usr/bin/dig +time=5 +tries=3 @${proxy} mullvad.net > /dev/null \
+          && exit 0
         wg-quick down ${tunnel} 2>/dev/null
         wg-quick up ${tunnel}
       ''

@@ -5,6 +5,11 @@ let
   log = "/Users/ted/Library/Logs/bazarr.log";
 
   start = pkgs.writeShellScript "start-bazarr" ''
+    until [ -d /Volumes/media/movies ]; do
+      echo "waiting for /Volumes/media"
+      sleep 5
+    done
+
     mkdir -p ${dataDir}/config
     touch ${configFile}
     ${lib.getExe pkgs.yq-go} -i '.general.ip = "127.0.0.1" | .general.port = 6767' ${configFile}

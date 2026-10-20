@@ -4,9 +4,31 @@ let
   ffmpegDir = "${dataDir}/ffmpeg";
   log = "/Users/ted/Library/Logs/ersatztv.log";
 
+  ffmpeg = pkgs.stdenvNoCC.mkDerivation rec {
+    pname = "ersatztv-ffmpeg";
+    version = "8.1.2-4";
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/ErsatzTV/ErsatzTV-ffmpeg/releases/download/${version}/ffmpeg-n8.1.2-etv.4-macosarm64-gpl-8.1.tar.xz";
+      hash = "sha256-RcDRk0EPuod9vKdy7IMDf193ER+FnAO94Hqql0M1DGw=";
+    };
+
+    dontFixup = true;
+
+    installPhase = ''
+      mkdir -p $out
+      cp -R bin $out/
+    '';
+  };
+
   start = pkgs.writeShellScript "start-ersatztv" ''
+    until [ -d /Volumes/media/movies ]; do
+      echo "waiting for /Volumes/media"
+      sleep 5
+    done
+
     mkdir -p "${dataDir}"
-    ln -sfn ${pkgs.ffmpeg_7.bin}/bin "${ffmpegDir}"
+    ln -sfn ${ffmpeg}/bin "${ffmpegDir}"
 
     if [ -e "${dataDir}/ersatztv.sqlite3" ]; then
       ${pkgs.sqlite}/bin/sqlite3 "${dataDir}/ersatztv.sqlite3" "

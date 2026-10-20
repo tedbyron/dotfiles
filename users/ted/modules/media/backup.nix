@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 let
-  backupDir = "/Users/ted/Backups/media";
+  backupDir = "/Volumes/media/backups";
+  stage = "/Users/ted/Backups/media/staging";
   keep = 14;
   log = "/Users/ted/Library/Logs/media-backup.log";
   share = "/Users/ted/.local/share";
@@ -111,7 +112,12 @@ let
     set -euo pipefail
     umask 077
 
-    stage=${backupDir}/staging
+    until [ -d ${backupDir} ]; do
+      echo "waiting for ${backupDir}"
+      sleep 30
+    done
+
+    stage=${stage}
     mkdir -p "$stage"
 
     copy() {
