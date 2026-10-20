@@ -82,9 +82,9 @@ backups. Redo by hand after a rebuild without backups:
 - Sonarr/Radarr: root folders `/Volumes/media/{tv,movies}`; Emby/Jellyfin
   connection for rescans; propers and repacks set to Do not Prefer (the
   Repack/Proper custom formats score them); delete empty folders on; no recycle
-  bin; import extra files `srt,ass,ssa,sub,idx`; delay profile prefers torrent
-  with a 30 min delay (bypassed for the top quality); qBittorrent client removes
-  completed downloads and moves imports to
+  bin (the NAS doesn't support one); import extra files `srt,ass,ssa,sub,idx`;
+  delay profile prefers torrent with a 30 min delay (bypassed for the top
+  quality); qBittorrent client removes completed downloads and moves imports to
   `radarr-imported`/`tv-sonarr-imported`. Quality profiles and naming come from
   Recyclarr.
 - Cleanuparr: queue cleaner every 15 min; failed import 3 strikes, downloading

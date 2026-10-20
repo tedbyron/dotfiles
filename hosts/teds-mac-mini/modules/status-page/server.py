@@ -1,19 +1,22 @@
-"""Write a sanitized snapshot for the public status page.
+"""Serve the public status page and a sanitized snapshot of the server.
 
-Only what this script copies into status.json and calendar.ics is published.
+Only what this script puts in status.json and calendar.ics is published. A
+snapshot is taken when one is requested and the last is over 5 minutes old.
 """
 
 import datetime as dt
+import http.server
 import json
 import os
 import re
-import shutil
 import sys
+import threading
 import urllib.parse
 import urllib.request
 
-out_dir, index_html = sys.argv[1:]
+port, index_html = sys.argv[1:]
 home = os.path.expanduser("~")
+max_age = dt.timedelta(minutes=5)
 
 # Rows as shown on the page
 SERVICES = [
@@ -43,7 +46,7 @@ SERVICES = [
 ]
 ARRS = {"sonarr": 8989, "radarr": 7878}
 
-now = dt.datetime.now(dt.timezone.utc)
+now = None
 failed = []
 
 
@@ -310,29 +313,66 @@ def ics(events):
     return "\r\n".join(lines) + "\r\n"
 
 
-def write(name, text):
-    path = os.path.join(out_dir, name)
-    with open(path + ".tmp", "w") as f:
-        f.write(text)
-    os.replace(path + ".tmp", path)
+snapshots = {}
+lock = threading.Lock()
 
 
-os.makedirs(out_dir, exist_ok=True)
-events = section("calendar", calendar)
-status = {
-    "updated": now.isoformat(timespec="seconds"),
-    "issues": section("issues", issues),
-    "services": section("services", services),
-    "system": section("system", system),
-    "library": section("library", library),
-    "downloads": section("downloads", downloads),
-    "requests": section("requests", requests),
-    "calendar": events,
-}
-write("status.json", json.dumps(status, indent=1))
-if events is not None:
-    write("calendar.ics", ics(events))
-shutil.copyfile(index_html, os.path.join(out_dir, "index.html.tmp"))
-os.replace(os.path.join(out_dir, "index.html.tmp"), os.path.join(out_dir, "index.html"))
+def snapshot():
+    global now
+    now = dt.datetime.now(dt.timezone.utc)
+    failed.clear()
+    events = section("calendar", calendar)
+    status = {
+        "updated": now.isoformat(timespec="seconds"),
+        "issues": section("issues", issues),
+        "services": section("services", services),
+        "system": section("system", system),
+        "library": section("library", library),
+        "downloads": section("downloads", downloads),
+        "requests": section("requests", requests),
+        "calendar": events,
+    }
+    snapshots["status.json"] = json.dumps(status, indent=1).encode()
+    # Keep the last calendar rather than publishing an empty one
+    if events is not None:
+        snapshots["calendar.ics"] = ics(events).encode()
+    if failed:
+        print(f"snapshot incomplete: {', '.join(failed)}", file=sys.stderr)
 
-sys.exit(1 if failed else 0)
+
+def latest(name):
+    # Concurrent requests wait for one snapshot instead of each taking their own
+    with lock:
+        if now is None or dt.datetime.now(dt.timezone.utc) - now > max_age:
+            snapshot()
+        return snapshots.get(name)
+
+
+class Handler(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        path = urllib.parse.urlsplit(self.path).path
+        if path in ("/", "/index.html"):
+            body, kind = open(index_html, "rb").read(), "text/html; charset=utf-8"
+        elif path == "/status.json":
+            body, kind = latest("status.json"), "application/json"
+        elif path == "/calendar.ics":
+            body, kind = latest("calendar.ics"), "text/calendar; charset=utf-8"
+        elif path == "/health":
+            body, kind = b"ok", "text/plain"
+        else:
+            body = None
+        if body is None:
+            self.send_error(404)
+            return
+        self.send_response(200)
+        self.send_header("Content-Type", kind)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "no-cache")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def log_message(self, *args):
+        pass
+
+
+http.server.ThreadingHTTPServer(("127.0.0.1", int(port)), Handler).serve_forever()

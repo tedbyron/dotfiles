@@ -112,7 +112,8 @@ let
       (probe "public" [
         "https://stream.ted.ooo/health"
         "https://request.ted.ooo/api/v1/status"
-        "https://status.ted.ooo/status.json"
+        # Not status.json, which would keep the snapshot refreshing every 5 minutes
+        "https://status.ted.ooo/health"
       ])
       {
         job_name = "blackbox";

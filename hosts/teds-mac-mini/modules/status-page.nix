@@ -4,16 +4,16 @@ let
 in
 {
   launchd.user.agents.status-page.serviceConfig = {
+    KeepAlive = true;
     ProgramArguments = [
       "${pkgs.python3}/bin/python3"
       "-I"
-      "${./status-page/snapshot.py}"
-      "/Users/ted/.local/share/status-page"
+      "${./status-page/server.py}"
+      "8410"
       "${./status-page/index.html}"
     ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;
-    StartInterval = 300;
   };
 }
