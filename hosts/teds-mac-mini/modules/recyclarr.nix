@@ -26,33 +26,47 @@ let
             - { name: WEBRip-2160p, min: 25, preferred: 100, max: 250 }
             - { name: Bluray-2160p, min: 25, preferred: 100, max: 250 }
 
+        # min_upgrade_format_score: TRaSH's 1 re-downloads a fine file for a slightly
+        # better group or a repack, often as a bigger file; 1000 leaves only real
+        # upgrades (to x265, or out of an unwanted format)
+        # Blu-ray and WEB share one group per resolution (as in Sonarr), so release
+        # group scores pick between them; TRaSH ranks Blu-ray a quality above WEB,
+        # which let a larger Blu-ray replace a WEB file. No 720p
         quality_profiles:
           - trash_id: d1d67249d3890e49bc12e275d989a7e9 # HD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
+            min_upgrade_format_score: 1000
             upgrade:
               allowed: true
-              until_quality: WEB 1080p
-              until_score: 2000
-          - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
-            reset_unmatched_scores:
-              enabled: true
-            upgrade:
-              allowed: true
-              until_quality: WEB 2160p
-              until_score: 2000
-            # Fall back to 1080p when there's no 4K, and keep upgrading until 4K
+              until_quality: 1080p
+              until_score: 3000
             qualities:
-              - name: Bluray-2160p
-              - name: WEB 2160p
-                qualities:
-                  - WEBRip-2160p
-                  - WEBDL-2160p
-              - name: Bluray-1080p
-              - name: WEB 1080p
+              - name: 1080p
                 qualities:
                   - WEBRip-1080p
                   - WEBDL-1080p
+                  - Bluray-1080p
+          - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
+            reset_unmatched_scores:
+              enabled: true
+            min_upgrade_format_score: 1000
+            upgrade:
+              allowed: true
+              until_quality: 2160p
+              until_score: 3000
+            # Fall back to 1080p when there's no 4K, and keep upgrading until 4K
+            qualities:
+              - name: 2160p
+                qualities:
+                  - WEBRip-2160p
+                  - WEBDL-2160p
+                  - Bluray-2160p
+              - name: 1080p
+                qualities:
+                  - WEBRip-1080p
+                  - WEBDL-1080p
+                  - Bluray-1080p
 
         custom_format_groups:
           add:
@@ -61,14 +75,17 @@ let
             - f8bf8eab4617f12dfdbd16303d8da245 # [Optional] Golden Rule HD
             - ff204bbcecdd487d1cefcefdbf0c278d # [Optional] Golden Rule UHD
 
-        # Prefer x265 over x264; above the top release group tier (1800)
+        # Codec first: x265 outweighs everything else a release can score without it
+        # (tier 1800 + HDR 500 + extras ~2330), and until_score 3000 means only x265
+        # releases meet the cutoff
         custom_formats:
           - trash_ids:
               - 9170d55c319f4fe40da8711ba9d8050d # x265
-            score: 2000
+            score: 3000
             assign_scores_to:
               - trash_id: d1d67249d3890e49bc12e275d989a7e9
               - trash_id: 64fb5f9858489bdac2af690e27c8f42f
+          # No audio preference at all; TRaSH's UHD profile scores every format
           - trash_ids:
               - 496f355514737f7d83bf7aa4d24f8169 # TrueHD ATMOS
               - 2f22d89048b01681dde8afe203bf2e95 # DTS X
@@ -77,7 +94,20 @@ let
               - a570d4a0e56a2874b64e5bfa55202a1b # FLAC
               - e7c2fcae07cbada050a0af3357491d7b # PCM
               - 8e109e50e0a0b83a5098b056e13bf6db # DTS-HD HRA
-            score: -1000
+              - 1af239278386be2919e1bcee0bde047e # DD+ ATMOS
+              - 417804f7f2c4308c1f4c5d380d4c4475 # ATMOS (undefined)
+              - 185f1dd7264c4562b9022d963ac37424 # DD+
+              - f9f847ac70a0af62ea4a08280b859636 # DTS-ES
+              - 1c1a4c5e823891c75bc50380a6866f73 # DTS
+              - 240770601cc226190c367ef59aba7463 # AAC
+              - c2998bd0d90ed5621d8df281e839436e # DD
+            score: 0
+            assign_scores_to:
+              - trash_id: 64fb5f9858489bdac2af690e27c8f42f
+          # Plays with wrong colours on anything without Dolby Vision; TRaSH's own score
+          - trash_ids:
+              - 923b6abef9b17f937fab56cfcf89e1f1 # DV (w/o HDR fallback)
+            score: -10000
             assign_scores_to:
               - trash_id: 64fb5f9858489bdac2af690e27c8f42f
           - trash_ids:
@@ -105,30 +135,44 @@ let
           qualities: *sizes
 
         quality_profiles:
+          # TRaSH's WEB profiles leave out 1080p Blu-ray, so an x265 Blu-ray file was
+          # "not in profile" and always replaced by a much larger WEB-DL. In the same
+          # group as WEB, scores (x265 3000) decide between them instead
           - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
             reset_unmatched_scores:
               enabled: true
+            # As in Radarr: only real upgrades replace a file
+            min_upgrade_format_score: 1000
             upgrade:
               allowed: true
-              until_score: 2000
-          - trash_id: d1498e7d189fbe6c7110ceaabb7473e6 # WEB-2160p
-            reset_unmatched_scores:
-              enabled: true
-            upgrade:
-              allowed: true
-              until_quality: WEB 2160p
-              until_score: 2000
-            # Fall back to 4K Blu-ray, then 1080p, and keep upgrading until 4K WEB
+              until_quality: 1080p
+              until_score: 3000
             qualities:
-              - name: WEB 2160p
-                qualities:
-                  - WEBRip-2160p
-                  - WEBDL-2160p
-              - name: Bluray-2160p
-              - name: WEB 1080p
+              - name: 1080p
                 qualities:
                   - WEBRip-1080p
                   - WEBDL-1080p
+                  - Bluray-1080p
+          - trash_id: d1498e7d189fbe6c7110ceaabb7473e6 # WEB-2160p
+            reset_unmatched_scores:
+              enabled: true
+            min_upgrade_format_score: 1000
+            upgrade:
+              allowed: true
+              until_quality: 2160p
+              until_score: 3000
+            # Fall back to 1080p, and keep upgrading until 4K
+            qualities:
+              - name: 2160p
+                qualities:
+                  - WEBRip-2160p
+                  - WEBDL-2160p
+                  - Bluray-2160p
+              - name: 1080p
+                qualities:
+                  - WEBRip-1080p
+                  - WEBDL-1080p
+                  - Bluray-1080p
 
         custom_format_groups:
           add:
@@ -139,12 +183,18 @@ let
             - 158188097a58d7687dee647e04af0da3 # [Optional] Golden Rule HD
             - e3f37512790f00d0e89e54fe5e790d1c # [Optional] Golden Rule UHD
 
+        # Codec first, as in Radarr (tier 1700 + HDR 500 + streaming + pack ~2460 without x265)
         custom_formats:
           - trash_ids:
               - c9eafd50846d299b862ca9bb6ea91950 # x265
-            score: 2000
+            score: 3000
             assign_scores_to:
               - trash_id: 72dae194fc92bf828f32cde7744e51a1
+              - trash_id: d1498e7d189fbe6c7110ceaabb7473e6
+          - trash_ids:
+              - 9b27ab6498ec0f31a3353992e19434ca # DV (w/o HDR fallback)
+            score: -10000
+            assign_scores_to:
               - trash_id: d1498e7d189fbe6c7110ceaabb7473e6
           # Prefer packs over single episodes; worth about two release group tiers
           - trash_ids:
