@@ -112,6 +112,7 @@ let
       (probe "public" [
         "https://stream.ted.ooo/health"
         "https://request.ted.ooo/api/v1/status"
+        "https://status.ted.ooo/status.json"
       ])
       {
         job_name = "blackbox";

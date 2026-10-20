@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>ted.ooo status</title>
+    <style>
+      :root {
+        --bg: #f6f7f9;
+        --card: #fff;
+        --ink: #1b1f24;
+        --muted: #667080;
+        --line: #e3e6ea;
+        --up: #1f9d55;
+        --down: #d64545;
+        --warn: #c98a12;
+        --accent: #3b6fd8;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111418;
+          --card: #1a1e24;
+          --ink: #e6e9ed;
+          --muted: #8b95a3;
+          --line: #2a3038;
+          --up: #3ccf7a;
+          --down: #f06a6a;
+          --warn: #e8b04a;
+          --accent: #7ea6ff;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          15px/1.5 system-ui,
+          -apple-system,
+          sans-serif;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 22px;
+      }
+      h2 {
+        margin: 0 0 12px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px;
+      }
+      #services {
+        display: grid;
+        gap: 12px 32px;
+      }
+      .service-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px 32px;
+      }
+      .service {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--muted);
+        flex: none;
+      }
+      .dot.up {
+        background: var(--up);
+      }
+      .dot.down {
+        background: var(--down);
+      }
+      #tiles {
+        display: grid;
+        gap: 16px;
+      }
+      .tiles {
+        display: flex;
+        gap: 12px;
+      }
+      .tile {
+        flex: 1;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 12px;
+        text-align: center;
+      }
+      .service-row.primary {
+        font-weight: 600;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-bottom: 8px;
+      }
+      .service .pct {
+        margin-left: auto;
+        font-weight: 400;
+        font-variant-numeric: tabular-nums;
+      }
+      .primary .service {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 8px;
+      }
+      .primary .service .pct {
+        margin-left: 0;
+      }
+      .days {
+        flex-basis: 100%;
+        display: flex;
+        gap: 2px;
+        height: 24px;
+      }
+      .days span {
+        flex: 1;
+        border-radius: 2px;
+        background: var(--line);
+      }
+      .days span.good {
+        background: var(--up);
+      }
+      .days span.fair {
+        background: var(--warn);
+      }
+      .days span.bad {
+        background: var(--down);
+      }
+      .card.banner {
+        justify-self: center;
+        max-width: 100%;
+        padding: 12px 24px;
+        text-align: center;
+      }
+      .overall {
+        font-weight: 600;
+      }
+      .issue {
+        padding-top: 4px;
+      }
+      .issue .muted {
+        margin-left: 8px;
+      }
+      .up-text {
+        color: var(--up);
+      }
+      .warn-text {
+        color: var(--warn);
+      }
+      .down-text {
+        color: var(--down);
+      }
+      @media (max-width: 560px) {
+        #services,
+        #tiles {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .service-row.primary {
+          display: grid;
+          grid-column: 1 / -1;
+          grid-template-columns: minmax(0, 1fr);
+        }
+        #tiles {
+          gap: 12px;
+        }
+        .service-row,
+        .tiles {
+          display: contents;
+        }
+      }
+      .tile .value {
+        font-size: 24px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+      .bar {
+        height: 8px;
+        background: var(--line);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
+      .bar span {
+        display: block;
+        height: 100%;
+        background: var(--accent);
+      }
+      .month-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+      .month-nav button {
+        font: inherit;
+        color: var(--ink);
+        background: none;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+      }
+      .month-nav button:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+      .month {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        overflow: hidden;
+      }
+      .weekday {
+        background: var(--card);
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+        padding: 4px 0;
+      }
+      .cell {
+        background: var(--card);
+        min-height: 88px;
+        padding: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        cursor: pointer;
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        border: 0;
+      }
+      .cell.outside {
+        background: var(--bg);
+        color: var(--muted);
+      }
+      .cell.selected {
+        box-shadow: inset 0 0 0 2px var(--accent);
+      }
+      .cell .num {
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      .cell.today .num {
+        color: var(--card);
+        background: var(--accent);
+        border-radius: 10px;
+        padding: 0 6px;
+        align-self: flex-start;
+      }
+      .chip {
+        font-size: 11px;
+        line-height: 1.4;
+        padding: 0 4px;
+        border-radius: 3px;
+        background: color-mix(in srgb, var(--accent) 15%, transparent);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .chip.available {
+        background: color-mix(in srgb, var(--up) 18%, transparent);
+      }
+      .dots {
+        display: none;
+        gap: 3px;
+        flex-wrap: wrap;
+      }
+      .dots span {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .dots span.available {
+        background: var(--up);
+      }
+      @media (max-width: 560px) {
+        .cell {
+          min-height: 48px;
+        }
+        .chip {
+          display: none;
+        }
+        .dots {
+          display: flex;
+        }
+      }
+      .day {
+        margin: 16px 0 4px;
+        font-weight: 600;
+      }
+      .event {
+        display: grid;
+        grid-template-columns: 64px 1fr auto;
+        gap: 8px;
+        padding: 4px 0;
+        border-top: 1px solid var(--line);
+      }
+      .event .time {
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
+      }
+      .badge {
+        font-size: 12px;
+        color: var(--up);
+      }
+      a {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>ted.ooo status</h1>
+        <span class="muted" id="updated">Loading…</span>
+      </header>
+
+      <section class="card banner">
+        <div id="issues"></div>
+      </section>
+
+      <section class="card">
+        <h2>Services</h2>
+        <div id="services"></div>
+        <p class="muted">Percentages are uptime over the last 30 days.</p>
+      </section>
+
+      <section class="card">
+        <h2>Server</h2>
+        <div id="tiles"></div>
+      </section>
+
+      <section class="card">
+        <h2>Downloads</h2>
+        <div id="downloads"></div>
+      </section>
+
+      <section class="card">
+        <h2>Calendar</h2>
+        <p class="muted">
+          Subscribe:
+          <a id="webcal" href="calendar.ics">add to calendar app</a> ·
+          <a href="calendar.ics">calendar.ics</a>
+        </p>
+        <div id="calendar"></div>
+      </section>
+    </main>
+
+    <script>
+      const el = (tag, cls, text) => {
+        const node = document.createElement(tag)
+        if (cls) node.className = cls
+        if (text !== undefined) node.textContent = text
+        return node
+      }
+      const unavailable = (target) =>
+        target.replaceChildren(el('span', 'muted', 'Unavailable right now'))
+      const fmt = (value, suffix = '') =>
+        value === null || value === undefined ? '–' : `${value}${suffix}`
+
+      document.getElementById('webcal').href =
+        `webcal://${location.host}/calendar.ics`
+
+      // One bar per day, oldest first, ending today
+      function days(values) {
+        const strip = el('div', 'days')
+        const today = new Date()
+        values.forEach((v, i) => {
+          const date = new Date(today)
+          date.setDate(today.getDate() - (values.length - 1 - i))
+          const grade =
+            v === null ? '' : v >= 99.5 ? 'good' : v >= 95 ? 'fair' : 'bad'
+          const bar = el('span', grade)
+          bar.title = `${date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}: ${v === null ? 'no data' : `${v}%`}`
+          strip.append(bar)
+        })
+        return strip
+      }
+
+      const STALE_MINUTES = 15
+
+      function issues(list, updated) {
+        const target = document.getElementById('issues')
+        const rows = []
+        const age = updated ? (Date.now() - updated) / 60_000 : Infinity
+        if (age > STALE_MINUTES)
+          rows.push({
+            text: updated
+              ? `Status last updated ${Math.round(age)} minutes ago, so the server may be offline`
+              : 'Status is unavailable, so the server may be offline',
+          })
+        if (list === null)
+          rows.push({ text: 'Known issues are unavailable right now' })
+        rows.push(...(list || []))
+
+        const overall = el(
+          'div',
+          `overall ${rows.length ? 'warn-text' : 'up-text'}`,
+          rows.length ? 'Some things need attention' : 'All systems normal',
+        )
+        target.replaceChildren(
+          overall,
+          ...rows.map((issue) => {
+            const row = el('div', 'issue')
+            row.append(el('span', null, issue.text))
+            if (issue.since)
+              row.append(
+                el(
+                  'span',
+                  'muted',
+                  `since ${new Date(issue.since).toLocaleString(undefined, {
+                    weekday: 'short',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                  })}`,
+                ),
+              )
+            return row
+          }),
+        )
+      }
+
+      function services(list) {
+        const target = document.getElementById('services')
+        if (!list) return unavailable(target)
+        target.replaceChildren(
+          ...list.map((items, i) => {
+            const row = el(
+              'div',
+              i === 0 ? 'service-row primary' : 'service-row',
+            )
+            row.append(
+              ...items.map((s) => {
+                const service = el('div', 'service')
+                const state =
+                  s.up === true ? 'up' : s.up === false ? 'down' : ''
+                // Services with daily bars show their state as the name's color
+                if (s.days)
+                  service.append(
+                    el('span', state && `${state}-text`, s.name),
+                    el('span', 'muted pct', fmt(s.uptime_percent, '%')),
+                    days(s.days),
+                  )
+                else
+                  service.append(
+                    el('span', `dot ${state}`),
+                    el('span', null, s.name),
+                    el('span', 'muted pct', fmt(s.uptime_percent, '%')),
+                  )
+                return service
+              }),
+            )
+            return row
+          }),
+        )
+      }
+
+      function uptime(seconds) {
+        if (seconds === null || seconds === undefined) return '–'
+        const days = Math.floor(seconds / 86400)
+        const hours = Math.floor((seconds % 86400) / 3600)
+        return `${days}d ${hours}h`
+      }
+
+      function tiles(system, library) {
+        const target = document.getElementById('tiles')
+        if (!system && !library) return unavailable(target)
+        const rows = [
+          [
+            ['Streaming', fmt(system?.streams)],
+            ['Movies', fmt(library?.movies)],
+            ['Shows', fmt(library?.shows)],
+            ['Episodes', fmt(library?.episodes)],
+          ],
+          [
+            ['Uptime', uptime(system?.uptime_seconds)],
+            ['CPU', fmt(system?.cpu_percent, '%')],
+            ['NAS free', fmt(system?.nas_free_tb, ' TB')],
+            ['Server free', fmt(system?.mini_free_gb, ' GB')],
+          ],
+        ]
+        target.replaceChildren(
+          ...rows.map((items) => {
+            const row = el('div', 'tiles')
+            row.append(
+              ...items.map(([label, value]) => {
+                const tile = el('div', 'tile')
+                tile.append(
+                  el('div', 'muted', label),
+                  el('div', 'value', value),
+                )
+                return tile
+              }),
+            )
+            return row
+          }),
+        )
+      }
+
+      function downloads(d, requests) {
+        const target = document.getElementById('downloads')
+        if (!d) return unavailable(target)
+        const parts = []
+        if (!d.active) parts.push(el('span', 'muted', 'Nothing downloading'))
+        else {
+          const bar = el('div', 'bar')
+          const fill = el('span')
+          fill.style.width = `${d.progress_percent || 0}%`
+          bar.append(fill)
+          parts.push(
+            el(
+              'div',
+              null,
+              `${d.active} downloading · ${fmt(d.progress_percent, '%')} done · ${fmt(d.remaining_gb, ' GB')} left`,
+            ),
+            bar,
+          )
+        }
+        if (requests)
+          parts.push(
+            el(
+              'p',
+              'muted',
+              `Requests: ${requests.processing} in progress · ${requests.pending} awaiting approval`,
+            ),
+          )
+        target.replaceChildren(...parts)
+      }
+
+      const dayKey = (d) =>
+        `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+      // The snapshot covers last month through next month
+      const view = { offset: 0, selected: dayKey(new Date()), events: null }
+
+      function calendar(events) {
+        if (events !== undefined) view.events = events
+        const target = document.getElementById('calendar')
+        if (!view.events) return unavailable(target)
+
+        const days = new Map()
+        for (const e of view.events) {
+          const date = e.allDay
+            ? new Date(`${e.start.slice(0, 10)}T12:00:00`)
+            : new Date(e.start)
+          const key = dayKey(date)
+          if (!days.has(key)) days.set(key, [])
+          days.get(key).push([date, e])
+        }
+
+        const today = new Date()
+        const first = new Date(
+          today.getFullYear(),
+          today.getMonth() + view.offset,
+          1,
+        )
+        const nav = el('div', 'month-nav')
+        const prev = el('button', null, '‹')
+        const next = el('button', null, '›')
+        prev.ariaLabel = 'Previous month'
+        next.ariaLabel = 'Next month'
+        prev.disabled = view.offset <= -1
+        next.disabled = view.offset >= 1
+        prev.onclick = () => {
+          view.offset--
+          calendar()
+        }
+        next.onclick = () => {
+          view.offset++
+          calendar()
+        }
+        nav.append(
+          prev,
+          el(
+            'span',
+            null,
+            first.toLocaleDateString(undefined, {
+              month: 'long',
+              year: 'numeric',
+            }),
+          ),
+          next,
+        )
+
+        const grid = el('div', 'month')
+        for (let i = 0; i < 7; i++)
+          grid.append(
+            el(
+              'div',
+              'weekday',
+              new Date(2026, 1, 1 + i).toLocaleDateString(undefined, {
+                weekday: 'short',
+              }),
+            ),
+          )
+        const start = new Date(first)
+        start.setDate(1 - first.getDay())
+        const weeks = Math.ceil(
+          (first.getDay() +
+            new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate()) /
+            7,
+        )
+        for (let i = 0; i < weeks * 7; i++) {
+          const date = new Date(start)
+          date.setDate(start.getDate() + i)
+          const key = dayKey(date)
+          const items = days.get(key) || []
+          const classes = ['cell']
+          if (date.getMonth() !== first.getMonth()) classes.push('outside')
+          if (key === dayKey(today)) classes.push('today')
+          if (key === view.selected) classes.push('selected')
+          const cell = el('button', classes.join(' '))
+          cell.onclick = () => {
+            view.selected = key
+            calendar()
+          }
+          const dots = el('div', 'dots')
+          cell.append(el('span', 'num', date.getDate()))
+          for (const [, e] of items) {
+            const state = e.available ? ' available' : ''
+            const chip = el('div', `chip${state}`, e.title)
+            chip.title = `${e.title} · ${e.detail}`
+            cell.append(chip)
+            dots.append(el('span', state.trim()))
+          }
+          cell.append(dots)
+          grid.append(cell)
+        }
+
+        const selected = new Date(`${view.selected}T12:00:00`)
+        const detail = [
+          el(
+            'div',
+            'day',
+            selected.toLocaleDateString(undefined, {
+              weekday: 'long',
+              month: 'short',
+              day: 'numeric',
+            }),
+          ),
+        ]
+        const items = days.get(view.selected) || []
+        if (!items.length) detail.push(el('div', 'muted', 'Nothing scheduled'))
+        for (const [date, e] of items) {
+          const row = el('div', 'event')
+          const time = e.allDay
+            ? 'All day'
+            : date.toLocaleTimeString(undefined, {
+                hour: 'numeric',
+                minute: '2-digit',
+              })
+          const what = el('div')
+          what.append(el('div', null, e.title), el('div', 'muted', e.detail))
+          row.append(
+            el('div', 'time', time),
+            what,
+            el('span', 'badge', e.available ? 'Available' : ''),
+          )
+          detail.push(row)
+        }
+        target.replaceChildren(nav, grid, ...detail)
+      }
+
+      async function refresh() {
+        try {
+          const res = await fetch('status.json', { cache: 'no-store' })
+          const data = await res.json()
+          const updated = new Date(data.updated)
+          document.getElementById('updated').textContent =
+            `Updated ${updated.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}`
+          issues(data.issues, updated)
+          services(data.services)
+          tiles(data.system, data.library)
+          downloads(data.downloads, data.requests)
+          calendar(data.calendar)
+        } catch {
+          document.getElementById('updated').textContent = 'Status unavailable'
+          issues(undefined, null)
+        }
+      }
+
+      refresh()
+      setInterval(refresh, 60_000)
+    </script>
+  </body>
+</html>

@@ -25,6 +25,19 @@ let
       import security
       reverse_proxy 127.0.0.1:5055
     }
+
+    # Static files written by status-page.nix; nothing else is served
+    status.ted.ooo {
+      import security
+      @files path / /index.html /status.json /calendar.ics
+      handle @files {
+        root * /Users/ted/.local/share/status-page
+        header /status.json Cache-Control "no-cache"
+        header /calendar.ics Content-Type "text/calendar; charset=utf-8"
+        file_server
+      }
+      respond 404
+    }
   '';
 in
 {
