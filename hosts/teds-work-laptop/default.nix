@@ -17,7 +17,7 @@
     casks = [
       "figma"
       "meetingbar"
-      "mullvad-vpn"
+      "protonvpn"
     ];
 
     masApps = {

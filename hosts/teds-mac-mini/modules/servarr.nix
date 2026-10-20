@@ -16,7 +16,7 @@ let
     sonarr = {
       package = pkgs.sonarr;
       port = 8989;
-      allowedHosts = false;
+      allowedHosts = true;
       media = true;
     };
   };

@@ -1,45 +1,54 @@
 { pkgs, lib, ... }:
 let
-  tunnel = "mullvad";
-  tunnelAddress = "10.75.150.82";
-  proxy = "10.64.0.1";
+  tunnel = "proton";
+  # Every Proton WireGuard config uses this address; the gateway is also its DNS and NAT-PMP server
+  tunnelAddress = "10.2.0.2";
+  gateway = "10.2.0.1";
 
-  # us-chi-wg-307; the account key and tunnel address work on any Mullvad server
+  # US-OH#8, a P2P server, from a WireGuard config generated with NAT-PMP (Port Forwarding) on
   server = {
-    publicKey = "U9UAYlVm8nXZjWPrF/vbb1P9oqSRmHo+IfK52yDYpGo=";
-    endpoint = "68.235.46.188:51820";
+    publicKey = "Rtsl6k9WA9t04Vt+EDUD3TlSr9+YL6YcTFwiSB1qBwA=";
+    endpoint = "146.70.84.2:51820";
   };
   nameFile = "/var/run/wireguard/${tunnel}.name";
   log = "/Users/ted/Library/Logs/qbittorrent.log";
   ini = "/Users/ted/.config/qBittorrent/qBittorrent.ini";
 
+  # natpmpc links its own library by bare name, so dyld can't find it on macOS
+  natpmpc = "${
+    pkgs.libnatpmp.overrideAttrs {
+      postFixup = "install_name_tool -change libnatpmp.1.dylib $out/lib/libnatpmp.1.dylib $out/bin/natpmpc";
+    }
+  }/bin/natpmpc";
+
   # Applied on every start, overriding changes made in the web UI
   settings = {
     BitTorrent = {
       "Session\\DefaultSavePath" = "/Volumes/media/downloads";
-      "Session\\TempPath" = "/Volumes/media/downloads/temp";
       "Session\\GlobalMaxRatio" = "2";
       "Session\\GlobalMaxSeedingMinutes" = "20160";
-      "Session\\ShareLimitAction" = "RemoveWithContent";
+      # Radarr and Sonarr remove stopped torrents once they've imported them
+      "Session\\ShareLimitAction" = "Stop";
       "Session\\AddTrackersFromURLEnabled" = "true";
       "Session\\AdditionalTrackersURL" =
         "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt";
       "Session\\AnnounceToAllTrackers" = "true";
     };
-    # Mullvad's SOCKS5 proxy doesn't relay UDP on every server, which kills DHT and UDP trackers
-    Network."Proxy\\Profiles\\BitTorrent" = "false";
+    Network."Proxy\\Type" = "None";
   };
 
   setSettings = pkgs.writeText "qbittorrent-settings.py" ''
     import json, sys
 
-    path, iface, address, settings = sys.argv[1:]
+    path, iface, address, port, settings = sys.argv[1:]
     wanted = json.loads(settings)
     wanted.setdefault("BitTorrent", {}).update({
         "Session\\Interface": iface,
         "Session\\InterfaceName": iface,
         "Session\\InterfaceAddress": address,
     })
+    if port:
+        wanted["BitTorrent"]["Session\\Port"] = port
 
     out, section, seen = [], None, set()
 
@@ -89,23 +98,44 @@ let
       /usr/bin/pgrep -x wireguard-go
     }
 
+    # Proton keeps a forwarded port only while it's renewed within its 60s lifetime
+    forward_port() {
+      ${natpmpc} -g ${gateway} -a 1 0 udp 60 > /dev/null \
+        && ${natpmpc} -g ${gateway} -a 1 0 tcp 60 \
+        | ${lib.getExe pkgs.gnused} -n 's/^Mapped public port \([0-9]*\) protocol TCP.*/\1/p'
+    }
+
     iface=$(tunnel_iface)
     wgpid=$(tunnel_pid)
-    echo "binding to $iface"
-    ${pkgs.python3}/bin/python3 -I ${setSettings} ${ini} "$iface" ${tunnelAddress} \
+    port=$(forward_port)
+    if [ -n "$port" ]; then
+      echo "binding to $iface, port $port"
+    else
+      echo "binding to $iface; no forwarded port, so peers can't connect in"
+    fi
+    ${pkgs.python3}/bin/python3 -I ${setSettings} ${ini} "$iface" ${tunnelAddress} "$port" \
       ${lib.escapeShellArg (builtins.toJSON settings)}
 
     ${lib.getExe pkgs.qbittorrent-nox} --confirm-legal-notice &
     pid=$!
     trap 'kill $pid; wait $pid' TERM INT
 
+    stop() {
+      echo "$1; stopping"
+      kill $pid
+      wait $pid
+      exit 1
+    }
+
     while kill -0 $pid 2>/dev/null; do
       sleep 15
       if [ "$(tunnel_iface)" != "$iface" ] || [ "$(tunnel_pid)" != "$wgpid" ]; then
-        echo "${tunnel} tunnel changed or went down; stopping"
-        kill $pid
-        wait $pid
-        exit 1
+        stop "${tunnel} tunnel changed or went down"
+      fi
+
+      renewed=$(forward_port)
+      if [ -n "$renewed" ] && [ "$renewed" != "$port" ]; then
+        stop "forwarded port changed from ''${port:-none} to $renewed"
       fi
     done
     wait $pid
@@ -128,7 +158,7 @@ in
     postUp = ''
       iface=$(cat ${nameFile})
       /sbin/route -q -n add -inet default -interface "$iface" -ifscope "$iface"
-      /sbin/route -q -n add -inet -host ${proxy} -interface "$iface"
+      /sbin/route -q -n add -inet -host ${gateway} -interface "$iface"
     '';
 
     # The module's daemon never retries a failed `up` or restarts a dead tunnel
@@ -149,7 +179,7 @@ in
       ''
         /sbin/ifconfig | grep -q "inet ${tunnelAddress} " \
           && wg show "$(cat ${nameFile})" peers | grep -qxF ${lib.escapeShellArg server.publicKey} \
-          && /usr/bin/dig +time=5 +tries=3 @${proxy} mullvad.net > /dev/null \
+          && /usr/bin/dig +time=5 +tries=3 @${gateway} protonvpn.com > /dev/null \
           && exit 0
         wg-quick down ${tunnel} 2>/dev/null
         wg-quick up ${tunnel}

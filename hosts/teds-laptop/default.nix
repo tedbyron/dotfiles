@@ -23,7 +23,7 @@
     casks = [
       "affinity"
       "discord"
-      "mullvad-vpn"
+      "protonvpn"
       "steam"
     ];
 

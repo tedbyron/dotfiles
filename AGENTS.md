@@ -53,8 +53,10 @@ must be `git add`ed before flake evaluation can see them.
   `tv/`, `backups/`), mounted by `nas.nix`. Downloads and library must stay in
   that one share so Radarr/Sonarr imports are hardlinks. Services that touch
   media wait for the mount before starting.
-- qBittorrent is bound to the Mullvad WireGuard tunnel; `qbittorrent.nix`
-  rebuilds the tunnel when DNS through it fails.
+- qBittorrent is bound to the Proton WireGuard tunnel; `qbittorrent.nix`
+  rebuilds the tunnel when DNS through it fails, and renews Proton's NAT-PMP
+  forwarded port (restarting qBittorrent when the port changes). The private key
+  is in `/etc/wireguard/proton.key`.
 - Never torrent outside the VPN. qBittorrent must only run through its start
   script, which waits for the tunnel, binds to it, and stops if it changes.
   Don't remove the interface binding, start qBittorrent any other way, or add
@@ -79,8 +81,12 @@ backups. Redo by hand after a rebuild without backups:
   tagged on 1337x, EZTV and Uindex.
 - Sonarr/Radarr: root folders `/Volumes/media/{tv,movies}`; Emby/Jellyfin
   connection for rescans; propers and repacks set to Do not Prefer (the
-  Repack/Proper custom formats score them); delete empty folders on. Quality
-  profiles and naming come from Recyclarr.
+  Repack/Proper custom formats score them); delete empty folders on; no recycle
+  bin; import extra files `srt,ass,ssa,sub,idx`; delay profile prefers torrent
+  with a 30 min delay (bypassed for the top quality); qBittorrent client removes
+  completed downloads and moves imports to
+  `radarr-imported`/`tv-sonarr-imported`. Quality profiles and naming come from
+  Recyclarr.
 - Cleanuparr: queue cleaner every 15 min; failed import 3 strikes, downloading
   metadata 6, errored 3; stall rules 0-80% (4 strikes) and 80-100% (15 strikes),
   reset after 10MB progress; seeker runs replacement and proactive searches
