@@ -86,7 +86,9 @@ let
     request.ted.ooo {
       import security
       import cloudflare
-      import limit seerr-login 10 5m /api/v1/auth/*
+      # Not all of /api/v1/auth/*: the app checks /me on most page changes and
+      # polls quickconnect/check while waiting
+      import limit seerr-login 10 5m /api/v1/auth/jellyfin /api/v1/auth/jellyfin/quickconnect/initiate /api/v1/auth/jellyfin/quickconnect/authenticate /api/v1/auth/local /api/v1/auth/plex /api/v1/auth/reset-password*
       import limit seerr 600 1m *
       # Seerr trusts the leftmost X-Forwarded-For, which Cloudflare passes
       # through from the client

@@ -94,7 +94,10 @@ backups. Redo by hand after a rebuild without backups:
   cutoff, paused at 3 active downloads, 6h post-release grace); download cleaner
   off.
 - Seerr: Radarr/Sonarr default profiles HD Bluray + WEB and WEB-1080p (specials,
-  libraries and root folders are set in `seerr.nix`).
+  libraries and root folders are set in `seerr.nix`). The owner (user 1, the
+  only admin) is Jellyfin `ted`, which Jellyfin only lets sign in locally; `tb`
+  is a normal user. Seerr's owner can't be demoted or changed from the UI, so
+  sign in as `ted` first when setting it up.
 - Jellyfin: Movies and Shows libraries on `/Volumes/media`; plugins Intro
   Skipper, Playback Reporting, Jellyscribe (GitHub manifest), File
   Transformation, StreamLimiter. Transcoding uses VideoToolbox with HDR tone
