@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   log = "/Users/ted/Library/Logs/jellyfin-posters.log";
 
@@ -167,7 +167,7 @@ let
 in
 {
   launchd.user.agents.jellyfin-posters.serviceConfig = {
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.python3}/bin/python3"
       "-I"
       "${sync}"

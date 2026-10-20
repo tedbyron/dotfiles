@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   dir = "/Users/ted/.local/share/node-exporter/textfile";
 
@@ -35,7 +35,7 @@ let
     '';
 
   job = domain: {
-    ProgramArguments = [ "${write domain}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${write domain}" ];
     RunAtLoad = true;
     StartInterval = 60;
   };

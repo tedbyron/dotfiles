@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   log = "/Users/ted/Library/Logs/blackbox-exporter.log";
 
@@ -17,7 +17,7 @@ in
     StandardErrorPath = log;
     StandardOutPath = log;
 
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.prometheus-blackbox-exporter}/bin/blackbox_exporter"
       "--config.file=${config}"
       "--web.listen-address=127.0.0.1:9115"

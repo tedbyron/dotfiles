@@ -40,7 +40,7 @@ in
 {
   launchd.user.agents.seerr.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = [ "${start}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;

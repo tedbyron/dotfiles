@@ -113,7 +113,7 @@ in
     StandardErrorPath = log;
     StandardOutPath = log;
 
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${caddy}/bin/caddy"
       "run"
       "--config"

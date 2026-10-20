@@ -171,7 +171,7 @@ in
   ];
 
   launchd.user.agents.recyclarr.serviceConfig = {
-    ProgramArguments = [ "${sync}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${sync}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;

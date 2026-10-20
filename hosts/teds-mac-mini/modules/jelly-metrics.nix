@@ -1,4 +1,9 @@
-{ pkgs, self, ... }:
+{
+  pkgs,
+  lib,
+  self,
+  ...
+}:
 let
   tokenFile = "/Users/ted/.config/jelly-metrics/token";
   log = "/Users/ted/Library/Logs/jelly-metrics.log";
@@ -41,6 +46,6 @@ in
       PORT = "8097";
     };
 
-    ProgramArguments = [ "${start}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
   };
 }

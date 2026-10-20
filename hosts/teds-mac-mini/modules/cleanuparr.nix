@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   log = "/Users/ted/Library/Logs/cleanuparr.log";
 
@@ -33,6 +33,6 @@ in
       CLEANUPARR_CONFIG_PATH = "/Users/ted/.local/share/cleanuparr";
     };
 
-    ProgramArguments = [ "${cleanuparr}/share/cleanuparr/Cleanuparr" ];
+    ProgramArguments = lib.ted.waitForNix [ "${cleanuparr}/share/cleanuparr/Cleanuparr" ];
   };
 }

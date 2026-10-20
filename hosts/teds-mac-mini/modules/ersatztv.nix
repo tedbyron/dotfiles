@@ -1,4 +1,9 @@
-{ pkgs, unstable, ... }:
+{
+  pkgs,
+  lib,
+  unstable,
+  ...
+}:
 let
   dataDir = "/Users/ted/Library/Application Support/ersatztv";
   ffmpegDir = "${dataDir}/ffmpeg";
@@ -113,7 +118,7 @@ in
 {
   launchd.user.agents.ersatztv.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = [ "${start}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;
@@ -125,7 +130,7 @@ in
   };
 
   launchd.user.agents.ersatztv-trash.serviceConfig = {
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.python3}/bin/python3"
       "-I"
       "${trash}"
@@ -139,7 +144,7 @@ in
   };
 
   launchd.daemons.ersatztv-pf.serviceConfig = {
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "/bin/sh"
       "-c"
       ''

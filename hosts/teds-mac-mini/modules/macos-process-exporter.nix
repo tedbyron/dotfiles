@@ -1,4 +1,9 @@
-{ pkgs, self, ... }:
+{
+  pkgs,
+  lib,
+  self,
+  ...
+}:
 let
   log = "/Users/ted/Library/Logs/macos-process-exporter.log";
   src = self.inputs.macos-process-exporter;
@@ -21,7 +26,7 @@ in
     StandardErrorPath = log;
     StandardOutPath = log;
 
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${macos-process-exporter}/bin/macos-process-exporter"
       "--listen-address=127.0.0.1:9105"
       "--min-cpu-percent=0.1"

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   dataDir = "/Users/ted/.local/share/alertmanager";
   webhookFile = "/Users/ted/.config/alertmanager/discord-webhook";
@@ -33,7 +33,7 @@ in
     StandardErrorPath = log;
     StandardOutPath = log;
 
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.prometheus-alertmanager}/bin/alertmanager"
       "--config.file=${checkedConfig}"
       "--storage.path=${dataDir}"

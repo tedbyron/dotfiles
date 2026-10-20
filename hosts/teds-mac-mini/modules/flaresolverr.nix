@@ -24,7 +24,7 @@ in
 {
   launchd.user.agents.flaresolverr.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "/bin/sh"
       "-c"
       "mkdir -p ${home} && exec ${lib.getExe flaresolverr}"

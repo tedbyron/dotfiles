@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   log = "/Users/ted/Library/Logs/node-exporter.log";
 in
@@ -9,7 +9,7 @@ in
     StandardErrorPath = log;
     StandardOutPath = log;
 
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.prometheus-node-exporter}/bin/node_exporter"
       "--web.listen-address=127.0.0.1:9100"
       "--collector.textfile.directory=/Users/ted/.local/share/node-exporter/textfile"

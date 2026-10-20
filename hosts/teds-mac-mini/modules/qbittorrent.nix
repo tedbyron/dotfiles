@@ -180,7 +180,7 @@ in
       ]
       + ":/usr/bin:/bin:/usr/sbin:/sbin";
 
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "/bin/sh"
       "-c"
       ''
@@ -203,7 +203,7 @@ in
 
   launchd.user.agents.qbittorrent.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = [ "${start}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;

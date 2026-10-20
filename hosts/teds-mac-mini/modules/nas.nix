@@ -1,11 +1,11 @@
-_:
+{ lib, ... }:
 let
   mountPoint = "/Volumes/media";
   export = "192.168.2.3:/volume1/media";
 in
 {
   launchd.daemons.nas-media.serviceConfig = {
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "/bin/sh"
       "-c"
       ''

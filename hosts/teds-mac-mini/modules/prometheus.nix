@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   promData = "/Users/ted/.local/share/prometheus";
   log = "/Users/ted/Library/Logs/prometheus.log";
@@ -191,7 +191,7 @@ in
     StandardErrorPath = log;
     StandardOutPath = log;
 
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.prometheus}/bin/prometheus"
       "--config.file=${checkedConfig}"
       "--storage.tsdb.path=${promData}"

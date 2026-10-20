@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   urlFile = "/Users/ted/.config/healthchecks/ping-url";
   log = "/Users/ted/Library/Logs/healthchecks.log";
@@ -20,7 +20,7 @@ let
 in
 {
   launchd.user.agents.healthchecks.serviceConfig = {
-    ProgramArguments = [ "${ping}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${ping}" ];
     RunAtLoad = true;
     StartInterval = 600;
     StandardErrorPath = log;

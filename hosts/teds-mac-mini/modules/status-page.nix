@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   log = "/Users/ted/Library/Logs/status-page.log";
 in
 {
   launchd.user.agents.status-page.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.python3}/bin/python3"
       "-I"
       "${./status-page/server.py}"

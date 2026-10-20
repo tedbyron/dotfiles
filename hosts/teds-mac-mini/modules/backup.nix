@@ -153,7 +153,7 @@ let
 in
 {
   launchd.user.agents.media-backup.serviceConfig = {
-    ProgramArguments = [ "${backup}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${backup}" ];
     StandardErrorPath = log;
     StandardOutPath = log;
 

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   log = "/Users/ted/Library/Logs/opentamer.log";
 
@@ -27,7 +27,7 @@ in
   launchd.user.agents.opentamer.serviceConfig = {
     KeepAlive = true;
     ProcessType = "Interactive";
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "/usr/bin/open"
       "-W"
       "-g"

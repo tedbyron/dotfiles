@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   dataDir = "/Users/ted/.local/share/grafana";
   log = "/Users/ted/Library/Logs/grafana.log";
@@ -52,7 +52,7 @@ in
       GF_ANALYTICS_CHECK_FOR_UPDATES = "false";
     };
 
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.grafana}/bin/grafana"
       "server"
       "--homepath"

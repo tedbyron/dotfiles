@@ -1,4 +1,9 @@
-{ pkgs, self, ... }:
+{
+  pkgs,
+  lib,
+  self,
+  ...
+}:
 let
   # Jellyfin drops TranscodingInfo while a transcode is throttled, which made
   # every bandwidth check fail and froze the limits for the whole stream
@@ -86,7 +91,7 @@ in
 {
   launchd.user.agents.speedrr.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = [ "${start}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;

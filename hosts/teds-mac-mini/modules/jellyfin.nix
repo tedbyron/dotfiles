@@ -1,4 +1,9 @@
-{ pkgs, unstable, ... }:
+{
+  pkgs,
+  lib,
+  unstable,
+  ...
+}:
 let
   mediaDir = "/Volumes/media";
   dataDir = "/Users/ted/.local/share/jellyfin";
@@ -135,14 +140,14 @@ in
 {
   launchd.user.agents.jellyfin.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = [ "${start}" ];
+    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;
   };
 
   launchd.user.agents.jellyfin-user-defaults.serviceConfig = {
-    ProgramArguments = [
+    ProgramArguments = lib.ted.waitForNix [
       "${pkgs.python3}/bin/python3"
       "-I"
       "${userDefaults}"

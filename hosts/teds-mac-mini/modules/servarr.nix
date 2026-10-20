@@ -49,7 +49,7 @@ in
           "${env}__SERVER__ALLOWEDHOSTS" = "localhost,127.0.0.1";
         };
 
-        ProgramArguments =
+        ProgramArguments = lib.ted.waitForNix (
           lib.optionals media [
             "/bin/sh"
             "-c"
@@ -65,7 +65,8 @@ in
             (lib.getExe package)
             "-nobrowser"
             "-data=/Users/ted/.local/share/${name}"
-          ];
+          ]
+        );
       };
     }
   ) services;
