@@ -160,6 +160,15 @@ let
     ''$(${lib.getExe pkgs.gnused} -n 's:.*<ApiKey>\(.*\)</ApiKey>.*:\1:p' /Users/ted/.local/share/${app}/config.xml)'';
 
   sync = pkgs.writeShellScript "recyclarr-sync" ''
+    # At boot this runs before Radarr and Sonarr are up, and a failed run stays
+    # failed (and alerting) until 5am
+    for _ in $(seq 60); do
+      ${lib.getExe pkgs.curl} -sf -o /dev/null http://127.0.0.1:7878/ping \
+        && ${lib.getExe pkgs.curl} -sf -o /dev/null http://127.0.0.1:8989/ping \
+        && break
+      sleep 10
+    done
+
     export RADARR_API_KEY=${apiKey "radarr"}
     export SONARR_API_KEY=${apiKey "sonarr"}
     exec ${lib.getExe pkgs.recyclarr} sync --config ${config} "$@"

@@ -33,8 +33,16 @@ let
       "Session\\AdditionalTrackersURL" =
         "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt";
       "Session\\AnnounceToAllTrackers" = "true";
+      # The default 20 slots (4 per torrent) left most leechers choked and upload
+      # at a few Mbit, far under speedrr's limit
+      "Session\\MaxUploads" = "50";
+      "Session\\MaxUploadsPerTorrent" = "10";
     };
-    Network."Proxy\\Type" = "None";
+    Network = {
+      "Proxy\\Type" = "None";
+      # UPnP/NAT-PMP would map ports on the home router, which never reach the tunnel
+      PortForwardingEnabled = "false";
+    };
   };
 
   setSettings = pkgs.writeText "qbittorrent-settings.py" ''
