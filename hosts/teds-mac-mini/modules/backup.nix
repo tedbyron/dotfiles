@@ -140,6 +140,8 @@ let
 
     archive=${backupDir}/media-$(date +%F).tar.gz
     tar -C "$stage" -czf "$archive.partial" .
+    # The NAS makes new files world-readable whatever the umask, and these hold API keys
+    chmod 600 "$archive.partial"
     mv "$archive.partial" "$archive"
     echo "wrote $archive ($(du -h "$archive" | cut -f1))"
 

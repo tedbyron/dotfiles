@@ -88,7 +88,8 @@ let
     def prefs_path(user):
         return f"/DisplayPreferences/usersettings?userId={user['Id']}&client=emby"
 
-    for _ in range(60):
+    # Runs only at load and 5am, and at boot Jellyfin can wait a long time for the NAS
+    while True:
         try:
             call("GET", "/System/Info/Public")
             break

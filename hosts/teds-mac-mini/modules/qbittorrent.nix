@@ -78,6 +78,13 @@ let
   '';
 
   start = pkgs.writeShellScript "start-qbittorrent" ''
+    # A copy left behind by a killed start script runs with nothing watching the
+    # tunnel, so stop it before anything else
+    while /usr/bin/pkill -9 -f "qbittorrent-nox.app/Contents/MacOS/qbittorrent-nox --confirm-legal-notice"; do
+      echo "stopped a qbittorrent left running without its start script"
+      sleep 1
+    done
+
     until [ -d /Volumes/media/downloads ]; do
       echo "waiting for /Volumes/media"
       sleep 5

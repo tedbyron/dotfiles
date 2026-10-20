@@ -76,6 +76,12 @@ let
             annotations.summary = "{{ $labels.name }} last exited with status {{ $value }}";
           }
           {
+            alert = "JobRestarting";
+            expr = ''increase(launchd_job_runs_total{keepalive="1"}[15m]) > 3'';
+            "for" = "15m";
+            annotations.summary = "{{ $labels.name }} has restarted {{ $value | printf \"%.0f\" }} times in 15 minutes";
+          }
+          {
             alert = "JobMetricsStale";
             expr = ''time() - node_textfile_mtime_seconds{file=~".*/launchd-.*"} > 600 or node_textfile_scrape_error == 1 or absent(launchd_job_running)'';
             "for" = "10m";

@@ -1,6 +1,14 @@
 { pkgs, self, ... }:
 let
-  src = self.inputs.speedrr;
+  # Jellyfin drops TranscodingInfo while a transcode is throttled, which made
+  # every bandwidth check fail and froze the limits for the whole stream
+  src = pkgs.runCommand "speedrr-src" { } ''
+    cp -r ${self.inputs.speedrr} $out
+    chmod -R u+w $out
+    substituteInPlace $out/modules/media_server.py --replace-fail \
+      'bandwidth = int(session["TranscodingInfo"]["Bitrate"])' \
+      'bandwidth = int(session.get("TranscodingInfo", {}).get("Bitrate") or sum(int(s.get("BitRate", 0)) for s in session["NowPlayingItem"].get("MediaStreams", [])))'
+  '';
   dataDir = "/Users/ted/.local/share/speedrr";
   passwordFile = "/Users/ted/.config/speedrr/qbittorrent-password";
   tokenFile = "/Users/ted/.config/jelly-metrics/token";

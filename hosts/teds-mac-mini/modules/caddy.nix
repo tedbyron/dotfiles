@@ -88,7 +88,11 @@ let
       import cloudflare
       import limit seerr-login 10 5m /api/v1/auth/*
       import limit seerr 600 1m *
-      reverse_proxy 127.0.0.1:5055
+      # Seerr trusts the leftmost X-Forwarded-For, which Cloudflare passes
+      # through from the client
+      reverse_proxy 127.0.0.1:5055 {
+        header_up X-Forwarded-For {client_ip}
+      }
     }
 
     # status-page.nix; nothing else is served
