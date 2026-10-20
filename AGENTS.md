@@ -65,6 +65,31 @@ must be `git add`ed before flake evaluation can see them.
   `~/.local/share/seerr/settings.json` and `~/.config/jelly-metrics/token`
   (Jellyfin).
 
+### Settings that live in the apps
+
+Not in nix (their APIs change between versions); restored from the nightly
+backups. Redo by hand after a rebuild without backups:
+
+- Prowlarr: Standard sync profile minimum seeders 5; Internet Archive disabled
+  (slow, no grabs); Knaben priority 50 (stale seeder counts); FlareSolverr proxy
+  tagged on 1337x, EZTV and Uindex.
+- Sonarr/Radarr: root folders `/Volumes/media/{tv,movies}`; Emby/Jellyfin
+  connection for rescans; propers and repacks set to Do not Prefer (the
+  Repack/Proper custom formats score them); delete empty folders on. Quality
+  profiles and naming come from Recyclarr.
+- Cleanuparr: queue cleaner every 15 min; failed import 3 strikes, downloading
+  metadata 6, errored 3; stall rules 0-80% (4 strikes) and 80-100% (15 strikes),
+  reset after 10MB progress; seeker replacement searches only, every 10 min;
+  download cleaner off.
+- Seerr: Radarr/Sonarr default profiles HD Bluray + WEB and WEB-1080p (specials,
+  libraries and root folders are set in `seerr.nix`).
+- Jellyfin: Movies and Shows libraries on `/Volumes/media`; plugins Intro
+  Skipper, Playback Reporting, Jellyscribe (GitHub manifest), File
+  Transformation, StreamLimiter. Transcoding uses VideoToolbox with HDR tone
+  mapping, throttling and segment deletion on.
+- ErsatzTV: Jellyfin as the media source; re-sync it and reset playouts after
+  library paths change.
+
 ### Gotchas
 
 - NFS reports no file creation time (it reads as 1970), so Jellyfin's

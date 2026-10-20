@@ -3,18 +3,38 @@ let
   tunnel = "mullvad";
   tunnelAddress = "10.75.150.82";
   proxy = "10.64.0.1";
+
+  # us-chi-wg-307; the account key and tunnel address work on any Mullvad server
+  server = {
+    publicKey = "U9UAYlVm8nXZjWPrF/vbb1P9oqSRmHo+IfK52yDYpGo=";
+    endpoint = "68.235.46.188:51820";
+  };
   nameFile = "/var/run/wireguard/${tunnel}.name";
   log = "/Users/ted/Library/Logs/qbittorrent.log";
   ini = "/Users/ted/.config/qBittorrent/qBittorrent.ini";
 
-  setInterface = pkgs.writeText "qbittorrent-interface.py" ''
-    import sys
+  # Applied to [BitTorrent] on every start, overriding changes made in the web UI
+  settings = {
+    "Session\\DefaultSavePath" = "/Volumes/media/downloads";
+    "Session\\TempPath" = "/Volumes/media/downloads/temp";
+    "Session\\GlobalMaxRatio" = "2";
+    "Session\\GlobalMaxSeedingMinutes" = "20160";
+    "Session\\ShareLimitAction" = "RemoveWithContent";
+    "Session\\AddTrackersFromURLEnabled" = "true";
+    "Session\\AdditionalTrackersURL" =
+      "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt";
+    "Session\\AnnounceToAllTrackers" = "true";
+  };
 
-    path, iface, address = sys.argv[1:]
+  setSettings = pkgs.writeText "qbittorrent-settings.py" ''
+    import json, sys
+
+    path, iface, address, settings = sys.argv[1:]
     wanted = {
         "Session\\Interface": iface,
         "Session\\InterfaceName": iface,
         "Session\\InterfaceAddress": address,
+        **json.loads(settings),
     }
 
     lines = open(path).read().splitlines()
@@ -56,7 +76,8 @@ let
 
     iface=$(tunnel_iface)
     echo "binding to $iface"
-    ${pkgs.python3}/bin/python3 -I ${setInterface} ${ini} "$iface" ${tunnelAddress}
+    ${pkgs.python3}/bin/python3 -I ${setSettings} ${ini} "$iface" ${tunnelAddress} \\
+      ${lib.escapeShellArg (builtins.toJSON settings)}
 
     ${lib.getExe pkgs.qbittorrent-nox} --confirm-legal-notice &
     pid=$!
@@ -82,8 +103,7 @@ in
 
     peers = [
       {
-        publicKey = "kpXVJa66qgBFlwCmHx6siJT3R9afvtbjdDOTKkkbiUI=";
-        endpoint = "23.234.85.2:51820";
+        inherit (server) publicKey endpoint;
         allowedIPs = [ "0.0.0.0/0" ];
         persistentKeepalive = 25;
       }
@@ -112,6 +132,7 @@ in
       "-c"
       ''
         /sbin/ifconfig | grep -q "inet ${tunnelAddress} " \
+          && wg show "$(cat ${nameFile})" peers | grep -qxF ${lib.escapeShellArg server.publicKey} \
           && /usr/bin/dig +time=5 +tries=3 @${proxy} mullvad.net > /dev/null \
           && exit 0
         wg-quick down ${tunnel} 2>/dev/null

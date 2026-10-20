@@ -18,11 +18,29 @@ let
       platforms = lib.platforms.unix;
     };
   });
+
+  # Applied on every start, overriding changes made in the web UI
+  settings = ''
+    .main.enableSpecialEpisodes = false
+    | .jellyfin.libraries |= map(.enabled = true)
+    | .radarr |= map(.activeDirectory = "/Volumes/media/movies")
+    | .sonarr |= map(.activeDirectory = "/Volumes/media/tv")
+  '';
+
+  start = pkgs.writeShellScript "start-seerr" ''
+    file=${dataDir}/settings.json
+    if [ -e "$file" ]; then
+      ${lib.getExe pkgs.jq} ${lib.escapeShellArg settings} "$file" > "$file.tmp" \
+        && mv "$file.tmp" "$file"
+    fi
+
+    exec ${lib.getExe seerr}
+  '';
 in
 {
   launchd.user.agents.seerr.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = [ (lib.getExe seerr) ];
+    ProgramArguments = [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;
