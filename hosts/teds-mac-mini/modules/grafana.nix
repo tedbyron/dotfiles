@@ -17,8 +17,21 @@ let
     ];
   };
 
+  dashboards = (pkgs.formats.yaml { }).generate "dashboards.yaml" {
+    apiVersion = 1;
+    providers = [
+      {
+        name = "dotfiles";
+        type = "file";
+        allowUiUpdates = true;
+        options.path = ./grafana;
+      }
+    ];
+  };
+
   provisioning = pkgs.linkFarm "grafana-provisioning" {
     "datasources/prometheus.yaml" = datasources;
+    "dashboards/dotfiles.yaml" = dashboards;
   };
 in
 {

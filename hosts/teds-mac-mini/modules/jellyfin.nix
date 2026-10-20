@@ -16,6 +16,14 @@ let
     </NetworkConfiguration>
   '';
 
+  # NFS reports no file creation time, so Jellyfin would date every NAS item 1970
+  metadataXml = pkgs.writeText "metadata.xml" ''
+    <?xml version="1.0" encoding="utf-8"?>
+    <MetadataConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <UseFileCreationTimeForDateAdded>false</UseFileCreationTimeForDateAdded>
+    </MetadataConfiguration>
+  '';
+
   start = pkgs.writeShellScript "start-jellyfin" ''
     mkdir -p ${dataDir} ${cfgDir}
 
@@ -28,6 +36,8 @@ let
       rm -f ${cfgDir}/network.xml
       ${pkgs.coreutils}/bin/install -m 644 ${networkXml} ${cfgDir}/network.xml
     fi
+
+    ${pkgs.coreutils}/bin/install -m 644 ${metadataXml} ${cfgDir}/metadata.xml
 
     if [ -e ${cfgDir}/system.xml ]; then
       ${pkgs.gnused}/bin/sed -i \

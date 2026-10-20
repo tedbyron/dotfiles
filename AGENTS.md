@@ -13,8 +13,8 @@ Nix flake for nix-darwin, NixOS, and home-manager configs.
 - `hosts/<host>/default.nix`: per-host config, imports from `users/`
 - `users/ted/`: user account and home-manager config (`programs/`, `modules/`,
   `file.nix`, `packages.nix`)
-- `users/ted/modules/media/`: media server stack (Jellyfin, servarr,
-  monitoring), imported by `teds-mac-mini`
+- `hosts/teds-mac-mini/modules/`: media server stack (Jellyfin, servarr,
+  monitoring) for the mac mini
 - `config/`: raw dotfiles, linked into `$HOME` via `lib.ted.configPath`
 - `bin/`: scripts on `PATH`
 - `flakes/`, `templates/`: local flake inputs and `nix flake init` templates

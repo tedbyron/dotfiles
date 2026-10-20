@@ -2,7 +2,7 @@
 {
   imports = [
     ../../users/ted
-    ../../users/ted/modules/media
+    ./modules
   ];
 
   system.stateVersion = 7;
