@@ -41,6 +41,18 @@ let
               allowed: true
               until_quality: WEB 2160p
               until_score: 2000
+            # Fall back to 1080p when there's no 4K, and keep upgrading until 4K
+            qualities:
+              - name: Bluray-2160p
+              - name: WEB 2160p
+                qualities:
+                  - WEBRip-2160p
+                  - WEBDL-2160p
+              - name: Bluray-1080p
+              - name: WEB 1080p
+                qualities:
+                  - WEBRip-1080p
+                  - WEBDL-1080p
 
         custom_format_groups:
           add:
@@ -104,7 +116,19 @@ let
               enabled: true
             upgrade:
               allowed: true
+              until_quality: WEB 2160p
               until_score: 2000
+            # Fall back to 4K Blu-ray, then 1080p, and keep upgrading until 4K WEB
+            qualities:
+              - name: WEB 2160p
+                qualities:
+                  - WEBRip-2160p
+                  - WEBDL-2160p
+              - name: Bluray-2160p
+              - name: WEB 1080p
+                qualities:
+                  - WEBRip-1080p
+                  - WEBDL-1080p
 
         custom_format_groups:
           add:
