@@ -2,6 +2,7 @@
   pkgs,
   lib,
   darwin,
+  unstable,
   ...
 }:
 {
@@ -102,6 +103,7 @@
 
     nix-index = {
       enable = true;
+      package = unstable.nix-index; # 0.1.10 can't parse cache.nixos.org listings
       enableZshIntegration = true;
     };
 

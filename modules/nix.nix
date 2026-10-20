@@ -11,6 +11,7 @@
     else
       {
         channel.enable = false;
+        nixPath = [ "nixpkgs=${pkgs.path}" ];
         gc.automatic = true;
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
@@ -38,6 +39,10 @@
           ];
         };
       };
+
+  # No channels, so give <nixpkgs> lookups (nix-index, nix-shell -p) the
+  # flake's nixpkgs. nix.nixPath needs nix.enable on darwin.
+  environment.variables = lib.mkIf darwin { NIX_PATH = "nixpkgs=${pkgs.path}"; };
 
   environment.etc."nix/nix.conf".text = lib.mkIf darwin ''
     download-buffer-size = 536870912
