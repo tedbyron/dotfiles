@@ -149,7 +149,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "annotations": {
@@ -1199,7 +1199,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "annotations": {
@@ -1448,7 +1448,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "annotations": {
@@ -1576,7 +1576,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "annotations": {
@@ -1681,10 +1681,10 @@
                       "spec": {
                         "disableTextWrap": false,
                         "editorMode": "code",
-                        "expr": "count by(username) (rate(jellyfin_stream_count[1m])) or on() vector(0)",
+                        "expr": "count by(username) (rate(jellyfin_stream_count[1m])) or on() label_replace(vector(0), \"username\", \"idle\", \"\", \"\")",
                         "fullMetaSearch": false,
                         "includeNullMetadata": true,
-                        "legendFormat": "__auto",
+                        "legendFormat": "{{username}}",
                         "range": true,
                         "useBackend": false
                       }
@@ -1701,7 +1701,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "annotations": {
@@ -1710,9 +1710,10 @@
                 },
                 "legend": {
                   "calcs": [],
-                  "displayMode": "table",
+                  "displayMode": "list",
                   "placement": "right",
-                  "showLegend": true
+                  "showLegend": true,
+                  "width": 120
                 },
                 "tooltip": {
                   "hideZeros": false,
@@ -1773,7 +1774,24 @@
                   },
                   "fieldMinMax": false
                 },
-                "overrides": []
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "idle"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.hideFrom",
+                        "value": {
+                          "legend": true,
+                          "tooltip": true,
+                          "viz": false
+                        }
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }
@@ -1803,10 +1821,10 @@
                       "spec": {
                         "disableTextWrap": false,
                         "editorMode": "code",
-                        "expr": "max by(username) (jellyfin_connected_clients_count) or on() vector(0)",
+                        "expr": "max by(username) (jellyfin_connected_clients_count) or on() label_replace(vector(0), \"username\", \"idle\", \"\", \"\")",
                         "fullMetaSearch": false,
                         "includeNullMetadata": true,
-                        "legendFormat": "__auto",
+                        "legendFormat": "{{username}}",
                         "range": true,
                         "useBackend": false
                       }
@@ -1823,7 +1841,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "annotations": {
@@ -1832,9 +1850,10 @@
                 },
                 "legend": {
                   "calcs": [],
-                  "displayMode": "table",
+                  "displayMode": "list",
                   "placement": "right",
-                  "showLegend": true
+                  "showLegend": true,
+                  "width": 120
                 },
                 "tooltip": {
                   "hideZeros": false,
@@ -1898,7 +1917,24 @@
                     }
                   }
                 },
-                "overrides": []
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "idle"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.hideFrom",
+                        "value": {
+                          "legend": true,
+                          "tooltip": true,
+                          "viz": false
+                        }
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }
@@ -2148,7 +2184,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "colorMode": "value",
@@ -2270,7 +2306,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "colorMode": "value",
@@ -2392,7 +2428,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "colorMode": "value",
@@ -3500,7 +3536,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.0.9",
+            "version": "13.0.11",
             "spec": {
               "options": {
                 "annotations": {
@@ -4338,24 +4374,24 @@
                       "spec": {
                         "x": 0,
                         "y": 0,
-                        "width": 15,
+                        "width": 10,
                         "height": 6,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-328"
+                          "name": "panel-329"
                         }
                       }
                     },
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 15,
+                        "x": 10,
                         "y": 0,
-                        "width": 5,
+                        "width": 10,
                         "height": 6,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-326"
+                          "name": "panel-328"
                         }
                       }
                     },
@@ -4390,20 +4426,20 @@
                       "spec": {
                         "x": 0,
                         "y": 6,
-                        "width": 15,
+                        "width": 10,
                         "height": 6,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-329"
+                          "name": "panel-326"
                         }
                       }
                     },
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 15,
+                        "x": 10,
                         "y": 6,
-                        "width": 5,
+                        "width": 10,
                         "height": 6,
                         "element": {
                           "kind": "ElementReference",
