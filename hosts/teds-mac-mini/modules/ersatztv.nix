@@ -41,6 +41,71 @@ let
     exec ${unstable.ersatztv}/bin/ErsatzTV
   '';
 
+  # Upgrades and replacements give the new file a new Jellyfin item, and
+  # ErsatzTV keeps scheduling the missing old one until its trash is emptied
+  trash = pkgs.writeText "ersatztv-trash.py" ''
+    import json, sqlite3, sys, time, urllib.request
+
+    db_path, secrets, jellyfin_token_file = sys.argv[1:]
+    etv_auth = {"X-Etv-Api-Key": json.load(open(secrets))["ApiKey"]}
+    jellyfin_auth = {
+        "Authorization": f'MediaBrowser Token="{open(jellyfin_token_file).read().strip()}"'
+    }
+
+    def call(url, headers, method="GET"):
+        req = urllib.request.Request(url, method=method, headers=headers)
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = r.read()
+            return json.loads(data) if data else None
+
+    def etv(path, method="GET"):
+        return call("http://127.0.0.1:8409" + path, etv_auth, method)
+
+    def jellyfin(path, method="GET"):
+        return call("http://127.0.0.1:8096" + path, jellyfin_auth, method)
+
+    def query(sql):
+        with sqlite3.connect(f"file:{db_path}?mode=ro", uri=True) as db:
+            return [row[0] for row in db.execute(sql)]
+
+    def stale():
+        return query("SELECT count(*) FROM MediaItem WHERE State <> 0")[0]
+
+    if not stale():
+        sys.exit(0)
+
+    # Resetting a playout changes what's on now, so wait for nobody to be watching
+    if etv("/api/sessions"):
+        print("skipping, channels are being watched")
+        sys.exit(0)
+
+    channels = query("""
+        SELECT DISTINCT c.Number FROM PlayoutItem pi
+        JOIN MediaItem mi ON mi.Id = pi.MediaItemId
+        JOIN Playout p ON p.Id = pi.PlayoutId
+        JOIN Channel c ON c.Id = p.ChannelId
+        WHERE mi.State <> 0
+    """)
+
+    print(f"emptying trash of {stale()} items")
+    etv("/api/maintenance/empty_trash", "POST")
+    for _ in range(30):
+        if not stale():
+            break
+        time.sleep(2)
+    else:
+        sys.exit("trash didn't empty")
+
+    for number in channels:
+        print(f"resetting channel {number}")
+        etv(f"/api/channels/{number}/playout/reset", "POST")
+
+    if channels:
+        task = next(t for t in jellyfin("/ScheduledTasks") if t["Key"] == "RefreshGuide")
+        jellyfin(f"/ScheduledTasks/Running/{task['Id']}", "POST")
+        print("refreshing jellyfin guide")
+  '';
+
   pfRules = pkgs.writeText "ersatztv.pf" ''
     block drop in quick on ! lo0 proto { tcp udp } to any port 8409
   '';
@@ -57,6 +122,20 @@ in
       ETV_UI_PORT = "8409";
       ETV_STREAMING_PORT = "8409";
     };
+  };
+
+  launchd.user.agents.ersatztv-trash.serviceConfig = {
+    ProgramArguments = [
+      "${pkgs.python3}/bin/python3"
+      "-I"
+      "${trash}"
+      "${dataDir}/ersatztv.sqlite3"
+      "${dataDir}/api-secrets.json"
+      "/Users/ted/.config/jelly-metrics/token"
+    ];
+    StandardErrorPath = "/Users/ted/Library/Logs/ersatztv-trash.log";
+    StandardOutPath = "/Users/ted/Library/Logs/ersatztv-trash.log";
+    StartInterval = 3600;
   };
 
   launchd.daemons.ersatztv-pf.serviceConfig = {
