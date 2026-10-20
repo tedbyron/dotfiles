@@ -57,12 +57,19 @@ let
     SubtitleLanguagePreference = "eng";
   };
 
+  # Files often flag a dub as the default track, which would win over OriginalLanguage
+  audioDefaults = {
+    AudioLanguagePreference = "OriginalLanguage";
+    PlayDefaultAudioTrack = false;
+  };
+
   userDefaults = pkgs.writeText "jellyfin-user-defaults.py" ''
     import json, sys, urllib.request
 
-    token_file, template_name, subtitle_defaults = sys.argv[1:]
+    token_file, template_name, subtitle_defaults, audio_defaults = sys.argv[1:]
     token = open(token_file).read().strip()
     subtitle_defaults = json.loads(subtitle_defaults)
+    audio_defaults = json.loads(audio_defaults)
 
     def call(method, path, body=None):
         req = urllib.request.Request(
@@ -108,6 +115,11 @@ let
             changed = True
             print(f"applied subtitle defaults to {user['Name']}")
 
+        if not config.get("AudioLanguagePreference"):
+            config.update(audio_defaults)
+            changed = True
+            print(f"applied audio defaults to {user['Name']}")
+
         if changed:
             call("POST", f"/Users/{user['Id']}/Configuration", config)
   '';
@@ -129,6 +141,7 @@ in
       "/Users/ted/.config/jelly-metrics/token"
       "tb"
       (builtins.toJSON subtitleDefaults)
+      (builtins.toJSON audioDefaults)
     ];
     RunAtLoad = true;
     StandardErrorPath = "/Users/ted/Library/Logs/jellyfin-user-defaults.log";
