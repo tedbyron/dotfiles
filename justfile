@@ -147,4 +147,6 @@ push host=`hostname`:
 # Update flake lockfile for all or specified inputs
 [group('util')]
 update *args:
-    nix flake update {{ args }}
+    # Authenticated requests avoid GitHub's 60/hour API rate limit
+    t=$(gh auth token 2>/dev/null) && export NIX_CONFIG="access-tokens = github.com=$t"; \
+        nix flake update {{ args }}
