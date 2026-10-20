@@ -64,7 +64,7 @@ let
   };
 
   userDefaults = pkgs.writeText "jellyfin-user-defaults.py" ''
-    import json, sys, urllib.request
+    import json, sys, time, urllib.request
 
     token_file, template_name, subtitle_defaults, audio_defaults = sys.argv[1:]
     token = open(token_file).read().strip()
@@ -81,12 +81,19 @@ let
                 "Content-Type": "application/json",
             },
         )
-        with urllib.request.urlopen(req) as r:
+        with urllib.request.urlopen(req, timeout=30) as r:
             data = r.read()
             return json.loads(data) if data else None
 
     def prefs_path(user):
         return f"/DisplayPreferences/usersettings?userId={user['Id']}&client=emby"
+
+    for _ in range(60):
+        try:
+            call("GET", "/System/Info/Public")
+            break
+        except OSError:
+            time.sleep(10)
 
     users = call("GET", "/Users")
     template = next(u for u in users if u["Name"] == template_name)

@@ -147,6 +147,18 @@ push host=`hostname`:
 # Update flake lockfile for all or specified inputs
 [group('util')]
 update *args:
+    #!/usr/bin/env zsh
+    set -euo pipefail
+    j=gui/$(id -u)/org.nixos.media-backup
+    if { launchctl print $j &>/dev/null } {
+        echo "Backing up media apps before updating"
+        pid=$(launchctl kickstart -p $j)
+        while { kill -0 $pid 2>/dev/null } { sleep 1 }
+        if { ! launchctl print $j | rg -q 'last exit code = 0' } {
+            echo "Backup failed, see ~/Library/Logs/media-backup.log"
+            exit 1
+        }
+    }
     # Authenticated requests avoid GitHub's 60/hour API rate limit
-    t=$(gh auth token 2>/dev/null) && export NIX_CONFIG="access-tokens = github.com=$t"; \
-        nix flake update {{ args }}
+    t=$(gh auth token 2>/dev/null) && export NIX_CONFIG="access-tokens = github.com=$t"
+    nix flake update {{ args }}

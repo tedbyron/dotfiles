@@ -69,6 +69,18 @@ let
             "for" = "10m";
             annotations.summary = "{{ $labels.mountpoint }} has less than 10% free";
           }
+          {
+            alert = "JobFailing";
+            expr = "launchd_job_last_exit_status != 0 and launchd_job_running == 0";
+            "for" = "30m";
+            annotations.summary = "{{ $labels.name }} last exited with status {{ $value }}";
+          }
+          {
+            alert = "JobMetricsStale";
+            expr = ''time() - node_textfile_mtime_seconds{file=~".*/launchd-.*"} > 600 or node_textfile_scrape_error == 1'';
+            "for" = "10m";
+            annotations.summary = "launchd job status metrics have stopped updating";
+          }
         ];
       }
     ];
