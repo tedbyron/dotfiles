@@ -36,7 +36,6 @@
 
   power = {
     restartAfterFreeze = true;
-    restartAfterPowerFailure = true;
 
     sleep = {
       allowSleepByPowerButton = false;
