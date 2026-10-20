@@ -61,6 +61,11 @@ let
             score: -1000
             assign_scores_to:
               - trash_id: 64fb5f9858489bdac2af690e27c8f42f
+          - trash_ids:
+              - d6e9318c875905d6cfb5bee961afcea9 # Language: Not Original
+            assign_scores_to:
+              - trash_id: d1d67249d3890e49bc12e275d989a7e9
+              - trash_id: 64fb5f9858489bdac2af690e27c8f42f
 
     sonarr:
       series:
@@ -98,6 +103,13 @@ let
           - trash_ids:
               - c9eafd50846d299b862ca9bb6ea91950 # x265
             score: 2000
+            assign_scores_to:
+              - trash_id: 72dae194fc92bf828f32cde7744e51a1
+              - trash_id: d1498e7d189fbe6c7110ceaabb7473e6
+          # Prefer packs over single episodes; worth about two release group tiers
+          - trash_ids:
+              - 3bc5f395426614e155e585a2f056cdf1 # Season Pack
+            score: 100
             assign_scores_to:
               - trash_id: 72dae194fc92bf828f32cde7744e51a1
               - trash_id: d1498e7d189fbe6c7110ceaabb7473e6
