@@ -87,7 +87,9 @@ let
   userDefaults = pkgs.writeText "jellyfin-user-defaults.py" ''
     import json, sys, time, urllib.request
 
-    token_file, template_name, subtitle_defaults, audio_defaults = sys.argv[1:]
+    token_file, template_name, subtitle_defaults, audio_defaults, *flags = sys.argv[1:]
+    # --all overwrites every user's home settings, not just users without any
+    copy_all = "--all" in flags
     token = open(token_file).read().strip()
     subtitle_defaults = json.loads(subtitle_defaults)
     audio_defaults = json.loads(audio_defaults)
@@ -119,23 +121,50 @@ let
 
     users = call("GET", "/Users")
     template = next(u for u in users if u["Name"] == template_name)
-    sections = {
+    # Everything on the Settings -> Home page
+    home_prefs = {
         k: v
         for k, v in call("GET", prefs_path(template))["CustomPrefs"].items()
-        if k.startswith("homesection")
+        if k.startswith("homesection") or k == "useEpisodeImagesInNextUpAndResume"
     }
-    if not sections:
+    if "homesection0" not in home_prefs:
         sys.exit(f"{template_name} has no home layout")
+    home_config = {
+        k: template["Configuration"][k]
+        for k in ["GroupedFolders", "LatestItemsExcludes", "HidePlayedInLatest"]
+    }
+
+    # Grouped views and Playlists have a different ID for each user, so views
+    # are copied by name and type
+    def views(user):
+        items = call("GET", f"/UserViews?userId={user['Id']}&includeHidden=true")
+        return {(v["Name"], v.get("CollectionType")): v["Id"] for v in items["Items"]}
+
+    template_views = {v: k for k, v in views(template).items()}
+
+    def copy_views(user, config):
+        ids = views(user)
+        for k in ["OrderedViews", "MyMediaExcludes"]:
+            config[k] = [
+                ids[template_views[v]]
+                for v in template["Configuration"][k]
+                if template_views.get(v) in ids
+            ]
 
     for user in users:
         config = user["Configuration"]
         changed = False
 
         prefs = call("GET", prefs_path(user))
-        if "homesection0" not in prefs["CustomPrefs"]:
-            prefs["CustomPrefs"].update(sections)
+        if user["Id"] != template["Id"] and (
+            copy_all or "homesection0" not in prefs["CustomPrefs"]
+        ):
+            prefs["CustomPrefs"].update(home_prefs)
             call("POST", prefs_path(user), prefs)
-            config["OrderedViews"] = template["Configuration"]["OrderedViews"]
+            config.update(home_config)
+            # Grouping changes the user's views, so apply it before copying them
+            call("POST", f"/Users/{user['Id']}/Configuration", config)
+            copy_views(user, config)
             changed = True
             print(f"applied {template_name}'s home layout to {user['Name']}")
 
@@ -152,6 +181,16 @@ let
         if changed:
             call("POST", f"/Users/{user['Id']}/Configuration", config)
   '';
+
+  userDefaultsArgs = [
+    "${pkgs.python3}/bin/python3"
+    "-I"
+    "${userDefaults}"
+    "/Users/ted/.config/jelly-metrics/token"
+    "tb"
+    (builtins.toJSON subtitleDefaults)
+    (builtins.toJSON audioDefaults)
+  ];
 in
 {
   launchd.user.agents.jellyfin.serviceConfig = {
@@ -162,16 +201,15 @@ in
     StandardOutPath = log;
   };
 
+  # jellyfin-copy-home copies tb's home settings to every user on demand
+  home-manager.users.ted.home.packages = [
+    (pkgs.writeShellScriptBin "jellyfin-copy-home" ''
+      exec ${lib.escapeShellArgs userDefaultsArgs} --all
+    '')
+  ];
+
   launchd.user.agents.jellyfin-user-defaults.serviceConfig = {
-    ProgramArguments = lib.ted.waitForNix [
-      "${pkgs.python3}/bin/python3"
-      "-I"
-      "${userDefaults}"
-      "/Users/ted/.config/jelly-metrics/token"
-      "tb"
-      (builtins.toJSON subtitleDefaults)
-      (builtins.toJSON audioDefaults)
-    ];
+    ProgramArguments = lib.ted.waitForNix userDefaultsArgs;
     RunAtLoad = true;
     StandardErrorPath = "/Users/ted/Library/Logs/jellyfin-user-defaults.log";
     StandardOutPath = "/Users/ted/Library/Logs/jellyfin-user-defaults.log";
