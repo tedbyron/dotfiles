@@ -29,25 +29,39 @@ let
       # them on every torrent they add (the only way torrents are added)
       "Session\\GlobalMaxRatio" = "1";
       "Session\\GlobalMaxSeedingMinutes" = "10080";
-      # Radarr and Sonarr remove stopped torrents once they've imported them
+      # Radarr and Sonarr only remove torrents that are stopped and past their seed
+      # goals, once they've imported them
       "Session\\ShareLimitAction" = "Stop";
+      # Every indexer is public; never add these trackers to private torrents
       "Session\\AddTrackersFromURLEnabled" = "true";
       "Session\\AdditionalTrackersURL" =
         "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt";
       "Session\\AnnounceToAllTrackers" = "true";
+      "Session\\AnonymousModeEnabled" = "true";
+      # Peers on the tunnel's network are only Proton's gateway
+      "Session\\LSDEnabled" = "false";
+      # Skip packed releases (TRaSH) and the executables fake public releases ship;
+      # the *arr apps then fail the import and Cleanuparr removes it
+      ExcludedFileNamesEnabled = "true";
+      "Session\\ExcludedFileNames" = "*.rar, *.r[0-9]*, *.exe, *.lnk, *.scr, *.bat, *.cmd";
       # The default 20 slots (4 per torrent) left most leechers choked and upload
       # at a few Mbit, far under speedrr's limit
-      "Session\\MaxUploads" = "50";
-      "Session\\MaxUploadsPerTorrent" = "10";
-      # The NAS is a single HDD over NFS: memory-mapped I/O (the default) turns into
-      # small scattered reads and writes, and extent affinity requests neighbouring
-      # pieces together so downloads are written in longer runs
-      "Session\\DiskIOType" = "Posix";
+      "Session\\MaxUploads" = "40";
+      "Session\\MaxUploadsPerTorrent" = "8";
+      # Plain reads and writes through libtorrent's disk thread pool. Memory-mapped
+      # I/O (the default) turns into small scattered reads and writes over NFS, and
+      # Posix does all disk I/O on the network thread, so a slow write stalls every
+      # peer. Extent affinity requests neighbouring pieces together so downloads
+      # are written in longer runs
+      "Session\\DiskIOType" = "SimplePreadPwrite";
       "Session\\PieceExtentAffinity" = "true";
+      # 4 MiB (default 1 MiB) of pending writes before peers are throttled, so
+      # downloads keep going while the HDD catches up
+      "Session\\DiskQueueSize" = "4194304";
       # Few concurrent downloads so the HDD isn't writing many files at once;
       # stalled ones don't hold a slot, and seeding stays unlimited
       "Session\\QueueingSystemEnabled" = "true";
-      "Session\\MaxActiveDownloads" = "3";
+      "Session\\MaxActiveDownloads" = "5";
       "Session\\MaxActiveUploads" = "-1";
       "Session\\MaxActiveTorrents" = "-1";
       "Session\\IgnoreSlowTorrentsForQueueing" = "true";
@@ -101,11 +115,20 @@ let
 
   start = pkgs.writeShellScript "start-qbittorrent" ''
     # A copy left behind by a killed start script runs with nothing watching the
-    # tunnel, so stop it before anything else
-    while /usr/bin/pkill -9 -f "qbittorrent-nox.app/Contents/MacOS/qbittorrent-nox --confirm-legal-notice"; do
-      echo "stopped a qbittorrent left running without its start script"
-      sleep 1
-    done
+    # tunnel, so stop it before anything else. One still shutting down after a
+    # restart is saving resume data, so give it time before killing it
+    pattern="qbittorrent-nox.app/Contents/MacOS/qbittorrent-nox --confirm-legal-notice"
+    if /usr/bin/pkill -f "$pattern"; then
+      echo "stopping a qbittorrent left running without its start script"
+      for _ in {1..30}; do
+        /usr/bin/pgrep -qf "$pattern" || break
+        sleep 1
+      done
+      while /usr/bin/pkill -9 -f "$pattern"; do
+        echo "killed it after it didn't exit within 30s"
+        sleep 1
+      done
+    fi
 
     until [ -d /Volumes/media/downloads ]; do
       echo "waiting for /Volumes/media"
