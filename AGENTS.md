@@ -59,6 +59,10 @@ must be `git add`ed before flake evaluation can see them.
   the share is recreated. The NFS mount uses 128K rsize/wsize (256K tested no
   faster) and readahead 128 (the macOS max); macOS's client only speaks NFSv4.0,
   so it stays on v3.
+- The NAS and the mini are both on a 2.5GbE switch (~260 MB/s NFS reads from the
+  NAS's cache). The NAS's two ports are an Active/Standby bond with the 2.5GbE
+  port active; the 1GbE port is only a backup link, so it never caps a client at
+  1GbE.
 - The NAS is a DS425+ (DSM 7.3, 2 GB RAM). A Samsung 990 Pro in an M.2 slot is a
   ~500 GB read-only SSD cache (skip sequential I/O on). DSM 7.3 blocks caches on
   unlisted NVMe drives, so 007revad's Synology_HDD_db (`syno_hdd_db.sh -n`) runs
