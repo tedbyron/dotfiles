@@ -106,7 +106,10 @@ backups. Redo by hand after a rebuild without backups:
 - Jellyfin: Movies and Shows libraries on `/Volumes/media`; plugins Intro
   Skipper, Playback Reporting, Jellyscribe (GitHub manifest), File
   Transformation, StreamLimiter. Transcoding uses VideoToolbox with HDR tone
-  mapping, throttling and segment deletion on.
+  mapping, throttling and segment deletion on. Trickplay extraction during
+  library scans and Intro Skipper's automatic analysis of new media are off, so
+  they only run in the nightly scheduled tasks (full-file NFS reads during
+  imports starve playback).
 - ErsatzTV: Jellyfin as the media source; re-sync it and reset playouts after
   library paths change.
 
