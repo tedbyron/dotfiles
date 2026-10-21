@@ -39,6 +39,18 @@ let
       # at a few Mbit, far under speedrr's limit
       "Session\\MaxUploads" = "50";
       "Session\\MaxUploadsPerTorrent" = "10";
+      # The NAS is a single HDD over NFS: memory-mapped I/O (the default) turns into
+      # small scattered reads and writes, and extent affinity requests neighbouring
+      # pieces together so downloads are written in longer runs
+      "Session\\DiskIOType" = "Posix";
+      "Session\\PieceExtentAffinity" = "true";
+      # Few concurrent downloads so the HDD isn't writing many files at once;
+      # stalled ones don't hold a slot, and seeding stays unlimited
+      "Session\\QueueingSystemEnabled" = "true";
+      "Session\\MaxActiveDownloads" = "3";
+      "Session\\MaxActiveUploads" = "-1";
+      "Session\\MaxActiveTorrents" = "-1";
+      "Session\\IgnoreSlowTorrentsForQueueing" = "true";
     };
     Network = {
       "Proxy\\Type" = "None";

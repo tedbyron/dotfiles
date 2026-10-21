@@ -59,6 +59,14 @@ must be `git add`ed before flake evaluation can see them.
   the share is recreated. The NFS mount uses 128K rsize/wsize (256K tested no
   faster) and readahead 128 (the macOS max); macOS's client only speaks NFSv4.0,
   so it stays on v3.
+- The NAS is a DS425+ (DSM 7.3, 2 GB RAM). A Samsung 990 Pro in an M.2 slot is a
+  ~500 GB read-only SSD cache (skip sequential I/O on). DSM 7.3 blocks caches on
+  unlisted NVMe drives, so 007revad's Synology_HDD_db (`syno_hdd_db.sh -n`) runs
+  as a root boot task in DSM's Task Scheduler; after a DSM update the cache may
+  need a reboot to come back. Async NFS writes are on and file access times are
+  never recorded. Shut the NAS down only after stopping the media services and
+  unmounting `/Volumes/media` (the mount is `hard`, so services hang otherwise);
+  `nas.nix` remounts it within 30s of the NAS coming back.
 - qBittorrent is bound to the Proton WireGuard tunnel; `qbittorrent.nix`
   rebuilds the tunnel when DNS through it fails, and renews Proton's NAT-PMP
   forwarded port (restarting qBittorrent when the port changes). The private key
@@ -93,12 +101,14 @@ backups. Redo by hand after a rebuild without backups:
   FlareSolverr proxy tagged on 1337x, EZTV and Uindex.
 - Sonarr/Radarr: root folders `/Volumes/media/{tv,movies}`; Emby/Jellyfin
   connection for rescans; propers and repacks set to Do not Prefer (the
-  Repack/Proper custom formats score them); delete empty folders on; no recycle
-  bin (the NAS doesn't support one); import extra files `srt,ass,ssa,sub,idx`;
-  delay profile prefers torrent with a 6h delay, bypassed only for releases
-  scoring 1700+ (TRaSH's WEB Tier 01), not for the top quality, since every
-  WEB-1080p release is the top quality in Sonarr's profile; qBittorrent client
-  removes completed downloads and moves imports to
+  Repack/Proper custom formats score them); rescan folder after refresh only
+  after manual refresh (they make every file change themselves, so the scheduled
+  refreshes don't need to stat the whole library over NFS); delete empty folders
+  on; no recycle bin (the NAS doesn't support one); import extra files
+  `srt,ass,ssa,sub,idx`; delay profile prefers torrent with a 6h delay, bypassed
+  only for releases scoring 1700+ (TRaSH's WEB Tier 01), not for the top
+  quality, since every WEB-1080p release is the top quality in Sonarr's profile;
+  qBittorrent client removes completed downloads and moves imports to
   `radarr-imported`/`tv-sonarr-imported`. Quality profiles and naming come from
   Recyclarr.
 - Cleanuparr: queue cleaner every 15 min; failed import 3 strikes, downloading
@@ -121,9 +131,14 @@ backups. Redo by hand after a rebuild without backups:
   they compete with playback during big import waves.
 - ErsatzTV: Jellyfin as the media source; re-sync it and reset playouts after
   library paths change.
+- Bazarr: subtitle sync only for subtitles scoring under 90 (episodes) and 70
+  (movies); syncing extracts the whole file's audio over NFS.
 
 ### Gotchas
 
+- Bazarr's start script runs `pkill -9 -f "bazarr/main.py --config …"`, which
+  also kills any shell whose command line contains that text; start Bazarr in a
+  command of its own and don't mention its path there.
 - NFS reports no file creation time (it reads as 1970), so Jellyfin's
   `UseFileCreationTimeForDateAdded` is kept off in `jellyfin.nix`.
 - `rsync -a` and `cp -p` to the NAS fail setting owners; use `rsync -rlpt`.
