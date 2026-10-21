@@ -49,9 +49,9 @@ must be `git add`ed before flake evaluation can see them.
   `modules/default.nix`, a probe in `prometheus.nix`, and a source in
   `backup.nix` (nightly archives to `~/Backups/media/archives` and the NAS).
 - Media is on a Synology NFS share at `/Volumes/media` (`downloads/`, `movies/`,
-  `tv/`, `anime/`, `anime-movies/`, `backups/`), mounted by `nas.nix`. Downloads
-  and library must share it so imports are hardlinks; services that touch media
-  wait for the mount.
+  `tv/`, `anime/`, `anime-movies/`, `orphaned/`, `backups/`), mounted by
+  `nas.nix`. Downloads and library must share it so imports are hardlinks;
+  services that touch media wait for the mount.
 - The NAS is a DS425+ (DSM 7.3, 2 GB RAM) with one HDD on btrfs with data
   checksums, so random I/O is the bottleneck. `downloads/` has `chattr +C` (set
   over SSH on the NAS as `ted`, needs a password; redo if the share is
@@ -100,11 +100,12 @@ backups. Redo by hand after a rebuild without backups:
   `radarr-imported`/`tv-sonarr-imported`. Anime uses [Anime] Remux-1080p except
   Star Wars: Visions (WEB-1080p; its Disney+ releases score under the anime
   minimum of 100).
-- Cleanuparr: queue cleaner every 15 min; strikes: failed import 3, downloading
-  metadata 6, errored 3, stalled 4 (0-80%) or 15 (80-100%), reset after 10MB;
+- Cleanuparr: queue cleaner every 15 min; strikes: failed import 4, downloading
+  metadata 6, errored 4, stalled 4 (0-80%) or 15 (80-100%), reset after 10MB;
   seeker every 10 min (round robin, each item at most weekly, monitored only, up
   to both cutoffs, paused at 3 active downloads, 6h grace); download cleaner
-  off.
+  every 6h with no seeding rules, only orphaned files: anything in `downloads/`
+  no torrent uses, after 24h, moves to `orphaned/` and is purged after 72h.
 - Seerr: default profiles HD Bluray + WEB, WEB-1080p, and [Anime] Remux-1080p
   for anime (folders and libraries are set in `seerr.nix`). An override rule
   (Settings → Services → Radarr) sends movies with TMDb's anime keyword (210024)
