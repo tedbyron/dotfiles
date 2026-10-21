@@ -11,7 +11,9 @@ in
       ''
         /sbin/mount | grep -q " on ${mountPoint} (nfs" && exit 0
         mkdir -p ${mountPoint}
-        /sbin/mount_nfs -o vers=3,tcp,hard,nfc ${export} ${mountPoint}
+        # macOS defaults to 32K reads and little readahead, so concurrent streams make the
+        # NAS's disks seek between tiny reads; 128K is the most Synology's NFSv3 accepts
+        /sbin/mount_nfs -o vers=3,tcp,hard,nfc,rsize=131072,wsize=131072,readahead=128 ${export} ${mountPoint}
       ''
     ];
 

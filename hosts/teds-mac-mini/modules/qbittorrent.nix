@@ -25,8 +25,10 @@ let
   settings = {
     BitTorrent = {
       "Session\\DefaultSavePath" = "/Volumes/media/downloads";
-      "Session\\GlobalMaxRatio" = "2";
-      "Session\\GlobalMaxSeedingMinutes" = "20160";
+      # Fallback matching the seed goals Prowlarr syncs to the *arr apps, which set
+      # them on every torrent they add (the only way torrents are added)
+      "Session\\GlobalMaxRatio" = "1";
+      "Session\\GlobalMaxSeedingMinutes" = "10080";
       # Radarr and Sonarr remove stopped torrents once they've imported them
       "Session\\ShareLimitAction" = "Stop";
       "Session\\AddTrackersFromURLEnabled" = "true";

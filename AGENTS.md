@@ -39,8 +39,7 @@ must be `git add`ed before flake evaluation can see them.
 - Match the existing style: nixfmt formatting, `lib.optionalAttrs` for
   darwin/linux splits, `baseNameOf (toString ./.)` for host names.
 - Run `just format` after editing.
-- Never commit unless explicitly asked for that specific commit. Leave changes
-  uncommitted and report what's pending.
+- Never commit unless explicitly asked for that specific commit.
 
 ## Mac mini media stack
 
@@ -53,6 +52,13 @@ must be `git add`ed before flake evaluation can see them.
   `tv/`, `backups/`), mounted by `nas.nix`. Downloads and library must stay in
   that one share so Radarr/Sonarr imports are hardlinks. Services that touch
   media wait for the mount before starting.
+- The share is btrfs with data checksums on (only settable at share creation),
+  and a single HDD, so random I/O is the bottleneck. `downloads/` and its
+  subfolders have `chattr +C` (set over SSH on the NAS, user `ted`, needs a
+  password) so new torrent files skip copy-on-write and checksums; redo it if
+  the share is recreated. The NFS mount uses 128K rsize/wsize (256K tested no
+  faster) and readahead 128 (the macOS max); macOS's client only speaks NFSv4.0,
+  so it stays on v3.
 - qBittorrent is bound to the Proton WireGuard tunnel; `qbittorrent.nix`
   rebuilds the tunnel when DNS through it fails, and renews Proton's NAT-PMP
   forwarded port (restarting qBittorrent when the port changes). The private key
@@ -81,15 +87,18 @@ must be `git add`ed before flake evaluation can see them.
 Not in nix (their APIs change between versions); restored from the nightly
 backups. Redo by hand after a rebuild without backups:
 
-- Prowlarr: Standard sync profile minimum seeders 5; Internet Archive disabled
-  (slow, no grabs); Knaben priority 50 (stale seeder counts); FlareSolverr proxy
-  tagged on 1337x, EZTV and Uindex.
+- Prowlarr: every indexer seeds to ratio 1 or 7 days (synced to Radarr/Sonarr,
+  which set it per torrent); Standard sync profile minimum seeders 5; Internet
+  Archive removed (slow, no grabs); Knaben priority 50 (stale seeder counts);
+  FlareSolverr proxy tagged on 1337x, EZTV and Uindex.
 - Sonarr/Radarr: root folders `/Volumes/media/{tv,movies}`; Emby/Jellyfin
   connection for rescans; propers and repacks set to Do not Prefer (the
   Repack/Proper custom formats score them); delete empty folders on; no recycle
   bin (the NAS doesn't support one); import extra files `srt,ass,ssa,sub,idx`;
-  delay profile prefers torrent with a 30 min delay (bypassed for the top
-  quality); qBittorrent client removes completed downloads and moves imports to
+  delay profile prefers torrent with a 6h delay, bypassed only for releases
+  scoring 1700+ (TRaSH's WEB Tier 01), not for the top quality, since every
+  WEB-1080p release is the top quality in Sonarr's profile; qBittorrent client
+  removes completed downloads and moves imports to
   `radarr-imported`/`tv-sonarr-imported`. Quality profiles and naming come from
   Recyclarr.
 - Cleanuparr: queue cleaner every 15 min; failed import 3 strikes, downloading
@@ -106,10 +115,10 @@ backups. Redo by hand after a rebuild without backups:
 - Jellyfin: Movies and Shows libraries on `/Volumes/media`; plugins Intro
   Skipper, Playback Reporting, Jellyscribe (GitHub manifest), File
   Transformation, StreamLimiter. Transcoding uses VideoToolbox with HDR tone
-  mapping, throttling and segment deletion on. Trickplay extraction during
-  library scans and Intro Skipper's automatic analysis of new media are off, so
-  they only run in the nightly scheduled tasks (full-file NFS reads during
-  imports starve playback).
+  mapping, throttling and segment deletion on. Trickplay is extracted during
+  library scans (non-blocking, below-normal priority, one thread), and Intro
+  Skipper analyzes new media automatically. Both read whole files over NFS, so
+  they compete with playback during big import waves.
 - ErsatzTV: Jellyfin as the media source; re-sync it and reset playouts after
   library paths change.
 
