@@ -48,6 +48,10 @@ must be `git add`ed before flake evaluation can see them.
   `~/Library/Logs/<app>.log`.
 - New services: add to `modules/default.nix`, a probe in `prometheus.nix`, and a
   source in `backup.nix`.
+- `backup.nix` archives app data nightly at 4am (SQLite via `.backup`) to
+  `~/Backups/media/archives`, then copies it to `/Volumes/media/backups`; each
+  keeps the newest 14. The local archive is written before waiting for the NAS,
+  so a down NAS only delays the copy.
 - Media is on a Synology NFS share at `/Volumes/media` (`downloads/`, `movies/`,
   `tv/`, `backups/`), mounted by `nas.nix`. Downloads and library must stay in
   that one share so Radarr/Sonarr imports are hardlinks. Services that touch

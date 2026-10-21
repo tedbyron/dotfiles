@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 let
-  backupDir = "/Volumes/media/backups";
+  nasDir = "/Volumes/media/backups";
+  localDir = "/Users/ted/Backups/media/archives";
   stage = "/Users/ted/Backups/media/staging";
   keep = 14;
   log = "/Users/ted/Library/Logs/media-backup.log";
@@ -112,11 +113,6 @@ let
     set -euo pipefail
     umask 077
 
-    until [ -d ${backupDir} ]; do
-      echo "waiting for ${backupDir}"
-      sleep 30
-    done
-
     stage=${stage}
     mkdir -p "$stage"
 
@@ -138,17 +134,34 @@ let
 
     ${lib.concatMapStringsSep "\n" copy sources}
 
-    archive=${backupDir}/media-$(date +%F).tar.gz
+    prune() {
+      find "$1" -maxdepth 1 -name 'media-*.tar.gz' | sort -r | tail -n +${toString (keep + 1)} | while read -r old; do
+        echo "removing $old"
+        rm -f "$old"
+      done
+    }
+
+    # Archive locally first, so there's still a copy when the NAS is down or lost
+    name=media-$(date +%F).tar.gz
+    archive=${localDir}/$name
+    mkdir -p ${localDir}
     tar -C "$stage" -czf "$archive.partial" .
-    # The NAS makes new files world-readable whatever the umask, and these hold API keys
-    chmod 600 "$archive.partial"
     mv "$archive.partial" "$archive"
     echo "wrote $archive ($(du -h "$archive" | cut -f1))"
+    prune ${localDir}
 
-    find ${backupDir} -maxdepth 1 -name 'media-*.tar.gz' | sort -r | tail -n +${toString (keep + 1)} | while read -r old; do
-      echo "removing $old"
-      rm -f "$old"
+    until [ -d ${nasDir} ]; do
+      echo "waiting for ${nasDir}"
+      sleep 30
     done
+
+    nasArchive=${nasDir}/$name
+    cp "$archive" "$nasArchive.partial"
+    # The NAS makes new files world-readable whatever the umask, and these hold API keys
+    chmod 600 "$nasArchive.partial"
+    mv "$nasArchive.partial" "$nasArchive"
+    echo "copied to $nasArchive"
+    prune ${nasDir}
   '';
 in
 {
