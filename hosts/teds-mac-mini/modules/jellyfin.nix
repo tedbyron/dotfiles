@@ -29,6 +29,14 @@ let
     </MetadataConfiguration>
   '';
 
+  # For ASS subtitles (anime signs and songs) whose fonts aren't attached to the
+  # file. The web player downloads every fallback font before showing ASS
+  # subtitles, so this is one ~6 MB font covering Japanese and Latin, not Noto CJK
+  fallbackFonts = pkgs.runCommand "jellyfin-fallback-fonts" { } ''
+    mkdir $out
+    cp ${pkgs.ipaexfont}/share/fonts/truetype/ipaexg.ttf $out/
+  '';
+
   start = pkgs.writeShellScript "start-jellyfin" ''
     mkdir -p ${dataDir} ${cfgDir}
 
@@ -48,6 +56,14 @@ let
       ${pkgs.gnused}/bin/sed -i \
         's|<EnableMetrics>false</EnableMetrics>|<EnableMetrics>true</EnableMetrics>|' \
         ${cfgDir}/system.xml
+    fi
+
+    ln -sfn ${fallbackFonts} ${dataDir}/fonts
+    if [ -e ${cfgDir}/encoding.xml ]; then
+      ${pkgs.gnused}/bin/sed -i \
+        -e '/<FallbackFontPath>/d' \
+        -e 's|<EnableFallbackFont>.*</EnableFallbackFont>|<EnableFallbackFont>true</EnableFallbackFont>\n  <FallbackFontPath>${dataDir}/fonts</FallbackFontPath>|' \
+        ${cfgDir}/encoding.xml
     fi
 
     exec ${unstable.jellyfin}/bin/jellyfin \

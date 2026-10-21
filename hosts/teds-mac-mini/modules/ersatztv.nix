@@ -39,6 +39,8 @@ let
       ${pkgs.sqlite}/bin/sqlite3 "${dataDir}/ersatztv.sqlite3" "
         UPDATE ConfigElement SET Value = '${ffmpegDir}/ffmpeg' WHERE Key = 'ffmpeg.ffmpeg_path';
         UPDATE ConfigElement SET Value = '${ffmpegDir}/ffprobe' WHERE Key = 'ffmpeg.ffprobe_path';
+        -- Libraries are discovered at startup with sync off, so a new one syncs from the next start
+        UPDATE JellyfinLibrary SET ShouldSyncItems = 1;
       "
     fi
 

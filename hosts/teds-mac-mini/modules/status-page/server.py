@@ -168,10 +168,15 @@ def system():
         ),
         "uptime_seconds": scalar("node_time_seconds - node_boot_time_seconds"),
         "nas_free_tb": scalar(f"node_filesystem_avail_bytes{nas} / 1e12"),
-        "nas_used_percent": scalar(
-            f"100 - node_filesystem_avail_bytes{nas} / node_filesystem_size_bytes{nas} * 100"
+        "nas_size_tb": scalar(f"node_filesystem_size_bytes{nas} / 1e12"),
+        "nas_free_percent": scalar(
+            f"node_filesystem_avail_bytes{nas} / node_filesystem_size_bytes{nas} * 100"
         ),
         "mini_free_gb": scalar(f"node_filesystem_avail_bytes{mini} / 1e9"),
+        "mini_size_gb": scalar(f"node_filesystem_size_bytes{mini} / 1e9"),
+        "mini_free_percent": scalar(
+            f"node_filesystem_avail_bytes{mini} / node_filesystem_size_bytes{mini} * 100"
+        ),
         "streams": int(scalar("sum(jellyfin_stream_count) or vector(0)")),
     }
 

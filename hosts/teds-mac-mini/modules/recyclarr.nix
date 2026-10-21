@@ -28,6 +28,9 @@ let
           - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
+          - trash_id: 722b624f9af1e492284c4bc842153a38 # [Anime] Remux-1080p
+            reset_unmatched_scores:
+              enabled: true
 
     sonarr:
       series:
@@ -52,6 +55,9 @@ let
             reset_unmatched_scores:
               enabled: true
           - trash_id: d1498e7d189fbe6c7110ceaabb7473e6 # WEB-2160p
+            reset_unmatched_scores:
+              enabled: true
+          - trash_id: 20e0fc959f1f1704bed501f23bdae76f # [Anime] Remux-1080p
             reset_unmatched_scores:
               enabled: true
   '';

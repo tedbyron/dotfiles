@@ -53,9 +53,9 @@ must be `git add`ed before flake evaluation can see them.
   keeps the newest 14. The local archive is written before waiting for the NAS,
   so a down NAS only delays the copy.
 - Media is on a Synology NFS share at `/Volumes/media` (`downloads/`, `movies/`,
-  `tv/`, `backups/`), mounted by `nas.nix`. Downloads and library must stay in
-  that one share so Radarr/Sonarr imports are hardlinks. Services that touch
-  media wait for the mount before starting.
+  `tv/`, `anime/`, `anime-movies/`, `backups/`), mounted by `nas.nix`. Downloads
+  and library must stay in that one share so Radarr/Sonarr imports are
+  hardlinks. Services that touch media wait for the mount before starting.
 - The share is btrfs with data checksums on (only settable at share creation),
   and a single HDD, so random I/O is the bottleneck. `downloads/` and its
   subfolders have `chattr +C` (set over SSH on the NAS, user `ted`, needs a
@@ -106,41 +106,71 @@ backups. Redo by hand after a rebuild without backups:
 - Prowlarr: every indexer seeds to ratio 1 or 7 days (synced to Radarr/Sonarr,
   which set it per torrent); Standard sync profile minimum seeders 5; Internet
   Archive removed (slow, no grabs); Knaben priority 50 (stale seeder counts);
-  FlareSolverr proxy tagged on 1337x, EZTV and Uindex.
-- Sonarr/Radarr: root folders `/Volumes/media/{tv,movies}`; Emby/Jellyfin
-  connection for rescans; propers and repacks set to Do not Prefer (the
-  Repack/Proper custom formats score them); rescan folder after refresh only
-  after manual refresh (they make every file change themselves, so the scheduled
-  refreshes don't need to stat the whole library over NFS); delete empty folders
-  on; no recycle bin (the NAS doesn't support one); import extra files
-  `srt,ass,ssa,sub,idx`; delay profile prefers torrent with a 6h delay, bypassed
-  only for releases scoring 1700+ (TRaSH's WEB Tier 01), not for the top
-  quality, since every WEB-1080p release is the top quality in Sonarr's profile;
-  qBittorrent client removes completed downloads and moves imports to
-  `radarr-imported`/`tv-sonarr-imported`. Quality profiles and naming come from
-  Recyclarr.
+  FlareSolverr proxy tagged on 1337x, EZTV and Uindex; Anime Tosho (public
+  feed.animetosho.net definition) beside Nyaa for anime, Sonarr only since it
+  has no movie categories.
+- Sonarr/Radarr: root folders `/Volumes/media/{tv,anime}` and
+  `/Volumes/media/{movies,anime-movies}` (Seerr sends anime requests to the
+  anime folders); Emby/Jellyfin connection for rescans; propers and repacks set
+  to Do not Prefer (the Repack/Proper custom formats score them); rescan folder
+  after refresh only after manual refresh (they make every file change
+  themselves, so the scheduled refreshes don't need to stat the whole library
+  over NFS); delete empty folders on; no recycle bin (the NAS doesn't support
+  one); import extra files `srt,ass,ssa,sub,idx`; delay profile prefers torrent
+  with a 6h delay, bypassed only for releases scoring 1700+ (TRaSH's WEB Tier
+  01), not for the top quality, since every WEB-1080p release is the top quality
+  in Sonarr's profile; qBittorrent client removes completed downloads and moves
+  imports to `radarr-imported`/`tv-sonarr-imported`. Quality profiles and naming
+  come from Recyclarr. Anime uses TRaSH's [Anime] Remux-1080p in both apps,
+  except Star Wars: Visions, which stays on WEB-1080p: its Disney+ releases
+  score under the anime profile's minimum of 100, so new seasons would never be
+  grabbed.
 - Cleanuparr: queue cleaner every 15 min; failed import 3 strikes, downloading
   metadata 6, errored 3; stall rules 0-80% (4 strikes) and 80-100% (15 strikes),
   reset after 10MB progress; seeker runs replacement and proactive searches
   every 10 min (round robin, each item at most weekly, monitored only, up to the
   quality and custom format score cutoffs in both apps, paused at 3 active
   downloads, 6h post-release grace); download cleaner off.
-- Seerr: Radarr/Sonarr default profiles HD Bluray + WEB and WEB-1080p (specials,
-  libraries and root folders are set in `seerr.nix`). The owner (user 1, the
-  only admin) is Jellyfin `ted`, which Jellyfin only lets sign in locally; `tb`
-  is a normal user. Seerr's owner can't be demoted or changed from the UI, so
-  sign in as `ted` first when setting it up.
-- Jellyfin: Movies and Shows libraries on `/Volumes/media`; plugins Intro
-  Skipper, Playback Reporting, Jellyscribe (GitHub manifest), File
-  Transformation, StreamLimiter. Transcoding uses VideoToolbox with HDR tone
-  mapping, throttling and segment deletion on. Trickplay is extracted during
-  library scans (non-blocking, below-normal priority, one thread), and Intro
-  Skipper analyzes new media automatically. Both read whole files over NFS, so
-  they compete with playback during big import waves.
+- Seerr: Radarr/Sonarr default profiles HD Bluray + WEB and WEB-1080p, and
+  [Anime] Remux-1080p for anime (specials, libraries and root folders are set in
+  `seerr.nix`). Seerr has no anime setting for Radarr, so an override rule
+  (Settings → Services → Radarr) sends movies with TMDb's anime keyword (210024)
+  to `anime-movies/` with the anime profile. The owner (user 1, the only admin)
+  is Jellyfin `ted`, which Jellyfin only lets sign in locally; `tb` is a normal
+  user. Seerr's owner can't be demoted or changed from the UI, so sign in as
+  `ted` first when setting it up.
+- Jellyfin: Movies, Shows, Anime and Anime Movies libraries on `/Volumes/media`
+  (the anime ones copy Movies' and Shows' options with AniDB then AniList first
+  for series, season and movie metadata; episodes keep TMDb first so numbering
+  matches Sonarr). Plugins beyond the bundled ones: Intro Skipper, Playback
+  Reporting, Jellyscribe (GitHub manifest), File Transformation, StreamLimiter,
+  Fanart, AniList and AniDB (metadata providers; AniDB uses its own built-in API
+  client and matches through TVDB IDs, since its title matching fails with an
+  XmlReader async error in 13.0.0.0), Jellyfin Enhanced (n00bcodr's manifest;
+  needs File Transformation; ratings from TMDB and Rotten Tomatoes, plus IMDb
+  and others through an MDBList key; users pick their own features in its `?`
+  panel). `jellyfin.nix` sets one fallback font (IPAexGothic) for ASS subtitles
+  without attached fonts; keep it small, the web player downloads every fallback
+  font before showing ASS subtitles. Custom CSS (Dashboard → Branding) hides the
+  native star rating and the native text external links, leaving Jellyfin
+  Enhanced's ratings row and its own icon links (`letterboxd-link`,
+  `seerr-link`, `arr-link`, `arr-tag-link`). Transcoding uses VideoToolbox with
+  HDR tone mapping, throttling and segment deletion on. Trickplay is extracted
+  during library scans (non-blocking, below-normal priority, one thread), and
+  Intro Skipper analyzes new media automatically. Both read whole files over
+  NFS, so they compete with playback during big import waves. `jellyfin.nix`
+  gives users without a home layout `tb`'s home sections and library order.
 - ErsatzTV: Jellyfin as the media source; re-sync it and reset playouts after
-  library paths change.
+  library paths change. It discovers new Jellyfin libraries only at startup,
+  with sync off; `ersatztv.nix` turns sync on for all of them on the next start.
+  Channels pick content by search query, not by library.
 - Bazarr: subtitle sync only for subtitles scoring under 90 (episodes) and 70
-  (movies); syncing extracts the whole file's audio over NFS.
+  (movies); syncing extracts the whole file's audio over NFS. AnimeTosho
+  provider on, with the AniDB HTTP API client `bazarrtedster` version 9 (in both
+  the AniDB and AnimeTosho settings); it needs the AniDB episode ID, which needs
+  that client. `bazarr.nix` patches the provider for AnimeTosho's new domain and
+  API and fixes the AniDB refiner's episode ID; drop the patch once upstream
+  fixes them (the build fails when the replaced text changes).
 
 ### Gotchas
 

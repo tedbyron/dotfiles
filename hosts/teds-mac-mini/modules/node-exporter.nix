@@ -13,6 +13,8 @@ in
       "${pkgs.prometheus-node-exporter}/bin/node_exporter"
       "--web.listen-address=127.0.0.1:9100"
       "--collector.textfile.directory=/Users/ted/.local/share/node-exporter/textfile"
+      # Reads Intel power status; fails every scrape on Apple Silicon
+      "--no-collector.thermal"
     ];
   };
 }

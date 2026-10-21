@@ -24,7 +24,7 @@ let
     .main.enableSpecialEpisodes = false
     | .jellyfin.libraries |= map(.enabled = true)
     | .radarr |= map(.activeDirectory = "/Volumes/media/movies")
-    | .sonarr |= map(.activeDirectory = "/Volumes/media/tv")
+    | .sonarr |= map(.activeDirectory = "/Volumes/media/tv" | .activeAnimeDirectory = "/Volumes/media/anime")
   '';
 
   start = pkgs.writeShellScript "start-seerr" ''

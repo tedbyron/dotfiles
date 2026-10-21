@@ -501,6 +501,11 @@
         return `${days}d ${hours}h`
       }
 
+      const capacity = (free, size, unit) =>
+        free === null || free === undefined || !size
+          ? null
+          : `${free} of ${Math.round(size)} ${unit}`
+
       function tiles(system, library) {
         const target = document.getElementById('tiles')
         if (!system && !library) return unavailable(target)
@@ -514,20 +519,29 @@
           [
             ['Uptime', uptime(system?.uptime_seconds)],
             ['CPU', fmt(system?.cpu_percent, '%')],
-            ['NAS free', fmt(system?.nas_free_tb, ' TB')],
-            ['Server free', fmt(system?.mini_free_gb, ' GB')],
+            [
+              'NAS free',
+              fmt(system?.nas_free_percent, '%'),
+              capacity(system?.nas_free_tb, system?.nas_size_tb, 'TB'),
+            ],
+            [
+              'Server free',
+              fmt(system?.mini_free_percent, '%'),
+              capacity(system?.mini_free_gb, system?.mini_size_gb, 'GB'),
+            ],
           ],
         ]
         target.replaceChildren(
           ...rows.map((items) => {
             const row = el('div', 'tiles')
             row.append(
-              ...items.map(([label, value]) => {
+              ...items.map(([label, value, detail]) => {
                 const tile = el('div', 'tile')
                 tile.append(
                   el('div', 'muted', label),
                   el('div', 'value', value),
                 )
+                if (detail) tile.append(el('div', 'muted', detail))
                 return tile
               }),
             )
