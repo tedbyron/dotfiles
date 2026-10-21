@@ -15,6 +15,7 @@
         --up: #1f9d55;
         --down: #d64545;
         --warn: #c98a12;
+        --fair: #f2b90c;
         --accent: #3b6fd8;
       }
       @media (prefers-color-scheme: dark) {
@@ -27,6 +28,7 @@
           --up: #3ccf7a;
           --down: #f06a6a;
           --warn: #e8b04a;
+          --fair: #f5c518;
           --accent: #7ea6ff;
         }
       }
@@ -138,25 +140,62 @@
       .primary .service .pct {
         margin-left: 0;
       }
-      .days {
+      .history {
         flex-basis: 100%;
+      }
+      .days {
         display: flex;
         gap: 2px;
         height: 24px;
       }
-      .days span {
+      .days span,
+      .swatch {
         flex: 1;
         border-radius: 2px;
         background: var(--line);
       }
-      .days span.good {
+      .days span.none,
+      .swatch.none {
+        background: none;
+        border: 1px dashed var(--line);
+      }
+      .days span.good,
+      .swatch.good {
         background: var(--up);
       }
-      .days span.fair {
-        background: var(--warn);
+      .days span.fair,
+      .swatch.fair {
+        background: var(--fair);
       }
-      .days span.bad {
+      .days span.bad,
+      .swatch.bad {
         background: var(--down);
+      }
+      .axis {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 400;
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .legend {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px 16px;
+        margin-bottom: 8px;
+      }
+      .legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .swatch {
+        display: inline-block;
+        flex: none;
+        width: 10px;
+        height: 14px;
       }
       .card.banner {
         justify-self: center;
@@ -400,20 +439,47 @@
       document.getElementById('webcal').href =
         `webcal://${location.host}/calendar.ics`
 
+      const shortDate = (date) =>
+        date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+
       // One bar per day, oldest first, ending today
       function days(values) {
         const strip = el('div', 'days')
         const today = new Date()
+        const first = new Date(today)
+        first.setDate(today.getDate() - (values.length - 1))
         values.forEach((v, i) => {
-          const date = new Date(today)
-          date.setDate(today.getDate() - (values.length - 1 - i))
+          const date = new Date(first)
+          date.setDate(first.getDate() + i)
           const grade =
-            v === null ? '' : v >= 99.5 ? 'good' : v >= 95 ? 'fair' : 'bad'
+            v === null ? 'none' : v >= 99.5 ? 'good' : v >= 95 ? 'fair' : 'bad'
           const bar = el('span', grade)
-          bar.title = `${date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}: ${v === null ? 'no data' : `${v}%`}`
+          bar.title = `${shortDate(date)}: ${v === null ? 'no data' : `${v}% up`}`
           strip.append(bar)
         })
-        return strip
+        const axis = el('div', 'axis muted')
+        axis.append(
+          el('span', null, shortDate(first)),
+          el('span', null, 'Today'),
+        )
+        const history = el('div', 'history')
+        history.append(strip, axis)
+        return history
+      }
+
+      function legend() {
+        const target = el('div', 'legend muted')
+        for (const [cls, text] of [
+          ['good', '99.5%+ up'],
+          ['fair', '95–99.5%'],
+          ['bad', 'Under 95%'],
+          ['none', 'No data'],
+        ]) {
+          const item = el('span')
+          item.append(el('i', `swatch ${cls}`), text)
+          target.append(item)
+        }
+        return target
       }
 
       const STALE_MINUTES = 15
@@ -463,6 +529,7 @@
         const target = document.getElementById('services')
         if (!list) return unavailable(target)
         target.replaceChildren(
+          legend(),
           ...list.map((items, i) => {
             const row = el(
               'div',
