@@ -63,6 +63,11 @@ must be `git add`ed before flake evaluation can see them.
   another torrent client without the same protection.
 - Prebuilt binaries (Cleanuparr, ErsatzTV's ffmpeg) are packaged from release
   archives with `dontFixup = true`.
+- Radarr/Sonarr quality settings follow the TRaSH Guides (trash-guides.info):
+  `recyclarr.nix` uses TRaSH's profiles, sizes and default format groups with no
+  overrides. Before changing profiles, scores, or Radarr/Sonarr settings TRaSH
+  covers, check the guides and follow them. The cached guide data is in
+  `~/Library/Application Support/recyclarr/resources/trash-guides/`.
 - Grafana dashboards in `modules/grafana/` are provisioned v2 JSON, exported
   from the `resource` table in `~/.local/share/grafana/grafana.db`.
 - App settings not in nix (Radarr, Sonarr, Seerr, Jellyfin libraries,
@@ -90,9 +95,9 @@ backups. Redo by hand after a rebuild without backups:
 - Cleanuparr: queue cleaner every 15 min; failed import 3 strikes, downloading
   metadata 6, errored 3; stall rules 0-80% (4 strikes) and 80-100% (15 strikes),
   reset after 10MB progress; seeker runs replacement and proactive searches
-  every 10 min (round robin, each item at most weekly, monitored only, up to
-  cutoff, paused at 3 active downloads, 6h post-release grace); download cleaner
-  off.
+  every 10 min (round robin, each item at most weekly, monitored only, up to the
+  quality and custom format score cutoffs in both apps, paused at 3 active
+  downloads, 6h post-release grace); download cleaner off.
 - Seerr: Radarr/Sonarr default profiles HD Bluray + WEB and WEB-1080p (specials,
   libraries and root folders are set in `seerr.nix`). The owner (user 1, the
   only admin) is Jellyfin `ted`, which Jellyfin only lets sign in locally; `tb`
