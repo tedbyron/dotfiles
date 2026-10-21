@@ -104,11 +104,13 @@ let
             score: 0
             assign_scores_to:
               - trash_id: 64fb5f9858489bdac2af690e27c8f42f
-          # Plays with wrong colours on anything without Dolby Vision; TRaSH's own score
+          # Plays with wrong colours on anything without Dolby Vision; TRaSH's own score.
+          # Mostly 4K, but some 1080p WEB-DLs are DV-only too
           - trash_ids:
               - 923b6abef9b17f937fab56cfcf89e1f1 # DV (w/o HDR fallback)
             score: -10000
             assign_scores_to:
+              - trash_id: d1d67249d3890e49bc12e275d989a7e9
               - trash_id: 64fb5f9858489bdac2af690e27c8f42f
           - trash_ids:
               - d6e9318c875905d6cfb5bee961afcea9 # Language: Not Original
@@ -195,6 +197,7 @@ let
               - 9b27ab6498ec0f31a3353992e19434ca # DV (w/o HDR fallback)
             score: -10000
             assign_scores_to:
+              - trash_id: 72dae194fc92bf828f32cde7744e51a1
               - trash_id: d1498e7d189fbe6c7110ceaabb7473e6
           # Prefer packs over single episodes; worth about two release group tiers
           - trash_ids:
