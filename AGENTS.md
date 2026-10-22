@@ -60,7 +60,8 @@ must be `git add`ed before flake evaluation can see them.
   it may need a reboot. Async NFS writes on, access times off. NAS and mini
   share a 2.5GbE switch (~260 MB/s cached reads); the NAS's 1GbE port is only a
   standby link. NFS stays on v3 (macOS only speaks v4.0); 256K rsize/wsize
-  tested no faster than 128K.
+  tested no faster than 128K; readahead stays at the default 16 (128 made
+  qBittorrent read ~4x what it served).
 - Shut the NAS down only after stopping the media services and unmounting
   `/Volumes/media` (the mount is `hard`); `nas.nix` remounts within 30s.
 - Never torrent outside the VPN. qBittorrent must only run through its start

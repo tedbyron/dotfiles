@@ -58,6 +58,9 @@ let
       # 4 MiB (default 1 MiB) of pending writes before peers are throttled, so
       # downloads keep going while the HDD catches up
       "Session\\DiskQueueSize" = "4194304";
+      # Open files kept between reads (default 100). Each NFS open and close is a round
+      # trip, and active torrents have ~330 files, so the default kept reopening them
+      "Session\\FilePoolSize" = "500";
       # Few concurrent downloads so the HDD isn't writing many files at once;
       # stalled ones don't hold a slot, and seeding stays unlimited
       "Session\\QueueingSystemEnabled" = "true";
