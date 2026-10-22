@@ -3,6 +3,11 @@
 If a repository has an `AGENTS.md` file, follow it as the project's instructions
 instead of `CLAUDE.md`.
 
+## Git
+
+Never add a `Co-Authored-By` trailer or any other AI attribution to commit
+messages or pull requests.
+
 ## Shell environment
 
 Coreutils and common command-line tools on `PATH` (`ls`, `stat`, `date`, `dd`,
