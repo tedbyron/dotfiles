@@ -87,9 +87,7 @@ let
   userDefaults = pkgs.writeText "jellyfin-user-defaults.py" ''
     import json, sys, time, urllib.request
 
-    token_file, template_name, subtitle_defaults, audio_defaults, *flags = sys.argv[1:]
-    # --all overwrites every user's home settings, not just users without any
-    copy_all = "--all" in flags
+    token_file, template_name, subtitle_defaults, audio_defaults = sys.argv[1:]
     token = open(token_file).read().strip()
     subtitle_defaults = json.loads(subtitle_defaults)
     audio_defaults = json.loads(audio_defaults)
@@ -156,9 +154,7 @@ let
         changed = False
 
         prefs = call("GET", prefs_path(user))
-        if user["Id"] != template["Id"] and (
-            copy_all or "homesection0" not in prefs["CustomPrefs"]
-        ):
+        if user["Id"] != template["Id"] and "homesection0" not in prefs["CustomPrefs"]:
             prefs["CustomPrefs"].update(home_prefs)
             call("POST", prefs_path(user), prefs)
             config.update(home_config)
@@ -200,13 +196,6 @@ in
     StandardErrorPath = log;
     StandardOutPath = log;
   };
-
-  # jellyfin-copy-home copies tb's home settings to every user on demand
-  home-manager.users.ted.home.packages = [
-    (pkgs.writeShellScriptBin "jellyfin-copy-home" ''
-      exec ${lib.escapeShellArgs userDefaultsArgs} --all
-    '')
-  ];
 
   launchd.user.agents.jellyfin-user-defaults.serviceConfig = {
     ProgramArguments = lib.ted.waitForNix userDefaultsArgs;
