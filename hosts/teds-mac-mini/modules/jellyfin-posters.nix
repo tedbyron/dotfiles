@@ -127,11 +127,13 @@ let
 
     posters, backdrops_done = load("posters.json"), load("backdrops.json")
     thumbs = load("thumbs.json")
-    failed = 0
 
     items = jellyfin(
         "/Items?Recursive=true&IncludeItemTypes=Movie,Series&CollapseBoxSetItems=false&Fields=ProviderIds"
     )["Items"]
+    # Consecutive failed runs per item, dropping items no longer in the library
+    ids = {item["Id"] for item in items}
+    failures = {k: v for k, v in load("failures.json").items() if k in ids}
 
     for item in items:
         tmdb = item.get("ProviderIds", {}).get("Tmdb")
@@ -154,15 +156,18 @@ let
                 set_thumb(item["Id"], backdrop)
                 thumbs[item["Id"]] = backdrop
                 print(f"set {item['Name']} thumb to {backdrop}")
+            failures.pop(item["Id"], None)
         except Exception as e:
-            print(f"failed {item['Name']}: {e}")
-            failed += 1
+            failures[item["Id"]] = failures.get(item["Id"], 0) + 1
+            print(f"failed {item['Name']} ({failures[item['Id']]} runs): {e}")
 
     os.makedirs(state_dir, exist_ok=True)
     save("posters.json", posters)
     save("backdrops.json", backdrops_done)
     save("thumbs.json", thumbs)
-    sys.exit(1 if failed else 0)
+    save("failures.json", failures)
+    # Fail the job (and alert) only when an item has failed 3 runs in a row
+    sys.exit(1 if any(n >= 3 for n in failures.values()) else 0)
   '';
 in
 {
