@@ -12,16 +12,18 @@
 
 @-moz-document domain("github.com") {
   :root {
-    --fontStack-monospace: Curlio, ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --fontStack-monospace:
+      Curlio, ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+      'Liberation Mono', monospace;
   }
 
   /* When the activity overview is enabled the grid rects are 10px * 10px (3px spacing). */
-  .ContributionCalendar-grid[style*="border-spacing: 3px"] {
+  .ContributionCalendar-grid[style*='border-spacing: 3px'] {
     --dist: 13px;
   }
 
   /* But when it's disabled, they're 11px * 11px (4px spacing). */
-  .ContributionCalendar-grid[style*="border-spacing: 4px"] {
+  .ContributionCalendar-grid[style*='border-spacing: 4px'] {
     --dist: 15px;
   }
 
@@ -36,12 +38,20 @@
   }
 
   /* Hide first sunday (otherwise it'll be outside the box). */
-  .ContributionCalendar-grid tbody tr:first-child .ContributionCalendar-label + * {
+  .ContributionCalendar-grid
+    tbody
+    tr:first-child
+    .ContributionCalendar-label
+    + * {
     display: none;
   }
 
   /* Show sunday text. */
-  .ContributionCalendar-grid tbody tr:first-child .ContributionCalendar-label span:last-child {
+  .ContributionCalendar-grid
+    tbody
+    tr:first-child
+    .ContributionCalendar-label
+    span:last-child {
     clip-path: unset !important;
   }
 }

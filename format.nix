@@ -76,7 +76,6 @@ _: {
       "config/**/ignore"
       "config/bat/*"
       "config/doom/*"
-      "config/ghostty/themes/*"
       "config/gtk-*/*"
       "config/ripgrep/*"
       "config/tmux/*"

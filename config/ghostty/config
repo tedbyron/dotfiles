@@ -1,6 +1,6 @@
 font-family = "Curlio"
 font-size = 12
-theme = "gruvbox-material-dark"
+theme = "light:gruvbox-material-light,dark:gruvbox-material-dark"
 minimum-contrast = 1
 cursor-style = "block"
 cursor-style-blink = false
