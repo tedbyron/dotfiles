@@ -120,11 +120,11 @@ backups. Redo by hand after a rebuild without backups:
   (GitHub manifest), File Transformation, StreamLimiter, Fanart, AniList, AniDB
   (built-in API client; title matching is broken in 13.0.0.0, so it matches by
   TVDB ID), Jellyfin Enhanced (n00bcodr's manifest, MDBList key). Custom CSS
-  (Dashboard → General) hides the native star and critic ratings, ends-at times,
-  poster count badges and the text external links, keeping Jellyfin Enhanced's
-  icon links (`letterboxd-link`, `seerr-link`, `arr-link`, `arr-tag-link`), and
-  puts Moonfin's header button before Jellyfin Enhanced's
-  (`.je-header-actions-host > .headerMoonfinButton { order: -1; }`).
+  (Dashboard → General) hides the native star and critic ratings, ends-at times
+  (item pages and player), the text external links (keeping Jellyfin Enhanced's
+  icon links: `letterboxd-link`, `letterboxd-link-icon`, `seerr-link`,
+  `arr-link`, `arr-tag-link`) and Moonfin's header button, and restyles the
+  poster count and played badges as translucent primary-color pills.
   VideoToolbox transcoding with tone mapping, throttling and segment deletion.
   Trickplay (during scans, one thread) and Intro Skipper read whole files over
   NFS, so they compete with playback during big imports.
