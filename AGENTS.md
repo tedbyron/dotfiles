@@ -78,9 +78,8 @@ must be `git add`ed before flake evaluation can see them.
   archives with `dontFixup = true`.
 - App settings are changed through each app's local API. Keys are in
   `~/.local/share/{radarr,sonarr,prowlarr}/config.xml`,
-  `~/.local/share/seerr/settings.json` (`main.apiKey`; Seerr rejects API writes
-  without a browser CSRF token, so edit `settings.json` or its database and
-  restart it) and `~/.config/jelly-metrics/token` (Jellyfin).
+  `~/.local/share/seerr/settings.json` (`main.apiKey`) and
+  `~/.config/jelly-metrics/token` (Jellyfin).
 
 ### Settings that live in the apps
 
@@ -112,7 +111,9 @@ backups. Redo by hand after a rebuild without backups:
   (Settings → Services → Radarr) sends movies with TMDb's anime keyword (210024)
   to `anime-movies/` with the anime profile. The owner is Jellyfin `ted` (local
   sign-in only, can't be changed later), so sign in as `ted` first on a fresh
-  setup; `tb` is a normal user.
+  setup; `tb` is a normal user. CSRF protection (Settings → Network) is off:
+  with it on, Seerr refuses every non-browser POST, including Moonfin's sign-in
+  and webhook setup, Jellyfin Enhanced's user import and the Serializd sync.
 - Jellyfin: libraries Movies, Shows, Anime, Anime Movies (anime ones put AniDB
   then AniList first, except episodes, which keep TMDb to match Sonarr's
   numbering). Extra plugins: Intro Skipper, Playback Reporting, Jellyscribe
@@ -121,7 +122,9 @@ backups. Redo by hand after a rebuild without backups:
   TVDB ID), Jellyfin Enhanced (n00bcodr's manifest, MDBList key). Custom CSS
   (Dashboard → General) hides the native star and critic ratings, ends-at times,
   poster count badges and the text external links, keeping Jellyfin Enhanced's
-  icon links (`letterboxd-link`, `seerr-link`, `arr-link`, `arr-tag-link`).
+  icon links (`letterboxd-link`, `seerr-link`, `arr-link`, `arr-tag-link`), and
+  puts Moonfin's header button before Jellyfin Enhanced's
+  (`.je-header-actions-host > .headerMoonfinButton { order: -1; }`).
   VideoToolbox transcoding with tone mapping, throttling and segment deletion.
   Trickplay (during scans, one thread) and Intro Skipper read whole files over
   NFS, so they compete with playback during big imports.
