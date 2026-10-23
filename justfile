@@ -132,18 +132,6 @@ search pattern *args:
         print -aC 4 Package Size Type Path ${=o} | r
     }
 
-# Build a darwin config and copy it to the mini's store
-[group('util')]
-[macos]
-push host=`hostname`:
-    #!/usr/bin/env zsh
-    set -euo pipefail
-    out=$(nix build --no-link --print-out-paths \
-        ~/git/dotfiles#darwinConfigurations.{{ host }}.system)
-    sudo "$(command -v nix)" copy -s --no-check-sigs \
-        --to 'ssh-ng://ted@teds-mac-mini?ssh-key=/etc/nix/mini-cache_ed25519' \
-        $out
-
 # Update flake lockfile for all or specified inputs
 [group('util')]
 update *args:
