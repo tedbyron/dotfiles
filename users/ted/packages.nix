@@ -42,7 +42,6 @@
     ++ lib.optionals darwin [
       unstable.mas
       pinentry_mac
-      vlc-bin
     ]
     ++ lib.optionals (!darwin) [
       gcr_4
