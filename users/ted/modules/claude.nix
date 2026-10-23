@@ -3,15 +3,23 @@
   lib,
   pkgs,
   unstable,
+  darwin,
   ...
 }:
 let
   servers = {
-    # Launches the system Firefox with a temporary profile
+    # Launches Zen on macOS, the system Firefox elsewhere, with a temporary
+    # profile
     firefox-devtools = {
       type = "stdio";
       command = lib.getExe unstable.firefox-devtools-mcp;
-      args = [ "--headless" ];
+      args = [
+        "--headless"
+      ]
+      ++ lib.optionals darwin [
+        "--firefoxPath"
+        "/Applications/Zen.app/Contents/MacOS/zen"
+      ];
     };
   };
 in

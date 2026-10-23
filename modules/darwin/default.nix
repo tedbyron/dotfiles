@@ -23,11 +23,11 @@
     # enableZshIntegration = true;
 
     casks = [
-      "firefox"
       "lunar"
       "nextdns-app"
       "rectangle"
       "spotify"
+      "zen"
     ];
 
     masApps = {

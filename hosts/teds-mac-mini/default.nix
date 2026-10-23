@@ -52,7 +52,7 @@
       userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
     in
     map (app: { inherit app; }) [
-      "/Applications/Firefox.app/"
+      "/Applications/Zen.app/"
       "/Applications/Bitwarden.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
