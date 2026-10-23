@@ -61,11 +61,12 @@ let
       # Open files kept between reads (default 100). Each NFS open and close is a round
       # trip, and active torrents have ~330 files, so the default kept reopening them
       "Session\\FilePoolSize" = "500";
-      # Few concurrent downloads so the HDD isn't writing many files at once;
-      # stalled ones don't hold a slot, and seeding stays unlimited
+      # Few concurrent downloads and seeds so the HDD isn't seeking between many
+      # files at once (unlimited seeding kept ~45 torrents uploading and the disk 85%
+      # busy); stalled ones don't hold a slot, so idle seeds still announce
       "Session\\QueueingSystemEnabled" = "true";
       "Session\\MaxActiveDownloads" = "5";
-      "Session\\MaxActiveUploads" = "-1";
+      "Session\\MaxActiveUploads" = "15";
       "Session\\MaxActiveTorrents" = "-1";
       "Session\\IgnoreSlowTorrentsForQueueing" = "true";
     };
