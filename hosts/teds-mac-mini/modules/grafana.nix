@@ -50,6 +50,10 @@ in
       GF_SERVER_HTTP_PORT = "3000";
       GF_ANALYTICS_REPORTING_ENABLED = "false";
       GF_ANALYTICS_CHECK_FOR_UPDATES = "false";
+      # Only reachable on localhost, so skip the login
+      GF_AUTH_ANONYMOUS_ENABLED = "true";
+      GF_AUTH_ANONYMOUS_ORG_ROLE = "Admin";
+      GF_AUTH_DISABLE_LOGIN_FORM = "true";
     };
 
     ProgramArguments = lib.ted.waitForNix [
