@@ -119,7 +119,8 @@ backups. Redo by hand after a rebuild without backups:
   numbering). Extra plugins: Intro Skipper, Playback Reporting, Jellyscribe
   (GitHub manifest), File Transformation, StreamLimiter, Fanart, AniList, AniDB
   (built-in API client; title matching is broken in 13.0.0.0, so it matches by
-  TVDB ID), Jellyfin Enhanced (n00bcodr's manifest, MDBList key). Custom CSS
+  TVDB ID), TMDb Box Sets, Jellyfin Enhanced (n00bcodr's manifest, MDBList key),
+  Moonbase (Moonfin's server plugin, Moonfin-Client manifest). Custom CSS
   (Dashboard → General) hides the native star and critic ratings, ends-at times
   (item pages and player), the text external links (keeping Jellyfin Enhanced's
   icon links: `letterboxd-link`, `letterboxd-link-icon`, `seerr-link`,
