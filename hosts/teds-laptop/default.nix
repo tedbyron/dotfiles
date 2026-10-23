@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  unstable,
   ...
 }:
 {
@@ -29,6 +28,7 @@
 
     masApps = {
       "DaVinci Resolve" = 571213070;
+      Infuse = 1136220934;
     };
   };
 
@@ -38,7 +38,6 @@
   '';
 
   home-manager.users.ted.home.packages = with pkgs; [
-    unstable.jellyfin-desktop # TODO: 26.11 old hydra build failed
     qbittorrent
   ];
 
@@ -65,11 +64,6 @@
 
     defaults.dock.persistent-apps =
       let
-        userPackages =
-          name:
-          lib.findFirst (
-            pkg: (builtins.parseDrvName pkg.name).name == name
-          ) null config.home-manager.users.ted.home.packages;
         userPrograms = name: (builtins.getAttr name config.home-manager.users.ted.programs).package;
       in
       map (app: { inherit app; }) [
@@ -82,7 +76,7 @@
         "/Applications/Affinity.app/"
         "/Applications/DaVinci Resolve.app/"
         "/Applications/Steam.app/"
-        "${userPackages "jellyfin-desktop"}/Applications/Jellyfin Desktop.app/"
+        "/Applications/Infuse.app/"
       ];
   };
 

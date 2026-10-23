@@ -1,4 +1,4 @@
-{ config, unstable, ... }:
+{ config, ... }:
 {
   imports = [
     ../../users/ted
@@ -28,10 +28,6 @@
     '';
   };
 
-  home-manager.users.ted.home.packages = [
-    unstable.jellyfin-desktop # TODO: 26.11 old hydra build failed
-  ];
-
   power = {
     restartAfterFreeze = true;
 
@@ -60,7 +56,6 @@
       "/Applications/Bitwarden.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
       "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
-      "${unstable.jellyfin-desktop}/Applications/Jellyfin Desktop.app/"
     ];
 
   users.users.ted.openssh.authorizedKeys.keys = [
