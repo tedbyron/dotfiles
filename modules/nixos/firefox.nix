@@ -31,7 +31,6 @@ _: {
       "breakpad.reportURL" = "";
       "browser.aboutConfig.showWarning" = false;
       "browser.backspace_action" = 0;
-      "browser.compactmode.show" = true;
       "browser.display.background_color.dark" = "#282828";
       "browser.newtabpage.activity-stream.feeds.system.topsites" = false;
       "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts" = false;
@@ -45,10 +44,10 @@ _: {
       "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
       "browser.tabs.crashReporting.sendReport" = false;
       "browser.tabs.tabmanager.enabled" = false;
+      "browser.theme.dark-private-windows" = false;
       "browser.toolbars.bookmarks.showOtherBookmarks" = false;
       "browser.toolbars.bookmarks.visibility" = "always";
       "browser.urlbar.suggest.recentsearches" = false;
-      "browser.urlbar.trimURLs" = false;
       "browser.warnOnQuitShortcut" = false;
       "datareporting.healthreport.uploadEnabled" = false;
       "datareporting.policy.dataSubmissionEnabled" = false;
@@ -66,7 +65,6 @@ _: {
       "media.hardware-video-decoding.force-enabled" = true;
       "middlemouse.paste" = false;
       "reader.parse-on-load.enabled" = false;
-      "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       "toolkit.telemetry.archive.enabled" = false;
       "toolkit.telemetry.server" = "";
       "toolkit.telemetry.unified" = false;

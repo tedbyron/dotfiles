@@ -1,0 +1,78 @@
+{
+  "manifest_version": 2,
+  "name": "Gruvbox Material",
+  "version": "1.1",
+  "description": "Gruvbox Material (medium) by sainnhe, light and dark, following the system appearance.",
+  "theme": {
+    "colors": {
+      "frame": "#fbf1c7",
+      "tab_background_text": "#654735",
+      "tab_selected": "#eee0b7",
+      "tab_text": "#4f3829",
+      "tab_line": "#c35e0a",
+      "tab_loading": "#4c7a5d",
+      "toolbar": "#f4e8be",
+      "toolbar_text": "#654735",
+      "toolbar_bottom_separator": "#f4e8be",
+      "toolbar_field": "#f4e8be",
+      "toolbar_field_text": "#654735",
+      "toolbar_field_focus": "#eee0b7",
+      "toolbar_field_border_focus": "#c35e0a",
+      "toolbar_field_highlight": "#6c782e",
+      "toolbar_field_highlight_text": "#fbf1c7",
+      "popup": "#eee0b7",
+      "popup_text": "#4f3829",
+      "popup_border": "#eee0b7",
+      "popup_highlight": "#6c782e",
+      "popup_highlight_text": "#fbf1c7",
+      "sidebar": "#fbf1c7",
+      "sidebar_text": "#654735",
+      "sidebar_border": "#f4e8be",
+      "sidebar_highlight": "#6c782e",
+      "sidebar_highlight_text": "#fbf1c7",
+      "icons_attention": "#4c7a5d",
+      "ntp_background": "#fbf1c7",
+      "ntp_text": "#654735"
+    }
+  },
+  "dark_theme": {
+    "colors": {
+      "frame": "#282828",
+      "tab_background_text": "#d4be98",
+      "tab_selected": "#45403d",
+      "tab_text": "#ddc7a1",
+      "tab_line": "#e78a4e",
+      "tab_loading": "#89b482",
+      "toolbar": "#32302f",
+      "toolbar_text": "#d4be98",
+      "toolbar_bottom_separator": "#32302f",
+      "toolbar_field": "#32302f",
+      "toolbar_field_text": "#d4be98",
+      "toolbar_field_focus": "#45403d",
+      "toolbar_field_border_focus": "#e78a4e",
+      "toolbar_field_highlight": "#a9b665",
+      "toolbar_field_highlight_text": "#282828",
+      "popup": "#45403d",
+      "popup_text": "#ddc7a1",
+      "popup_border": "#45403d",
+      "popup_highlight": "#a9b665",
+      "popup_highlight_text": "#282828",
+      "sidebar": "#282828",
+      "sidebar_text": "#d4be98",
+      "sidebar_border": "#32302f",
+      "sidebar_highlight": "#a9b665",
+      "sidebar_highlight_text": "#282828",
+      "icons_attention": "#89b482",
+      "ntp_background": "#282828",
+      "ntp_text": "#d4be98"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "gruvbox-auto@tbyron",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}
