@@ -26,7 +26,7 @@
       };
       emoji = {
         name = "Apple Color Emoji";
-        package = self.inputs.apple-emoji-linux.outputs.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        package = self.outputs.packages.${pkgs.stdenv.hostPlatform.system}.apple-emoji;
       };
     };
 

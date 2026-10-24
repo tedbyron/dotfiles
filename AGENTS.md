@@ -16,6 +16,7 @@ Nix flake for nix-darwin, NixOS, and home-manager configs.
 - `hosts/teds-mac-mini/modules/`: media server stack (Jellyfin, servarr,
   monitoring) for the mac mini
 - `config/`: raw dotfiles, linked into `$HOME` via `lib.ted.configPath`
+- `packages/`: local packages, exposed as flake `packages` outputs
 - `bin/`: scripts on `PATH`
 - `flakes/`, `templates/`: local flake inputs and `nix flake init` templates
 

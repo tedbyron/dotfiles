@@ -69,7 +69,7 @@
     enableDefaultPackages = true;
     fontDir.enable = true;
     packages = [
-      self.inputs.apple-emoji-linux.outputs.packages.${pkgs.stdenv.hostPlatform.system}.default
+      self.outputs.packages.${pkgs.stdenv.hostPlatform.system}.apple-emoji
     ];
 
     fontconfig.defaultFonts = {

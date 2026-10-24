@@ -1,27 +1,5 @@
 {
   "nodes": {
-    "apple-emoji-linux": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "ttc": "ttc"
-      },
-      "locked": {
-        "lastModified": 1784586794,
-        "narHash": "sha256-5iKMG6cX51ULPeKf/47jhhkyNh+rNk3KuuOg3CfK7xA=",
-        "owner": "samuelngs",
-        "repo": "apple-emoji-linux",
-        "rev": "484daf4e13942437e083d881cae39fbc92d837e1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "samuelngs",
-        "repo": "apple-emoji-linux",
-        "type": "github"
-      }
-    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -185,24 +163,6 @@
     "flake-utils": {
       "inputs": {
         "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_2": {
-      "inputs": {
-        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1791914995,
@@ -428,10 +388,9 @@
     },
     "root": {
       "inputs": {
-        "apple-emoji-linux": "apple-emoji-linux",
         "curlio": "curlio",
         "darwin": "darwin",
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "home-manager-darwin": "home-manager-darwin",
         "jelly-metrics": "jelly-metrics",
@@ -475,7 +434,7 @@
           "nixpkgs"
         ],
         "nur": "nur",
-        "systems": "systems_3",
+        "systems": "systems_2",
         "tinted-kitty": "tinted-kitty",
         "tinted-schemes": "tinted-schemes",
         "tinted-tmux": "tinted-tmux",
@@ -512,21 +471,6 @@
       }
     },
     "systems_2": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -624,20 +568,6 @@
         "repo": "treefmt-nix",
         "type": "github"
       }
-    },
-    "ttc": {
-      "flake": false,
-      "locked": {
-        "path": "./Apple Color Emoji.ttc",
-        "type": "path"
-      },
-      "original": {
-        "path": "./Apple Color Emoji.ttc",
-        "type": "path"
-      },
-      "parent": [
-        "apple-emoji-linux"
-      ]
     }
   },
   "root": "root",

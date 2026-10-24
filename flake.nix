@@ -33,10 +33,6 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    apple-emoji-linux = {
-      url = "github:samuelngs/apple-emoji-linux";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     stylix = {
       url = "github:nix-community/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -160,7 +156,9 @@
       {
         checks.formatting = treefmt.check self;
         formatter = treefmt.wrapper;
-        packages = removeAttrs inputs.curlio.outputs.packages.${system} [ "default" ];
+        packages = removeAttrs inputs.curlio.outputs.packages.${system} [ "default" ] // {
+          apple-emoji = pkgs.callPackage ./packages/apple-emoji.nix { };
+        };
 
         devShells.default = pkgs.mkShellNoCC {
           packages = with pkgs; [
