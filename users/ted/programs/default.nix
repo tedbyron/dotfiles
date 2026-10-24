@@ -117,8 +117,14 @@
       arguments = lib.splitString "\n" (lib.ted.readConfig "ripgrep/ripgreprc");
     };
 
+    # UseKeychain needs Apple's /usr/bin/ssh
     ssh = {
-      enable = false;
+      enable = darwin;
+      enableDefaultConfig = false;
+      settings."*" = {
+        AddKeysToAgent = "yes";
+        UseKeychain = "yes";
+      };
     };
 
     starship = {
