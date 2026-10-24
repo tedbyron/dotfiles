@@ -101,11 +101,14 @@ backups. Redo by hand after a rebuild without backups:
   Star Wars: Visions (WEB-1080p; its Disney+ releases score under the anime
   minimum of 100).
 - Cleanuparr: queue cleaner every 15 min; strikes: failed import 4, downloading
-  metadata 6, errored 4, stalled 4 (0-80%) or 15 (80-100%), reset after 10MB;
-  seeker every 10 min (round robin, each item at most weekly, monitored only, up
-  to both cutoffs, paused at 3 active downloads, 6h grace); download cleaner
-  every 6h with no seeding rules, only orphaned files: anything in `downloads/`
-  no torrent uses, after 24h, moves to `orphaned/` and is purged after 72h.
+  metadata 6, errored 4, stalled 6 (0-80%) or 16 (80-100%, so nearly done
+  downloads get more time), reset after 10MB; slow (under 20 KB/s) 16, never
+  reset (catches dead torrents that trickle from partial peers and so never
+  count as stalled); seeker every 10 min (round robin, each item at most weekly,
+  monitored only, up to both cutoffs, paused at 3 active downloads, 6h grace);
+  download cleaner every 6h with no seeding rules, only orphaned files: anything
+  in `downloads/` no torrent uses, after 24h, moves to `orphaned/` and is purged
+  after 72h.
 - Seerr: default profiles HD Bluray + WEB, WEB-1080p, and [Anime] Remux-1080p
   for anime (folders and libraries are set in `seerr.nix`). An override rule
   (Settings → Services → Radarr) sends movies with TMDb's anime keyword (210024)
