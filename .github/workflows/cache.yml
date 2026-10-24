@@ -5,8 +5,7 @@ name: Cache
 
 on:
   schedule:
-    # Tuesday 4:30 EDT (3:30 EST); cron is UTC.
-    - cron: "30 8 * * 2"
+    - cron: "0 0 * * 1"
   workflow_dispatch:
 
 concurrency:
