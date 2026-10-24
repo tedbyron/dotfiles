@@ -4,6 +4,7 @@ let
 
   config = pkgs.writeText "recyclarr.yml" ''
     # TRaSH's profiles, scores, sizes and default format groups, unchanged
+    # except where noted
     radarr:
       movies:
         base_url: http://127.0.0.1:7878
@@ -25,6 +26,14 @@ let
           - trash_id: d1d67249d3890e49bc12e275d989a7e9 # HD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
+            # Override: no Bluray-720p fallback, so a movie with no acceptable
+            # 1080p release waits for one (or a manual grab) instead
+            qualities:
+              - name: Bluray-1080p
+              - name: WEB 1080p
+                qualities:
+                  - WEBRip-1080p
+                  - WEBDL-1080p
           - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
             reset_unmatched_scores:
               enabled: true

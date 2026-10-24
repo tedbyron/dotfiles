@@ -69,8 +69,9 @@ must be `git add`ed before flake evaluation can see them.
   script, which waits for the Proton WireGuard tunnel, binds to it, and stops if
   it changes. Don't remove the binding, start it any other way, or add another
   client without the same protection. The key is `/etc/wireguard/proton.key`.
-- Radarr/Sonarr quality settings follow the TRaSH Guides with no overrides
-  (`recyclarr.nix`). Check the guides before changing anything they cover;
+- Radarr/Sonarr quality settings follow the TRaSH Guides (`recyclarr.nix`). The
+  one override: HD Bluray + WEB drops Bluray-720p (1080p releases are grabbed by
+  hand when none pass). Check the guides before changing anything they cover;
   cached copy in
   `~/Library/Application Support/recyclarr/resources/trash-guides/`.
 - Grafana dashboards in `modules/grafana/` are provisioned v2 JSON, exported
