@@ -49,6 +49,9 @@
       settings = {
         git_protocol = "https";
         editor = "nvim";
+        telemetry = "disabled";
+        color_labels = "enabled";
+        pager = "delta";
         aliases = {
           prco = "pr checkout";
           open = "repo view --web";
