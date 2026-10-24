@@ -41,6 +41,7 @@ in
     default_profiles ${lib.escapeShellArg zenDir} | while IFS= read -r profile; do
       run mkdir -p "$profile/extensions"
       run install -m 644 ${lib.ted.configPath "zen/user.js"} "$profile/user.js"
+      run install -D -m 644 ${lib.ted.configPath "zen/userChrome.css"} "$profile/chrome/userChrome.css"
       run install -m 644 ${theme} "$profile/extensions/${themeId}.xpi"
     done
   '';

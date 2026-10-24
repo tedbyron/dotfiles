@@ -1,0 +1,11 @@
+/* Copied into Zen's default profile by users/ted/modules/firefox.nix */
+
+/* Zen paints the window from the space's gradient, which without one is
+   transparent over the macOS vibrancy, so a theme's frame color never shows.
+   Paint it with the theme's frame color instead. */
+:root[lwtheme] .zen-browser-generic-background {
+  &::before,
+  &::after {
+    background: var(--lwt-accent-color) !important;
+  }
+}

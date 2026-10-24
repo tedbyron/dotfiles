@@ -3,7 +3,9 @@
 // Apply Firefox themes (Zen ignores them by default)
 user_pref("zen.theme.disable-lightweight", false);
 
-user_pref("zen.theme.gradient", false);
+// Load userChrome.css
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+
 user_pref("zen.watermark.enabled", false);
 user_pref("zen.urlbar.replace-newtab", true);
 user_pref("zen.urlbar.wait-to-clear", 0);
