@@ -5,7 +5,7 @@ user_pref("zen.theme.disable-lightweight", false);
 
 user_pref("zen.theme.gradient", false);
 user_pref("zen.watermark.enabled", false);
-user_pref("zen.urlbar.replace-newtab", false);
+user_pref("zen.urlbar.replace-newtab", true);
 user_pref("zen.urlbar.wait-to-clear", 0);
 user_pref("zen.workspaces.open-new-tab-if-last-unpinned-tab-is-closed", true);
 user_pref("zen.view.show-background-tab-toast", false);
