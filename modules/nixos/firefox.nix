@@ -27,7 +27,6 @@ _: {
       "accessibility.typeaheadfind.flashBar" = 0;
       "app.normandy.api_url" = "";
       "app.normandy.enabled" = false;
-      "beacon.enabled" = false;
       "breakpad.reportURL" = "";
       "browser.aboutConfig.showWarning" = false;
       "browser.backspace_action" = 0;
@@ -58,7 +57,7 @@ _: {
       "font.name.sans-serif.x-western" = "Inter";
       "font.name.serif.x-western" = "Libre Baskerville";
       "font.name-list.emoji" = "Apple Color Emoji";
-      "screen-api.macos-native-full-screen" = false;
+      "full-screen-api.macos-native-full-screen" = false;
       "full-screen-api.warning.timeout" = 0;
       "gfx.x11-egl.force-enabled" = true;
       "layout.css.visited_links_enabled" = false;
