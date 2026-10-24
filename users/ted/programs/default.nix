@@ -61,7 +61,9 @@
 
     git =
       let
-        package = if darwin then pkgs.git else pkgs.git.override { withLibsecret = true; };
+        # gitFull has libsecret and is cached; overriding git rebuilt it and
+        # ran its test suite (~12 minutes in CI)
+        package = if darwin then pkgs.git else pkgs.gitFull;
       in
       {
         enable = true;
