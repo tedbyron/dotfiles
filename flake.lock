@@ -96,26 +96,7 @@
           "flake-utils"
         ],
         "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "path": "./flakes/curlio",
-        "type": "path"
-      },
-      "original": {
-        "path": "./flakes/curlio",
-        "type": "path"
-      },
-      "parent": []
-    },
-    "curlio-darwin": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs-darwin"
+          "nixpkgs-curlio"
         ]
       },
       "locked": {
@@ -376,6 +357,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-curlio": {
+      "locked": {
+        "lastModified": 1792615934,
+        "narHash": "sha256-MlvRfa1O5Cqc2/a+gG+l9TSuowEoCKCmrJ1d9oAVm0I=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36",
+        "type": "github"
+      }
+    },
     "nixpkgs-darwin": {
       "locked": {
         "lastModified": 1792683697,
@@ -433,7 +430,6 @@
       "inputs": {
         "apple-emoji-linux": "apple-emoji-linux",
         "curlio": "curlio",
-        "curlio-darwin": "curlio-darwin",
         "darwin": "darwin",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
@@ -442,6 +438,7 @@
         "macos-process-exporter": "macos-process-exporter",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-curlio": "nixpkgs-curlio",
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "speedrr": "speedrr",

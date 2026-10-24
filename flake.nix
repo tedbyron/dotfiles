@@ -24,14 +24,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # nixos-26.05, pinned so flake updates don't rebuild Iosevka; bump the rev
+    # by hand.
+    nixpkgs-curlio.url = "github:NixOS/nixpkgs/da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36";
     curlio = {
       url = "path:./flakes/curlio";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-    curlio-darwin = {
-      url = "path:./flakes/curlio";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-curlio";
       inputs.flake-utils.follows = "flake-utils";
     };
 
@@ -157,13 +155,12 @@
         darwin = isDarwin system;
         nixpkgs = if darwin then inputs.nixpkgs-darwin else inputs.nixpkgs;
         pkgs = import nixpkgs { inherit system overlays; };
-        curlio = if darwin then inputs.curlio-darwin else inputs.curlio;
         treefmt = (inputs.treefmt-nix.lib.evalModule pkgs ./format.nix).config.build;
       in
       {
         checks.formatting = treefmt.check self;
         formatter = treefmt.wrapper;
-        packages = removeAttrs curlio.outputs.packages.${system} [ "default" ];
+        packages = removeAttrs inputs.curlio.outputs.packages.${system} [ "default" ];
 
         devShells.default = pkgs.mkShellNoCC {
           packages = with pkgs; [

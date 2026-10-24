@@ -31,8 +31,38 @@ jobs:
           path: flake.lock
           retention-days: 1
 
-  build:
+  # Slow to build, so build it once per platform before the hosts, which then
+  # pull it from Cachix.
+  curlio:
     needs: lock
+    strategy:
+      matrix:
+        include:
+          - runner: macos-latest
+            system: aarch64-darwin
+            attr: packages.aarch64-darwin.curlio-ttf
+          - runner: ubuntu-latest
+            system: x86_64-linux
+            attr: packages.x86_64-linux.curlio-ttf
+    name: curlio (${{ matrix.system }})
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: flake-lock
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config:
+            experimental-features = nix-command flakes pipe-operators
+      - uses: cachix/cachix-action@v17
+        with:
+          name: ${{ env.CACHIX_NAME }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - run: nix build --print-build-logs --no-link .#${{ matrix.attr }}
+
+  build:
+    needs: [lock, curlio]
     strategy:
       fail-fast: false
       matrix:
