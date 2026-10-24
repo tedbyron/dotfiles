@@ -14,6 +14,10 @@ concurrency:
 
 env:
   CACHIX_NAME: tedbyron
+  # Don't push downloads, vendored dependencies or debug outputs: hosts only
+  # need build outputs, and these were over half of what a run pushed. Paths
+  # in another pushed path's closure are still pushed.
+  PUSH_FILTER: '(-source|-source-patched|-npm-deps|-go-modules|-debug|\.(run|dmg|zip|tgz|deb|distro|tar(\.[a-z0-9]+)?))$'
 
 jobs:
   lock:
@@ -59,6 +63,7 @@ jobs:
         with:
           name: ${{ env.CACHIX_NAME }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          pushFilter: ${{ env.PUSH_FILTER }}
       - run: nix build --print-build-logs --no-link .#${{ matrix.attr }}
 
   build:
@@ -96,6 +101,7 @@ jobs:
         with:
           name: ${{ env.CACHIX_NAME }}
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          pushFilter: ${{ env.PUSH_FILTER }}
           extraPullNames: nix-community
       - run: nix build --print-build-logs --no-link .#${{ matrix.attr }}
 
