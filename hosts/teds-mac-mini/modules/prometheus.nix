@@ -87,6 +87,13 @@ let
             "for" = "10m";
             annotations.summary = "launchd job status metrics have stopped updating";
           }
+          {
+            # jellyfin_stream_count has no series while nothing is playing
+            alert = "JellyfinRestartPending";
+            expr = "jellyfin_pending_restart == 1 unless on () sum(jellyfin_stream_count) > 0";
+            "for" = "1h";
+            annotations.summary = "Jellyfin needs a restart (usually for plugin updates) and nothing has played for an hour";
+          }
         ];
       }
     ];
@@ -129,6 +136,7 @@ let
         job_name = "node_exporter";
         static_configs = [ { targets = [ "127.0.0.1:9100" ]; } ];
         metric_relabel_configs = keep [
+          "jellyfin_pending_restart"
           "launchd_job_last_exit_status"
           "launchd_job_running"
           "launchd_job_runs_total"
