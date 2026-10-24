@@ -89,7 +89,9 @@ let
       # Not all of /api/v1/auth/*: the app checks /me on most page changes and
       # polls quickconnect/check while waiting
       import limit seerr-login 10 5m /api/v1/auth/jellyfin /api/v1/auth/jellyfin/quickconnect/initiate /api/v1/auth/jellyfin/quickconnect/authenticate /api/v1/auth/local /api/v1/auth/plex /api/v1/auth/reset-password*
-      import limit seerr 600 1m *
+      # Browsing and requesting while signed in passed 600/min: every card and
+      # request fetches its own title and avatar, and a household shares one IP
+      import limit seerr 3000 1m *
       # Seerr trusts the leftmost X-Forwarded-For, which Cloudflare passes
       # through from the client
       reverse_proxy 127.0.0.1:5055 {
