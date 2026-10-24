@@ -10,6 +10,15 @@ let
   cfgDir = "/Users/ted/.config/jellyfin";
   log = "/Users/ted/Library/Logs/jellyfin.log";
 
+  # jellyfin-ffmpeg's VERSION file shadows libc++'s <version> on macOS's
+  # case-insensitive filesystem, breaking the C++ OpenColorIO wrapper that
+  # ffmpeg 8.1 enables; Jellyfin doesn't use the ocio filter
+  jellyfin = unstable.jellyfin.override {
+    jellyfin-ffmpeg = unstable.jellyfin-ffmpeg.override {
+      ffmpeg_8-full = unstable.ffmpeg_8-full.override { withOpenColorIO = false; };
+    };
+  };
+
   networkXml = pkgs.writeText "network.xml" ''
     <?xml version="1.0" encoding="utf-8"?>
     <NetworkConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
@@ -66,7 +75,7 @@ let
         ${cfgDir}/encoding.xml
     fi
 
-    exec ${unstable.jellyfin}/bin/jellyfin \
+    exec ${jellyfin}/bin/jellyfin \
       --datadir ${dataDir} \
       --configdir ${cfgDir} \
       --cachedir ${dataDir}/cache \
