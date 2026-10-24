@@ -17,6 +17,7 @@
       cargo-generate
       cargo-pgo
       cargo-watch
+      unstable.claude-code
       delta
       fd
       ffmpeg
