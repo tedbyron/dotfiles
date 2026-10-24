@@ -1,0 +1,95 @@
+name: Cache
+
+# Builds every host and pushes to Cachix. The weekly run updates flake.lock
+# first and commits it only if every host built.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Tuesday 4:30 EDT (3:30 EST); cron is UTC.
+    - cron: "30 8 * * 2"
+  workflow_dispatch:
+
+concurrency:
+  group: cache
+  cancel-in-progress: false
+
+env:
+  CACHIX_NAME: tedbyron
+  UPDATE: ${{ github.event_name != 'push' }}
+
+jobs:
+  lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+        if: env.UPDATE == 'true'
+        with:
+          extra_nix_config:
+            experimental-features = nix-command flakes pipe-operators
+      - run: nix flake update
+        if: env.UPDATE == 'true'
+      - uses: actions/upload-artifact@v7
+        with:
+          name: flake-lock
+          path: flake.lock
+          retention-days: 1
+
+  build:
+    needs: lock
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - host: teds-laptop
+            runner: macos-latest
+            attr: darwinConfigurations.teds-laptop.system
+          - host: teds-mac-mini
+            runner: macos-latest
+            attr: darwinConfigurations.teds-mac-mini.system
+          - host: teds-work-laptop
+            runner: macos-latest
+            attr: darwinConfigurations.teds-work-laptop.system
+          - host: teds-desktop
+            runner: ubuntu-latest
+            attr: nixosConfigurations.teds-desktop.config.system.build.toplevel
+    name: ${{ matrix.host }}
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: flake-lock
+      # Skips itself on macOS, which has enough space.
+      - uses: wimpysworld/nothing-but-nix@v10
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config:
+            experimental-features = nix-command flakes pipe-operators
+      - uses: cachix/cachix-action@v17
+        with:
+          name: ${{ env.CACHIX_NAME }}
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          extraPullNames: nix-community
+      - run: nix build --print-build-logs --no-link .#${{ matrix.attr }}
+
+  commit:
+    needs: build
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: flake-lock
+      - run: |
+          git diff --quiet flake.lock && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Update flake' flake.lock
+          git pull --rebase
+          git push
