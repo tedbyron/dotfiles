@@ -131,6 +131,7 @@ let
         metric_relabel_configs = keep [
           "launchd_job_last_exit_status"
           "launchd_job_running"
+          "launchd_job_runs_total"
           "node_boot_time_seconds"
           "node_cpu_seconds_total"
           "node_disk_read_bytes_total"
