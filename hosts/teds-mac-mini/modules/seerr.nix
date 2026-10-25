@@ -19,12 +19,14 @@ let
     };
   });
 
-  # Applied on every start, overriding changes made in the web UI
+  # Applied on every start, overriding changes made in the web UI. Requests are
+  # tagged with the requester ("5-tb"), which Radarr and Sonarr use to send tb's
+  # downloads to the bottom of qBittorrent's queue.
   settings = ''
     .main.enableSpecialEpisodes = false
     | .jellyfin.libraries |= map(.enabled = true)
-    | .radarr |= map(.activeDirectory = "/Volumes/media/movies")
-    | .sonarr |= map(.activeDirectory = "/Volumes/media/tv" | .activeAnimeDirectory = "/Volumes/media/anime")
+    | .radarr |= map(.activeDirectory = "/Volumes/media/movies" | .tagRequests = true)
+    | .sonarr |= map(.activeDirectory = "/Volumes/media/tv" | .activeAnimeDirectory = "/Volumes/media/anime" | .tagRequests = true)
   '';
 
   start = pkgs.writeShellScript "start-seerr" ''

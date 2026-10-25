@@ -102,10 +102,12 @@ backups. Redo by hand after a rebuild without backups:
   statting the library over NFS); delete empty folders on; no recycle bin;
   import extra files `srt,ass,ssa,sub,idx`; delay profile prefers torrent, 6h
   delay, bypassed only at score 1700+ (TRaSH's WEB Tier 01); qBittorrent client
-  removes completed downloads, categories
-  `radarr-imported`/`tv-sonarr-imported`. Anime uses [Anime] Remux-1080p except
-  Star Wars: Visions (WEB-1080p; its Disney+ releases score under the anime
-  minimum of 100).
+  removes completed downloads, categories `radarr`/`tv-sonarr` (priority First)
+  and `radarr-imported`/`tv-sonarr-imported`; a second "qBittorrent (low)"
+  client for items tagged `5-tb` (Seerr tags requests by requester) uses
+  `radarr-low`/`sonarr-low` with priority Last, so tb's downloads queue behind
+  everyone else's. Anime uses [Anime] Remux-1080p except Star Wars: Visions
+  (WEB-1080p; its Disney+ releases score under the anime minimum of 100).
 - Cleanuparr: queue cleaner every 15 min; strikes: failed import 4, downloading
   metadata 6, errored 4, stalled 6 (0-80%) or 16 (80-100%, so nearly done
   downloads get more time), reset after 10MB; slow (under 20 KB/s) 16, never
