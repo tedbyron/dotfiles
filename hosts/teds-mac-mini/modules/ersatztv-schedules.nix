@@ -19,6 +19,7 @@ let
     animation = search "ANIMATION" "(type:episode AND show_genre:animation) OR (type:movie AND genre:animation)";
     anime = search "ANIME" ''(type:movie OR type:episode) AND (library_name:anime OR library_name:"anime movies")'';
     scifi = search "SCIFI" ''(type:episode AND show_genre:"sci-fi & fantasy") OR (type:movie AND genre:"science fiction")'';
+    eighties = search "EIGHTIES" "(type:movie OR type:episode) AND release_date:[19800101 TO 19891231]";
     nineties = search "NINETIES" "(type:movie OR type:episode) AND release_date:[19900101 TO 19991231]";
     christmas = search "CHRISTMAS" ''(type:movie AND (tag:christmas OR tag:"christmas party" OR tag:"santa claus" OR title:christmas OR title:xmas)) OR (type:episode AND (title:christmas OR title:xmas OR tag:christmas))'';
   };
@@ -40,6 +41,7 @@ let
     animation = loop content.animation;
     anime = loop content.anime;
     scifi = loop content.scifi;
+    eighties = loop content.eighties;
     nineties = loop content.nineties;
     random = loop content.anything;
     christmas = loop content.christmas;
