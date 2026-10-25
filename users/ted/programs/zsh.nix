@@ -113,6 +113,7 @@ in
       gds = "git diff --stat";
       gdss = "git diff --shortstat";
       gdst = "git diff --staged";
+      glp = "git log -p";
       gmv = "git mv";
       grep = "grep -Ei --color=auto";
       h = "head";
