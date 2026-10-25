@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  mediaLaunch,
+  ...
+}:
 let
   dataDir = "/Users/ted/.local/share/bazarr";
   configFile = "${dataDir}/config/config.yaml";
@@ -40,7 +45,7 @@ in
 {
   launchd.user.agents.bazarr.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
+    ProgramArguments = mediaLaunch [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;

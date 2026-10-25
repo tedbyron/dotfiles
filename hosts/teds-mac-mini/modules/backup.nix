@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  mediaLaunch,
+  ...
+}:
 let
   nasDir = "/Volumes/media/backups";
   localDir = "/Users/ted/Backups/media/archives";
@@ -166,7 +171,7 @@ let
 in
 {
   launchd.user.agents.media-backup.serviceConfig = {
-    ProgramArguments = lib.ted.waitForNix [ "${backup}" ];
+    ProgramArguments = mediaLaunch [ "${backup}" ];
     StandardErrorPath = log;
     StandardOutPath = log;
 

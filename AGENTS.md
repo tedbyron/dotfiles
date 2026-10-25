@@ -49,6 +49,10 @@ must be `git add`ed before flake evaluation can see them.
   `~/Library/Logs/<app>.log`. A new service needs an entry in
   `modules/default.nix`, a probe in `prometheus.nix`, and a source in
   `backup.nix` (nightly archives to `~/Backups/media/archives` and the NAS).
+  Services that touch the NAS start with `mediaLaunch` (`media-launch.nix`), a
+  fixed launcher in `/usr/local/libexec` that macOS allows network volumes only,
+  so store-path changes don't bring back privacy prompts. An unanswered prompt
+  blocks every service's NAS access until someone clicks it.
 - Media is on a Synology NFS share at `/Volumes/media` (`downloads/`, `movies/`,
   `tv/`, `anime/`, `anime-movies/`, `orphaned/`, `backups/`), mounted by
   `nas.nix`. Downloads and library must share it so imports are hardlinks;

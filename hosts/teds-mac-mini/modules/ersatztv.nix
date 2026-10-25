@@ -2,6 +2,7 @@
   pkgs,
   lib,
   unstable,
+  mediaLaunch,
   ...
 }:
 let
@@ -120,7 +121,7 @@ in
 {
   launchd.user.agents.ersatztv.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
+    ProgramArguments = mediaLaunch [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;

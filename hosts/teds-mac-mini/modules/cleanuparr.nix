@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  mediaLaunch,
+  ...
+}:
 let
   log = "/Users/ted/Library/Logs/cleanuparr.log";
 
@@ -33,6 +37,6 @@ in
       CLEANUPARR_CONFIG_PATH = "/Users/ted/.local/share/cleanuparr";
     };
 
-    ProgramArguments = lib.ted.waitForNix [ "${cleanuparr}/share/cleanuparr/Cleanuparr" ];
+    ProgramArguments = mediaLaunch [ "${cleanuparr}/share/cleanuparr/Cleanuparr" ];
   };
 }

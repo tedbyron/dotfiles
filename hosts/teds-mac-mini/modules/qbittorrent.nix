@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  mediaLaunch,
+  ...
+}:
 let
   tunnel = "proton";
   # Every Proton WireGuard config uses this address; the gateway is also its DNS and NAT-PMP server
@@ -252,7 +257,7 @@ in
 
   launchd.user.agents.qbittorrent.serviceConfig = {
     KeepAlive = true;
-    ProgramArguments = lib.ted.waitForNix [ "${start}" ];
+    ProgramArguments = mediaLaunch [ "${start}" ];
     RunAtLoad = true;
     StandardErrorPath = log;
     StandardOutPath = log;

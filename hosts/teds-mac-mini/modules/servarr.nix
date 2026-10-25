@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  mediaLaunch,
+  ...
+}:
 let
   services = {
     prowlarr = {
@@ -49,7 +54,7 @@ in
           "${env}__SERVER__ALLOWEDHOSTS" = "localhost,127.0.0.1";
         };
 
-        ProgramArguments = lib.ted.waitForNix (
+        ProgramArguments = (if media then mediaLaunch else lib.ted.waitForNix) (
           lib.optionals media [
             "/bin/sh"
             "-c"
