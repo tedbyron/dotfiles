@@ -131,6 +131,7 @@ in
       rm = "rm -i";
       sudo = "sudo ";
       t = "tail";
+      ta = "tmux new -As0";
       tree = "unbuffer tree | bat -p";
       wlcopy = "wl-copy";
       wlpaste = "wl-paste";
