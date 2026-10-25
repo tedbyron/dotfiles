@@ -12,3 +12,8 @@ vim.o.tabstop = 4
 if vim.g.vscode then
   vim.o.timeout = false
 end
+
+if vim.env.SSH_CONNECTION then
+  vim.g.clipboard = "osc52"
+  vim.opt.clipboard = "unnamedplus"
+end
