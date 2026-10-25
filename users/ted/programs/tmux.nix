@@ -15,7 +15,7 @@
     extraConfig = ''
       set -g set-clipboard on
       set -g automatic-rename on
-      set -g automatic-rename-format "#{?#{==:#{pane_current_command},zsh},#{?#{==:#{pane_current_path},#{HOME}},~,#{b:pane_current_path}},#{pane_current_command}}"
+      set -g automatic-rename-format '#{?#{==:#{pane_current_command},zsh},#{?#{==:#{pane_current_path},#{HOME}},~,#{b:pane_current_path}},#{s/^\.(.*)-wrapped$/\1/:pane_current_command}}'
       set -g renumber-windows on
 
       #
