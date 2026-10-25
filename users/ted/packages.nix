@@ -30,6 +30,7 @@
       nil
       nixd
       nixfmt
+      statix
       nodejs
       ouch
       rustc
