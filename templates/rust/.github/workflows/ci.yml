@@ -1,13 +1,13 @@
-name: "Build default package"
+name: "Check flake"
 
 on:
   push:
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: cachix/install-nix-action@v26
-      - name: build
-        run: nix build
+      - name: check
+        run: nix flake check
