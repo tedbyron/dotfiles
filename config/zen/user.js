@@ -13,7 +13,11 @@ user_pref("zen.workspaces.open-new-tab-if-last-unpinned-tab-is-closed", true);
 user_pref("zen.view.show-background-tab-toast", false);
 user_pref("zen.view.compact.toolbar-flash-popup", false);
 user_pref("zen.view.show-clear-tabs-button", false);
+user_pref("zen.view.show-newtab-button-top", false);
 user_pref("zen.haptic-feedback.enabled", false);
+
+// Use system DNS, which the NextDNS app encrypts, instead of Zen's own DoH
+user_pref("network.trr.mode", 5);
 
 // From modules/nixos/firefox.nix, minus prefs Zen already sets or locks
 // (telemetry, Normandy, search suggestions) and Linux-only ones
