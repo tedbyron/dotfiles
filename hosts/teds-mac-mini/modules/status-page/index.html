@@ -149,28 +149,27 @@
         gap: 2px;
         height: 24px;
       }
-      .days span,
-      .swatch {
+      .days span {
         flex: 1;
         border-radius: 2px;
         background: var(--line);
       }
-      .days span.none,
-      .swatch.none {
+      .days span.none {
         background: none;
         border: 1px dashed var(--line);
       }
-      .days span.good,
-      .swatch.good {
+      .days span.good {
         background: var(--up);
       }
-      .days span.fair,
-      .swatch.fair {
+      .days span.fair {
         background: var(--fair);
       }
-      .days span.bad,
-      .swatch.bad {
+      .days span.bad {
         background: var(--down);
+      }
+      .days span.selected {
+        outline: 2px solid var(--ink);
+        outline-offset: 1px;
       }
       .axis {
         display: flex;
@@ -178,25 +177,6 @@
         font-weight: 400;
         font-size: 12px;
         margin-top: 2px;
-      }
-      .legend {
-        grid-column: 1 / -1;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 4px 16px;
-        margin-bottom: 8px;
-      }
-      .legend span {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .swatch {
-        display: inline-block;
-        flex: none;
-        width: 10px;
-        height: 14px;
       }
       .card.banner {
         justify-self: center;
@@ -459,28 +439,23 @@
           strip.append(bar)
         })
         const axis = el('div', 'axis muted')
+        const day = el('span')
         axis.append(
           el('span', null, shortDate(first)),
+          day,
           el('span', null, 'Today'),
         )
+        // Touch screens have no hover tooltips, so tapping a bar shows its
+        // title between the axis labels
+        strip.addEventListener('pointerup', (e) => {
+          if (e.pointerType === 'mouse' || e.target.parentNode !== strip) return
+          strip.querySelector('.selected')?.classList.remove('selected')
+          e.target.classList.add('selected')
+          day.textContent = e.target.title
+        })
         const history = el('div', 'history')
         history.append(strip, axis)
         return history
-      }
-
-      function legend() {
-        const target = el('div', 'legend muted')
-        for (const [cls, text] of [
-          ['good', '99.5%+ up'],
-          ['fair', '95–99.5%'],
-          ['bad', 'Under 95%'],
-          ['none', 'No data'],
-        ]) {
-          const item = el('span')
-          item.append(el('i', `swatch ${cls}`), text)
-          target.append(item)
-        }
-        return target
       }
 
       const STALE_MINUTES = 15
@@ -530,7 +505,6 @@
         const target = document.getElementById('services')
         if (!list) return unavailable(target)
         target.replaceChildren(
-          legend(),
           ...list.map((items, i) => {
             const row = el(
               'div',
