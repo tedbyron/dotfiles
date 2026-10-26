@@ -42,6 +42,7 @@ SERVICES = [
     },
     {
         "http://127.0.0.1:8409/": "ErsatzTV",
+        "http://127.0.0.1:5056/health": "tedbot",
     },
 ]
 ARRS = {"sonarr": 8989, "radarr": 7878}

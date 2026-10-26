@@ -54,6 +54,13 @@
       url = "github:itschasa/speedrr";
       flake = false;
     };
+    tedbot = {
+      url = "github:tedbyron/tedbot";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs =

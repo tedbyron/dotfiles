@@ -105,6 +105,11 @@ let
       path = "/Users/ted/.config/qBittorrent";
       exclude = [ ];
     }
+    {
+      name = "tedbot-config";
+      path = "/Users/ted/.config/tedbot";
+      exclude = [ ];
+    }
   ];
 
   copy =
