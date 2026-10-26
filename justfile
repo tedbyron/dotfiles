@@ -140,8 +140,10 @@ update *args:
     j=gui/$(id -u)/org.nixos.media-backup
     if { launchctl print $j &>/dev/null } {
         echo "Backing up media apps before updating"
-        pid=$(launchctl kickstart -p $j)
-        while { kill -0 $pid 2>/dev/null } { sleep 1 }
+        launchctl kickstart -p $j >/dev/null
+        # Wait for launchd to record the exit, which can lag the process
+        # going away
+        while { ! launchctl print $j | rg -q '^\tstate = not running' } { sleep 1 }
         if { ! launchctl print $j | rg -q 'last exit code = 0' } {
             echo "Backup failed, see ~/Library/Logs/media-backup.log"
             exit 1
