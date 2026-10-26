@@ -91,10 +91,6 @@ let
   '';
 in
 {
-  home-manager.users.ted.home.packages = [
-    (pkgs.writeShellScriptBin "recyclarr-sync" ''exec ${sync} "$@"'')
-  ];
-
   launchd.user.agents.recyclarr.serviceConfig = {
     ProgramArguments = lib.ted.waitForNix [ "${sync}" ];
     RunAtLoad = true;
