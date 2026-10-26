@@ -69,8 +69,6 @@
   side-by-side = true
   syntax-theme = "gruvbox-material-dark"
   wrap-max-lines = "unlimited"
-  # Continue wrapped lines at the left edge instead of right-aligning short ones
-  wrap-right-percent = "0.1"
 [filter.lfs]
   # clean = "git-lfs clean -- %f"
   # smudge = "git-lfs smudge -- %f"
