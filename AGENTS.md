@@ -67,8 +67,9 @@ must be `git add`ed before flake evaluation can see them.
   standby link. NFS stays on v3 (macOS only speaks v4.0); 256K rsize/wsize
   tested no faster than 128K; readahead stays at the default 16 (128 made
   qBittorrent read ~4x what it served).
-- Shut the NAS down only after stopping the media services and unmounting
-  `/Volumes/media` (the mount is `hard`); `nas.nix` remounts within 30s.
+- Shut the NAS down only after `nas-maintenance start`, which stops the services
+  that use it and unmounts `/Volumes/media` (the mount is `hard`);
+  `nas-maintenance stop` brings them back once the NAS is up.
 - Never torrent outside the VPN. qBittorrent must only run through its start
   script, which waits for the Proton WireGuard tunnel, binds to it, and stops if
   it changes. Don't remove the binding, start it any other way, or add another
