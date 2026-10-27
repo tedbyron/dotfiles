@@ -10,13 +10,20 @@ messages or pull requests.
 
 ## Shell environment
 
-Coreutils and common command-line tools on `PATH` (`ls`, `stat`, `date`, `dd`,
-`sed`, `grep`, `awk`, `find`, `xargs`, etc.) are the GNU versions from nixpkgs,
-including on macOS. Use GNU flags and syntax, not BSD.
-
 Prefer `rg` (ripgrep) over `grep` for searching files: it's recursive by
 default, respects `.gitignore`, and filters by type (`rg -t nix pattern`) or
 glob (`rg -g '*.nix' pattern`). Keep `grep` for filtering piped output.
+
+### Windows
+
+The shell is PowerShell 7+ (`pwsh`), not Windows PowerShell 5.1 or `cmd.exe`.
+Use PowerShell cmdlets and syntax; GNU coreutils aren't on `PATH`, but `rg` is.
+
+### macOS and Linux
+
+Coreutils and common command-line tools on `PATH` (`ls`, `stat`, `date`, `dd`,
+`sed`, `grep`, `awk`, `find`, `xargs`, etc.) are the GNU versions from nixpkgs,
+including on macOS. Use GNU flags and syntax, not BSD.
 
 The shell is zsh, not bash:
 
