@@ -9,13 +9,11 @@ let
     prowlarr = {
       package = pkgs.prowlarr;
       port = 9696;
-      allowedHosts = true;
       media = false;
     };
     radarr = {
       package = pkgs.radarr;
       port = 7878;
-      allowedHosts = true;
       media = true;
     };
     # Seerr's 4K requests: a second Radarr and Sonarr, since one can't keep two
@@ -23,20 +21,17 @@ let
     radarr-4k = {
       package = pkgs.radarr;
       port = 7879;
-      allowedHosts = true;
       media = true;
       env = "RADARR";
     };
     sonarr = {
       package = pkgs.sonarr;
       port = 8989;
-      allowedHosts = true;
       media = true;
     };
     sonarr-4k = {
       package = pkgs.sonarr;
       port = 8990;
-      allowedHosts = true;
       media = true;
       env = "SONARR";
     };
@@ -48,7 +43,6 @@ in
     {
       package,
       port,
-      allowedHosts,
       media,
       env ? lib.toUpper name,
     }:
@@ -65,8 +59,6 @@ in
         EnvironmentVariables = {
           "${env}__SERVER__BINDADDRESS" = "127.0.0.1";
           "${env}__SERVER__PORT" = toString port;
-        }
-        // lib.optionalAttrs allowedHosts {
           "${env}__SERVER__ALLOWEDHOSTS" = "localhost,127.0.0.1";
         };
 

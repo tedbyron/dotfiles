@@ -34,8 +34,9 @@ let
       # them on every torrent they add (the only way torrents are added)
       "Session\\GlobalMaxRatio" = "1";
       "Session\\GlobalMaxSeedingMinutes" = "10080";
-      # Radarr and Sonarr only remove torrents that are stopped and past their seed
-      # goals, once they've imported them
+      # Stop at the seed goals. The *arr apps move imported torrents to a
+      # post-import category and never remove them; Cleanuparr deletes them
+      # once they reach the goals
       "Session\\ShareLimitAction" = "Stop";
       # Every indexer is public; never add these trackers to private torrents
       "Session\\AddTrackersFromURLEnabled" = "true";
