@@ -145,38 +145,36 @@ backups. Redo by hand after a rebuild without backups:
   including Moonfin's sign-in and webhook setup, Jellyfin Enhanced's user import
   and the Serializd sync.
 - Jellyfin: libraries Movies, Shows, Anime, Anime Movies, Movies 4K, Shows 4K
-  (every user groups the first four into Movies and TV Shows, keeping 4K
-  separate; anime ones put AniDB then AniList first, except episodes, which keep
-  TMDb to match Sonarr's numbering). Extra plugins: Intro Skipper, Playback
-  Reporting, Jellyscribe (GitHub manifest; Letterboxd skips the show and anime
-  libraries, Serializd the movie ones, 4K included), File Transformation,
-  StreamLimiter, Fanart, AniList, AniDB (built-in API client; title matching is
-  broken in 13.0.0.0, so it matches by TVDB ID), TMDb Box Sets (strips
-  "Collection" from names; the libraries' own "Automatically add to collection"
-  stays off, since it matches by name and would make "… Collection" duplicates),
-  Jellyfin Enhanced (n00bcodr's manifest, MDBList key; arr links and downloads
-  cover the 4K instances too; Seerr 4K requests on; Seerr link on item pages
-  opens its in-app modal, which is how to request 4K of a title already in HD;
-  native poster tags on, so other clients see the quality tags baked into
-  posters, drawn when first requested), Moonbase (Moonfin's server plugin,
-  Moonfin-Client manifest), Subtitle Extract (all libraries; subtitles and
-  attachments nightly at 2:05/2:15, capped at 45 min so they finish before
-  Trickplay and backups), SkipMe.db (Intro Skipper manifest; crowd-sourced
-  segments, synced at 1:00 before Intro Skipper), Session Cleaner (90 days,
-  Sundays). Custom CSS (Dashboard → General) hides the native star and critic
-  ratings, ends-at times (item pages and player), the text external links
-  (keeping Jellyfin Enhanced's icon links: `letterboxd-link`,
-  `letterboxd-link-icon`, `seerr-link`, `arr-link`, `arr-tag-link`) and
-  Moonfin's header button, and restyles the poster count and played badges as
-  translucent primary-color pills. VideoToolbox transcoding with tone mapping,
-  throttling and segment deletion; HEVC encoding allowed, AV1 off (no
-  VideoToolbox AV1 encoder, so it would be software). Trickplay (one thread)
-  reads whole files over NFS, so it runs only in its nightly task (3:00, capped
-  at 1h), not during scans. External content in suggestions (Dashboard →
-  Libraries → Display) is off, or "More like this" lists ErsatzTV airings beside
-  the library copies. The XMLTV guide's kids categories leave out "family":
-  ErsatzTV passes TMDb genres, and one Family program tags its channel Kids for
-  good.
+  (anime ones put AniDB then AniList first, except episodes, which keep TMDb to
+  match Sonarr's numbering). Extra plugins: Intro Skipper, Playback Reporting,
+  Jellyscribe (GitHub manifest; Letterboxd skips the show and anime libraries,
+  Serializd the movie ones, 4K included), File Transformation, StreamLimiter,
+  Fanart, AniList, AniDB (built-in API client; title matching is broken in
+  13.0.0.0, so it matches by TVDB ID), TMDb Box Sets (strips "Collection" from
+  names; the libraries' own "Automatically add to collection" stays off, since
+  it matches by name and would make "… Collection" duplicates), Jellyfin
+  Enhanced (n00bcodr's manifest, MDBList key; arr links and downloads cover the
+  4K instances too; Seerr 4K requests on; Seerr link on item pages opens its
+  in-app modal, which is how to request 4K of a title already in HD; native
+  poster tags on, so other clients see the quality tags baked into posters,
+  drawn when first requested), Moonbase (Moonfin's server plugin, Moonfin-Client
+  manifest), Subtitle Extract (all libraries; subtitles and attachments nightly
+  at 2:05/2:15, capped at 45 min so they finish before Trickplay and backups),
+  SkipMe.db (Intro Skipper manifest; crowd-sourced segments, synced at 1:00
+  before Intro Skipper), Session Cleaner (90 days, Sundays). Custom CSS
+  (Dashboard → General) hides the native star and critic ratings, ends-at times
+  (item pages and player), the text external links (keeping Jellyfin Enhanced's
+  icon links: `letterboxd-link`, `letterboxd-link-icon`, `seerr-link`,
+  `arr-link`, `arr-tag-link`) and Moonfin's header button, and restyles the
+  poster count and played badges as translucent primary-color pills.
+  VideoToolbox transcoding with tone mapping, throttling and segment deletion;
+  HEVC encoding allowed, AV1 off (no VideoToolbox AV1 encoder, so it would be
+  software). Trickplay (one thread) reads whole files over NFS, so it runs only
+  in its nightly task (3:00, capped at 1h), not during scans. External content
+  in suggestions (Dashboard → Libraries → Display) is off, or "More like this"
+  lists ErsatzTV airings beside the library copies. The XMLTV guide's kids
+  categories leave out "family": ErsatzTV passes TMDb genres, and one Family
+  program tags its channel Kids for good.
 - ErsatzTV: Jellyfin as the media source; channels pick content by search, not
   library. Re-sync and reset playouts after library paths change. Channel logos
   are generated by `ersatztv-logos.nix` (Jellyfin's guide shows only the logo,
