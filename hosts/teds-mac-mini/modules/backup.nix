@@ -43,8 +43,18 @@ let
       exclude = arrExcludes;
     }
     {
+      name = "sonarr-4k";
+      path = "${share}/sonarr-4k";
+      exclude = arrExcludes;
+    }
+    {
       name = "radarr";
       path = "${share}/radarr";
+      exclude = arrExcludes;
+    }
+    {
+      name = "radarr-4k";
+      path = "${share}/radarr-4k";
       exclude = arrExcludes;
     }
     {
@@ -68,6 +78,14 @@ let
     {
       name = "bazarr";
       path = "${share}/bazarr";
+      exclude = [
+        "cache/"
+        "log/"
+      ];
+    }
+    {
+      name = "bazarr-4k";
+      path = "${share}/bazarr-4k";
       exclude = [
         "cache/"
         "log/"

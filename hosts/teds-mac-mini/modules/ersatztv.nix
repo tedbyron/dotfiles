@@ -40,8 +40,10 @@ let
       ${pkgs.sqlite}/bin/sqlite3 "${dataDir}/ersatztv.sqlite3" "
         UPDATE ConfigElement SET Value = '${ffmpegDir}/ffmpeg' WHERE Key = 'ffmpeg.ffmpeg_path';
         UPDATE ConfigElement SET Value = '${ffmpegDir}/ffprobe' WHERE Key = 'ffmpeg.ffprobe_path';
-        -- Libraries are discovered at startup with sync off, so a new one syncs from the next start
-        UPDATE JellyfinLibrary SET ShouldSyncItems = 1;
+        -- Libraries are discovered at startup with sync off, so a new one syncs from the next start.
+        -- Not the 4K libraries, whose copies would put titles in the channels twice
+        UPDATE JellyfinLibrary SET ShouldSyncItems =
+          (SELECT Name FROM Library WHERE Library.Id = JellyfinLibrary.Id) NOT IN ('Movies 4K', 'Shows 4K');
       "
     fi
 

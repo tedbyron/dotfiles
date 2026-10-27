@@ -54,9 +54,9 @@ must be `git add`ed before flake evaluation can see them.
   so store-path changes don't bring back privacy prompts. An unanswered prompt
   blocks every service's NAS access until someone clicks it.
 - Media is on a Synology NFS share at `/Volumes/media` (`downloads/`, `movies/`,
-  `tv/`, `anime/`, `anime-movies/`, `orphaned/`, `backups/`), mounted by
-  `nas.nix`. Downloads and library must share it so imports are hardlinks;
-  services that touch media wait for the mount.
+  `movies-4k/`, `tv/`, `tv-4k/`, `anime/`, `anime-movies/`, `orphaned/`,
+  `backups/`), mounted by `nas.nix`. Downloads and library must share it so
+  imports are hardlinks; services that touch media wait for the mount.
 - The NAS is a DS425+ (DSM 7.3, 2 GB RAM) with one HDD on btrfs with data
   checksums, so random I/O is the bottleneck. `downloads/` has `chattr +C` (set
   over SSH on the NAS as `ted`, needs a password; redo if the share is
@@ -80,15 +80,19 @@ must be `git add`ed before flake evaluation can see them.
   score (a last resort, replaced by any x264 release), 1080p minimum sizes are
   lower, and Bluray-1080p ranks with WEB. Radarr stays on the guide: it ranks
   Bluray above WEB before scores, so allowing x265 there would replace WEB-DLs
-  with Bluray x265 encodes. Check the guides before changing anything they
-  cover; cached copy in
+  with Bluray x265 encodes. Seerr's 4K requests go to a second Radarr
+  (`radarr-4k`, port 7879, UHD Bluray + WEB, `movies-4k/`) and Sonarr
+  (`sonarr-4k`, port 8990, WEB-2160p, `tv-4k/`, anime included), since one
+  instance keeps one copy of a title. Check the guides before changing anything
+  they cover; cached copy in
   `~/Library/Application Support/recyclarr/resources/trash-guides/`.
 - Grafana dashboards in `modules/grafana/` are provisioned v2 JSON, exported
   from the `resource` table in `~/.local/share/grafana/grafana.db`.
 - Prebuilt binaries (Cleanuparr, ErsatzTV's ffmpeg) are packaged from release
   archives with `dontFixup = true`.
 - App settings are changed through each app's local API. Keys are in
-  `~/.local/share/{radarr,sonarr,prowlarr}/config.xml`,
+  `~/.local/share/{radarr,radarr-4k,sonarr,sonarr-4k,prowlarr}/config.xml`,
+  `~/.local/share/bazarr{,-4k}/config/config.yaml` (`auth.apikey`),
   `~/.local/share/seerr/settings.json` (`main.apiKey`) and
   `~/.config/jelly-metrics/token` (Jellyfin).
 
@@ -111,7 +115,9 @@ backups. Redo by hand after a rebuild without backups:
   and `radarr-imported`/`tv-sonarr-imported`; a second "qBittorrent (low)"
   client for items tagged `5-tb` (Seerr tags requests by requester) uses
   `radarr-low`/`tv-sonarr-low` with priority Last, so tb's downloads queue
-  behind everyone else's. Anime uses [Anime] Remux-1080p.
+  behind everyone else's. Anime uses [Anime] Remux-1080p. The 4K instances match
+  these except root folders `movies-4k`/`tv-4k` only and categories
+  `radarr-4k`/`tv-sonarr-4k`, `-low` and `-imported`; Prowlarr syncs to both.
 - Cleanuparr: queue cleaner every 15 min; strikes: failed import 4, downloading
   metadata 6, errored 4, stalled 6 (0-80%) or 16 (80-100%, so nearly done
   downloads get more time), reset after 10MB; slow (under 20 KB/s) 16, never
@@ -119,27 +125,33 @@ backups. Redo by hand after a rebuild without backups:
   count as stalled); seeker every 10 min (round robin, each item at most weekly,
   monitored only, up to both cutoffs, paused at 3 active downloads, 6h grace);
   download cleaner every 6h: a seeding rule deletes torrents and their files in
-  `tv-sonarr-imported`/`radarr-imported` at ratio 1 or after 168h (the arrs
-  never see torrents once they're in the post-import category, so they don't
-  remove them; the library copies are hardlinks), and anything in `downloads/`
-  no torrent uses, after 24h, moves to `orphaned/` and is purged after 72h.
+  `tv-sonarr-imported`/`radarr-imported` and their `-4k-` twins at ratio 1 or
+  after 168h (the arrs never see torrents once they're in the post-import
+  category, so they don't remove them; the library copies are hardlinks), and
+  anything in `downloads/` no torrent uses, after 24h, moves to `orphaned/` and
+  is purged after 72h.
 - Seerr: default profiles HD Bluray + WEB, WEB-1080p, and [Anime] Remux-1080p
   for anime (folders and libraries are set in `seerr.nix`). An override rule
   (Settings → Services → Radarr) sends movies with TMDb's anime keyword (210024)
   to `anime-movies/` with the anime profile. The owner is Jellyfin `ted` (local
   sign-in only, can't be changed later), so sign in as `ted` first on a fresh
-  setup; `tb` is a normal user. CSRF protection (Settings → Network) is off:
-  with it on, Seerr refuses every non-browser POST, including Moonfin's sign-in
-  and webhook setup, Jellyfin Enhanced's user import and the Serializd sync.
-- Jellyfin: libraries Movies, Shows, Anime, Anime Movies (anime ones put AniDB
-  then AniList first, except episodes, which keep TMDb to match Sonarr's
-  numbering). Extra plugins: Intro Skipper, Playback Reporting, Jellyscribe
-  (GitHub manifest), File Transformation, StreamLimiter, Fanart, AniList, AniDB
-  (built-in API client; title matching is broken in 13.0.0.0, so it matches by
-  TVDB ID), TMDb Box Sets (strips "Collection" from names; the libraries' own
-  "Automatically add to collection" stays off, since it matches by name and
-  would make "… Collection" duplicates), Jellyfin Enhanced (n00bcodr's manifest,
-  MDBList key; native poster tags on, so other clients see the quality tags
+  setup; `tb` is a normal user. Radarr 4K and Sonarr 4K are the default 4K
+  servers; every user has Request 4K (also in the default permissions) and needs
+  approval, except `tb`, whose Manage Requests approves its own. CSRF protection
+  (Settings → Network) is off: with it on, Seerr refuses every non-browser POST,
+  including Moonfin's sign-in and webhook setup, Jellyfin Enhanced's user import
+  and the Serializd sync.
+- Jellyfin: libraries Movies, Shows, Anime, Anime Movies, Movies 4K, Shows 4K
+  (anime ones put AniDB then AniList first, except episodes, which keep TMDb to
+  match Sonarr's numbering). Extra plugins: Intro Skipper, Playback Reporting,
+  Jellyscribe (GitHub manifest; Letterboxd skips the show and anime libraries,
+  Serializd the movie ones, 4K included), File Transformation, StreamLimiter,
+  Fanart, AniList, AniDB (built-in API client; title matching is broken in
+  13.0.0.0, so it matches by TVDB ID), TMDb Box Sets (strips "Collection" from
+  names; the libraries' own "Automatically add to collection" stays off, since
+  it matches by name and would make "… Collection" duplicates), Jellyfin
+  Enhanced (n00bcodr's manifest, MDBList key; arr links and downloads cover the
+  4K instances too; native poster tags on, so other clients see the quality tags
   baked into posters, drawn when first requested), Moonbase (Moonfin's server
   plugin, Moonfin-Client manifest), Subtitle Extract (all libraries; subtitles
   and attachments nightly at 2:05/2:15, capped at 45 min so they finish before
@@ -162,18 +174,22 @@ backups. Redo by hand after a rebuild without backups:
 - ErsatzTV: Jellyfin as the media source; channels pick content by search, not
   library. Re-sync and reset playouts after library paths change. Channel logos
   are generated by `ersatztv-logos.nix` (Jellyfin's guide shows only the logo,
-  not the name) unless one is uploaded in ErsatzTV.
+  not the name) unless one is uploaded in ErsatzTV. `ersatztv.nix` keeps the 4K
+  libraries unsynced.
 - Bazarr: sync only subtitles scoring under 90 (episodes) / 70 (movies), since
   it reads the whole file's audio over NFS. AnimeTosho provider uses the AniDB
   HTTP client `bazarrtedster` v9; `bazarr.nix` patches the provider and the
   AniDB refiner (drop it once upstream fixes them; the build fails if the
-  patched text changes). TVsubtitles is removed (403 since Oct 2026).
+  patched text changes). TVsubtitles is removed (403 since Oct 2026). Bazarr
+  connects to one Radarr and Sonarr, so `bazarr-4k` (port 6768) has the same
+  settings pointed at the 4K ones.
 
 ### Gotchas
 
-- Bazarr's start script runs `pkill -9 -f "bazarr/main.py --config …"`, which
-  also kills any shell whose command line contains that text; start Bazarr in a
-  command of its own and don't mention its path there.
+- Bazarr's start script runs `pkill -9 -f "bazarr/main.py --config <dataDir> "`
+  (the trailing space keeps it off `bazarr-4k`), which also kills any shell
+  whose command line contains that text; start Bazarr in a command of its own
+  and don't mention its path there.
 - NFS reports no file creation time (it reads as 1970), so Jellyfin's
   `UseFileCreationTimeForDateAdded` stays off.
 - `rsync -a` and `cp -p` to the NAS fail setting owners; use `rsync -rlpt`.

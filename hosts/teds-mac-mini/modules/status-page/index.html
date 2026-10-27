@@ -153,6 +153,7 @@
         flex: 1;
         border-radius: 2px;
         background: var(--line);
+        cursor: pointer;
       }
       .days span.none {
         background: none;
@@ -445,10 +446,10 @@
           day,
           el('span', null, 'Today'),
         )
-        // Touch screens have no hover tooltips, so tapping a bar shows its
-        // title between the axis labels
-        strip.addEventListener('pointerup', (e) => {
-          if (e.pointerType === 'mouse' || e.target.parentNode !== strip) return
+        // Clicking or tapping a bar shows its title between the axis labels,
+        // since touch screens have no hover tooltips
+        strip.addEventListener('click', (e) => {
+          if (e.target.parentNode !== strip) return
           strip.querySelector('.selected')?.classList.remove('selected')
           e.target.classList.add('selected')
           day.textContent = e.target.title

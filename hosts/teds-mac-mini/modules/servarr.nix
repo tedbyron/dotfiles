@@ -18,11 +18,27 @@ let
       allowedHosts = true;
       media = true;
     };
+    # Seerr's 4K requests: a second Radarr and Sonarr, since one can't keep two
+    # copies of a title
+    radarr-4k = {
+      package = pkgs.radarr;
+      port = 7879;
+      allowedHosts = true;
+      media = true;
+      env = "RADARR";
+    };
     sonarr = {
       package = pkgs.sonarr;
       port = 8989;
       allowedHosts = true;
       media = true;
+    };
+    sonarr-4k = {
+      package = pkgs.sonarr;
+      port = 8990;
+      allowedHosts = true;
+      media = true;
+      env = "SONARR";
     };
   };
 in
@@ -34,10 +50,10 @@ in
       port,
       allowedHosts,
       media,
+      env ? lib.toUpper name,
     }:
     let
       log = "/Users/ted/Library/Logs/${name}.log";
-      env = lib.toUpper name;
     in
     {
       serviceConfig = {

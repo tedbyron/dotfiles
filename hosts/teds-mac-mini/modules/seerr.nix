@@ -25,15 +25,16 @@ let
   # which posts new and available requests in Discord and forwards everything
   # to Moonfin (its URL and secret are in tedbot's config). Its types are a
   # bitmask; 128 is "Request Automatically Approved", so tedbot sees every new
-  # request, not only ones waiting for approval.
+  # request, not only ones waiting for approval. 4K requests go to the second
+  # Radarr and Sonarr (is4k); 4K anime goes in tv-4k with other 4K shows.
   settings = ''
     .main.enableSpecialEpisodes = false
     | .notifications.agents.webhook.enabled = true
     | .notifications.agents.webhook.options.webhookUrl = "http://127.0.0.1:5056/seerr"
     | .notifications.agents.webhook.types |= (if (. / 128 | floor) % 2 == 0 then . + 128 else . end)
     | .jellyfin.libraries |= map(.enabled = true)
-    | .radarr |= map(.activeDirectory = "/Volumes/media/movies" | .tagRequests = true)
-    | .sonarr |= map(.activeDirectory = "/Volumes/media/tv" | .activeAnimeDirectory = "/Volumes/media/anime" | .tagRequests = true)
+    | .radarr |= map(.activeDirectory = (if .is4k then "/Volumes/media/movies-4k" else "/Volumes/media/movies" end) | .tagRequests = true)
+    | .sonarr |= map(if .is4k then .activeDirectory = "/Volumes/media/tv-4k" | .activeAnimeDirectory = "/Volumes/media/tv-4k" else .activeDirectory = "/Volumes/media/tv" | .activeAnimeDirectory = "/Volumes/media/anime" end | .tagRequests = true)
   '';
 
   start = pkgs.writeShellScript "start-seerr" ''

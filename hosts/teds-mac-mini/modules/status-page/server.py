@@ -28,24 +28,27 @@ SERVICES = [
         "http://127.0.0.1:8096/health": "Jellyfin",
         "http://127.0.0.1:5055/api/v1/status": "Seerr",
         "http://127.0.0.1:8080/": "qBittorrent",
-        "http://127.0.0.1:3000/api/health": "Grafana",
-    },
-    {
-        "http://127.0.0.1:7878/ping": "Radarr",
-        "http://127.0.0.1:8989/ping": "Sonarr",
         "http://127.0.0.1:9696/ping": "Prowlarr",
     },
     {
-        "http://127.0.0.1:8191/": "FlareSolverr",
+        "http://127.0.0.1:7878/ping": "Radarr",
+        "http://127.0.0.1:7879/ping": "Radarr 4K",
+        "http://127.0.0.1:8989/ping": "Sonarr",
+        "http://127.0.0.1:8990/ping": "Sonarr 4K",
+    },
+    {
         "http://127.0.0.1:6767/": "Bazarr",
+        "http://127.0.0.1:6768/": "Bazarr 4K",
+        "http://127.0.0.1:8191/": "FlareSolverr",
         "http://127.0.0.1:11011/health": "Cleanuparr",
     },
     {
         "http://127.0.0.1:8409/": "ErsatzTV",
+        "http://127.0.0.1:3000/api/health": "Grafana",
         "http://127.0.0.1:5056/health": "tedbot",
     },
 ]
-ARRS = {"sonarr": 8989, "radarr": 7878}
+ARRS = {"sonarr": 8989, "radarr": 7878, "sonarr-4k": 8990, "radarr-4k": 7879}
 
 now = None
 failed = []
@@ -226,10 +229,19 @@ def calendar():
     end = (this_month + dt.timedelta(days=62)).replace(day=1) - dt.timedelta(days=1)
     window = {"start": start.isoformat(), "end": end.isoformat()}
     events = []
+    # A title in both the regular and 4K instance is one entry, available if
+    # either has it
+    episodes = {}
+    for app in ["sonarr", "sonarr-4k"]:
+        for ep in arr(app, "calendar", includeSeries="true", **window):
+            key = (ep["series"]["tvdbId"], ep["seasonNumber"], ep["episodeNumber"])
+            if key in episodes:
+                episodes[key]["hasFile"] |= ep["hasFile"]
+            else:
+                episodes[key] = ep
     seasons = {}
-    for ep in arr("sonarr", "calendar", includeSeries="true", **window):
-        key = (ep["seriesId"], ep["seasonNumber"], ep["airDateUtc"][:10])
-        seasons.setdefault(key, []).append(ep)
+    for (tvdb, season, _), ep in episodes.items():
+        seasons.setdefault((tvdb, season, ep["airDateUtc"][:10]), []).append(ep)
     for (_, season, _), eps in seasons.items():
         series = eps[0]["series"]
         # A season dropped all at once is one entry, not a row per episode
@@ -254,7 +266,14 @@ def calendar():
                     "available": all(ep["hasFile"] for ep in group),
                 }
             )
-    for movie in arr("radarr", "calendar", **window):
+    movies = {}
+    for app in ["radarr", "radarr-4k"]:
+        for movie in arr(app, "calendar", **window):
+            if movie["tmdbId"] in movies:
+                movies[movie["tmdbId"]]["hasFile"] |= movie["hasFile"]
+            else:
+                movies[movie["tmdbId"]] = movie
+    for movie in movies.values():
         for field, label in [
             ("inCinemas", "In cinemas"),
             ("digitalRelease", "Digital release"),

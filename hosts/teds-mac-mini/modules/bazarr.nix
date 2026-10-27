@@ -5,10 +5,6 @@
   ...
 }:
 let
-  dataDir = "/Users/ted/.local/share/bazarr";
-  configFile = "${dataDir}/config/config.yaml";
-  log = "/Users/ted/Library/Logs/bazarr.log";
-
   # AnimeTosho moved off animetosho.org (it no longer resolves) and now gives each
   # attachment's download URL and language_code in its API. The AniDB refiner
   # also stores get_episode_ids' (series, episode) pair as the episode ID, so the
@@ -24,30 +20,48 @@ let
     '';
   });
 
-  start = pkgs.writeShellScript "start-bazarr" ''
-    until [ -d /Volumes/media/movies ]; do
-      echo "waiting for /Volumes/media"
-      sleep 5
-    done
+  # Bazarr connects to one Radarr and Sonarr, so the 4K ones get their own
+  instances = {
+    bazarr = 6767;
+    bazarr-4k = 6768;
+  };
 
-    mkdir -p ${dataDir}/config
-    touch ${configFile}
-    ${lib.getExe pkgs.yq-go} -i '.general.ip = "127.0.0.1" | .general.port = 6767' ${configFile}
+  agent =
+    name: port:
+    let
+      dataDir = "/Users/ted/.local/share/${name}";
+      configFile = "${dataDir}/config/config.yaml";
+      log = "/Users/ted/Library/Logs/${name}.log";
 
-    # A child left behind by a killed wrapper keeps the port, so every new
-    # child exits on bind while the orphan serves stale code
-    /usr/bin/pkill -9 -f "bazarr/main.py --config ${dataDir}" || true
+      start = pkgs.writeShellScript "start-${name}" ''
+        until [ -d /Volumes/media/movies ]; do
+          echo "waiting for /Volumes/media"
+          sleep 5
+        done
 
-    export PATH=${lib.makeBinPath [ pkgs.ffmpeg ]}:$PATH
-    exec ${bazarr}/bin/bazarr --config ${dataDir} --no-update
-  '';
+        mkdir -p ${dataDir}/config
+        touch ${configFile}
+        ${lib.getExe pkgs.yq-go} -i '.general.ip = "127.0.0.1" | .general.port = ${toString port}' ${configFile}
+
+        # A child left behind by a killed wrapper keeps the port, so every new
+        # child exits on bind while the orphan serves stale code. The space
+        # keeps bazarr's pattern from matching bazarr-4k
+        /usr/bin/pkill -9 -f "bazarr/main.py --config ${dataDir} " || true
+
+        export PATH=${lib.makeBinPath [ pkgs.ffmpeg ]}:$PATH
+        exec ${bazarr}/bin/bazarr --config ${dataDir} --no-update
+      '';
+    in
+    {
+      serviceConfig = {
+        KeepAlive = true;
+        ProgramArguments = mediaLaunch [ "${start}" ];
+        RunAtLoad = true;
+        StandardErrorPath = log;
+        StandardOutPath = log;
+      };
+    };
 in
 {
-  launchd.user.agents.bazarr.serviceConfig = {
-    KeepAlive = true;
-    ProgramArguments = mediaLaunch [ "${start}" ];
-    RunAtLoad = true;
-    StandardErrorPath = log;
-    StandardOutPath = log;
-  };
+  launchd.user.agents = lib.mapAttrs agent instances;
 }

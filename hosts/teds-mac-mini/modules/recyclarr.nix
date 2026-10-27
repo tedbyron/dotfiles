@@ -26,10 +26,27 @@ let
           - trash_id: d1d67249d3890e49bc12e275d989a7e9 # HD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
-          - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
+          - trash_id: 722b624f9af1e492284c4bc842153a38 # [Anime] Remux-1080p
             reset_unmatched_scores:
               enabled: true
-          - trash_id: 722b624f9af1e492284c4bc842153a38 # [Anime] Remux-1080p
+
+      # Seerr's 4K requests
+      movies-4k:
+        base_url: http://127.0.0.1:7879
+        api_key: !env_var RADARR_4K_API_KEY
+        delete_old_custom_formats: true
+
+        media_naming:
+          folder: jellyfin-tmdb
+          movie:
+            rename: true
+            standard: jellyfin-tmdb
+
+        quality_definition:
+          type: movie
+
+        quality_profiles:
+          - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
 
@@ -82,9 +99,6 @@ let
               allowed: true
               until_quality: 1080p
               until_score: 10000
-          - trash_id: d1498e7d189fbe6c7110ceaabb7473e6 # WEB-2160p
-            reset_unmatched_scores:
-              enabled: true
           - trash_id: 20e0fc959f1f1704bed501f23bdae76f # [Anime] Remux-1080p
             reset_unmatched_scores:
               enabled: true
@@ -95,6 +109,29 @@ let
             assign_scores_to:
               - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
                 score: -1000
+
+      # Seerr's 4K requests
+      series-4k:
+        base_url: http://127.0.0.1:8990
+        api_key: !env_var SONARR_4K_API_KEY
+        delete_old_custom_formats: true
+
+        media_naming:
+          series: jellyfin-tvdb
+          season: default
+          episodes:
+            rename: true
+            standard: default
+            daily: default
+            anime: default
+
+        quality_definition:
+          type: series
+
+        quality_profiles:
+          - trash_id: d1498e7d189fbe6c7110ceaabb7473e6 # WEB-2160p
+            reset_unmatched_scores:
+              enabled: true
   '';
 
   apiKey =
@@ -106,13 +143,17 @@ let
     # failed (and alerting) until 5am
     for _ in $(seq 60); do
       ${lib.getExe pkgs.curl} -sf -o /dev/null http://127.0.0.1:7878/ping \
+        && ${lib.getExe pkgs.curl} -sf -o /dev/null http://127.0.0.1:7879/ping \
         && ${lib.getExe pkgs.curl} -sf -o /dev/null http://127.0.0.1:8989/ping \
+        && ${lib.getExe pkgs.curl} -sf -o /dev/null http://127.0.0.1:8990/ping \
         && break
       sleep 10
     done
 
     export RADARR_API_KEY=${apiKey "radarr"}
+    export RADARR_4K_API_KEY=${apiKey "radarr-4k"}
     export SONARR_API_KEY=${apiKey "sonarr"}
+    export SONARR_4K_API_KEY=${apiKey "sonarr-4k"}
     exec ${lib.getExe pkgs.recyclarr} sync --config ${config} "$@"
   '';
 in
