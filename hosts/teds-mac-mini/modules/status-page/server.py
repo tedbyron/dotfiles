@@ -185,15 +185,46 @@ def system():
     }
 
 
+def jellyfin(path, **params):
+    token = open(os.path.join(home, ".config/jelly-metrics/token")).read().strip()
+    query = urllib.parse.urlencode(params)
+    return fetch(
+        f"http://127.0.0.1:8096{path}?{query}",
+        {"Authorization": f'MediaBrowser Token="{token}"'},
+    )
+
+
 def library():
-    counts = {
-        r["metric"]["type"]: int(float(r["value"][1]))
-        for r in prom("jellyfin_media_count")
+    # Without a user, Jellyfin leaves out some series and counts collections
+    # as movies
+    user = next(u["Id"] for u in jellyfin("/Users") if u["Name"] == "ted")
+
+    def items(kind):
+        return jellyfin(
+            "/Items",
+            userId=user,
+            Recursive="true",
+            IncludeItemTypes=kind,
+            Fields="ProviderIds",
+        )["Items"]
+
+    def title(item, *providers):
+        ids = item.get("ProviderIds", {})
+        return next(((p, ids[p]) for p in providers if ids.get(p)), item["Id"])
+
+    # A title in both an HD and a 4K library counts once
+    movies = {title(m, "Tmdb", "Imdb") for m in items("Movie")}
+    series = {s["Id"]: title(s, "Tvdb", "Tmdb") for s in items("Series")}
+    episodes = {
+        (series.get(e["SeriesId"]), e.get("ParentIndexNumber"), e["IndexNumber"])
+        if e.get("IndexNumber") is not None
+        else e["Id"]
+        for e in items("Episode")
     }
     return {
-        "movies": counts.get("movies"),
-        "shows": counts.get("series"),
-        "episodes": counts.get("episodes"),
+        "movies": len(movies),
+        "shows": len(set(series.values())),
+        "episodes": len(episodes),
     }
 
 
