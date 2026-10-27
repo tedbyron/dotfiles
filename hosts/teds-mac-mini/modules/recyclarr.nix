@@ -26,14 +26,6 @@ let
           - trash_id: d1d67249d3890e49bc12e275d989a7e9 # HD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
-            # Override: no Bluray-720p fallback, so a movie with no acceptable
-            # 1080p release waits for one (or a manual grab) instead
-            qualities:
-              - name: Bluray-1080p
-              - name: WEB 1080p
-                qualities:
-                  - WEBRip-1080p
-                  - WEBDL-1080p
           - trash_id: 64fb5f9858489bdac2af690e27c8f42f # UHD Bluray + WEB
             reset_unmatched_scores:
               enabled: true
@@ -56,19 +48,53 @@ let
             daily: default
             anime: default
 
+        # Override: lower 1080p minimums so x265 encodes (x265 season packs
+        # run 8-12 MB/min, under half the guide's minimums) aren't rejected
+        # for size
         quality_definition:
           type: series
+          qualities:
+            - name: Bluray-1080p
+              min: 15
+            - name: WEBDL-1080p
+              min: 8
+            - name: WEBRip-1080p
+              min: 8
 
         quality_profiles:
           - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
             reset_unmatched_scores:
               enabled: true
+            # Override: x265 is a last resort instead of rejected (see
+            # custom_formats), since on public trackers most season packs are
+            # x265, and Bluray-1080p ranks with WEB, since packs of older shows
+            # are mostly Bluray rips. Every 1080p quality ranks the same, so
+            # scores decide: any x264 release beats x265 and replaces it later,
+            # and Bluray (no tier scores here) loses to a tiered WEB release
+            min_format_score: -1000
+            qualities:
+              - name: 1080p
+                qualities:
+                  - WEBRip-1080p
+                  - WEBDL-1080p
+                  - Bluray-1080p
+            upgrade:
+              allowed: true
+              until_quality: 1080p
+              until_score: 10000
           - trash_id: d1498e7d189fbe6c7110ceaabb7473e6 # WEB-2160p
             reset_unmatched_scores:
               enabled: true
           - trash_id: 20e0fc959f1f1704bed501f23bdae76f # [Anime] Remux-1080p
             reset_unmatched_scores:
               enabled: true
+
+        custom_formats:
+          - trash_ids:
+              - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+            assign_scores_to:
+              - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
+                score: -1000
   '';
 
   apiKey =

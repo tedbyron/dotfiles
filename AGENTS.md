@@ -75,9 +75,13 @@ must be `git add`ed before flake evaluation can see them.
   it changes. Don't remove the binding, start it any other way, or add another
   client without the same protection. The key is `/etc/wireguard/proton.key`.
 - Radarr/Sonarr quality settings follow the TRaSH Guides (`recyclarr.nix`). The
-  one override: HD Bluray + WEB drops Bluray-720p (1080p releases are grabbed by
-  hand when none pass). Check the guides before changing anything they cover;
-  cached copy in
+  overrides are in Sonarr's WEB-1080p, because on public trackers most season
+  packs are x265 or Bluray rips: x265 (HD) scores -1000 with a -1000 minimum
+  score (a last resort, replaced by any x264 release), 1080p minimum sizes are
+  lower, and Bluray-1080p ranks with WEB. Radarr stays on the guide: it ranks
+  Bluray above WEB before scores, so allowing x265 there would replace WEB-DLs
+  with Bluray x265 encodes. Check the guides before changing anything they
+  cover; cached copy in
   `~/Library/Application Support/recyclarr/resources/trash-guides/`.
 - Grafana dashboards in `modules/grafana/` are provisioned v2 JSON, exported
   from the `resource` table in `~/.local/share/grafana/grafana.db`.
