@@ -86,6 +86,9 @@ must be `git add`ed before flake evaluation can see them.
   instance keeps one copy of a title. Check the guides before changing anything
   they cover; cached copy in
   `~/Library/Application Support/recyclarr/resources/trash-guides/`.
+- `jellyfin-posters.nix` sets every movie's and show's poster, backdrop and
+  thumb from Seerr's TMDb art, 4K libraries included, so both copies look the
+  same.
 - Grafana dashboards in `modules/grafana/` are provisioned v2 JSON, exported
   from the `resource` table in `~/.local/share/grafana/grafana.db`.
 - Prebuilt binaries (Cleanuparr, ErsatzTV's ffmpeg) are packaged from release
@@ -104,7 +107,7 @@ backups. Redo by hand after a rebuild without backups:
 - Prowlarr: every indexer seeds to ratio 1 or 7 days; Standard sync profile
   minimum seeders 5; Internet Archive removed; Knaben priority 50 (stale seeder
   counts); FlareSolverr tag on 1337x, EZTV and Uindex; Anime Tosho (public
-  definition) beside Nyaa, synced to Sonarr only (no movie categories).
+  definition) beside Nyaa, synced to both Sonarrs only (no movie categories).
 - Sonarr/Radarr: root folders `tv`, `anime`, `movies`, `anime-movies`; Jellyfin
   connection for rescans; propers and repacks Do not Prefer (custom formats
   score them); rescan folder after refresh only after manual refresh (avoids
@@ -142,19 +145,22 @@ backups. Redo by hand after a rebuild without backups:
   including Moonfin's sign-in and webhook setup, Jellyfin Enhanced's user import
   and the Serializd sync.
 - Jellyfin: libraries Movies, Shows, Anime, Anime Movies, Movies 4K, Shows 4K
-  (anime ones put AniDB then AniList first, except episodes, which keep TMDb to
-  match Sonarr's numbering). Extra plugins: Intro Skipper, Playback Reporting,
-  Jellyscribe (GitHub manifest; Letterboxd skips the show and anime libraries,
-  Serializd the movie ones, 4K included), File Transformation, StreamLimiter,
-  Fanart, AniList, AniDB (built-in API client; title matching is broken in
-  13.0.0.0, so it matches by TVDB ID), TMDb Box Sets (strips "Collection" from
-  names; the libraries' own "Automatically add to collection" stays off, since
-  it matches by name and would make "… Collection" duplicates), Jellyfin
-  Enhanced (n00bcodr's manifest, MDBList key; arr links and downloads cover the
-  4K instances too; native poster tags on, so other clients see the quality tags
-  baked into posters, drawn when first requested), Moonbase (Moonfin's server
-  plugin, Moonfin-Client manifest), Subtitle Extract (all libraries; subtitles
-  and attachments nightly at 2:05/2:15, capped at 45 min so they finish before
+  (every user groups the first four into Movies and TV Shows, keeping 4K
+  separate; anime ones put AniDB then AniList first, except episodes, which keep
+  TMDb to match Sonarr's numbering). Extra plugins: Intro Skipper, Playback
+  Reporting, Jellyscribe (GitHub manifest; Letterboxd skips the show and anime
+  libraries, Serializd the movie ones, 4K included), File Transformation,
+  StreamLimiter, Fanart, AniList, AniDB (built-in API client; title matching is
+  broken in 13.0.0.0, so it matches by TVDB ID), TMDb Box Sets (strips
+  "Collection" from names; the libraries' own "Automatically add to collection"
+  stays off, since it matches by name and would make "… Collection" duplicates),
+  Jellyfin Enhanced (n00bcodr's manifest, MDBList key; arr links and downloads
+  cover the 4K instances too; Seerr 4K requests on; Seerr link on item pages
+  opens its in-app modal, which is how to request 4K of a title already in HD;
+  native poster tags on, so other clients see the quality tags baked into
+  posters, drawn when first requested), Moonbase (Moonfin's server plugin,
+  Moonfin-Client manifest), Subtitle Extract (all libraries; subtitles and
+  attachments nightly at 2:05/2:15, capped at 45 min so they finish before
   Trickplay and backups), SkipMe.db (Intro Skipper manifest; crowd-sourced
   segments, synced at 1:00 before Intro Skipper), Session Cleaner (90 days,
   Sundays). Custom CSS (Dashboard → General) hides the native star and critic
