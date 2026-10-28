@@ -1940,16 +1940,16 @@
     },
     {
       "id": "zen-duplicate-tab",
-      "key": "",
-      "keycode": "",
+      "key": "d",
+      "keycode": null,
       "group": "windowAndTabManagement",
       "l10nId": "zen-duplicate-tab-shortcut",
       "modifiers": {
         "control": false,
-        "alt": false,
+        "alt": true,
         "shift": false,
         "meta": false,
-        "accel": false
+        "accel": true
       },
       "action": "cmd_zenDuplicateTab",
       "disabled": false,
