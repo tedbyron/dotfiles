@@ -83,7 +83,7 @@ _: {
       "config/.gtkrc-2.0"
       "config/Microsoft.PowerShell_profile.ps1"
       "config/pam-gnupg"
-      "config/zen/user.js"
+      "config/zen/*"
       ".gitignore"
       "LICENSE"
       "flake.lock"
