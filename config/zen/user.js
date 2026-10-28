@@ -62,6 +62,7 @@ user_pref("browser.theme.dark-private-windows", false);
 user_pref("browser.toolbars.bookmarks.showOtherBookmarks", false);
 user_pref("browser.toolbars.bookmarks.visibility", "always");
 user_pref("browser.urlbar.showSearchSuggestionsFirst", false);
+user_pref("browser.urlbar.suggest.clipboard", false);
 user_pref("browser.urlbar.suggest.engines", false);
 user_pref("browser.urlbar.suggest.recentsearches", false);
 user_pref("browser.urlbar.suggest.searches", false);
