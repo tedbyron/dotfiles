@@ -156,7 +156,13 @@ let
 
       find "$stage/$name" -type f \( -name '*.db' -o -name '*.sqlite' -o -name '*.sqlite3' \) | while read -r copied; do
         rm -f "$copied" "$copied-wal" "$copied-shm" "$copied-journal"
-        ${pkgs.sqlite}/bin/sqlite3 "$src/''${copied#"$stage/$name/"}" ".backup '$copied'"
+        db=$src/''${copied#"$stage/$name/"}
+        # Wait out the app's write locks instead of failing on the first busy
+        # page
+        if ! ${pkgs.sqlite}/bin/sqlite3 -cmd '.timeout 60000' "$db" ".backup '$copied'"; then
+          echo "failed to back up $db"
+          exit 1
+        fi
       done
     }
 
