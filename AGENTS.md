@@ -106,8 +106,10 @@ backups. Redo by hand after a rebuild without backups:
 
 - Prowlarr: every indexer seeds to ratio 1 or 7 days; Standard sync profile
   minimum seeders 5; Internet Archive removed; Knaben priority 50 (stale seeder
-  counts); FlareSolverr tag on 1337x, EZTV and Uindex; Anime Tosho (public
-  definition) beside Nyaa, synced to both Sonarrs only (no movie categories).
+  counts); FlareSolverr tag on 1337x, EZTV, Uindex, ExtraTorrent.st and both
+  kickasstorrents; Torrent Downloads removed (its category feeds are empty, so
+  the arrs reject it); Anime Tosho (public definition) beside Nyaa, synced to
+  both Sonarrs only (no movie categories).
 - Sonarr/Radarr: root folders `tv`, `anime`, `movies`, `anime-movies`; Jellyfin
   connection for rescans; propers and repacks Do not Prefer (custom formats
   score them); rescan folder after refresh only after manual refresh (avoids
