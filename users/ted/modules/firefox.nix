@@ -42,6 +42,7 @@ in
       run mkdir -p "$profile/extensions"
       run install -m 644 ${lib.ted.configPath "zen/user.js"} "$profile/user.js"
       run install -D -m 644 ${lib.ted.configPath "zen/userChrome.css"} "$profile/chrome/userChrome.css"
+      run install -m 644 ${lib.ted.configPath "zen/userContent.css"} "$profile/chrome/userContent.css"
       # Zen downloads listed mods on its next update check (first launch on a
       # new profile)
       run install -m 644 ${lib.ted.configPath "zen/zen-mods-export.json"} "$profile/zen-themes.json"

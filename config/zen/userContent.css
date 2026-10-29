@@ -1,0 +1,16 @@
+/* Copied into Zen's default profile by users/ted/modules/firefox.nix */
+
+/* With the new tab page off, new tabs are an unstyled blank page, painted in
+   the default canvas color. browser.display.background_color.dark doesn't
+   change that in dark mode, so paint them the theme's ntp_background. */
+@-moz-document url("about:newtab"), url("about:home"), url("about:blank") {
+  :root {
+    background-color: #fbf1c7 !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      background-color: #282828 !important;
+    }
+  }
+}
