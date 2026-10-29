@@ -9,3 +9,25 @@
     background: var(--lwt-accent-color) !important;
   }
 }
+
+/* The floating URL bar (new tabs and windows, or any focus while the sidebar
+   is hidden in compact mode) has a fixed white or near-black background.
+   Paint it like Firefox's focused URL bar, with a lighter border that the
+   divider under the input matches. */
+:root[lwtheme] #urlbar[breakout-extend] {
+  --urlbarview-separator-color: color-mix(in srgb, var(--toolbar-field-text-color) 25%, transparent) !important;
+
+  & .urlbar-background {
+    background-color: var(--toolbar-field-background-color-focus) !important;
+    outline: 1px solid var(--urlbarview-separator-color) !important;
+  }
+}
+
+/* The link and loading status in the bottom corner and the toasts in the top
+   corner (copied URL, etc.) are tinted from the space's color; paint them like
+   the theme's popups instead */
+:root[lwtheme] :is(#statuspanel-label, #zen-toast-container .zen-toast) {
+  background: var(--panel-background-color) !important;
+  color: var(--panel-text-color) !important;
+  border: 1px solid color-mix(in srgb, var(--panel-text-color) 25%, transparent) !important;
+}
