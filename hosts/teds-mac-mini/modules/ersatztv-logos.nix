@@ -7,7 +7,7 @@ let
   # carries the name. Jellyfin only takes the M3U logo for a channel without
   # one, so it's uploaded there directly too.
   sync = pkgs.writeText "ersatztv-logos.py" ''
-    import base64, datetime, hashlib, json, os, sqlite3, subprocess, sys, tempfile
+    import base64, datetime, hashlib, json, os, sqlite3, subprocess, sys, tempfile, time
     import urllib.request
 
     db_path, logo_dir, jellyfin_token_file, state_dir = sys.argv[1:]
@@ -84,6 +84,14 @@ let
                     (LOGO, channel_id, digest, now, now),
                 )
         print(f"set {name} logo to {digest}")
+
+    # Runs at load, when Jellyfin may still be starting (503s until it's up)
+    for _ in range(60):
+        try:
+            jellyfin("/System/Info/Public")
+            break
+        except OSError:
+            time.sleep(10)
 
     for channel in jellyfin("/LiveTv/Channels")["Items"]:
         digest = logos.get(channel.get("ChannelNumber"))
