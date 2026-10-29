@@ -143,6 +143,7 @@
           let
             web = format != "ttf";
             latin = format == "web-latin";
+            cssName = "${lib.toLower buildPlan.family}.css";
           in
           pkgs.stdenvNoCC.mkDerivation {
             inherit (font) name;
@@ -155,8 +156,10 @@
               ++ (
                 if web then
                   [
-                    python312Packages.brotli
-                    python312Packages.fonttools
+                    (python312.withPackages (ps: [
+                      ps.brotli
+                      ps.fonttools
+                    ]))
                   ]
                 else
                   [ nerd-font-patcher ]
@@ -179,6 +182,8 @@
                       else
                         "--unicodes=U+0000-017F,U+2000-20CF,U+2100-22FF,U+FFFD"
                     }
+
+                  python ${./font-face.py} ${buildPlan.family} *.woff2 > ${cssName}
                 ''
               else
                 ''
@@ -192,7 +197,7 @@
                 ''
                   install -Dm444 ${font}/share/fonts/truetype/*.ttf \
                     -t $out/share/fonts/truetype
-                  install -Dm444 *.woff2 -t $out/share/fonts/woff2
+                  install -Dm444 *.woff2 ${cssName} -t $out/share/fonts/woff2
                 ''
               else
                 ''
