@@ -118,8 +118,32 @@
           privateBuildPlan = buildPlanSingleWidth "condensed";
         };
 
+        # Google Fonts' latin subset
+        latinUnicodes = lib.concatStringsSep "," [
+          "U+0000-00FF"
+          "U+0131"
+          "U+0152-0153"
+          "U+02BB-02BC"
+          "U+02C6"
+          "U+02DA"
+          "U+02DC"
+          "U+2000-206F"
+          "U+20AC"
+          "U+2122"
+          "U+2190-21FF"
+          "U+2212"
+          "U+2215"
+          "U+FEFF"
+          "U+FFFD"
+        ];
+
+        # format is "ttf", "web", or "web-latin"
         mkFont =
-          font: web:
+          font: format:
+          let
+            web = format != "ttf";
+            latin = format == "web-latin";
+          in
           pkgs.stdenvNoCC.mkDerivation {
             inherit (font) name;
             dontUnpack = true;
@@ -149,7 +173,12 @@
                     --flavor=woff2 \
                     --layout-features=* \
                     --desubroutinize \
-                    --unicodes="U+0000-017F,U+2000-20CF,U+2100-22FF,U+FFFD"
+                    ${
+                      if latin then
+                        "--no-hinting --unicodes=${latinUnicodes}"
+                      else
+                        "--unicodes=U+0000-017F,U+2000-20CF,U+2100-22FF,U+FFFD"
+                    }
                 ''
               else
                 ''
@@ -174,12 +203,15 @@
       {
         packages = rec {
           default = curlio-ttf;
-          all-ttf = mkFont all false;
-          all-web = mkFont all true;
-          curlio-ttf = mkFont curlio false;
-          curlio-web = mkFont curlio true;
-          curlio-condensed-ttf = mkFont curlioCondensed false;
-          curlio-condensed-web = mkFont curlioCondensed true;
+          all-ttf = mkFont all "ttf";
+          all-web = mkFont all "web";
+          all-web-latin = mkFont all "web-latin";
+          curlio-ttf = mkFont curlio "ttf";
+          curlio-web = mkFont curlio "web";
+          curlio-web-latin = mkFont curlio "web-latin";
+          curlio-condensed-ttf = mkFont curlioCondensed "ttf";
+          curlio-condensed-web = mkFont curlioCondensed "web";
+          curlio-condensed-web-latin = mkFont curlioCondensed "web-latin";
         };
       }
     );
