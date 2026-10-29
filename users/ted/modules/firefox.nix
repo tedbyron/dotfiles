@@ -46,8 +46,8 @@ in
       # Zen downloads listed mods on its next update check (first launch on a
       # new profile)
       run install -m 644 ${lib.ted.configPath "zen/zen-mods-export.json"} "$profile/zen-themes.json"
-      # Copied back from the profile after changing shortcuts in Zen's settings
-      run install -m 644 ${lib.ted.configPath "zen/zen-keyboard-shortcuts.json"} "$profile/zen-keyboard-shortcuts.json"
+      # Copied back from the profile after changing shortcuts in about:keyboard
+      run install -m 644 ${lib.ted.configPath "zen/customKeys.json"} "$profile/customKeys.json"
       run install -m 644 ${theme} "$profile/extensions/${themeId}.xpi"
     done
   '';

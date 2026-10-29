@@ -10,7 +10,7 @@ user_pref("zen.watermark.enabled", false);
 user_pref("zen.urlbar.replace-newtab", true);
 user_pref("zen.urlbar.wait-to-clear", 0);
 user_pref("zen.workspaces.open-new-tab-if-last-unpinned-tab-is-closed", true);
-user_pref("zen.view.show-background-tab-toast", false);
+user_pref("zen.view.compact.show-background-tab-toast", false);
 user_pref("zen.view.compact.toolbar-flash-popup", false);
 user_pref("zen.view.show-clear-tabs-button", false);
 user_pref("zen.view.show-newtab-button-top", false);
