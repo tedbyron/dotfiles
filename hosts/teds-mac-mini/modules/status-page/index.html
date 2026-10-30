@@ -409,6 +409,7 @@
       </section>
     </main>
 
+    <script id="snapshot" type="application/json"></script>
     <script>
       const el = (tag, cls, text) => {
         const node = document.createElement(tag)
@@ -766,26 +767,62 @@
         target.replaceChildren(nav, grid, ...detail)
       }
 
+      let shown = null
+      function render(data) {
+        const updated = new Date(data.updated)
+        // Only the stale warning can change while the snapshot doesn't
+        issues(data.issues, updated)
+        if (data.updated === shown) return updated
+        shown = data.updated
+        document.getElementById('updated').textContent =
+          `Updated ${updated.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}`
+        services(data.services)
+        tiles(data.system, data.library)
+        downloads(data.downloads, data.requests)
+        calendar(data.calendar)
+        return updated
+      }
+
+      // The server takes a snapshot every 5 minutes, so fetch just after the
+      // next one is due, and not at all while the tab is hidden
+      let due = 0
+      let timer
+      function schedule() {
+        clearTimeout(timer)
+        if (document.hidden) return
+        // A late snapshot is retried every minute
+        const wait = due > Date.now() ? due - Date.now() : 60_000
+        timer = setTimeout(refresh, wait)
+      }
+
       async function refresh() {
         try {
           const res = await fetch('status.json', { cache: 'no-store' })
-          const data = await res.json()
-          const updated = new Date(data.updated)
-          document.getElementById('updated').textContent =
-            `Updated ${updated.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}`
-          issues(data.issues, updated)
-          services(data.services)
-          tiles(data.system, data.library)
-          downloads(data.downloads, data.requests)
-          calendar(data.calendar)
+          due = render(await res.json()).getTime() + 305_000
         } catch {
           document.getElementById('updated').textContent = 'Status unavailable'
           issues(undefined, null)
+          shown = null
         }
+        schedule()
       }
 
-      refresh()
-      setInterval(refresh, 60_000)
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && Date.now() >= due) refresh()
+        else schedule()
+      })
+
+      // The server puts its latest snapshot in the page, so it renders without
+      // waiting for status.json
+      try {
+        due =
+          render(
+            JSON.parse(document.getElementById('snapshot').textContent),
+          ).getTime() + 305_000
+        schedule()
+      } catch {
+        refresh()
+      }
     </script>
   </body>
 </html>
