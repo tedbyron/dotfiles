@@ -94,6 +94,12 @@ let
             "for" = "1h";
             annotations.summary = "Jellyfin needs a restart (usually for plugin updates) and nothing has played for an hour";
           }
+          {
+            # Cleared by marking the events resolved on Cleanuparr's Events page
+            alert = "CleanuparrActionRequired";
+            expr = "cleanuparr_unresolved_events > 0";
+            annotations.summary = "Cleanuparr has {{ $value }} unresolved {{ $labels.type }} event(s) for {{ $labels.instance }}";
+          }
         ];
       }
     ];
@@ -140,6 +146,7 @@ let
         job_name = "node_exporter";
         static_configs = [ { targets = [ "127.0.0.1:9100" ]; } ];
         metric_relabel_configs = keep [
+          "cleanuparr_unresolved_events"
           "jellyfin_pending_restart"
           "launchd_job_last_exit_status"
           "launchd_job_running"
