@@ -147,6 +147,9 @@ def issues():
         if a["state"] != "firing":
             continue
         labels = a["labels"]
+        # A reminder for the admin, not something visitors would notice
+        if labels["alertname"] == "JellyfinRestartPending":
+            continue
         name = names.get(labels.get("instance"), "A service")
         # Only these fixed messages are published, never raw labels
         text = {
