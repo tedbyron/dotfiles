@@ -1,8 +1,7 @@
 """Serve the public status page and a sanitized snapshot of the server.
 
 Only what this script puts in status.json and calendar.ics is published. A
-snapshot is taken every 5 minutes in the background, so no request waits for
-one, and the page is served with the latest already inside it.
+snapshot is taken when one is requested and the last is over 5 minutes old.
 """
 
 import datetime as dt
@@ -12,13 +11,12 @@ import os
 import re
 import sys
 import threading
-import time
 import urllib.parse
 import urllib.request
 
 port, index_html = sys.argv[1:]
 home = os.path.expanduser("~")
-interval = 300
+max_age = dt.timedelta(minutes=5)
 
 # Rows as shown on the page
 SERVICES = [
@@ -422,6 +420,7 @@ def ics(events):
 
 
 snapshots = {}
+lock = threading.Lock()
 
 
 def snapshot():
@@ -439,14 +438,7 @@ def snapshot():
         "requests": section("requests", requests),
         "calendar": events,
     }
-    body = json.dumps(status, separators=(",", ":"))
-    snapshots["status.json"] = body.encode()
-    # "</" would end the script tag; "<\/" is the same JSON
-    embedded = body.replace("</", "<\\/")
-    snapshots["index.html"] = page.replace(
-        '<script id="snapshot" type="application/json"></script>',
-        f'<script id="snapshot" type="application/json">{embedded}</script>',
-    ).encode()
+    snapshots["status.json"] = json.dumps(status, separators=(",", ":")).encode()
     # Keep the last calendar rather than publishing an empty one
     if events is not None:
         snapshots["calendar.ics"] = ics(events).encode()
@@ -454,24 +446,23 @@ def snapshot():
         print(f"snapshot incomplete: {', '.join(failed)}", file=sys.stderr)
 
 
-def refresh():
-    while True:
-        time.sleep(interval)
-        try:
+def latest(name):
+    # Concurrent requests wait for one snapshot instead of each taking their own
+    with lock:
+        if now is None or dt.datetime.now(dt.timezone.utc) - now > max_age:
             snapshot()
-        except Exception as e:
-            print(f"snapshot: {e}", file=sys.stderr)
+        return snapshots.get(name)
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         path = urllib.parse.urlsplit(self.path).path
         if path in ("/", "/index.html"):
-            body, kind = snapshots["index.html"], "text/html; charset=utf-8"
+            body, kind = open(index_html, "rb").read(), "text/html; charset=utf-8"
         elif path == "/status.json":
-            body, kind = snapshots["status.json"], "application/json"
+            body, kind = latest("status.json"), "application/json"
         elif path == "/calendar.ics":
-            body, kind = snapshots.get("calendar.ics"), "text/calendar; charset=utf-8"
+            body, kind = latest("calendar.ics"), "text/calendar; charset=utf-8"
         elif path == "/health":
             body, kind = b"ok", "text/plain"
         else:
@@ -490,7 +481,4 @@ class Handler(http.server.BaseHTTPRequestHandler):
         pass
 
 
-page = open(index_html).read()
-snapshot()
-threading.Thread(target=refresh, daemon=True).start()
 http.server.ThreadingHTTPServer(("127.0.0.1", int(port)), Handler).serve_forever()

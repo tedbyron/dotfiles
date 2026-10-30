@@ -369,14 +369,37 @@
       a {
         color: var(--accent);
       }
+      .spinner {
+        display: none;
+        justify-self: center;
+        width: 28px;
+        height: 28px;
+        margin-top: 48px;
+        border: 3px solid var(--line);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      .loading .spinner {
+        display: block;
+      }
+      .loading main > section {
+        display: none;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
-  <body>
+  <body class="loading">
     <main>
       <header>
         <h1>ted.ooo status</h1>
         <span class="muted" id="updated">Loading…</span>
       </header>
+      <div class="spinner" role="status" aria-label="Loading"></div>
 
       <section class="card banner">
         <div id="issues"></div>
@@ -409,7 +432,6 @@
       </section>
     </main>
 
-    <script id="snapshot" type="application/json"></script>
     <script>
       const el = (tag, cls, text) => {
         const node = document.createElement(tag)
@@ -772,7 +794,7 @@
         const updated = new Date(data.updated)
         // Only the stale warning can change while the snapshot doesn't
         issues(data.issues, updated)
-        if (data.updated === shown) return updated
+        if (data.updated === shown) return
         shown = data.updated
         document.getElementById('updated').textContent =
           `Updated ${updated.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}`
@@ -780,49 +802,27 @@
         tiles(data.system, data.library)
         downloads(data.downloads, data.requests)
         calendar(data.calendar)
-        return updated
-      }
-
-      // The server takes a snapshot every 5 minutes, so fetch just after the
-      // next one is due, and not at all while the tab is hidden
-      let due = 0
-      let timer
-      function schedule() {
-        clearTimeout(timer)
-        if (document.hidden) return
-        // A late snapshot is retried every minute
-        const wait = due > Date.now() ? due - Date.now() : 60_000
-        timer = setTimeout(refresh, wait)
       }
 
       async function refresh() {
         try {
           const res = await fetch('status.json', { cache: 'no-store' })
-          due = render(await res.json()).getTime() + 305_000
+          render(await res.json())
         } catch {
           document.getElementById('updated').textContent = 'Status unavailable'
           issues(undefined, null)
           shown = null
         }
-        schedule()
+        // The first snapshot after a quiet spell takes a few seconds
+        document.body.classList.remove('loading')
       }
 
+      refresh()
+      // A hidden tab would keep the server taking snapshots for no one
+      setInterval(() => document.hidden || refresh(), 60_000)
       document.addEventListener('visibilitychange', () => {
-        if (!document.hidden && Date.now() >= due) refresh()
-        else schedule()
+        if (!document.hidden) refresh()
       })
-
-      // The server puts its latest snapshot in the page, so it renders without
-      // waiting for status.json
-      try {
-        due =
-          render(
-            JSON.parse(document.getElementById('snapshot').textContent),
-          ).getTime() + 305_000
-        schedule()
-      } catch {
-        refresh()
-      }
     </script>
   </body>
 </html>
