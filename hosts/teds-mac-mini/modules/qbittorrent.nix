@@ -81,6 +81,10 @@ let
       # UPnP/NAT-PMP would map ports on the home router, which never reach the tunnel
       PortForwardingEnabled = "false";
     };
+    # The quarantine xattr it sets on downloads is stored on NFS as a ._ file beside
+    # each one, which Radarr's multi-part check counts as a second part of movies
+    # whose file name starts with e.g. "Pa" or "CD", so it never imports them
+    Preferences."Advanced\\markOfTheWeb" = "false";
   };
 
   setSettings = pkgs.writeText "qbittorrent-settings.py" ''
