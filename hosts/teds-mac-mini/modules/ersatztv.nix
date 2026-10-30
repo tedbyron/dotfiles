@@ -78,8 +78,10 @@ let
         with sqlite3.connect(f"file:{db_path}?mode=ro", uri=True) as db:
             return [row[0] for row in db.execute(sql)]
 
+    # FileNotFound, the only state empty_trash deletes. RemoteOnly and Unavailable
+    # items become FileNotFound once a library sync no longer finds them in Jellyfin
     def stale():
-        return query("SELECT count(*) FROM MediaItem WHERE State <> 0")[0]
+        return query("SELECT count(*) FROM MediaItem WHERE State = 1")[0]
 
     if not stale():
         sys.exit(0)
@@ -94,7 +96,7 @@ let
         JOIN MediaItem mi ON mi.Id = pi.MediaItemId
         JOIN Playout p ON p.Id = pi.PlayoutId
         JOIN Channel c ON c.Id = p.ChannelId
-        WHERE mi.State <> 0
+        WHERE mi.State = 1
     """)
 
     print(f"emptying trash of {stale()} items")
