@@ -170,9 +170,6 @@ def system():
     nas = '{mountpoint="/Volumes/media"}'
     mini = '{mountpoint="/System/Volumes/Data"}'
     return {
-        "cpu_percent": scalar(
-            '100 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100'
-        ),
         "uptime_seconds": scalar("node_time_seconds - node_boot_time_seconds"),
         "nas_free_tb": scalar(f"node_filesystem_avail_bytes{nas} / 1e12"),
         "nas_size_tb": scalar(f"node_filesystem_size_bytes{nas} / 1e12"),
@@ -184,7 +181,6 @@ def system():
         "mini_free_percent": scalar(
             f"node_filesystem_avail_bytes{mini} / node_filesystem_size_bytes{mini} * 100"
         ),
-        "streams": int(scalar("sum(jellyfin_stream_count) or vector(0)")),
     }
 
 
@@ -233,15 +229,31 @@ def library():
 
 def downloads():
     # A season pack is one download but appears once per episode in the queue
-    torrents = {}
+    active, queued = {}, set()
     for app in ARRS:
         for item in arr(app, "queue", pageSize=1000)["records"]:
-            if item.get("trackedDownloadState") == "downloading":
-                torrents[item["downloadId"]] = (item["size"], item["sizeleft"])
-    size = sum(total for total, _ in torrents.values())
-    left = sum(remaining for _, remaining in torrents.values())
+            key = item.get("downloadId") or (
+                app,
+                item.get("seriesId") or item.get("movieId"),
+                item.get("seasonNumber"),
+            )
+            # Torrents still fetching metadata have no size yet, so they wait
+            # with the queued ones instead of reading as 0 GB left
+            if (
+                item.get("trackedDownloadState") == "downloading"
+                and item.get("status") == "downloading"
+                and item["size"]
+            ):
+                active[key] = (item["size"], item["sizeleft"])
+            elif item.get("trackedDownloadState") == "downloading" or item.get(
+                "status"
+            ) in ("delay", "queued", "paused"):
+                queued.add(key)
+    size = sum(total for total, _ in active.values())
+    left = sum(remaining for _, remaining in active.values())
     return {
-        "active": len(torrents),
+        "active": len(active),
+        "queued": len(queued - active.keys()),
         "progress_percent": round((1 - left / size) * 100, 1) if size else None,
         "remaining_gb": round(left / 1e9, 1),
     }
@@ -249,11 +261,46 @@ def downloads():
 
 def requests():
     settings = json.load(open(os.path.join(home, ".local/share/seerr/settings.json")))
-    counts = fetch(
-        "http://127.0.0.1:5055/api/v1/request/count",
-        {"X-Api-Key": settings["main"]["apiKey"]},
-    )
-    return {"pending": counts["pending"], "processing": counts["processing"]}
+    headers = {"X-Api-Key": settings["main"]["apiKey"]}
+    counts = fetch("http://127.0.0.1:5055/api/v1/request/count", headers)
+    processing = fetch(
+        "http://127.0.0.1:5055/api/v1/request?take=1000&filter=processing", headers
+    )["results"]
+    movies = {
+        app: {m["tmdbId"]: m for m in arr(app, "movie")}
+        for app in ["radarr", "radarr-4k"]
+    }
+    series = {
+        app: {s["tvdbId"]: s for s in arr(app, "series")}
+        for app in ["sonarr", "sonarr-4k"]
+    }
+
+    def unreleased(request):
+        suffix = "-4k" if request["is4k"] else ""
+        media = request["media"]
+        if request["type"] == "movie":
+            movie = movies["radarr" + suffix].get(media["tmdbId"])
+            return movie is not None and not movie["isAvailable"]
+        show = series["sonarr" + suffix].get(media.get("tvdbId"))
+        if show is None:
+            return False
+        stats = {s["seasonNumber"]: s.get("statistics", {}) for s in show["seasons"]}
+        # Waiting on a release when no aired episode of a season not yet
+        # available is missing; a season Sonarr doesn't list hasn't aired
+        for season in request["seasons"]:
+            s = stats.get(season["seasonNumber"], {})
+            if season["status"] != 5 and s.get("episodeCount", 0) > s.get(
+                "episodeFileCount", 0
+            ):
+                return False
+        return True
+
+    upcoming = sum(unreleased(r) for r in processing)
+    return {
+        "pending": counts["pending"],
+        "processing": len(processing) - upcoming,
+        "upcoming": upcoming,
+    }
 
 
 def calendar():

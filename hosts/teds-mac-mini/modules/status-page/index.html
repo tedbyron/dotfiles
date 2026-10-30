@@ -233,6 +233,9 @@
         overflow: hidden;
         margin-top: 8px;
       }
+      #downloads > p:first-child {
+        margin-top: 0;
+      }
       .bar span {
         display: block;
         height: 100%;
@@ -391,7 +394,7 @@
       </section>
 
       <section class="card">
-        <h2>Downloads</h2>
+        <h2>Requests &amp; downloads</h2>
         <div id="downloads"></div>
       </section>
 
@@ -554,14 +557,12 @@
         if (!system && !library) return unavailable(target)
         const rows = [
           [
-            ['Streaming', fmt(system?.streams)],
             ['Movies', fmt(library?.movies)],
             ['Shows', fmt(library?.shows)],
             ['Episodes', fmt(library?.episodes)],
           ],
           [
             ['Uptime', uptime(system?.uptime_seconds)],
-            ['CPU', fmt(system?.cpu_percent, '%')],
             [
               'NAS free',
               fmt(system?.nas_free_percent, '%'),
@@ -597,8 +598,8 @@
         const target = document.getElementById('downloads')
         if (!d) return unavailable(target)
         const parts = []
-        if (!d.active) parts.push(el('span', 'muted', 'Nothing downloading'))
-        else {
+        const queued = d.queued ? `${d.queued} queued` : null
+        if (d.active) {
           const bar = el('div', 'bar')
           const fill = el('span')
           fill.style.width = `${d.progress_percent || 0}%`
@@ -607,19 +608,28 @@
             el(
               'div',
               null,
-              `${d.active} downloading · ${fmt(d.progress_percent, '%')} done · ${fmt(d.remaining_gb, ' GB')} left`,
+              [
+                `${d.active} downloading`,
+                `${fmt(d.progress_percent, '%')} done`,
+                `${fmt(d.remaining_gb, ' GB')} left`,
+                queued,
+              ]
+                .filter(Boolean)
+                .join(' · '),
             ),
             bar,
           )
-        }
-        if (requests)
-          parts.push(
-            el(
-              'p',
-              'muted',
-              `Requests: ${requests.processing} in progress · ${requests.pending} awaiting approval`,
-            ),
-          )
+        } else if (queued) parts.push(el('div', null, queued))
+        // Counts of zero are left out
+        const counts = [
+          requests?.processing && `${requests.processing} in progress`,
+          requests?.upcoming && `${requests.upcoming} awaiting release`,
+          requests?.pending && `${requests.pending} awaiting approval`,
+        ].filter(Boolean)
+        if (counts.length)
+          parts.push(el('p', 'muted', `Requests: ${counts.join(' · ')}`))
+        if (!parts.length)
+          parts.push(el('span', 'muted', 'Nothing in progress'))
         target.replaceChildren(...parts)
       }
 
