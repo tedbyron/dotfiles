@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# tedbot stop|restart: stop unloads the agent, since KeepAlive would bring a
+# killed tedbot straight back; restart loads it again if it was stopped.
+
+set -eu
+
+service="gui/$(id -u)/org.nixos.tedbot"
+
+case "${1:-}" in
+stop) exec launchctl bootout "$service" ;;
+restart)
+  launchctl kickstart -k "$service" 2>/dev/null ||
+    exec launchctl bootstrap "gui/$(id -u)" ~/Library/LaunchAgents/org.nixos.tedbot.plist
+  ;;
+*)
+  echo "usage: tedbot stop|restart" >&2
+  exit 1
+  ;;
+esac
