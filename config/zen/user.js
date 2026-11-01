@@ -9,6 +9,8 @@ user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("zen.watermark.enabled", false);
 user_pref("zen.urlbar.replace-newtab", true);
 user_pref("zen.urlbar.wait-to-clear", 0);
+// Zen defaults this to false, so closing the last tab opens an empty one
+user_pref("browser.tabs.closeWindowWithLastTab", true);
 user_pref("zen.workspaces.open-new-tab-if-last-unpinned-tab-is-closed", false);
 user_pref("zen.view.compact.show-background-tab-toast", false);
 user_pref("zen.view.compact.toolbar-flash-popup", false);
