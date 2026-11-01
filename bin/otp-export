@@ -1,5 +1,5 @@
 #!/usr/bin/env nix
-#!nix shell nixpkgs#uv
+#!nix shell nixpkgs#uv nixpkgs#imagemagick
 #!nix -c zsh
 #
 # Extracts OTP secrets from authenticator export QR images into a CSV. Prompts
@@ -15,7 +15,7 @@ usage() {
 }
 
 out=otp-secrets.csv
-while getopts oh: opt; do
+while getopts ho: opt; do
     case $opt in
         o) out=$OPTARG ;;
         h) usage 0 ;;
@@ -45,8 +45,23 @@ if [[ -e $out ]] {
     print
 }
 
-# The CSV holds plaintext secrets
+# The CSV and converted images hold plaintext secrets
 umask 077
+
+# OpenCV can't read HEIC (iPhone screenshots), so convert those to PNG
+tmp=$(mktemp -d)
+trap 'rm -rf $tmp' EXIT
+for i in {1..$#images}
+    if [[ ${images[i]:e:l} == hei[cf] ]] {
+        magick $images[i] $tmp/$i.png
+        images[i]=$tmp/$i.png
+    }
+
+# pyzbar loads the zbar library with ctypes, which looks in DYLD_ and LD_
+# library paths, not the nix profile
+zbar=$(nix build --no-link --print-out-paths nixpkgs#zbar.lib)/lib
+export DYLD_FALLBACK_LIBRARY_PATH=$zbar LD_LIBRARY_PATH=$zbar
+
 uvx --from git+https://github.com/scito/extract_otp_secrets \
     extract_otp_secrets --csv $out $images
 print "Wrote $out"
