@@ -1,0 +1,52 @@
+#!/usr/bin/env nix
+#!nix shell nixpkgs#uv
+#!nix -c zsh
+#
+# Extracts OTP secrets from authenticator export QR images into a CSV. Prompts
+# for the images (drag and drop works) and output path if no images are given.
+#
+# Usage: otp-export [-o out.csv] [image...]
+
+set -euo pipefail
+
+usage() {
+    print -u2 "usage: ${ZSH_ARGZERO:t} [-o out.csv] [image...]"
+    exit ${1:-1}
+}
+
+out=otp-secrets.csv
+while getopts oh: opt; do
+    case $opt in
+        o) out=$OPTARG ;;
+        h) usage 0 ;;
+        *) usage ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+images=($@)
+if (( ! $#images )) {
+    read -r "line?Images: "
+    # Split like the shell would, so quoted or backslash-escaped paths work
+    images=(${(Q)${(z)line}})
+    (( $#images )) || usage
+    read -r "line?Output [$out]: "
+    [[ -n $line ]] && out=${(Q)line}
+}
+
+images=(${images/#\~/$HOME})
+out=${out/#\~/$HOME}
+
+for img in $images
+    [[ -r $img ]] || { print -u2 "not readable: $img"; exit 1 }
+
+if [[ -e $out ]] {
+    read -q "?$out exists, overwrite? [y/N] " || { print; exit 1 }
+    print
+}
+
+# The CSV holds plaintext secrets
+umask 077
+uvx --from git+https://github.com/scito/extract_otp_secrets \
+    extract_otp_secrets --csv $out $images
+print "Wrote $out"
