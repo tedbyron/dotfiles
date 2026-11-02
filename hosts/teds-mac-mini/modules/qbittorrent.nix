@@ -184,7 +184,7 @@ let
 
     ${lib.getExe pkgs.qbittorrent-nox} --confirm-legal-notice &
     pid=$!
-    trap 'kill $pid; wait $pid' TERM INT
+    trap 'kill $pid; wait $pid; exit' TERM INT
 
     stop() {
       echo "$1; stopping"
@@ -194,7 +194,9 @@ let
     }
 
     while kill -0 $pid 2>/dev/null; do
-      sleep 15
+      # In the background, or the trap would wait for it
+      sleep 15 &
+      wait $!
       if [ "$(tunnel_iface)" != "$iface" ] || [ "$(tunnel_pid)" != "$wgpid" ]; then
         stop "${tunnel} tunnel changed or went down"
       fi
@@ -261,6 +263,9 @@ in
   };
 
   launchd.user.agents.qbittorrent.serviceConfig = {
+    # launchd signals qBittorrent itself once its start script is killed, so this has
+    # to outlast the shutdown the script is waiting for
+    ExitTimeOut = 60;
     KeepAlive = true;
     ProgramArguments = mediaLaunch [ "${start}" ];
     RunAtLoad = true;

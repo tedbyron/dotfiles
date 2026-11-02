@@ -68,9 +68,11 @@ needs a password, so ask Ted to run them (`j switch`). New files must be
   standby link. NFS stays on v3 (macOS only speaks v4.0); 256K rsize/wsize
   tested no faster than 128K; readahead stays at the default 16 (128 made
   qBittorrent read ~4x what it served).
-- Shut the NAS down only after `nas-maintenance start`, which stops the services
-  that use it and unmounts `/Volumes/media` (the mount is `hard`);
-  `nas-maintenance stop` brings them back once the NAS is up.
+- Shut the NAS down only after `nas-maintenance start`, which silences the
+  alerts that causes (for up to 4 hours), stops the services that use it and
+  unmounts `/Volumes/media` (the mount is `hard`); `nas-maintenance stop` brings
+  them back once the NAS is up, and the silence ends 10 minutes later.
+  Healthchecks keeps reporting success while that silence is active.
 - Never torrent outside the VPN. qBittorrent must only run through its start
   script, which waits for the Proton WireGuard tunnel, binds to it, and stops if
   it changes. Don't remove the binding, start it any other way, or add another
