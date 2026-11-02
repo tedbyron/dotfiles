@@ -12,7 +12,11 @@
       {
         channel.enable = false;
         nixPath = [ "nixpkgs=${pkgs.path}" ];
-        gc.automatic = true;
+        gc = {
+          automatic = true;
+          dates = "weekly";
+          options = "--delete-older-than 30d";
+        };
         optimise.automatic = true;
         package = pkgs.nixVersions.latest;
 
