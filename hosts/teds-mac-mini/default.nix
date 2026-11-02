@@ -14,6 +14,9 @@
     {
       inherit hostName;
       computerName = hostName;
+      # The IP is static, so DHCP gives no DNS server. NextDNS's encrypted DNS needs a
+      # plain one to find its own server, and IPv6's can disappear with the router's prefix
+      dns = [ "192.168.2.1" ];
     };
 
   environment.etc = {
