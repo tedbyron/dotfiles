@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   mediaLaunch,
@@ -197,8 +198,30 @@ let
     echo "copied to $nasArchive"
     prune ${nasDir}
   '';
+
+  # Starts the agent rather than running the script, so its NAS access goes through
+  # mediaLaunch and not the terminal, and it can't overlap a nightly run
+  backupCli = pkgs.writeShellApplication {
+    name = "backup";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.gawk
+    ];
+    text = ''
+      target="gui/$(id -u)/${config.launchd.user.agents.media-backup.serviceConfig.Label}"
+      offset=$(stat -c %s ${log} 2>/dev/null || echo 0)
+      pid=$(/bin/launchctl kickstart -p "$target")
+
+      tail -c +$((offset + 1)) -f --pid="$pid" ${log}
+
+      code=$(/bin/launchctl print "$target" | awk '$1 == "last" && $2 == "exit" { print $NF }')
+      exit "''${code:-1}"
+    '';
+  };
 in
 {
+  home-manager.users.ted.home.packages = [ backupCli ];
+
   launchd.user.agents.media-backup.serviceConfig = {
     ProgramArguments = mediaLaunch [ "${backup}" ];
     StandardErrorPath = log;
