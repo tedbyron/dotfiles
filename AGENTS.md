@@ -32,8 +32,9 @@ stable channel.
 - Build another host: `nix build .#darwinConfigurations.<host>.system` or
   `nix build .#nixosConfigurations.<host>.config.system.build.toplevel`
 
-Don't run `just switch`, `boot`, `test`, or `rollback`; ask first. New files
-must be `git add`ed before flake evaluation can see them.
+Don't run `just switch`, `boot`, `test`, or `rollback`: they need sudo, which
+needs a password, so ask Ted to run them (`j switch`). New files must be
+`git add`ed before flake evaluation can see them.
 
 ## Conventions
 
