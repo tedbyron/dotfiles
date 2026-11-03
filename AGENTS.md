@@ -75,8 +75,10 @@ needs a password, so ask Ted to run them (`j switch`). New files must be
   Healthchecks keeps reporting success while that silence is active.
 - Never torrent outside the VPN. qBittorrent must only run through its start
   script, which waits for the Proton WireGuard tunnel, binds to it, and stops if
-  it changes. Don't remove the binding, start it any other way, or add another
-  client without the same protection. The key is `/etc/wireguard/proton.key`.
+  it changes or stops passing traffic. `qbittorrent.nix` patches libtorrent so
+  tracker retries stay bound. Don't remove the binding or the patch, start it
+  any other way, or add another client without the same protection. The key is
+  `/etc/wireguard/proton.key`.
 - Radarr/Sonarr quality settings follow the TRaSH Guides (`recyclarr.nix`). The
   overrides are in Sonarr's WEB-1080p, because on public trackers most season
   packs are x265 or Bluray rips: x265 (HD) scores -1000 with a -1000 minimum

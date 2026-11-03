@@ -10,12 +10,36 @@ let
   tunnelAddress = "10.2.0.2";
   gateway = "10.2.0.1";
 
-  # US-OH#8, a P2P server, from a WireGuard config generated with NAT-PMP (Port Forwarding) on
+  # US-OH#24, a P2P server, from a WireGuard config generated with NAT-PMP (Port Forwarding) on
   server = {
     publicKey = "Rtsl6k9WA9t04Vt+EDUD3TlSr9+YL6YcTFwiSB1qBwA=";
     endpoint = "146.70.84.2:51820";
   };
   nameFile = "/var/run/wireguard/${tunnel}.name";
+
+  # libtorrent binds a tracker connection's socket once. When a tracker has several
+  # IPs and the first fails, the retry reopens it unbound, so it leaves through en0
+  # with the real IP (qBittorrent#24823). Unfixed upstream as of 2.1.2
+  libtorrent = pkgs.libtorrent-rasterbar.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      substituteInPlace src/http_connection.cpp \
+        --replace-fail "m_sock->async_connect(target_address," ${lib.escapeShellArg ''
+          if (m_bind_addr && !m_sock->is_open())
+          {
+            error_code ec;
+            m_sock->open(m_bind_addr->ip.is_v4() ? tcp::v4() : tcp::v6(), ec);
+            if (!ec) m_sock->bind(tcp::endpoint(m_bind_addr->ip, 0), ec);
+            if (ec)
+            {
+              post(m_ios, std::bind(&http_connection::callback, me, ec, span<char>{}));
+              return;
+            }
+          }
+          m_sock->async_connect(target_address,''}
+    '';
+  });
+  qbittorrent = pkgs.qbittorrent-nox.override { libtorrent-rasterbar = libtorrent; };
+
   log = "/Users/ted/Library/Logs/qbittorrent.log";
   ini = "/Users/ted/.config/qBittorrent/qBittorrent.ini";
 
@@ -154,7 +178,12 @@ let
       /sbin/ifconfig | ${pkgs.gawk}/bin/awk '/^[a-z]/ { sub(":", "", $1); i = $1 } /inet ${tunnelAddress} / { print i }'
     }
 
-    until [ -n "$(tunnel_iface)" ]; do
+    # The interface stays up when the server stops answering
+    tunnel_works() {
+      /usr/bin/dig +time=3 +tries=1 @${gateway} protonvpn.com > /dev/null
+    }
+
+    until [ -n "$(tunnel_iface)" ] && tunnel_works; do
       echo "waiting for ${tunnel} tunnel"
       sleep 5
     done
@@ -182,7 +211,7 @@ let
     ${pkgs.python3}/bin/python3 -I ${setSettings} ${ini} "$iface" ${tunnelAddress} "$port" \
       ${lib.escapeShellArg (builtins.toJSON settings)}
 
-    ${lib.getExe pkgs.qbittorrent-nox} --confirm-legal-notice &
+    ${lib.getExe qbittorrent} --confirm-legal-notice &
     pid=$!
     trap 'kill $pid; wait $pid; exit' TERM INT
 
@@ -193,6 +222,7 @@ let
       exit 1
     }
 
+    failures=0
     while kill -0 $pid 2>/dev/null; do
       # In the background, or the trap would wait for it
       sleep 15 &
@@ -200,6 +230,15 @@ let
       if [ "$(tunnel_iface)" != "$iface" ] || [ "$(tunnel_pid)" != "$wgpid" ]; then
         stop "${tunnel} tunnel changed or went down"
       fi
+
+      if ! tunnel_works; then
+        failures=$((failures + 1))
+        if [ "$failures" -ge 3 ]; then
+          stop "${tunnel} tunnel stopped passing traffic"
+        fi
+        continue
+      fi
+      failures=0
 
       renewed=$(forward_port)
       if [ -n "$renewed" ] && [ "$renewed" != "$port" ]; then
@@ -250,7 +289,8 @@ in
           && /usr/bin/dig +time=5 +tries=3 @${gateway} protonvpn.com > /dev/null \
           && exit 0
         wg-quick down ${tunnel} 2>/dev/null
-        wg-quick up ${tunnel}
+        # It stays running under launchd, which wouldn't start this check again
+        wg-quick up ${tunnel} &
       ''
     ];
 
