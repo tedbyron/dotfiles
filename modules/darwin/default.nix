@@ -1,9 +1,22 @@
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [ ./system.nix ];
 
   security.pam.services.sudo_local.touchIdAuth = true;
   system.primaryUser = "ted";
+
+  # /nix/store may not be mounted yet when launchd loads this job at login
+  launchd.user.agents.gnupg-agent.serviceConfig.ProgramArguments = lib.mkForce (
+    lib.ted.waitForNix [
+      (lib.getExe' config.programs.gnupg.package "gpg-connect-agent")
+      "/bye"
+    ]
+  );
 
   environment = {
     etc."pam.d/sudo_local".text = ''
