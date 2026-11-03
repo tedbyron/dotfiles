@@ -67,17 +67,26 @@ let
       "Session\\AdditionalTrackersURL" =
         "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best.txt";
       "Session\\AnnounceToAllTrackers" = "true";
+      "Session\\AnnounceToAllTiers" = "true";
       "Session\\AnonymousModeEnabled" = "true";
       # Peers on the tunnel's network are only Proton's gateway
       "Session\\LSDEnabled" = "false";
+      # Off to test whether it stops the Proton tunnel answering minutes after qBittorrent starts
+      "Session\\DHTEnabled" = "false";
+      "Session\\PeXEnabled" = "true";
+      # Under the defaults (500, 100, 30, 50) to keep the Proton tunnel answering: the
+      # lockouts came minutes after qBittorrent started, when it connects the fastest
+      "Session\\MaxConnections" = "300";
+      "Session\\MaxConnectionsPerTorrent" = "40";
+      "Session\\ConnectionSpeed" = "5";
+      "Session\\MaxConcurrentHTTPAnnounces" = "20";
       # Skip packed releases (TRaSH) and the executables fake public releases ship;
       # the *arr apps then fail the import and Cleanuparr removes it
       ExcludedFileNamesEnabled = "true";
       "Session\\ExcludedFileNames" = "*.rar, *.r[0-9]*, *.exe, *.lnk, *.scr, *.bat, *.cmd";
-      # The default 20 slots (4 per torrent) left most leechers choked and upload
-      # at a few Mbit, far under speedrr's limit
-      "Session\\MaxUploads" = "40";
-      "Session\\MaxUploadsPerTorrent" = "8";
+      # qBittorrent's defaults. They're listed because removing a key keeps its last value
+      "Session\\MaxUploads" = "20";
+      "Session\\MaxUploadsPerTorrent" = "4";
       # Plain reads and writes through libtorrent's disk thread pool. Memory-mapped
       # I/O (the default) turns into small scattered reads and writes over NFS, and
       # Posix does all disk I/O on the network thread, so a slow write stalls every
@@ -284,9 +293,10 @@ in
       "/bin/sh"
       "-c"
       ''
+        # A silent server isn't a reason to rebuild: WireGuard keeps retrying by itself, and
+        # every rebuild would look like a new connection to everything on the path
         /sbin/ifconfig | grep -q "inet ${tunnelAddress} " \
           && wg show "$(cat ${nameFile})" peers | grep -qxF ${lib.escapeShellArg server.publicKey} \
-          && /usr/bin/dig +time=5 +tries=3 @${gateway} protonvpn.com > /dev/null \
           && exit 0
         wg-quick down ${tunnel} 2>/dev/null
         # It stays running under launchd, which wouldn't start this check again
