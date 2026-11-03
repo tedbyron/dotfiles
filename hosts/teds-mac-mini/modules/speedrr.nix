@@ -75,6 +75,12 @@ let
       sleep 30
     done
 
+    # It exits if qBittorrent's API isn't up, which is normal while the VPN tunnel is down
+    until /usr/bin/nc -z 127.0.0.1 8080 2> /dev/null; do
+      echo "waiting for qbittorrent on port 8080"
+      sleep 30
+    done
+
     umask 077
     mkdir -p ${dataDir}
     ${python}/bin/python3 -I -c '
