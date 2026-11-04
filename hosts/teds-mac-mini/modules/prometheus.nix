@@ -138,6 +138,13 @@ let
         # Not status.json, which would keep the snapshot refreshing every 5 minutes
         "https://status.ted.ooo/health"
       ])
+      # No alerts: these only show whether a public site failure is Cloudflare's
+      # path or the whole connection. request. and status. land on Cloudflare's
+      # Atlanta site, www.cloudflare.com on a nearer one, Google off Cloudflare.
+      (probe "internet" [
+        "https://www.cloudflare.com/cdn-cgi/trace"
+        "https://www.google.com/generate_204"
+      ])
       {
         job_name = "blackbox";
         static_configs = [ { targets = [ "127.0.0.1:9115" ]; } ];
