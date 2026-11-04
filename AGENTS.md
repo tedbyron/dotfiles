@@ -58,16 +58,16 @@ needs a password, so ask Ted to run them (`j switch`). New files must be
   `movies-4k/`, `tv/`, `tv-4k/`, `anime/`, `anime-movies/`, `orphaned/`,
   `backups/`), mounted by `nas.nix`. Downloads and library must share it so
   imports are hardlinks; services that touch media wait for the mount.
-- The NAS is a DS425+ (DSM 7.3, 2 GB RAM) with one HDD on btrfs with data
-  checksums, so random I/O is the bottleneck. `downloads/` has `chattr +C` (set
-  over SSH on the NAS as `ted`, needs a password; redo if the share is
-  recreated). A Samsung 990 Pro is a ~500 GB read-only SSD cache, enabled on DSM
-  7.3 by 007revad's `syno_hdd_db.sh -n` as a root boot task; after a DSM update
-  it may need a reboot. Async NFS writes on, access times off. NAS and mini
-  share a 2.5GbE switch (~260 MB/s cached reads); the NAS's 1GbE port is only a
-  standby link. NFS stays on v3 (macOS only speaks v4.0); 256K rsize/wsize
-  tested no faster than 128K; readahead stays at the default 16 (128 made
-  qBittorrent read ~4x what it served).
+- The NAS is a DS425+ (DSM 7.3, 2 GB RAM) with two 22 TB HDDs in RAID 1 on btrfs
+  with data checksums, so random I/O is the bottleneck. `downloads/` has
+  `chattr +C` (set over SSH on the NAS as `ted`, needs a password; redo if the
+  share is recreated). A Samsung 990 Pro is a ~500 GB read-only SSD cache,
+  enabled on DSM 7.3 by 007revad's `syno_hdd_db.sh -n` as a root boot task;
+  after a DSM update it may need a reboot. Async NFS writes on, access times
+  off. NAS and mini share a 2.5GbE switch (~260 MB/s cached reads); the NAS's
+  1GbE port is only a standby link. NFS stays on v3 (macOS only speaks v4.0);
+  256K rsize/wsize tested no faster than 128K; readahead stays at the default 16
+  (128 made qBittorrent read ~4x what it served).
 - Shut the NAS down only after `nas-maintenance start`, which silences the
   alerts that causes (for up to 4 hours), stops the services that use it and
   unmounts `/Volumes/media` (the mount is `hard`); `nas-maintenance stop` brings
