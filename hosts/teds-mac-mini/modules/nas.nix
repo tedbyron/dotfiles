@@ -144,6 +144,18 @@ let
             fi
           done
 
+          # These keep running during maintenance and fail while Jellyfin is down. They only
+          # run hourly, so without this JobFailing fires when the silence ends
+          for _ in {1..60}; do
+            /usr/bin/curl -fsS -m 2 -o /dev/null http://127.0.0.1:8096/health \
+              && /usr/bin/curl -fsS -m 2 -o /dev/null http://127.0.0.1:8409/ \
+              && break
+            sleep 2
+          done
+          for label in ${agents.jellyfin-posters.serviceConfig.Label} ${agents.ersatztv-logos.serviceConfig.Label}; do
+            /bin/launchctl kickstart "gui/$uid/$label" || echo "couldn't start $label" >&2
+          done
+
           # Not ended outright, since firing alerts would go out while the services start
           if [ -n "$(silence_id || true)" ] && ! silence_for "10 minutes"; then
             echo "couldn't shorten the alert silence; it ends within 4 hours" >&2
