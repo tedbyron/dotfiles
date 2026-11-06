@@ -37,9 +37,15 @@
     fallback = true
   '';
 
-  home-manager.users.ted.home.packages = with pkgs; [
-    qbittorrent
-  ];
+  home-manager.users.ted = {
+    home.packages = with pkgs; [
+      qbittorrent
+    ];
+
+    # The mini only accepts the key kept in Bitwarden (App Store build, hence the container)
+    programs.ssh.settings.teds-mac-mini.IdentityAgent =
+      "~/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock";
+  };
 
   programs.ssh = {
     extraConfig = ''

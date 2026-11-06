@@ -62,7 +62,7 @@
     ];
 
   users.users.ted.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGVGv+eruOaJsG7AHCykBgFL3lM3tteCzXcmOBEbUfrC ted@ted.ooo"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDmkz6Q/zzN7uPM+Q9joQb8Gc6aVIJmBDNiK3u3Bvw/R"
     ''restrict,command="/nix/var/nix/profiles/default/bin/nix-daemon --stdio" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ03cN9i+T95Ohp9DXgDDL38xDKfUQ/T/y+6TdwOaR62 root@teds-laptop''
   ];
 }
