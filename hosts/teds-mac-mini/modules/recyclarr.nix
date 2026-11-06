@@ -109,6 +109,15 @@ let
             assign_scores_to:
               - trash_id: 72dae194fc92bf828f32cde7744e51a1 # WEB-1080p
                 score: -1000
+          # Override: the anime profile only rejects dubs named as such
+          # (Dubs Only), so English-only releases tagged "ENG" got through
+          # and replaced dual-audio copies. Radarr's anime profile already
+          # requires the original language
+          - trash_ids:
+              - ae575f95ab639ba5d15f663bf019e3e8 # Language: Not Original
+            assign_scores_to:
+              - trash_id: 20e0fc959f1f1704bed501f23bdae76f # [Anime] Remux-1080p
+                score: -10000
 
       # Seerr's 4K requests
       series-4k:

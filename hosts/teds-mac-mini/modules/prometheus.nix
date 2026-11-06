@@ -13,6 +13,78 @@ let
 
   yaml = pkgs.formats.yaml { };
 
+  services = [
+    {
+      name = "Jellyfin";
+      url = "http://127.0.0.1:8096/health";
+    }
+    {
+      name = "Seerr";
+      url = "http://127.0.0.1:5055/api/v1/status";
+    }
+    {
+      name = "Sonarr";
+      url = "http://127.0.0.1:8989/ping";
+    }
+    {
+      name = "Sonarr 4K";
+      url = "http://127.0.0.1:8990/ping";
+    }
+    {
+      name = "Radarr";
+      url = "http://127.0.0.1:7878/ping";
+    }
+    {
+      name = "Radarr 4K";
+      url = "http://127.0.0.1:7879/ping";
+    }
+    {
+      name = "Prowlarr";
+      url = "http://127.0.0.1:9696/ping";
+    }
+    {
+      name = "Cleanuparr";
+      url = "http://127.0.0.1:11011/health";
+    }
+    {
+      name = "Bazarr";
+      url = "http://127.0.0.1:6767/";
+    }
+    {
+      name = "Bazarr 4K";
+      url = "http://127.0.0.1:6768/";
+    }
+    {
+      name = "qBittorrent";
+      url = "http://127.0.0.1:8080/";
+    }
+    {
+      name = "ErsatzTV";
+      url = "http://127.0.0.1:8409/";
+    }
+    {
+      name = "tedbot";
+      url = "http://127.0.0.1:5056/health";
+    }
+    {
+      name = "FlareSolverr";
+      url = "http://127.0.0.1:8191/";
+    }
+    {
+      name = "Grafana";
+      url = "http://127.0.0.1:3000/api/health";
+    }
+  ];
+
+  # Names services in alert text. Done in the template rather than as a target
+  # label, which would start new probe_success series and split the status
+  # page's 30-day uptime
+  serviceName = lib.concatMapStrings (
+    s: ''{{ if eq $labels.instance "${s.url}" }}${s.name}{{ end }}''
+  ) services;
+  # https://stream.ted.ooo/health -> stream.ted.ooo
+  host = ''{{ reReplaceAll "^https?://([^/]+).*" "$1" $labels.instance }}'';
+
   probe = job: targets: {
     job_name = job;
     metrics_path = "/probe";
@@ -43,56 +115,56 @@ let
             alert = "ServiceDown";
             expr = ''probe_success{job="services"} == 0'';
             "for" = "5m";
-            annotations.summary = "{{ $labels.instance }} has not responded for 5 minutes (qBittorrent at :8080 also stops when the VPN tunnel is down)";
+            annotations.summary = "${serviceName} is down{{ if eq $labels.instance \"http://127.0.0.1:8080/\" }} (or the VPN tunnel is){{ end }}";
           }
           {
             alert = "PublicSiteDown";
             expr = ''probe_success{job="public"} == 0'';
             "for" = "5m";
-            annotations.summary = "{{ $labels.instance }} has not responded for 5 minutes";
+            annotations.summary = "${host} is down";
           }
           {
             alert = "CertificateExpiring";
             expr = ''probe_ssl_earliest_cert_expiry{job="public"} - time() < 14 * 86400'';
             "for" = "1h";
-            annotations.summary = "TLS certificate for {{ $labels.instance }} expires in under 14 days";
+            annotations.summary = "${host} certificate expires in under 14 days";
           }
           {
             alert = "ExporterDown";
             expr = "up == 0";
             "for" = "5m";
-            annotations.summary = "Prometheus cannot scrape {{ $labels.job }}";
+            annotations.summary = "Can't scrape {{ $labels.job }}";
           }
           {
             alert = "DiskSpaceLow";
             expr = ''node_filesystem_avail_bytes{mountpoint=~"/System/Volumes/Data|/Volumes/.+"} / node_filesystem_size_bytes < 0.10'';
             "for" = "10m";
-            annotations.summary = "{{ $labels.mountpoint }} has less than 10% free";
+            annotations.summary = "{{ $labels.mountpoint }} is under 10% free";
           }
           {
             alert = "JobFailing";
             expr = "launchd_job_last_exit_status != 0 and launchd_job_running == 0";
             "for" = "30m";
-            annotations.summary = "{{ $labels.name }} last exited with status {{ $value }}";
+            annotations.summary = "{{ $labels.name }} is failing (exit {{ $value }})";
           }
           {
             alert = "JobRestarting";
             expr = ''increase(launchd_job_runs_total{keepalive="1"}[15m]) > 3'';
             "for" = "15m";
-            annotations.summary = "{{ $labels.name }} has restarted {{ $value | printf \"%.0f\" }} times in 15 minutes";
+            annotations.summary = "{{ $labels.name }} restarted {{ $value | printf \"%.0f\" }} times in 15 minutes";
           }
           {
             alert = "JobMetricsStale";
             expr = ''time() - node_textfile_mtime_seconds{file=~".*/launchd-.*"} > 600 or node_textfile_scrape_error == 1 or absent(launchd_job_running)'';
             "for" = "10m";
-            annotations.summary = "launchd job status metrics have stopped updating";
+            annotations.summary = "launchd job metrics are stale";
           }
           {
             # jellyfin_stream_count has no series while nothing is playing
             alert = "JellyfinRestartPending";
             expr = "jellyfin_pending_restart == 1 unless on () sum(jellyfin_stream_count) > 0";
             "for" = "1h";
-            annotations.summary = "Jellyfin needs a restart (usually for plugin updates) and nothing has played for an hour";
+            annotations.summary = "Jellyfin needs a restart (nothing has played for an hour)";
           }
           {
             # Cleared by marking the events resolved on Cleanuparr's Events page
@@ -115,23 +187,7 @@ let
     alerting.alertmanagers = [ { static_configs = [ { targets = [ "127.0.0.1:9093" ]; } ]; } ];
 
     scrape_configs = [
-      (probe "services" [
-        "http://127.0.0.1:8096/health"
-        "http://127.0.0.1:5055/api/v1/status"
-        "http://127.0.0.1:8989/ping"
-        "http://127.0.0.1:8990/ping"
-        "http://127.0.0.1:7878/ping"
-        "http://127.0.0.1:7879/ping"
-        "http://127.0.0.1:9696/ping"
-        "http://127.0.0.1:11011/health"
-        "http://127.0.0.1:6767/"
-        "http://127.0.0.1:6768/"
-        "http://127.0.0.1:8080/"
-        "http://127.0.0.1:8409/"
-        "http://127.0.0.1:5056/health"
-        "http://127.0.0.1:8191/"
-        "http://127.0.0.1:3000/api/health"
-      ])
+      (probe "services" (map (s: s.url) services))
       (probe "public" [
         "https://stream.ted.ooo/health"
         "https://request.ted.ooo/api/v1/status"

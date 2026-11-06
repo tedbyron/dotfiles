@@ -16,7 +16,15 @@ let
     receivers = [
       {
         name = "discord";
-        discord_configs = [ { webhook_url_file = webhookFile; } ];
+        # Just the summaries, instead of every label and a Prometheus link;
+        # the embed is red while firing and green once resolved
+        discord_configs = [
+          {
+            webhook_url_file = webhookFile;
+            title = ''{{ if eq (len .Alerts) 1 }}{{ with index .Alerts 0 }}{{ if eq .Status "resolved" }}Resolved: {{ end }}{{ .Annotations.summary }}{{ end }}{{ else }}{{ with .Alerts.Firing }}{{ len . }} firing{{ end }}{{ if and .Alerts.Firing .Alerts.Resolved }}, {{ end }}{{ with .Alerts.Resolved }}{{ len . }} resolved{{ end }}{{ end }}'';
+            message = ''{{ if gt (len .Alerts) 1 }}{{ range .Alerts.Firing }}🔴 {{ .Annotations.summary }}{{ "\n" }}{{ end }}{{ range .Alerts.Resolved }}✅ {{ .Annotations.summary }}{{ "\n" }}{{ end }}{{ end }}'';
+          }
+        ];
       }
     ];
   };
