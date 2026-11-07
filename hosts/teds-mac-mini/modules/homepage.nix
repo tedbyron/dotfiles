@@ -185,7 +185,6 @@ let
               fields = [
                 "pending"
                 "processing"
-                "available"
                 "issues"
               ];
             };
@@ -428,12 +427,12 @@ let
         --color-teal-500: #89b482;
       }
     ''
-    # leech, download, seed, upload -> seed, leech, download, upload. It and
+    # leech, download, seed, upload -> leech, seed, download, upload. It and
     # Storage are two rows of two, since their values don't fit four across
     (reorder "qBittorrent" [
-      2
-      3
       1
+      3
+      2
       4
     ])
     # The alert list's empty state says "No items found"
