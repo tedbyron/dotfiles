@@ -211,7 +211,7 @@ let
       Server = [
         {
           Uptime = {
-            icon = "prometheus.svg";
+            icon = "mdi-heart-pulse-#d4be98";
             widget = {
               type = "prometheusmetric";
               url = prometheus;
@@ -247,7 +247,7 @@ let
         }
         {
           Storage = {
-            icon = "synology.svg";
+            icon = "mdi-harddisk-#d4be98";
             widget = {
               type = "prometheusmetric";
               url = prometheus;
@@ -332,7 +332,7 @@ let
         }
         {
           Releases = {
-            icon = "sonarr.svg";
+            icon = "mdi-calendar-#d4be98";
             widget = {
               type = "calendar";
               view = "agenda";
