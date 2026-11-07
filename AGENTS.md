@@ -139,7 +139,10 @@ backups. Redo by hand after a rebuild without backups:
   after 168h (the arrs never see torrents once they're in the post-import
   category, so they don't remove them; the library copies are hardlinks), and
   anything in `downloads/` no torrent uses, after 24h, moves to `orphaned/` and
-  is purged after 72h.
+  is purged after 72h; malware blocker every 5 min with Cleanuparr's
+  `blacklist_permissive` for Sonarr and Radarr (covers the 4K instances too),
+  "delete if any file is blocked" off (the list includes `.nfo`/`.txt`, which
+  normal releases carry).
 - Seerr: default profiles HD Bluray + WEB, WEB-1080p, and [Anime] Remux-1080p
   for anime (folders and libraries are set in `seerr.nix`). An override rule
   (Settings → Services → Radarr) sends movies with TMDb's anime keyword (210024)

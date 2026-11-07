@@ -115,62 +115,92 @@ let
             alert = "ServiceDown";
             expr = ''probe_success{job="services"} == 0'';
             "for" = "5m";
-            annotations.summary = "${serviceName} is down{{ if eq $labels.instance \"http://127.0.0.1:8080/\" }} (or the VPN tunnel is){{ end }}";
+            annotations = {
+              summary = "${serviceName} is down{{ if eq $labels.instance \"http://127.0.0.1:8080/\" }} (or the VPN tunnel is){{ end }}";
+              resolved = "${serviceName} is back up";
+            };
           }
           {
             alert = "PublicSiteDown";
             expr = ''probe_success{job="public"} == 0'';
             "for" = "5m";
-            annotations.summary = "${host} is down";
+            annotations = {
+              summary = "${host} is down";
+              resolved = "${host} is back up";
+            };
           }
           {
             alert = "CertificateExpiring";
             expr = ''probe_ssl_earliest_cert_expiry{job="public"} - time() < 14 * 86400'';
             "for" = "1h";
-            annotations.summary = "${host} certificate expires in under 14 days";
+            annotations = {
+              summary = "${host} certificate expires in under 14 days";
+              resolved = "${host} certificate renewed";
+            };
           }
           {
             alert = "ExporterDown";
             expr = "up == 0";
             "for" = "5m";
-            annotations.summary = "Can't scrape {{ $labels.job }}";
+            annotations = {
+              summary = "Can't scrape {{ $labels.job }}";
+              resolved = "Scraping {{ $labels.job }} again";
+            };
           }
           {
             alert = "DiskSpaceLow";
             expr = ''node_filesystem_avail_bytes{mountpoint=~"/System/Volumes/Data|/Volumes/.+"} / node_filesystem_size_bytes < 0.10'';
             "for" = "10m";
-            annotations.summary = "{{ $labels.mountpoint }} is under 10% free";
+            annotations = {
+              summary = "{{ $labels.mountpoint }} is under 10% free";
+              resolved = "{{ $labels.mountpoint }} is back over 10% free";
+            };
           }
           {
             alert = "JobFailing";
             expr = "launchd_job_last_exit_status != 0 and launchd_job_running == 0";
             "for" = "30m";
-            annotations.summary = "{{ $labels.name }} is failing (exit {{ $value }})";
+            annotations = {
+              summary = "{{ $labels.name }} is failing (exit {{ $value }})";
+              resolved = "{{ $labels.name }} recovered";
+            };
           }
           {
             alert = "JobRestarting";
             expr = ''increase(launchd_job_runs_total{keepalive="1"}[15m]) > 3'';
             "for" = "15m";
-            annotations.summary = "{{ $labels.name }} restarted {{ $value | printf \"%.0f\" }} times in 15 minutes";
+            annotations = {
+              summary = "{{ $labels.name }} restarted {{ $value | printf \"%.0f\" }} times in 15 minutes";
+              resolved = "{{ $labels.name }} stopped restarting";
+            };
           }
           {
             alert = "JobMetricsStale";
             expr = ''time() - node_textfile_mtime_seconds{file=~".*/launchd-.*"} > 600 or node_textfile_scrape_error == 1 or absent(launchd_job_running)'';
             "for" = "10m";
-            annotations.summary = "launchd job metrics are stale";
+            annotations = {
+              summary = "launchd job metrics are stale";
+              resolved = "launchd job metrics are updating again";
+            };
           }
           {
             # jellyfin_stream_count has no series while nothing is playing
             alert = "JellyfinRestartPending";
             expr = "jellyfin_pending_restart == 1 unless on () sum(jellyfin_stream_count) > 0";
             "for" = "1h";
-            annotations.summary = "Jellyfin needs a restart (nothing has played for an hour)";
+            annotations = {
+              summary = "Jellyfin needs a restart (nothing has played for an hour)";
+              resolved = "Jellyfin no longer needs a restart";
+            };
           }
           {
             # Cleared by marking the events resolved on Cleanuparr's Events page
             alert = "CleanuparrActionRequired";
             expr = "cleanuparr_unresolved_events > 0";
-            annotations.summary = "Cleanuparr has {{ $value }} unresolved {{ $labels.type }} event(s) for {{ $labels.instance }}";
+            annotations = {
+              summary = "Cleanuparr has {{ $value }} unresolved {{ $labels.type }} event(s) for {{ $labels.instance }}";
+              resolved = "Cleanuparr's {{ $labels.type }} events for {{ $labels.instance }} are resolved";
+            };
           }
         ];
       }

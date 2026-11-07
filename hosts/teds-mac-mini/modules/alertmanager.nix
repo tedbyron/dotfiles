@@ -17,12 +17,14 @@ let
       {
         name = "discord";
         # Just the summaries, instead of every label and a Prometheus link;
-        # the embed is red while firing and green once resolved
+        # the embed is red while firing and green once resolved. Resolved
+        # alerts use the rule's `resolved` annotation ("X is back up"), since
+        # "Resolved: X is down" reads as if it's still down
         discord_configs = [
           {
             webhook_url_file = webhookFile;
-            title = ''{{ if eq (len .Alerts) 1 }}{{ with index .Alerts 0 }}{{ if eq .Status "resolved" }}Resolved: {{ end }}{{ .Annotations.summary }}{{ end }}{{ else }}{{ with .Alerts.Firing }}{{ len . }} firing{{ end }}{{ if and .Alerts.Firing .Alerts.Resolved }}, {{ end }}{{ with .Alerts.Resolved }}{{ len . }} resolved{{ end }}{{ end }}'';
-            message = ''{{ if gt (len .Alerts) 1 }}{{ range .Alerts.Firing }}🔴 {{ .Annotations.summary }}{{ "\n" }}{{ end }}{{ range .Alerts.Resolved }}✅ {{ .Annotations.summary }}{{ "\n" }}{{ end }}{{ end }}'';
+            title = ''{{ if eq (len .Alerts) 1 }}{{ with index .Alerts 0 }}{{ if ne .Status "resolved" }}{{ .Annotations.summary }}{{ else if .Annotations.resolved }}{{ .Annotations.resolved }}{{ else }}Resolved: {{ .Annotations.summary }}{{ end }}{{ end }}{{ else }}{{ with .Alerts.Firing }}{{ len . }} firing{{ end }}{{ if and .Alerts.Firing .Alerts.Resolved }}, {{ end }}{{ with .Alerts.Resolved }}{{ len . }} resolved{{ end }}{{ end }}'';
+            message = ''{{ if gt (len .Alerts) 1 }}{{ range .Alerts.Firing }}🔴 {{ .Annotations.summary }}{{ "\n" }}{{ end }}{{ range .Alerts.Resolved }}✅ {{ with .Annotations.resolved }}{{ . }}{{ else }}{{ .Annotations.summary }}{{ end }}{{ "\n" }}{{ end }}{{ end }}'';
           }
         ];
       }
