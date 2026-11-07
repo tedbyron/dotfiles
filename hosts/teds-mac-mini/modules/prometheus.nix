@@ -77,18 +77,18 @@ let
   ];
 
   # Names services in alert text. Done in the template rather than as a target
-  # label, which would start new probe_success series and split the status
-  # page's 30-day uptime
+  # label, which would start new probe_success series and split the 30-day
+  # uptime on Homepage and Grafana
   serviceName = lib.concatMapStrings (
     s: ''{{ if eq $labels.instance "${s.url}" }}${s.name}{{ end }}''
   ) services;
   # https://stream.ted.ooo/health -> stream.ted.ooo
   host = ''{{ reReplaceAll "^https?://([^/]+).*" "$1" $labels.instance }}'';
 
-  probe = job: targets: {
+  probe = job: module: targets: {
     job_name = job;
     metrics_path = "/probe";
-    params.module = [ "http_2xx" ];
+    params.module = [ module ];
     static_configs = [ { inherit targets; } ];
     relabel_configs = [
       {
@@ -217,17 +217,17 @@ let
     alerting.alertmanagers = [ { static_configs = [ { targets = [ "127.0.0.1:9093" ]; } ]; } ];
 
     scrape_configs = [
-      (probe "services" (map (s: s.url) services))
-      (probe "public" [
+      (probe "services" "http_2xx" (map (s: s.url) services))
+      (probe "public" "http_2xx_direct" [
         "https://stream.ted.ooo/health"
         "https://request.ted.ooo/api/v1/status"
-        # Not status.json, which would keep the snapshot refreshing every 5 minutes
-        "https://status.ted.ooo/health"
+        # Bypasses Cloudflare Access, unlike the rest of the site
+        "https://status.ted.ooo/api/healthcheck"
       ])
       # No alerts: these only show whether a public site failure is Cloudflare's
       # path or the whole connection. request. and status. land on Cloudflare's
       # Atlanta site, www.cloudflare.com on a nearer one, Google off Cloudflare.
-      (probe "internet" [
+      (probe "internet" "http_2xx" [
         "https://www.cloudflare.com/cdn-cgi/trace"
         "https://www.google.com/generate_204"
       ])
@@ -244,6 +244,8 @@ let
           "launchd_job_last_exit_status"
           "launchd_job_running"
           "launchd_job_runs_total"
+          "media_backup_last_success_timestamp_seconds"
+          "media_backup_size_bytes"
           "node_boot_time_seconds"
           "node_cpu_seconds_total"
           "node_disk_read_bytes_total"

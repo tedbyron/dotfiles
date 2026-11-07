@@ -197,6 +197,17 @@ let
     mv "$nasArchive.partial" "$nasArchive"
     echo "copied to $nasArchive"
     prune ${nasDir}
+
+    # For Homepage's Backup card
+    metrics=/Users/ted/.local/share/node-exporter/textfile
+    mkdir -p "$metrics"
+    tmp=$(mktemp "$metrics/.media-backup.XXXXXX")
+    {
+      echo "media_backup_last_success_timestamp_seconds $(date +%s)"
+      echo "media_backup_size_bytes $(${pkgs.coreutils}/bin/stat -c %s "$archive")"
+    } > "$tmp"
+    chmod 644 "$tmp"
+    mv "$tmp" "$metrics/media-backup.prom"
   '';
 
   # Starts the agent rather than running the script, so its NAS access goes through

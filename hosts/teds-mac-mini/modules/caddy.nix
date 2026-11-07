@@ -3,8 +3,11 @@ let
   log = "/Users/ted/Library/Logs/caddy.log";
 
   caddy = pkgs.caddy.withPlugins {
-    plugins = [ "github.com/mholt/caddy-ratelimit@v0.1.1-0.20260612195517-5625512f24f6" ];
-    hash = "sha256-un3EYnFin5o/HrW7yZlVTMWzWbYYNbL7wjuhWb37CC8=";
+    plugins = [
+      "github.com/mholt/caddy-ratelimit@v0.1.1-0.20260612195517-5625512f24f6"
+      "github.com/ggicci/caddy-jwt@v1.4.0"
+    ];
+    hash = "sha256-YUJigh4qCnETPtwnvBYQyfjE3z0z4il5J7VuRWLpx+Q=";
   };
 
   # From https://www.cloudflare.com/ips-v4 and ips-v6
@@ -36,6 +39,7 @@ let
   caddyfile = pkgs.writeText "Caddyfile" ''
     {
       order rate_limit before basic_auth
+      order jwtauth after rate_limit
       # request. and status. are proxied by Cloudflare; stream. isn't, so its clients connect directly
       servers {
         trusted_proxies static ${cloudflare}
@@ -99,13 +103,22 @@ let
       }
     }
 
-    # status-page.nix; nothing else is served
+    # homepage.nix, behind Cloudflare Access (email login). Every request but
+    # the healthcheck (a Bypass policy) needs Access's signed JWT for this app,
+    # so the page is down, not public, if Access is off or misconfigured
     status.ted.ooo {
       import security
       import cloudflare
-      import limit status 60 1m *
-      @other not path / /index.html /status.json /calendar.ics /health
-      respond @other 404
+      # Every widget polls on its own timer while the page is open
+      import limit status 1200 1m *
+      @access not path /api/healthcheck
+      jwtauth @access {
+        jwk_url https://tedbyron.cloudflareaccess.com/cdn-cgi/access/certs
+        from_header Cf-Access-Jwt-Assertion
+        issuer_whitelist https://tedbyron.cloudflareaccess.com
+        audience_whitelist 86f40a221462a54ae6bd72683a9b6e47b2ac509d1621d57c77f70b48d5295ba8
+        user_claims email
+      }
       reverse_proxy 127.0.0.1:8410
     }
   '';
