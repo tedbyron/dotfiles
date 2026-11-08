@@ -218,7 +218,7 @@ let
               refreshInterval = 60000;
               metrics = [
                 {
-                  label = "stream 30d";
+                  label = "stream";
                   query = ''avg_over_time(probe_success{instance="https://stream.ted.ooo/health"}[30d]) * 100'';
                   format = {
                     type = "percent";
@@ -226,7 +226,7 @@ let
                   };
                 }
                 {
-                  label = "request 30d";
+                  label = "request";
                   query = ''avg_over_time(probe_success{instance="https://request.ted.ooo/api/v1/status"}[30d]) * 100'';
                   format = {
                     type = "percent";
@@ -234,7 +234,7 @@ let
                   };
                 }
                 {
-                  label = "Services up";
+                  label = "Services";
                   query = ''sum(probe_success{job="services"})'';
                 }
                 {
@@ -285,7 +285,7 @@ let
         }
         {
           Alerts = {
-            icon = "alertmanager.svg";
+            icon = "mdi-alert-#d4be98";
             # Alertmanager rather than Prometheus: it has the rendered
             # summaries and leaves out silenced alerts (nas-maintenance)
             widget = {
@@ -441,7 +441,7 @@ let
         font-size: 0;
       }
       li.service[data-name="Alerts"] div:not(.animate-pulse) > .font-thin:only-child::after {
-        content: "No firing alerts";
+        content: "No alerts";
         font-size: 0.75rem;
       }
     ''
