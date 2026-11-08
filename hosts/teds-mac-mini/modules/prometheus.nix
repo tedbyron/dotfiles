@@ -162,7 +162,7 @@ let
             "for" = "30m";
             annotations = {
               summary = "{{ $labels.name }} is failing (exit {{ $value }})";
-              resolved = "{{ $labels.name }} recovered";
+              resolved = "{{ $labels.name }} is running";
             };
           }
           {
@@ -190,7 +190,7 @@ let
             "for" = "1h";
             annotations = {
               summary = "Jellyfin needs a restart (nothing has played for an hour)";
-              resolved = "Jellyfin no longer needs a restart";
+              resolved = "Jellyfin has been restarted";
             };
           }
           {
