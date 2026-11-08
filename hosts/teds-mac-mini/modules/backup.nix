@@ -153,7 +153,9 @@ let
         return
       fi
 
-      ${lib.getExe pkgs.rsync} -a --delete --delete-excluded "$@" "$src/" "$stage/$name/"
+      # 24 means files vanished mid-copy (apps rotating their own files), which
+      # is fine for a snapshot
+      ${lib.getExe pkgs.rsync} -a --delete --delete-excluded "$@" "$src/" "$stage/$name/" || [ $? -eq 24 ]
 
       find "$stage/$name" -type f \( -name '*.db' -o -name '*.sqlite' -o -name '*.sqlite3' \) | while read -r copied; do
         rm -f "$copied" "$copied-wal" "$copied-shm" "$copied-journal"
