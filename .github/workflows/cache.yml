@@ -1,7 +1,8 @@
 name: Cache
 
 # Updates flake.lock, builds every host, and pushes them to Cachix. The lock
-# is committed only if every host built.
+# (with any mac mini hashes the build job fixed) is committed only if every
+# host built.
 
 on:
   schedule:
@@ -103,7 +104,54 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
           pushFilter: ${{ env.PUSH_FILTER }}
           extraPullNames: nix-community
-      - run: nix build --print-build-logs --no-link .#${{ matrix.attr }}
+      # Some mac mini hashes follow the lock, not a pinned release: Caddy's
+      # plugins hash covers a go.mod generated with nixpkgs' Go, and the Go
+      # vendorHashes (jelly-metrics, macos-process-exporter) cover flake inputs
+      # that `nix flake update` moves to upstream's latest commit. A mismatch
+      # in one of those is fixed in the mac mini's modules and the build
+      # retried; the commit job applies the fix. Pinned downloads (Cleanuparr,
+      # ErsatzTV, OpenTamer, ...) are left to fail: their hash changing means
+      # upstream replaced a release.
+      - env:
+          ATTR: ${{ matrix.attr }}
+          HOST: ${{ matrix.host }}
+          MODULES: hosts/teds-mac-mini/modules
+        run: |
+          build() {
+            nix build --print-build-logs --no-link ".#$ATTR" 2>&1 | tee build.log
+            return "${PIPESTATUS[0]}"
+          }
+          # Nix stops at the first failure, so each retry can find another.
+          for _ in 1 2 3; do
+            build && exit 0
+            [[ $HOST == teds-mac-mini ]] || exit 1
+            fixed=0
+            while read -r old new; do
+              [[ $old == sha256-* && $new == sha256-* ]] || continue
+              files=$(grep -rlF "\"$old\"" "$MODULES" || true)
+              [[ -n $files && $(wc -l <<< "$files") -eq 1 ]] || continue
+              # macOS's sed needs a backup suffix for -i.
+              sed -i.bak "s|\"$old\"|\"$new\"|" "$files" && rm "$files.bak"
+              echo "::notice file=$files::Updated hash $old to $new"
+              fixed=1
+            done < <(awk '
+              /hash mismatch in fixed-output derivation/ {
+                ok = /-(caddy-src-with-plugins-.*|go-modules)\.drv/
+              }
+              ok && /specified:/ { old = $2 }
+              ok && /got:/ { print old, $2; ok = 0 }
+            ' build.log)
+            [[ $fixed == 1 ]] || exit 1
+          done
+          exit 1
+      - if: matrix.host == 'teds-mac-mini'
+        run: git diff -- hosts/teds-mac-mini > "$RUNNER_TEMP/mini.patch"
+      - if: matrix.host == 'teds-mac-mini'
+        uses: actions/upload-artifact@v7
+        with:
+          name: mini-patch
+          path: ${{ runner.temp }}/mini.patch
+          retention-days: 1
 
   commit:
     needs: build
@@ -115,10 +163,17 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           name: flake-lock
+      - uses: actions/download-artifact@v8
+        with:
+          name: mini-patch
+          path: ${{ runner.temp }}
       - run: |
-          git diff --quiet flake.lock && exit 0
+          patch=$RUNNER_TEMP/mini.patch
+          if [[ -s $patch ]]; then git apply "$patch"; fi
+          files=(flake.lock hosts/teds-mac-mini)
+          git diff --quiet -- "${files[@]}" && exit 0
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Update flake' flake.lock
+          git commit -m 'Update flake' -- "${files[@]}"
           git pull --rebase
           git push
