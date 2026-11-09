@@ -184,9 +184,11 @@ backups. Redo by hand after a rebuild without backups:
   software). Trickplay (one thread) reads whole files over NFS, so it runs only
   in its nightly task (3:00, capped at 1h), not during scans. External content
   in suggestions (Dashboard → Libraries → Display) is off, or "More like this"
-  lists ErsatzTV airings beside the library copies. The XMLTV guide's kids
-  categories leave out "family": ErsatzTV passes TMDb genres, and one Family
-  program tags its channel Kids for good.
+  lists ErsatzTV airings beside the library copies. "Prefer embedded titles over
+  filenames" is off in every library: scene releases embed the release name,
+  which then replaces the TMDb title. The XMLTV guide's kids categories leave
+  out "family": ErsatzTV passes TMDb genres, and one Family program tags its
+  channel Kids for good.
 - Cloudflare Access (Zero Trust dashboard): an app for `status.ted.ooo`
   (Homepage, `homepage.nix`) allowing listed emails by one-time code, and a
   second for `status.ted.ooo/api/healthcheck` with a Bypass policy so Prometheus
