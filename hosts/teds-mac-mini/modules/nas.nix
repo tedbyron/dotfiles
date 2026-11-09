@@ -101,26 +101,37 @@ let
           done
 
           # Longer than any job's ExitTimeOut
-          for _ in {1..90}; do
-            stopped && break
-            sleep 1
-          done
+          if ! stopped; then
+            echo "waiting for the services to exit"
+            for _ in {1..90}; do
+              stopped && break
+              sleep 1
+            done
+          fi
 
           # Otherwise it remounts within 30s
           if loaded system/${Label}; then
             sudo /bin/launchctl bootout system/${Label}
           fi
 
-          # launchd doesn't kill stragglers, which can hold the mount after their job is gone
-          for _ in {1..60}; do
-            mounted || break
-            sudo /sbin/umount ${mountPoint} 2>/dev/null && break
-            sleep 1
-          done
+          # Not umount: the terminal has no Network Volumes access, so unmount(2) fails with
+          # EPERM even as root, and Spotlight's mds keeps the root open. Disk Arbitration
+          # unmounts on its own behalf and asks mds to let go. launchd doesn't kill
+          # stragglers, which can hold the mount after their job is gone, so it retries
+          if mounted; then
+            echo "unmounting ${mountPoint}"
+            for _ in {1..30}; do
+              err=$(/usr/sbin/diskutil unmount ${mountPoint} 2>&1 > /dev/null) && break
+              mounted || break
+              sleep 2
+            done
+          fi
 
           if mounted; then
+            echo "couldn't unmount: ''${err:-unknown error}" >&2
             echo "still in use; stop these and run 'nas-maintenance start' again:" >&2
-            /usr/sbin/lsof +f -- ${mountPoint} >&2 || true
+            # As root, or it misses system processes like mds
+            sudo /usr/sbin/lsof +f -- ${mountPoint} >&2 || true
             exit 1
           fi
 
