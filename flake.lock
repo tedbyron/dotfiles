@@ -548,11 +548,11 @@
         "treefmt": "treefmt"
       },
       "locked": {
-        "lastModified": 1793975916,
-        "narHash": "sha256-oK5WdbqYrSzuvuOEm797Zcq//h8R95WKv84/trJwE1I=",
+        "lastModified": 1794201439,
+        "narHash": "sha256-5kh64DkSaeHDLYDKwgRa5AtQOZWp4pz2QqBDjOUW5c4=",
         "owner": "tedbyron",
         "repo": "tedbot",
-        "rev": "df237b2dca7f8efba21773fd17ff58a2b21cc972",
+        "rev": "65d96f879222d4050e1889dde68abd3657f3b604",
         "type": "github"
       },
       "original": {
