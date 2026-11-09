@@ -7,7 +7,7 @@ let
       "github.com/mholt/caddy-ratelimit@v0.1.1-0.20260612195517-5625512f24f6"
       "github.com/ggicci/caddy-jwt@v1.4.0"
     ];
-    hash = "sha256-YUJigh4qCnETPtwnvBYQyfjE3z0z4il5J7VuRWLpx+Q=";
+    hash = "sha256-NmiIVC5EhHOxYE/FDl52NfSZ4vj1gS2Y9KBnSeXME38=";
   };
 
   # From https://www.cloudflare.com/ips-v4 and ips-v6
