@@ -28,6 +28,10 @@ let
     theme = "auto";
     inputNeededNotifEnabled = false;
     agentPushNotifEnabled = false;
+    env = {
+      DISABLE_TELEMETRY = "1";
+      DO_NOT_TRACK = "1";
+    };
   };
 in
 {
