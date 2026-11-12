@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   imports = [
     ../../users/ted
@@ -18,6 +18,8 @@
       # plain one to find its own server, and IPv6's can disappear with the router's prefix
       dns = [ "192.168.2.1" ];
     };
+
+  home-manager.users.ted.programs.vscode.enable = lib.mkForce false;
 
   environment.etc = {
     "nix/nix.conf".enable = false;
@@ -58,7 +60,6 @@
       "/Applications/Zen.app/"
       "/Applications/Bitwarden.app/"
       "${userPrograms "ghostty"}/Applications/Ghostty.app/"
-      "${userPrograms "vscode"}/Applications/Visual Studio Code.app/"
     ];
 
   users.users.ted.openssh.authorizedKeys.keys = [
