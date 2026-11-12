@@ -88,8 +88,12 @@ needs a password, so ask Ted to run them (`j switch`). New files must be
   with Bluray x265 encodes. Seerr's 4K requests go to a second Radarr
   (`radarr-4k`, port 7879, UHD Bluray + WEB, `movies-4k/`) and Sonarr
   (`sonarr-4k`, port 8990, WEB-2160p, `tv-4k/`, anime included), since one
-  instance keeps one copy of a title. Check the guides before changing anything
-  they cover; cached copy in
+  instance keeps one copy of a title. Each instance also has an "(Atmos)" copy
+  of its profile (`jl` picks it in Seerr's advanced requests): Atmos and DTS:X
+  at the guide's scores (Radarr 4K's profile already has them) and looser
+  qualities: remuxes for movies only, Bluray encodes with WEB, and x265 at -1000
+  at 1080p, with Radarr's Bluray-1080p minimum lowered to 25 for it. Check the
+  guides before changing anything they cover; cached copy in
   `~/Library/Application Support/recyclarr/resources/trash-guides/`.
 - `jellyfin-posters.nix` sets every movie's and show's poster, backdrop and
   thumb from Seerr's TMDb art, 4K libraries included, so both copies look the
