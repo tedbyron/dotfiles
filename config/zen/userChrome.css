@@ -23,6 +23,15 @@
   }
 }
 
+/* Until a page paints, its tab shows the browser element's own background,
+   which Zen sets to plain white or rgb(32, 32, 32). Paint it the theme's
+   frame color, which matches its ntp_background and userContent.css's blank
+   page color. (Firefox would use ntp_background itself, but only with the
+   new tab page on.) */
+:root[lwtheme] #tabbrowser-tabpanels browser[type="content"]:not([transparent="true"]) {
+  background: var(--lwt-accent-color) !important;
+}
+
 /* The link and loading status in the bottom corner and the toasts in the top
    corner (copied URL, etc.) are tinted from the space's color; paint them like
    the theme's popups instead */
