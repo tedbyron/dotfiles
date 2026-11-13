@@ -127,6 +127,17 @@ let
 
     posters, backdrops_done = load("posters.json"), load("backdrops.json")
     thumbs = load("thumbs.json")
+    # Image tags after each item was done; a changed tag means Jellyfin replaced
+    # the art (a refresh, or the item dropped and re-added under the same ID)
+    tags = load("tags.json")
+
+    def current(item):
+        backdrop = item.get("BackdropImageTags") or [None]
+        return {
+            "Primary": item.get("ImageTags", {}).get("Primary"),
+            "Backdrop": backdrop[0],
+            "Thumb": item.get("ImageTags", {}).get("Thumb"),
+        }
 
     items = jellyfin(
         "/Items?Recursive=true&IncludeItemTypes=Movie,Series&CollapseBoxSetItems=false&Fields=ProviderIds"
@@ -134,6 +145,13 @@ let
     # Consecutive failed runs per item, dropping items no longer in the library
     ids = {item["Id"] for item in items}
     failures = {k: v for k, v in load("failures.json").items() if k in ids}
+    tags = {k: v for k, v in tags.items() if k in ids}
+
+    for item in items:
+        now, then = current(item), tags.get(item["Id"], {})
+        for kind, done in (("Primary", posters), ("Backdrop", backdrops_done), ("Thumb", thumbs)):
+            if item["Id"] in done and now[kind] != then.get(kind):
+                del done[item["Id"]]
 
     for item in items:
         tmdb = item.get("ProviderIds", {}).get("Tmdb")
@@ -157,6 +175,8 @@ let
                 thumbs[item["Id"]] = backdrop
                 print(f"set {item['Name']} thumb to {backdrop}")
             failures.pop(item["Id"], None)
+            fresh = jellyfin(f"/Items?Ids={item['Id']}")["Items"][0]
+            tags[item["Id"]] = current(fresh)
         except Exception as e:
             failures[item["Id"]] = failures.get(item["Id"], 0) + 1
             print(f"failed {item['Name']} ({failures[item['Id']]} runs): {e}")
@@ -165,6 +185,7 @@ let
     save("posters.json", posters)
     save("backdrops.json", backdrops_done)
     save("thumbs.json", thumbs)
+    save("tags.json", tags)
     save("failures.json", failures)
     # Fail the job (and alert) only when an item has failed 3 runs in a row
     sys.exit(1 if any(n >= 3 for n in failures.values()) else 0)
