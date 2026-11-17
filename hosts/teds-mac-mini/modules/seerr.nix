@@ -8,7 +8,28 @@ let
   dataDir = "/Users/ted/.local/share/seerr";
   log = "/Users/ted/Library/Logs/seerr.log";
 
+  # Title cards only show the HD status, so a title with only a 4K copy looks
+  # unrequested. Fall back to the 4K status when the HD one is unknown or
+  # deleted (detail pages already show both badges).
+  cardStatus =
+    var:
+    let
+      none = "[undefined, 1, 7]";
+      status = "${var}.mediaInfo?.status";
+      status4k = "${var}.mediaInfo?.status4k";
+    in
+    "status={${none}.includes(${status}) && !${none}.includes(${status4k}) ? ${status4k} : ${status}}";
+
   seerr = unstable.seerr.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      for file in src/components/{TitleCard/TmdbTitleCard,MediaSlider/index,CollectionDetails/index,Common/ListView/index}.tsx; do
+        substituteInPlace "$file" --replace-fail \
+          'status={title.mediaInfo?.status}' ${lib.escapeShellArg (cardStatus "title")}
+      done
+      substituteInPlace src/components/PersonDetails/index.tsx --replace-fail \
+        'status={media.mediaInfo?.status}' ${lib.escapeShellArg (cardStatus "media")}
+    '';
+
     nativeBuildInputs = old.nativeBuildInputs ++ [
       pkgs.cctools
       pkgs.xcbuild
