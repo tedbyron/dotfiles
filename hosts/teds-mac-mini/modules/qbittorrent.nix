@@ -56,8 +56,8 @@ let
       "Session\\DefaultSavePath" = "/Volumes/media/downloads";
       # Fallback matching the seed goals Prowlarr syncs to the *arr apps, which set
       # them on every torrent they add (the only way torrents are added)
-      "Session\\GlobalMaxRatio" = "1";
-      "Session\\GlobalMaxSeedingMinutes" = "10080";
+      "Session\\GlobalMaxRatio" = "2";
+      "Session\\GlobalMaxSeedingMinutes" = "20160";
       # Stop at the seed goals. The *arr apps move imported torrents to a
       # post-import category and never remove them; Cleanuparr deletes them
       # once they reach the goals

@@ -114,7 +114,7 @@ needs a password, so ask Ted to run them (`j switch`). New files must be
 Not in nix (their APIs change between versions); restored from the nightly
 backups. Redo by hand after a rebuild without backups:
 
-- Prowlarr: every indexer seeds to ratio 1 or 7 days; Standard sync profile
+- Prowlarr: every indexer seeds to ratio 2 or 14 days; Standard sync profile
   minimum seeders 5; Internet Archive removed; Knaben priority 50 (stale seeder
   counts); FlareSolverr tag on 1337x, EZTV, Uindex, ExtraTorrent.st and both
   kickasstorrents; Torrent Downloads removed (its category feeds are empty, so
@@ -142,7 +142,7 @@ backups. Redo by hand after a rebuild without backups:
   download cleaner hourly (btrfs frees a deleted torrent's scattered extents
   slowly and loudly, so small batches beat 6-hourly bursts): a seeding rule
   deletes torrents and their files in `tv-sonarr-imported`/`radarr-imported` and
-  their `-4k-` twins at ratio 1 or after 168h (the arrs never see torrents once
+  their `-4k-` twins at ratio 2 or after 336h (the arrs never see torrents once
   they're in the post-import category, so they don't remove them; the library
   copies are hardlinks), and anything in `downloads/` no torrent uses, after
   24h, moves to `orphaned/` and is purged after 72h; malware blocker every 5 min
