@@ -5,6 +5,9 @@ instead of `CLAUDE.md`.
 
 ## Git
 
+Never commit or push unless I explicitly ask for that specific commit or push.
+Permission for one commit or push doesn't carry over to later changes.
+
 Never add a `Co-Authored-By` trailer or any other AI attribution to commit
 messages or pull requests.
 
