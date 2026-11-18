@@ -222,12 +222,27 @@ let
 
     ${lib.getExe qbittorrent} --confirm-legal-notice &
     pid=$!
-    trap 'kill $pid; wait $pid; exit' TERM INT
+
+    # Shutdown can hang for hours (once while the tunnel was down and the NAS was
+    # overloaded), and KeepAlive only restarts it once this script exits. 50s stays
+    # under launchd's ExitTimeOut, so this kills it before launchd does
+    terminate() {
+      kill $pid
+      for _ in {1..50}; do
+        kill -0 $pid 2>/dev/null || break
+        sleep 1
+      done
+      if kill -0 $pid 2>/dev/null; then
+        echo "qbittorrent didn't exit within 50s; killing it"
+        kill -KILL $pid
+      fi
+      wait $pid
+    }
+    trap 'terminate; exit' TERM INT
 
     stop() {
       echo "$1; stopping"
-      kill $pid
-      wait $pid
+      terminate
       exit 1
     }
 

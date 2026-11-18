@@ -174,8 +174,9 @@ backups. Redo by hand after a rebuild without backups:
   in-app modal, which is how to request 4K of a title already in HD; native
   poster tags on, so other clients see the quality tags baked into posters,
   drawn when first requested), Moonbase (Moonfin's server plugin, Moonfin-Client
-  manifest), Subtitle Extract (all libraries; subtitles and attachments nightly
-  at 2:05/2:15, capped at 45 min so they finish before Trickplay and backups),
+  manifest), Subtitle Extract (all libraries; attachments nightly at 2:05,
+  subtitles at 4:15 capped at 2.5h, after Trickplay and the 4:00 backup: they
+  read whole files over NFS, and overlapping them saturated the NAS's disks),
   SkipMe.db (Intro Skipper manifest; crowd-sourced segments, synced at 1:00
   before Intro Skipper), Session Cleaner (90 days, Sundays). Custom CSS
   (Dashboard → General) hides the native star and critic ratings, ends-at times
