@@ -23,6 +23,7 @@ user_pref("zen.tabs.show-newtab-vertical", false);
 user_pref("zen.tabs.select-recently-used-on-close", false);
 user_pref("zen.tabs.ctrl-tab.ignore-essential-tabs", true);
 user_pref("zen.workspaces.continue-where-left-off", true);
+user_pref("zen.window-sync.sync-only-pinned-tabs", true);
 user_pref("privacy.userContext.enabled", false);
 
 // Better Find Bar mod (zen-mods-export.json)
