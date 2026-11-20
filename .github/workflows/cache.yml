@@ -134,7 +134,7 @@ jobs:
               sed -i.bak "s|\"$old\"|\"$new\"|" "$files" && rm "$files.bak"
               echo "::notice file=$files::Updated hash $old to $new"
               fixed=1
-            done < <(awk '
+            done < <(LC_ALL=C awk '
               /hash mismatch in fixed-output derivation/ {
                 ok = /-(caddy-src-with-plugins-.*|go-modules)\.drv/
               }

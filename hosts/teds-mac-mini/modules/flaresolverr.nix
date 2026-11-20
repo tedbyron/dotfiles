@@ -19,6 +19,15 @@ let
   flaresolverr = pkgs.flaresolverr.override {
     chromium = chrome;
     inherit undetected-chromedriver;
+    # func-timeout's sleep test allows only 0.1s of slack, which a busy CI
+    # runner overshoots.
+    python3 = pkgs.python3.override {
+      packageOverrides = _: prev: {
+        func-timeout = prev.func-timeout.overridePythonAttrs (old: {
+          disabledTests = (old.disabledTests or [ ]) ++ [ "test_getSleepLambda" ];
+        });
+      };
+    };
   };
 in
 {
