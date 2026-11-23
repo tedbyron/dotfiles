@@ -9,7 +9,7 @@ let
   nasDir = "/Volumes/media/backups";
   localDir = "/Users/ted/Backups/media/archives";
   stage = "/Users/ted/Backups/media/staging";
-  keep = 14;
+  keep = 7;
   log = "/Users/ted/Library/Logs/media-backup.log";
   share = "/Users/ted/.local/share";
   appSupport = "/Users/ted/Library/Application Support";
@@ -35,6 +35,7 @@ let
         "cache/"
         "log/"
         "metadata/"
+        "data/subtitles"
         "data/trickplay/"
       ];
     }

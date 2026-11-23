@@ -56,8 +56,11 @@ needs a password, so ask Ted to run them (`j switch`). New files must be
   blocks every service's NAS access until someone clicks it.
 - Media is on a Synology NFS share at `/Volumes/media` (`downloads/`, `movies/`,
   `movies-4k/`, `tv/`, `tv-4k/`, `anime/`, `anime-movies/`, `orphaned/`,
-  `backups/`), mounted by `nas.nix`. Downloads and library must share it so
-  imports are hardlinks; services that touch media wait for the mount.
+  `backups/`, `subtitles/`), mounted by `nas.nix`. Downloads and library must
+  share it so imports are hardlinks; services that touch media wait for the
+  mount. `subtitles/` is Jellyfin's `data/subtitles` (a symlink made by
+  `jellyfin.nix`): Subtitle Extract's output, regenerable and too big for the
+  mini's disk, so it isn't backed up.
 - The NAS is a DS425+ (DSM 7.3, 2 GB RAM) with two 22 TB HDDs in RAID 1 on btrfs
   with data checksums, so random I/O is the bottleneck. `downloads/` has
   `chattr +C` (set over SSH on the NAS as `ted`, needs a password; redo if the

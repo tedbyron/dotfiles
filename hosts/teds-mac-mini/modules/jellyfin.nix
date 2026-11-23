@@ -8,6 +8,7 @@
 let
   mediaDir = "/Volumes/media";
   dataDir = "/Users/ted/.local/share/jellyfin";
+  subtitleDir = "${mediaDir}/subtitles";
   cfgDir = "/Users/ted/.config/jellyfin";
   log = "/Users/ted/Library/Logs/jellyfin.log";
 
@@ -67,6 +68,15 @@ let
         's|<EnableMetrics>false</EnableMetrics>|<EnableMetrics>true</EnableMetrics>|' \
         ${cfgDir}/system.xml
     fi
+
+    # Subtitle Extract's output (mostly Bluray PGS bitmaps, tens of GB) is
+    # regenerable from the media, so it lives on the NAS, outside the backups
+    mkdir -p ${subtitleDir} ${dataDir}/data
+    if [ -d ${dataDir}/data/subtitles ] && [ ! -L ${dataDir}/data/subtitles ]; then
+      ${lib.getExe pkgs.rsync} -rlpt ${dataDir}/data/subtitles/ ${subtitleDir}/
+      rm -rf ${dataDir}/data/subtitles
+    fi
+    ln -sfn ${subtitleDir} ${dataDir}/data/subtitles
 
     ln -sfn ${fallbackFonts} ${dataDir}/fonts
     if [ -e ${cfgDir}/encoding.xml ]; then
