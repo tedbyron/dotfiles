@@ -11,6 +11,15 @@ let
       group_wait = "30s";
       group_interval = "5m";
       repeat_interval = "12h";
+      # Alerts with a restart button go to tedbot, which posts them in the same
+      # channel styled the same way: webhook posts can't have interactive
+      # buttons. It answers 502 if it couldn't post, so Alertmanager retries
+      routes = [
+        {
+          matchers = [ ''restart=~".+"'' ];
+          receiver = "tedbot";
+        }
+      ];
     };
 
     receivers = [
@@ -25,6 +34,15 @@ let
             webhook_url_file = webhookFile;
             title = ''{{ if eq (len .Alerts) 1 }}{{ with index .Alerts 0 }}{{ if ne .Status "resolved" }}{{ .Annotations.summary }}{{ else if .Annotations.resolved }}{{ .Annotations.resolved }}{{ else }}Resolved: {{ .Annotations.summary }}{{ end }}{{ end }}{{ else }}{{ with .Alerts.Firing }}{{ len . }} firing{{ end }}{{ if and .Alerts.Firing .Alerts.Resolved }}, {{ end }}{{ with .Alerts.Resolved }}{{ len . }} resolved{{ end }}{{ end }}'';
             message = ''{{ if gt (len .Alerts) 1 }}{{ range .Alerts.Firing }}🔴 {{ .Annotations.summary }}{{ "\n" }}{{ end }}{{ range .Alerts.Resolved }}✅ {{ with .Annotations.resolved }}{{ . }}{{ else }}{{ .Annotations.summary }}{{ end }}{{ "\n" }}{{ end }}{{ end }}'';
+          }
+        ];
+      }
+      {
+        name = "tedbot";
+        webhook_configs = [
+          {
+            url = "http://127.0.0.1:5056/alertmanager";
+            send_resolved = true;
           }
         ];
       }

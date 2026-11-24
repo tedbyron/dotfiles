@@ -192,6 +192,8 @@ let
               summary = "Jellyfin needs a restart (nothing has played for an hour)";
               resolved = "Jellyfin has been restarted";
             };
+            # tedbot posts it with a restart button (alertmanager.nix)
+            labels.restart = "jellyfin";
           }
           {
             # Cleared by marking the events resolved on Cleanuparr's Events page
