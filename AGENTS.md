@@ -128,10 +128,12 @@ backups. Redo by hand after a rebuild without backups:
   score them); rescan folder after refresh only after manual refresh (avoids
   statting the library over NFS); delete empty folders on; no recycle bin;
   import extra files `srt,ass,ssa,sub,idx`; delay profile prefers torrent, 6h
-  delay, bypassed only at score 1700+ (TRaSH's WEB Tier 01); qBittorrent client
-  removes completed downloads, categories `radarr`/`tv-sonarr` (priority First)
-  and `radarr-imported`/`tv-sonarr-imported`; a second "qBittorrent (low)"
-  client for items tagged `5-tb` (Seerr tags requests by requester) uses
+  delay, bypassed only at score 1700+ (TRaSH's WEB Tier 01), except in both
+  Radarrs: 12h, never bypassed (new digital releases get repacks within hours);
+  qBittorrent client removes completed downloads, categories
+  `radarr`/`tv-sonarr` (priority First) and
+  `radarr-imported`/`tv-sonarr-imported`; a second "qBittorrent (low)" client
+  for items tagged `5-tb` (Seerr tags requests by requester) uses
   `radarr-low`/`tv-sonarr-low` with priority Last, so tb's downloads queue
   behind everyone else's. Anime uses [Anime] Remux-1080p. The 4K instances match
   these except root folders `movies-4k`/`tv-4k` only and categories
